@@ -1,0 +1,1 @@
+insert into video_source values (1, '搜狐', 'http://so.tv.sohu.com', 'http://so.tv.sohu.com/list_p1115_p2_p3_p4_p5_p6_p7_p8_p9_p10_p11_p12_p13.html', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

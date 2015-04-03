@@ -1,0 +1,193 @@
+html{color:#000;font-size:12px;font-family:'Microsoft YaHei','Œ¢»Ì—≈∫⁄',Tahoma,Geneva,'ÀŒÃÂ';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}body{font-size:12px;font-family:'Microsoft YaHei','Œ¢»Ì—≈∫⁄',Tahoma,Geneva,'ÀŒÃÂ'}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}fieldset,img{border:0}li{list-style:none}
+a:link,a:visited {color:#007498;text-decoration:none;}
+a:hover,a:active {color:#003;text-decoration:underline;}
+a img {border:0;}
+.nmain {width:1000px;margin:0 auto;position: relative;z-index:100;background:#fff;}
+.wrap {width:980px;margin:0 auto;}
+.wrap2 {width:980px;margin:0 auto;z-index:100;}
+.clearfix:after {content:"ª”∞»Ã’ﬂÕ¯ - www.narutom.com";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix {display:inline-block;}
+.clearfix {display:block;}
+.softblist,.softolist , .narutolist2 {list-style:none;line-height:22px;}
+.softblist li,.softolist li {float:left;height:22px;line-height:22px;overflow:hidden;white-space:normal;background:url(img/bg_main.png) no-repeat -365px -58px;padding-left:13px;_display:inline}
+.narutolist li {float:left;list-style:none;line-height:22px;background:url('http://www.narutom.com/images/li_bg4.gif') no-repeat left 5px;height:22px;line-height:22px;overflow:hidden;white-space:normal;padding-left:12px;background:url('http://www.narutom.com/images/li_bg3.gif') no-repeat left 5px;width:80px; }
+
+.softolist li a:link,.softolist li a:visited, .narutolist li a:link, .narutolist li a:visited{color:#8F5400;}
+.softolist li a:hover,.softolist li a:active , .narutolist li a:hover, .narutolist li a:active{color:#f00;text-decoration:underline;}
+.softblist li span,.softolist li span {float:right;}
+/*------------------------------*/
+
+/* Õ∑≤øπ≤”√CSS */
+#header {height:168px;margin:0 auto;width:980px;background:url('http://www.narutom.com/images/banner.jpg') repeat-x;}
+#logo {float:left;margin:5px 0 0 8px;display:inline;}
+#logo {font-size:12px;font-weight:normal;}
+#logo a {padding:85px 0px 0 128px	display:block;font-size:12px;text-decoration:none;color:#666;text-align:left;width:340px;voice-family: "\"}\"";voice-family: inherit;width:120px;}
+#logo a span {font-size:10px;}
+#logo a:hover {color:#2E3092;}
+#menu {float:left;width:100%;clear:both;height:35px;line-height:35px;margin-top:13px;}
+#menu li {float:left;}
+#menu li a {font-size:12px;font-weight:bold;color:#fff;padding:0 6px 0 7px;display:block;text-decoration:none;}
+#menu li a:hover {background:url('http://www.narutom.com/images/menu_hover.png') repeat-x;color:#000;}
+#login {background:#FFFFEC;border:1px #88D3E3 solid;margin:3px 0 0 0;height:33px;line-height:33px;color:#069}
+#login p{margin:2px;padding-left:20px;height:30px;line-height:30px;}#login p a{color:#039;}
+#login p span {float:right;margin-right:5px;display:inline;}
+
+/*------------------------------------------------*/
+#recommend_down {float: left;width: 300px;height:370px;clear: left;border: 1px #88D3E3 solid;margin: 5px 0 0 0;}
+#recommend_down dl {float:left;width:100%;clear:both;}
+#recommend_down dt {float:left;margin:10px;display:inline;}
+#recommend_down dt img {padding:2px;border:1px #ccc solid;}
+#recommend_down dt a:hover img {border:1px #88D3E3 solid;}
+#recommend_down dd {float:left;width:245px;height:69px;overflow:hidden;margin:10px 2px 0px 16px;}
+
+.wrap h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
+.wrap2 h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap2 .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
+#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
+.wrap h2 span a {float: right;font-weight: normal;margin-right: 5px;color: #007498;}
+#last_updated {float: right;width: 390px;height:370px;margin: 5px 12px 0 4px;border: 1px #88D3E3 solid;/* background-image:url(http://www.narutom.com/img/news_bg.gif); */background-color: #FFFFFF;background-repeat: no-repeat;background-position: right bottom;}
+#last_updated ul, #hot_video ul{margin: 5px 10px;}
+#last_updated .softblist li a{font-size:12px;}
+#last_updated .softblist li a:hover{font-size:14px;}
+#last_updated .softblist li {width:356px;}
+#last_updated .softblist li span {color: #999;}
+#last_updated .softblist li span.today {color: #666;}
+#last_updated a.type, .index_downrank a.type {color: #999;}
+#last_updated a.type:hover, .index_downrank a.type:hover {color: #f60;text-decoration: underline;}
+#hot_down{float: right;width:260px;height:370px;margin: 5px 0 0 0;border: 1px #E8CA78 solid;}
+
+#hot_video {text-align:center;}
+#hot_down h2, .index_downrank h2 , #hot_video h2 , .index_downrank .ltitle , #hot_down .ltitle{background: #FEF9EB;color: #8F5400;border-bottom: 1px #F9F0C0 solid;}
+#common_tools h2 {padding: 0;text-align: center;}
+.index_downrank {float: left;border: 1px #E8CA78 solid;width: 235px;margin: 8px 0 0 0;}
+.index_downrank ul {margin: 5px 10px;}
+.index_gamelist {float: left;margin: 8px 0 0 8px;width: 361px;border: 1px #88D3E3 solid;}
+.index_gamelist ul {margin: 5px 10px;}
+.index_gamelist li {width:320px;}
+#num_index{margin-top:8px;height:30px;line-height:30px;}
+#num_index,#friendlink {width:978px;clear:both;margin:8px 0 0 0;border:1px #E8CA78 solid;background:#f7f7f7;text-align:left;}
+#comlink {float:left;}
+#num_index span{float:right;padding-right:6px;}
+#friendlink {border:1px #88D3E3 solid;background:#fff;width:978px;padding-bottom:1px;}
+#friendlink ul {padding-left:1px;display:inline;margin:8px;}
+#friendlink li {width: 99px;float: left;text-align: center;height:20px;overflow:hidden;}
+#friendlink li a {display:block;color: #666;width:100%;height:100%;}
+#friendlink li a:hover {color: #06c;text-decoration:none;}
+#friendlink img {margin:1px; border:1px solid #333;}
+.softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
+.narutolist2 {margin:0 auto;padding:0; line-height:20px;height:105px;border-top:1px solid #d0d0d0;text-align:center;zoom:1;clear:left;clear:both}
+.narutolist2 ul {margin:0;padding:0;height:120px;width:250px;zoom:1;float:left;margin-left:5px;}
+.narutolist2 li{margin:0;padding:0;width:113px;height:105px;overflow:hidden;text-align:center;margin:7px 0 2px 10px;overflow:hidden;float:left;_margin-left:5px;_margin-bottom:0;}
+.narutolist2 li img {border:1px solid #888;display:block;margin-bottom:6px;width:103px;height:75px; *padding:3px; *border:1px solid #eee; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;box-shadow: inset 0 -1px 0 #3333sf;-webkit-box-shadow: inset 0 -1px 0 #3333sf;-webkit-transition: 0.4s;-webkit-transition: -webkit-transform 0.4s ease-out;transition: transform 0.4s ease-out;-moz-transition: -moz-transform 0.4s ease-out;}
+.narutolist2 img,.narutolist2 img:hover{-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;-ms-animation-fill-mode:both;-o-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-duration:0s;-moz-animation-duration:0s;-ms-animation-duration:0s;-o-animation-duration:0s;animation-duration:0s;-webkit-animation-duration:.7s;-moz-animation-duration:.7s;-ms-animation-duration:.7s;-o-animation-duration:.7s;animation-duration:.7s}
+@-webkit-keyframes pulse{0%{-webkit-transform:scale(1)}50%{-webkit-transform:scale(1.1)}100%{-webkit-transform:scale(1)}}
+@-moz-keyframes pulse{0%{-moz-transform:scale(1)}50%{-moz-transform:scale(1.1)}100%{-moz-transform:scale(1)}}
+@-o-keyframes pulse{0%{-o-transform:scale(1)}50%{-o-transform:scale(1.1)}100%{-o-transform:scale(1)}}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.narutolist2 img:hover{-webkit-animation-name:pulse;-moz-animation-name:pulse;-o-animation-name:pulse;animation-name:pulse}
+#gameList li img , #indexgameList img {border:1px solid #666;display:block;width:140px;height:110px;}
+#indexgameList li{float:left;width:150px;height:120px;text-align:center;margin:5px 8px;padding-left:8px;}
+#newspic img {border:1px solid #666;display:block;width:560px;height:400px;}
+#narutoList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden;}
+#narutoList li img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #eee; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
+#narutoList li a:hover img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
+#indexcartoonList {margin:0;padding:0;}
+#indexcartoonList li {float:left;width:126px;height:188px;text-align:center;margin:5px 4px;padding-left:2px;}
+#indexcartoonList li img ,°°#cartoonList li img {border:1px solid #d0d0d0;padding:3px;width:120px;height:160px;}
+#indexcartoonList li img ,°°#cartoonList li img a{border:1px solid #d0d0d0;padding:3px;}
+#indexcartoonList li a:hover img{border:1px solid #069;padding:3px;}
+#cartoonList{width:888px;}
+#cartoonList li{float:left;width:128px;height:190px;text-align:center;margin:5px 8px;}
+#naruto_desk,.naruto_desk{border: 1px #88D3E3 solid;float: left;clear: both;margin:5px 0;width: 978px; height:168px;}
+#kof_desk h2,#naruto_desk h2{padding: 0;text-align: center;}
+#newsgg{float:left;margin:18px 2px 2px 12px;}
+#desktop img{width:800px;height:600px;cursor:pointer;}
+#cartoon-List {float:left; width:320px;}
+#cartoon-List li {height:22px;line-height:22px;overflow:hidden;white-space:normal;padding-left:15px; margin-left:6px;width:320px;background:url('http://www.narutom.com/images/li_bg3.gif') no-repeat left 7px;}
+/* new style */
+li{list-style-type:none; }
+.Ncontainer{width:980px; margin:0 auto;background:#fff;}
+.Ncontainer2{width:980px; margin:0 auto;background:#fff;}
+.BOLD, BOLD a{ font-weight:700;}
+.red, .red a, .red a:visited, .red hover{ color:#CA2A00;}
+.blue{ color:#1C1CFA; font-size:14px}
+
+#Head{ height:78px; text-align:left;width:980px;overfolw:hidden;clear:both;}
+#narutologo{ width:206px; height:78px; background:url(http://www.narutom.com/img/logo.gif) no-repeat bottom; float:left}
+#narutologo h1{ display:none;}
+#narutologo img{ float:left; margin-left:8px;}
+#narutologo span{ float:left; margin:60px 0 0 60px;}
+#topbanner{height:68px;width:600px;margin-top:10px;float:right;text-align:left;margin-right:10px;}
+#Narutonav{ height:25px; background:url(http://www.narutom.com/img/nav_b.gif) no-repeat bottom;margin-top:10px;}
+#Narutonav li{ width:108px; height:25px; float:left;}
+#Narutonav span{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(http://www.narutom.com/img/nav_on.gif) no-repeat;}
+#Narutonav a, #Narutonav a:visited{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(http://www.narutom.com/img/nav.gif) no-repeat;font-size:14px;color:#069;}
+#Narutonav a:hover{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(http://www.narutom.com/img/nav_over.gif) no-repeat; text-decoration:none;color:green;}
+#Ntop{ height:28px;width:980px; border-bottom:#CAD8D8 1px solid;background: url(http://www.narutom.com/img/top_bg.jpg); text-align:left;margin-bottom:10px;}
+#Ntop2{ height:28px;width:960px; border-bottom:#CAD8D8 1px solid;background: url(http://www.narutom.com/img/top_bg.jpg); text-align:left;margin-bottom:10px;}
+#Ntop a {margin:0 5px;}
+.listMenu { height:28px;line-height:28px;margin-left:10px;text-align:left;}
+#Ntop .Nleft{ width:8px; height:28px; background: url(http://www.narutom.com/img/top_l.jpg); float:left;}
+.dmga {float:right; margin:10px;}
+#bal{width:720px;height:90px;margin:0 auto;padding:0;margin-top:10px;margin-bottom:5px;overfolw:hidden;}
+#indexcomic{ width:290px; height:285px;text-align:left;}
+.comicbox{ width:290px;height:72px;margin-top:8px;display:block;float:left;margin-left:5px;overflow:hidden;}
+.comicimg { width:145px; float:left; }
+.comicimg img { border:1px solid #333;}
+.comictext {float:left;width:130px;margin-left:2px;padding-left:0;overflow:hidden;}
+.comictext li {overflow:hidden;height:18px;line-height:20px;}
+#cotitle {font-weight:bold; margin:6px 0;font-size:14px;color:#666;}
+.codam{height:76px;margin-top:16px;margin-bottom:6px;}
+.counts{display:;}
+.tg1{width:900px;height:0px;overflow:hidden;}
+.tg2{width:900px;padding-top:1px;margin-top:20px;margin-bottom:20px;border:1px #ccc solid;}
+.vtg2{width:960px;height:60px;padding-top:1px;margin-top:20px;margin-bottom:20px;border:1px #ccc solid;overflow:hidden;}
+.ita{width:900px;text-align:left;margin-top:5px;margin-bottom:1px;}
+.ita2{width:900px;text-align:left;margin-top:6px;margin-bottom:2px;display:table;clear:both;over-flow:hidden;padding-top:10px;}
+.ls{ height:0px; overflow:hidden; clear:both; border-bottom:1px #999 dashed;}
+.mt10{margin-top:10px;}.mt20{margin-top:20px;}
+.mb10{margin-bottom:10px;}
+.listmh {width:660px;}
+.listmh li {	list-style:none;line-height:2.0em;float:left;width:300px;margin-left:18px;}
+.listnav {width:660px;height:30px;padding:10px 0 10px 30px;text-align:left;float:left;}
+.listnav a {font-size:16px;font-weight:bold;color:red}
+#hotDMList{margin:3px 5px 0 5px;height:280px;text-align:center;}
+#hotDMList li {width:82px;height:90px;float:left;margin:3px 2px 0 5px;text-align:center;}
+#hotDMList li img {margin-top:3px; *padding:1px; *border:1px solid #eee; -webkit-border-radius:6px;border:1px solid #eee;/* Webkit browsers */border-radius:6px;border:1px solid #eee;box-shadow: inset 0 -1px 0 #3333sf;-webkit-box-shadow: inset 0 -1px 0 #3333sf;-webkit-transition: 0.4s;-webkit-transition: -webkit-transform 0.4s ease-out;transition: transform 0.4s ease-out;-moz-transition: -moz-transform 0.4s ease-out;}
+#hotDMList li img:hover{box-shadow: 0 0 10px #fff; rgba(255,255,255,.6), inset 0 0 20px;rgba(255,255,255,1);-webkit-box-shadow: 0 0 10px #fff; rgba(255,255,255,.6), inset 0 0 20pxrgba(255,255,255,1);transform: rotateZ(360deg);-webkit-transform: rotateZ(360deg);-moz-transform: rotateZ(360deg);}
+#hotDMList li a:hover img {margin-top:3px; *padding:1px; *border:1px solid #069; -webkit-border-radius:6px;border:1px solid #069;/* Webkit browsers */border-radius:6px;border:1px solid #069;}
+#hotDMList p{text-align:center;line-height:20px;}
+#hotDMList li A {color:green;}
+.index_downrank .ltitle span.curPos ,,.index_gamelist .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;}
+.index_downrank .ltitle span ,.index_gamelist .ltitle span{margin-left:10px;height:18px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;float:right;}
+#recommend_down .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;}
+#recommend_down .ltitle span {margin-left:10px;border:1px solid #555;background:#fff;height:18px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;}
+#footer {margin:8px 0 0 0;border-top:3px #FFF3AD solid;background:#676767;color:#fff;}
+#footer p {text-align:center;}
+#footer a {color:#fff;text-decoration:underline;}
+#footer a:hover {color:#F0F8FF;text-decoration:none;}
+.lines {margin:auto;width:980px;height:1px;margin-top:1px;border-bottom:1px solid dotted;clear: both;}
+#tipmsg{width:980px;margin:auto;}
+a{color:202020;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;}
+a:hover,a:visited:hover{text-shadow:#585858 0px 0px 3px;}
+.dmnew{height:150px; line-height:30px; overflow:hidden;}
+.dmnew a{float:left; color:green; margin-left:18px; border-bottom:1px dashed #e5e5e5; height:28px; white-space:nowrap;}
+.dmnew a:hover{color:#4e8000; text-decoration:none;}
+.dmnew a strong{color:#ff3c00;}
+.isea{text-align:center;width:280px;height:40px;margin:auto;border-top:1px solid #d0d0d0;clear:both;font-size:14px;vertical-align:middle;padding-top:10px;margin-top:5px;}
+.isea input {font:12px "Œ¢»Ì—≈∫⁄","ÀŒÃÂ",Verdana,Arial,sans-serif,"Times New Roman";}
+.bar{font-weight:bold;background:url(img/bg_line.png) repeat-x 0 -33px;height:30px;padding-left:10px;border-bottom:1px solid #d0d0d0}
+.reminderTab{height:28px}.reminderTab span{display:inline-block;cursor:pointer;width:36px;text-align:center;border-right:1px solid #FC6;border-bottom:1px solid #FC6;line-height:25px;height:25px;background-color:#FFC;color:#666}.reminderTab span.last{border-right:0}.reminderTab span.on{border-bottom:1px solid #FFF;color:#F00;font-weight:bold;width:36px;background-color:#FFF}
+.reminderContent{width:247px;margin:0 auto;height:133px;}
+.reminderContent ul{display:none;margin:0;padding:0;}
+.reminderContent li{float:left;width:100px;overflow:hidden;height:25px;line-height:25px;margin:0;border-bottom:1px dashed #f0f0f0;background:url(img/bg_main.png) no-repeat -365px -57px;padding-left:11px;_display:inline}
+.reminderContent li a{color:green;}
+.bdshare{margin:auto;width:100%;height:45px;text-align:center;margin-top:10px;border-top:1px solid #d0d0d0;}
+.ml8{margin-left:8px;margin-top:8px;_margin-top:0;}
+#indexcartoonList img,#indexcartoonList:hover{-webkit-animation-fill-mode: both;-moz-animation-fill-mode: both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration: 0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration: 0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;}
+@-webkit-keyframes swing {20%, 40%, 60%, 80%, 100% { -webkit-transform-origin: top center; }20% { -webkit-transform: rotate(15deg);}40%{-webkit-transform: rotate(-10deg);}60%{-webkit-transform: rotate(5deg);}80%{-webkit-transform: rotate(-5deg);}100%{-webkit-transform: rotate(0deg);}}
+@-moz-keyframes swing {20% { -moz-transform: rotate(15deg); }40% { -moz-transform: rotate(-10deg); }60% { -moz-transform: rotate(5deg); }80% { -moz-transform: rotate(-5deg); }100% { -moz-transform: rotate(0deg);}}
+@-o-keyframes swing {20% { -o-transform: rotate(15deg);}40%{-o-transform: rotate(-10deg);}60%{-o-transform: rotate(5deg);}80%{-o-transform: rotate(-5deg);}100%{-o-transform: rotate(0deg);}}
+@keyframes swing {20%{ transform: rotate(15deg);}40% { transform: rotate(-10deg);}60%{transform: rotate(5deg);}80%{transform: rotate(-5deg);}100%{transform: rotate(0deg);}}
+#indexcartoonList img:hover{-webkit-transform-origin: top center;-moz-transform-origin: top center;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name: swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;}
+.itabg{width:980px;height:90px;border:1px solid #d0d0d0;clear: both;display:inline;overflow:hidden;}
+.bd2 {margin:10px 0;}
