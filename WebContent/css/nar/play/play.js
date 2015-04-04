@@ -57,39 +57,44 @@ player.lighter = {
         })
     }
 };
-var _w = '100%';
-var _h = 480;
-var _flv = _VideoSrc();
-var _path = '';
-function plays() {
-	if(_video.indexOf("$")!=-1)
-		_src = _flv+"?v=" + _video.split("$")[0];
-	else
-		_src = _flv+"?v=" + _video;
-	setTimeout(function() {$("#hy_float").remove()},6000);
-	if(_source == '') {
-		if(_video.length>20)
-			_path = _video;
-		else {
-			_path = "http://static.youku.com/v1.0.0112/v/swf/qplayer.swf?VideoIDS="+_video;
-		}
-		document.write('<embed src="'+_path+'" type="application/x-shockwave-flash" allowscriptaccess="always" flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;" allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>')
-	}else {
-		document.write('<iframe src="'+_src+'" id="naruto_v" name="naruto_v" frameborder="0" width='+_w+' height='+_h+' scrolling="no" class="vborder"></iframe>');
-	}
-}
+
+
+//var _w = '100%';
+//var _h = 480;
+//var _flv = _VideoSrc();
+//var _path = '';
+//function plays() {
+//	if(_video.indexOf("$")!=-1)
+//		_src = _flv+"?v=" + _video.split("$")[0];
+//	else
+//		_src = _flv+"?v=" + _video;
+//	setTimeout(function() {$("#hy_float").remove()},6000);
+//	if(_source == '') {
+//		if(_video.length>20)
+//			_path = _video;
+//		else {
+//			_path = "http://static.youku.com/v1.0.0112/v/swf/qplayer.swf?VideoIDS="+_video;
+//		}
+//		document.write('<embed src="'+_path+'" type="application/x-shockwave-flash" allowscriptaccess="always" flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;" allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>')
+//	}else {
+//		document.write('<iframe src="'+_src+'" id="naruto_v" name="naruto_v" frameborder="0" width='+_w+' height='+_h+' scrolling="no" class="vborder"></iframe>');
+//	}
+//}
+
 function setWid(n) {
 	if(n==1){$("#setwid").text('窄屏');$("#vright").hide();$("#vleft").width("980px");$("#player").width("980px");$("#setwid").html("<a href=\"javascript:void(0);\" onclick=\"javascript:setWid(0);\" class=\"setwid\" id=\"witer\">窄屏</a>");}else {$("#setwid").text('宽屏');$("#vright").show();$("#setwid").attr("href","javascript:setWid(1);");$("#vleft").width("720px");$("#player").width("720px");$("#setwid").html("<a href=\"javascript:void(0);\" onclick=\"javascript:setWid(1);\" class=\"setwid\" id=\"witer\">宽屏</a>");}
 }
-function _vshare() {
-	document.writeln('<!-- Baidu Button BEGIN --><div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_qzone"></a><a class="bds_tsina"></a><a class="bds_tqq"></a><a class="bds_renren"></a><a class="bds_tqf"></a><a class="bds_qq"></a><a class="bds_baidu"></a><a class="bds_douban"></a><a class="bds_copy"></a><span class="bds_more">更多</span><a class="shareCount"></a></div>');
-	document.writeln('<!-- Baidu Button END -->');
-	document.writeln('<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=616638" ><\/script><script type="text/javascript" id="bdshell_js"><\/script>');
-	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
-}
-function _VideoSrc() {
-	return (_source == '') ? '/v3/js/flv.html' : '/v3/player/'+_source+'.html';
-}
+
+//function _vshare() {
+//	document.writeln('<!-- Baidu Button BEGIN --><div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare"><a class="bds_qzone"></a><a class="bds_tsina"></a><a class="bds_tqq"></a><a class="bds_renren"></a><a class="bds_tqf"></a><a class="bds_qq"></a><a class="bds_baidu"></a><a class="bds_douban"></a><a class="bds_copy"></a><span class="bds_more">更多</span><a class="shareCount"></a></div>');
+//	document.writeln('<!-- Baidu Button END -->');
+//	document.writeln('<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=616638" ><\/script><script type="text/javascript" id="bdshell_js"><\/script>');
+//	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+//}
+
+//function _VideoSrc() {
+//	return (_source == '') ? '/v3/js/flv.html' : '/v3/player/'+_source+'.html';
+//}
 // hym
 var hyms = new Array();
 var hym = {

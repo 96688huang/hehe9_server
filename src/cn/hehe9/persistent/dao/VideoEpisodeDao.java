@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.hehe9.common.utils.ListUtil;
 import cn.hehe9.persistent.entity.VideoEpisode;
 import cn.hehe9.persistent.mapper.VideoEpisodeMapper;
 
@@ -46,7 +47,7 @@ public class VideoEpisodeDao {
 	public List<VideoEpisode> findBy(Integer videoId, int page, int queryCount, Integer... episodeNos) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("videoId", videoId);
-		params.put("episodeNos", episodeNos);
+		params.put("episodeNos", ListUtil.asList(episodeNos));
 		params.put("offset", (page - 1) * queryCount);
 		params.put("count", queryCount);
 		List<VideoEpisode> result = videoEpisodeMapper.findBy(params);
