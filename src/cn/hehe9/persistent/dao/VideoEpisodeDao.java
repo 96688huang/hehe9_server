@@ -59,4 +59,10 @@ public class VideoEpisodeDao {
 	public int udpate(VideoEpisode ve) {
 		return videoEpisodeMapper.updateByPrimaryKeySelective(ve);
 	}
+
+	public Integer countBy(Integer videoId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("videoId", videoId);
+		return videoEpisodeMapper.countBy(params);
+	}
 }

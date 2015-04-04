@@ -197,4 +197,8 @@
 		order by episode_no desc
 		limit #{offset}, #{count}
 	</select>
+	
+	<select id="countBy" parameterType="map" resultType="INTEGER">
+		select count(1) from video_episode where video_id = #{videoId}
+	</select>
 </mapper>

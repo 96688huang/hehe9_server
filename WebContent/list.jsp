@@ -1,21 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<TITLE>º£ÔôÍõÔÚÏß¹Û¿´ - »ðÓ°ÈÌÕßÖÐÎÄÍø</TITLE>
-<meta name="keywords" content="º£ÔôÍõÔÚÏß¹Û¿´-»ðÓ°ÈÌÕßÖÐÎÄÍø">
-<meta name="description" content="º£ÔôÍõÔÚÏß¹Û¿´-»ðÓ°ÈÌÕßÖÐÎÄÍø">
-<link rel="stylesheet"
-	href="E:\workspace_luna\9Game\hehe9\WebContent\css\nar\list\index2.css"
-	media="all" type="text/css">
-	<link rel="stylesheet"
-		href="E:\workspace_luna\9Game\hehe9\WebContent\css\nar\list\bdsstyle.css"
-		type="text/css">
+<base href="<%=basePath%>">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>updating</title>
+<!-- æ–° Bootstrap æ ¸å¿ƒ CSS æ–‡ä»¶ -->
+
+<!-- å¯é€‰çš„Bootstrapä¸»é¢˜æ–‡ä»¶ï¼ˆä¸€èˆ¬ä¸ç”¨å¼•å…¥ï¼‰ -->
+<!-- <link rel="stylesheet"
+href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
+
+<!-- jQueryæ–‡ä»¶ã€‚åŠ¡å¿…åœ¨bootstrap.min.js ä¹‹å‰å¼•å…¥ -->
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+<!-- æœ€æ–°çš„ Bootstrap æ ¸å¿ƒ JavaScript æ–‡ä»¶ -->
+<!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+
+<link rel="stylesheet" href="./css/nar/list/index2.css" media="all"
+	type="text/css">
+<link rel="stylesheet" href="./css/nar/index/bdsstyle.css"
+	type="text/css">
 </head>
 <body>
 	<div id="Head" class="Ncontainer2">
 		<div id="narutologo">
-			<span class="red BOLD"><a href="http://www.narutom.com/">»ðÓ°ÈÌÕßÖÐÎÄÍø</a></span>
+			<span class="red BOLD"><a href="http://www.narutom.com/">ç«å½±å¿è€…ä¸­æ–‡ç½‘</a></span>
 		</div>
 		<div id="topbanner">
 			<script type="text/javascript">
@@ -25,78 +41,78 @@
 	</div>
 	<div id="Narutonav" class="Ncontainer2">
 		<ul>
-			<li><a href="http://www.narutom.com/"><span>Ê× Ò³</span></a></li>
+			<li><a href="http://www.narutom.com/"><span>é¦– é¡µ</span></a></li>
 			<li><a href="http://www.narutom.com/comic/"
-				onmouseover="showMenu(1)">»ðÓ°ÈÌÕß</a></li>
+				onmouseover="showMenu(1)">ç«å½±å¿è€…</a></li>
 			<li><a href="http://www.narutom.com/bleach/"
-				onmouseover="showMenu(2)" title="ËÀÉñ">ËÀÉñ</a></li>
+				onmouseover="showMenu(2)" title="æ­»ç¥ž">æ­»ç¥ž</a></li>
 			<li><a href="http://www.narutom.com/onepiece/"
-				onmouseover="showMenu(3)" title="º£ÔôÍõ">º£ÔôÍõ</a></li>
+				onmouseover="showMenu(3)" title="æµ·è´¼çŽ‹">æµ·è´¼çŽ‹</a></li>
 			<li><a href="http://www.narutom.com/fairytail/"
-				onmouseover="showMenu(5)" title="Ñý¾«µÄÎ²°Í">Ñý¾«µÄÎ²°Í</a></li>
+				onmouseover="showMenu(5)" title="å¦–ç²¾çš„å°¾å·´">å¦–ç²¾çš„å°¾å·´</a></li>
 			<li><a href="http://www.narutom.com/cartoon/"
-				onmouseover="showMenu(4)">ÔÚÏß¶¯Âþ</a></li>
-			<li><a href="http://bbs.narutom.com/" target="_blank">»ðÓ°ÂÛÌ³</a></li>
+				onmouseover="showMenu(4)">åœ¨çº¿åŠ¨æ¼«</a></li>
+			<li><a href="http://bbs.narutom.com/" target="_blank">ç«å½±è®ºå›</a></li>
 		</ul>
 	</div>
 	<div id="Ntop2" class="Ncontainer2">
 		<div class="Nleft"></div>
 		<div id="narutolist1" class="listMenu" style="display: ''">
-			<a href="http://www.narutom.com/news/" title="¶¯ÂþÐÂÎÅ,×îÐÂµÄ»ðÓ°ËÀÉñµÈ¶¯ÂþÇé±¨">¶¯ÂþÐÂÎÅ</a>
-			| <a href="http://www.narutom.com/comic/" title="»ðÓ°ÈÌÕßÂþ»­">»ðÓ°Âþ»­</a> | <a
-				href="http://www.narutom.com/video/" title="»ðÓ°ÈÌÕß¶¯»­">»ðÓ°¶¯»­</a> | <a
-				href="http://www.narutom.com/naruto-juchangban/" title="»ðÓ°ÈÌÕß¾ç³¡°æ">»ðÓ°¾ç³¡°æ</a>
-			| <a href="http://www.narutom.com/mv/" title="»ðÓ°ÈÌÕßMV">»ðÓ°ÈÌÕßMV</a> | <a
-				href="http://www.narutom.com/juqingfenxi/" title="»ðÓ°ÈÌÕß¾çÇé·ÖÎö">»ðÓ°¾çÇé·ÖÎö</a>
-			| <a href="http://www.narutom.com/article/" title="»ðÓ°ÈÌÕßÎÄÕÂ">»ðÓ°ÎÄÕÂ</a> |
-			<a href="http://www.narutom.com/pic/" title="»ðÓ°ÈÌÕßÍ¼¿â">»ðÓ°Í¼¿â</a> | <a
-				href="http://www.narutom.com/wallpaper/" title="»ðÓ°ÈÌÕß±ÚÖ½">»ðÓ°±ÚÖ½</a> | <a
-				href="http://www.narutom.com/flash/" title="»ðÓ°ÈÌÕßFlash">»ðÓ°Flash</a> |
-			<a href="http://www.narutom.com/dengchang/" title="»ðÓ°ÈÌÕß×ÊÁÏ">»ðÓ°×ÊÁÏ</a>
+			<a href="http://www.narutom.com/news/" title="åŠ¨æ¼«æ–°é—»,æœ€æ–°çš„ç«å½±æ­»ç¥žç­‰åŠ¨æ¼«æƒ…æŠ¥">åŠ¨æ¼«æ–°é—»</a>
+			| <a href="http://www.narutom.com/comic/" title="ç«å½±å¿è€…æ¼«ç”»">ç«å½±æ¼«ç”»</a> | <a
+				href="http://www.narutom.com/video/" title="ç«å½±å¿è€…åŠ¨ç”»">ç«å½±åŠ¨ç”»</a> | <a
+				href="http://www.narutom.com/naruto-juchangban/" title="ç«å½±å¿è€…å‰§åœºç‰ˆ">ç«å½±å‰§åœºç‰ˆ</a>
+			| <a href="http://www.narutom.com/mv/" title="ç«å½±å¿è€…MV">ç«å½±å¿è€…MV</a> | <a
+				href="http://www.narutom.com/juqingfenxi/" title="ç«å½±å¿è€…å‰§æƒ…åˆ†æž">ç«å½±å‰§æƒ…åˆ†æž</a>
+			| <a href="http://www.narutom.com/article/" title="ç«å½±å¿è€…æ–‡ç« ">ç«å½±æ–‡ç« </a> |
+			<a href="http://www.narutom.com/pic/" title="ç«å½±å¿è€…å›¾åº“">ç«å½±å›¾åº“</a> | <a
+				href="http://www.narutom.com/wallpaper/" title="ç«å½±å¿è€…å£çº¸">ç«å½±å£çº¸</a> | <a
+				href="http://www.narutom.com/flash/" title="ç«å½±å¿è€…Flash">ç«å½±Flash</a> |
+			<a href="http://www.narutom.com/dengchang/" title="ç«å½±å¿è€…èµ„æ–™">ç«å½±èµ„æ–™</a>
 		</div>
 		<div id="narutolist2" class="listMenu" style="display: none;">
-			<a href="http://www.narutom.com/bleach/manhua/" title="ËÀÉñÂþ»­">ËÀÉñÂþ»­</a>
-			| <a href="http://www.narutom.com/bleach/video/" title="ËÀÉñÔÚÏß¹Û¿´">ËÀÉñÔÚÏß¹Û¿´</a>
-			| <a href="http://www.narutom.com/juchangban/bleach/" title="ËÀÉñ¾ç³¡°æ">ËÀÉñ¾ç³¡°æ</a>
+			<a href="http://www.narutom.com/bleach/manhua/" title="æ­»ç¥žæ¼«ç”»">æ­»ç¥žæ¼«ç”»</a>
+			| <a href="http://www.narutom.com/bleach/video/" title="æ­»ç¥žåœ¨çº¿è§‚çœ‹">æ­»ç¥žåœ¨çº¿è§‚çœ‹</a>
+			| <a href="http://www.narutom.com/juchangban/bleach/" title="æ­»ç¥žå‰§åœºç‰ˆ">æ­»ç¥žå‰§åœºç‰ˆ</a>
 		</div>
 		<div id="narutolist3" class="listMenu" style="display: none;">
-			<a href="http://www.narutom.com/onepiece/manhua/" title="º£ÔôÍõÂþ»­">º£ÔôÍõÂþ»­</a>
-			| <a href="http://www.narutom.com/onepiece/video/" title="º£ÔôÍõÔÚÏß¹Û¿´">º£ÔôÍõÔÚÏß¹Û¿´</a>
+			<a href="http://www.narutom.com/onepiece/manhua/" title="æµ·è´¼çŽ‹æ¼«ç”»">æµ·è´¼çŽ‹æ¼«ç”»</a>
+			| <a href="http://www.narutom.com/onepiece/video/" title="æµ·è´¼çŽ‹åœ¨çº¿è§‚çœ‹">æµ·è´¼çŽ‹åœ¨çº¿è§‚çœ‹</a>
 			| <a href="http://www.narutom.com/juchangban/onepiece/"
-				title="º£ÔôÍõ¾ç³¡°æ">º£ÔôÍõ¾ç³¡°æ</a>
+				title="æµ·è´¼çŽ‹å‰§åœºç‰ˆ">æµ·è´¼çŽ‹å‰§åœºç‰ˆ</a>
 		</div>
 		<div id="narutolist5" class="listMenu" style="display: none;">
-			<a href="http://www.narutom.com/fairytail/manhua/" title="Ñý¾«µÄÎ²°ÍÂþ»­">Ñý¾«µÄÎ²°ÍÂþ»­</a>
-			| <a href="http://www.narutom.com/fairytail/v/" title="Ñý¾«µÄÎ²°ÍÔÚÏß¹Û¿´">Ñý¾«µÄÎ²°ÍÔÚÏß¹Û¿´</a>
+			<a href="http://www.narutom.com/fairytail/manhua/" title="å¦–ç²¾çš„å°¾å·´æ¼«ç”»">å¦–ç²¾çš„å°¾å·´æ¼«ç”»</a>
+			| <a href="http://www.narutom.com/fairytail/v/" title="å¦–ç²¾çš„å°¾å·´åœ¨çº¿è§‚çœ‹">å¦–ç²¾çš„å°¾å·´åœ¨çº¿è§‚çœ‹</a>
 		</div>
 		<div id="narutolist4" class="listMenu" style="display: none;">
-			<a href="http://www.narutom.com/cartoon/conan/" title="ÃûÕìÌ½¿ÂÄÏ"
-				target="_blank">ÃûÕìÌ½¿ÂÄÏ</a> | <a
-				href="http://www.narutom.com/cartoon/quanzhilieren/" title="È«Ö°ÁÔÈËÖØÖÆ°æ"
-				target="_blank">ÐÂÈ«Ö°ÁÔÈË</a> | <a
-				href="http://www.narutom.com/cartoon/seiya-omega/" title="Ê¥¶·Ê¿ÐÇÊ¸¦¸"
-				target="_blank">Ê¥¶·Ê¿ÐÇÊ¸¦¸</a> | <a
-				href="http://www.narutom.com/cartoon/yinhun/" title="Òø»ê"
-				target="_blank">Òø»ê</a> | <a
-				href="http://www.narutom.com/cartoon/anmei2/" title="ÎÒµÄÃÃÃÃÄÄÓÐÕâÃ´¿É°®µÚ¶þ¼¾"
-				target="_blank">ÎÒµÄÃÃÃÃÄÄÓÐÕâÃ´¿É°®µÚ¶þ¼¾</a> | <a
-				href="http://www.narutom.com/cartoon/xialan/" title="ÏÀá°È«¼¯£¬¶¯»­Æ¬ÏÀá°ÔÚÏß¹Û¿´"
-				target="_blank">ÏÀá°</a> | <a
+			<a href="http://www.narutom.com/cartoon/conan/" title="åä¾¦æŽ¢æŸ¯å—"
+				target="_blank">åä¾¦æŽ¢æŸ¯å—</a> | <a
+				href="http://www.narutom.com/cartoon/quanzhilieren/" title="å…¨èŒçŒŽäººé‡åˆ¶ç‰ˆ"
+				target="_blank">æ–°å…¨èŒçŒŽäºº</a> | <a
+				href="http://www.narutom.com/cartoon/seiya-omega/" title="åœ£æ–—å£«æ˜ŸçŸ¢Î©"
+				target="_blank">åœ£æ–—å£«æ˜ŸçŸ¢Î©</a> | <a
+				href="http://www.narutom.com/cartoon/yinhun/" title="é“¶é­‚"
+				target="_blank">é“¶é­‚</a> | <a
+				href="http://www.narutom.com/cartoon/anmei2/" title="æˆ‘çš„å¦¹å¦¹å“ªæœ‰è¿™ä¹ˆå¯çˆ±ç¬¬äºŒå­£"
+				target="_blank">æˆ‘çš„å¦¹å¦¹å“ªæœ‰è¿™ä¹ˆå¯çˆ±ç¬¬äºŒå­£</a> | <a
+				href="http://www.narutom.com/cartoon/xialan/" title="ä¾ å²šå…¨é›†ï¼ŒåŠ¨ç”»ç‰‡ä¾ å²šåœ¨çº¿è§‚çœ‹"
+				target="_blank">ä¾ å²š</a> | <a
 				href="http://www.narutom.com/cartoon/diancipaos/"
-				title="Ä³¿ÆÑ§µÄ³¬µç´ÅÅÚSÔÚÏß¹Û¿´" target="_blank">Ä³¿ÆÑ§µÄ³¬µç´ÅÅÚS</a> | <a
-				href="http://www.narutom.com/cartoon/xiaolirenchuan/" title="Ð¡ÀîÈÌ´«"
-				target="_blank">Ð¡ÀîÈÌ´«</a> | <a href="http://www.narutom.com/cartoon/"
-				title="¸ü¶à¶¯Âþ" target="_blank">¸ü¶à¶¯Âþ</a>
+				title="æŸç§‘å­¦çš„è¶…ç”µç£ç‚®Såœ¨çº¿è§‚çœ‹" target="_blank">æŸç§‘å­¦çš„è¶…ç”µç£ç‚®S</a> | <a
+				href="http://www.narutom.com/cartoon/xiaolirenchuan/" title="å°æŽå¿ä¼ "
+				target="_blank">å°æŽå¿ä¼ </a> | <a href="http://www.narutom.com/cartoon/"
+				title="æ›´å¤šåŠ¨æ¼«" target="_blank">æ›´å¤šåŠ¨æ¼«</a>
 		</div>
 	</div>
 	<div class="wrap2 clearfix">
 		<div id="nav">
 			<p>
-				<label>ÄúµÄÎ»ÖÃ: <!--empire.url--> <a
-					href="http://www.narutom.com/" class="classlinkclass">Ê×Ò³</a>&nbsp;>&nbsp;<a
-					href="http://www.narutom.com/onepiece/" class="classlinkclass">º£ÔôÍõ</a>&nbsp;>&nbsp;<a
+				<label>æ‚¨çš„ä½ç½®: <!--empire.url--> <a
+					href="http://www.narutom.com/" class="classlinkclass">é¦–é¡µ</a>&nbsp;>&nbsp;<a
+					href="http://www.narutom.com/onepiece/" class="classlinkclass">æµ·è´¼çŽ‹</a>&nbsp;>&nbsp;<a
 					href="http://www.narutom.com/onepiece/video/"
-					class="classlinkclass">º£ÔôÍõÔÚÏß¹Û¿´</a>&nbsp;><!--empire.url--></label><span><script
+					class="classlinkclass">æµ·è´¼çŽ‹åœ¨çº¿è§‚çœ‹</a>&nbsp;><!--empire.url--></label><span><script
 						src="/style/nav.js"></script></span>
 			</p>
 		</div>
@@ -108,376 +124,118 @@
 		<div id="container2" class="clearfix">
 			<div id="content2">
 				<div class="listitem">
-					<h1>º£ÔôÍõÔÚÏß¹Û¿´</h1>
+					<h1>${video.name}åœ¨çº¿è§‚çœ‹</h1>
 					<ul id="narutoList">
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/27171.html"
-							title="º£ÔôÍõµÚ683¼¯¡¸´óµØÃù¶¯ ÆÆ»µÉñ¾Þ´óÅý¿¨½µÁÙ!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ683¼¯¡¸´óµØÃù¶¯ ÆÆ»µÉñ¾Þ´óÅý¿¨½µÁÙ!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2015-03-01/2b44232364fd90d3ba349e9c3920347b.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/27171.html"
-							title="º£ÔôÍõµÚ683¼¯¡¸´óµØÃù¶¯ ÆÆ»µÉñ¾Þ´óÅý¿¨½µÁÙ!¡¹" target="_blank">º£ÔôÍõµÚ683¼¯¡¸´óµØÃù¶¯
-								ÆÆ»µÉñ¾Þ´óÅý¿¨½µÁÙ!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/27062.html"
-							title="º£ÔôÍõµÚ682¼¯¡¸Í»ÆÆµÐÕó Â··ÉË÷Â¡¿ªÊ¼·´»÷!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ682¼¯¡¸Í»ÆÆµÐÕó Â··ÉË÷Â¡¿ªÊ¼·´»÷!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2015-02-15/189f3a400852bb518f037714d419b074.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/27062.html"
-							title="º£ÔôÍõµÚ682¼¯¡¸Í»ÆÆµÐÕó Â··ÉË÷Â¡¿ªÊ¼·´»÷!¡¹" target="_blank">º£ÔôÍõµÚ682¼¯¡¸Í»ÆÆµÐÕó
-								Â··ÉË÷Â¡¿ªÊ¼·´»÷!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/27000.html"
-							title="º£ÔôÍõµÚ681¼¯¡¸¼ÛÖµ5ÒÚµÄÄÐÈË ±»Ãé×¼µÄÎÚË÷À¼µÂ!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ681¼¯¡¸¼ÛÖµ5ÒÚµÄÄÐÈË ±»Ãé×¼µÄÎÚË÷À¼µÂ!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2015-02-08/011a57ddd9afd34807b6048787fe711b.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/27000.html"
-							title="º£ÔôÍõµÚ681¼¯¡¸¼ÛÖµ5ÒÚµÄÄÐÈË ±»Ãé×¼µÄÎÚË÷À¼µÂ!¡¹" target="_blank">º£ÔôÍõµÚ681¼¯¡¸¼ÛÖµ5ÒÚµÄÄÐÈË
-								±»Ãé×¼µÄÎÚË÷À¼µÂ!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26936.html"
-							title="º£ÔôÍõµÚ680¼¯¡¸¶ñÄ§µÄÏÝÚå!µÂÀ×Ë¹ÂÞÈø¼ßÃðÕ½!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ680¼¯¡¸¶ñÄ§µÄÏÝÚå!µÂÀ×Ë¹ÂÞÈø¼ßÃðÕ½!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2015-02-01/b237c715ec36e8b1d9a4de0d946dcb13.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26936.html"
-							title="º£ÔôÍõµÚ680¼¯¡¸¶ñÄ§µÄÏÝÚå!µÂÀ×Ë¹ÂÞÈø¼ßÃðÕ½!¡¹" target="_blank">º£ÔôÍõµÚ680¼¯¡¸¶ñÄ§µÄÏÝÚå!µÂÀ×Ë¹ÂÞÈø¼ßÃðÕ½!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26874.html"
-							title="º£ÔôÍõµÚ679¼¯¡¸ìªË¬µÇ³¡!¸ïÃü¾ü×Ü²ÎÄ±³¤Èø²©?¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ679¼¯¡¸ìªË¬µÇ³¡!¸ïÃü¾ü×Ü²ÎÄ±³¤Èø²©?¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2015-01-25/d3bf4e9ff0913019c9983d48fd337bf4.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26874.html"
-							title="º£ÔôÍõµÚ679¼¯¡¸ìªË¬µÇ³¡!¸ïÃü¾ü×Ü²ÎÄ±³¤Èø²©?¡¹" target="_blank">º£ÔôÍõµÚ679¼¯¡¸ìªË¬µÇ³¡!¸ïÃü¾ü×Ü²ÎÄ±³¤Èø²©?¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26805.html"
-							title="º£ÔôÍõµÚ678¼¯¡¸»ðÈ­Õ¨ÁÑ!ÉÕÉÕ¹ûÊµµÄÁ¦Á¿¸´»î?¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ678¼¯¡¸»ðÈ­Õ¨ÁÑ!ÉÕÉÕ¹ûÊµµÄÁ¦Á¿¸´»î?¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2015-01-18/b34c0aadc33998dbf749076397007d76.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26805.html"
-							title="º£ÔôÍõµÚ678¼¯¡¸»ðÈ­Õ¨ÁÑ!ÉÕÉÕ¹ûÊµµÄÁ¦Á¿¸´»î?¡¹" target="_blank">º£ÔôÍõµÚ678¼¯¡¸»ðÈ­Õ¨ÁÑ!ÉÕÉÕ¹ûÊµµÄÁ¦Á¿¸´»î?¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26666.html"
-							title="º£ÔôÍõµÚ677¼¯¡¸´«Ëµ¸´»î!¾ÓÂ³Ê¿È«Á¦Ò»»÷?¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ677¼¯¡¸´«Ëµ¸´»î!¾ÓÂ³Ê¿È«Á¦Ò»»÷?¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2015-01-04/fb3e61ede9c62e8fbdbc24db4254f9bd.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26666.html"
-							title="º£ÔôÍõµÚ677¼¯¡¸´«Ëµ¸´»î!¾ÓÂ³Ê¿È«Á¦Ò»»÷?¡¹" target="_blank">º£ÔôÍõµÚ677¼¯¡¸´«Ëµ¸´»î!¾ÓÂ³Ê¿È«Á¦Ò»»÷?¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26608.html"
-							title="º£ÔôÍõµÚ676¼¯¡¸×÷Õ½Ê§°Ü!Ó¢ÐÛÎÚË÷À¼¶ÈÕ½ËÀ?¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ676¼¯¡¸×÷Õ½Ê§°Ü!Ó¢ÐÛÎÚË÷À¼¶ÈÕ½ËÀ?¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-12-28/40139d28d9829dbbd608e62dadef30cc.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26608.html"
-							title="º£ÔôÍõµÚ676¼¯¡¸×÷Õ½Ê§°Ü!Ó¢ÐÛÎÚË÷À¼¶ÈÕ½ËÀ?¡¹" target="_blank">º£ÔôÍõµÚ676¼¯¡¸×÷Õ½Ê§°Ü!Ó¢ÐÛÎÚË÷À¼¶ÈÕ½ËÀ?¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26548.html"
-							title="º£ÔôÍõµÚ675¼¯¡¸ÃüÔË°ãµÄåâåË ¾ÓÂ³Ê¿ÓëÀû¿âÍõ!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ675¼¯¡¸ÃüÔË°ãµÄåâåË ¾ÓÂ³Ê¿ÓëÀû¿âÍõ!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-12-21/72586c255d1f5a1d292d7447e9543dd0.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26548.html"
-							title="º£ÔôÍõµÚ675¼¯¡¸ÃüÔË°ãµÄåâåË ¾ÓÂ³Ê¿ÓëÀû¿âÍõ!¡¹" target="_blank">º£ÔôÍõµÚ675¼¯¡¸ÃüÔË°ãµÄåâåË
-								¾ÓÂ³Ê¿ÓëÀû¿âÍõ!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26481.html"
-							title="º£ÔôÍõµÚ674¼¯¡¸Æ­×ÓÎÚË÷À¼µÂÌÓÅÜÖÐ!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ674¼¯¡¸Æ­×ÓÎÚË÷À¼µÂÌÓÅÜÖÐ!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-12-14/9fa829f8cc44e9eef45f148560eee627.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26481.html"
-							title="º£ÔôÍõµÚ674¼¯¡¸Æ­×ÓÎÚË÷À¼µÂÌÓÅÜÖÐ!¡¹" target="_blank">º£ÔôÍõµÚ674¼¯¡¸Æ­×ÓÎÚË÷À¼µÂÌÓÅÜÖÐ!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26424.html"
-							title="º£ÔôÍõµÚ673¼¯¡¸Õ¨µ¯ÈË ¹ÅÀ­µÏÎÚË¹´ó±¬Õ¨!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ673¼¯¡¸Õ¨µ¯ÈË ¹ÅÀ­µÏÎÚË¹´ó±¬Õ¨!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-12-07/5f2b11b925d23fcc2672fbb1981c9ae6.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26424.html"
-							title="º£ÔôÍõµÚ673¼¯¡¸Õ¨µ¯ÈË ¹ÅÀ­µÏÎÚË¹´ó±¬Õ¨!¡¹" target="_blank">º£ÔôÍõµÚ673¼¯¡¸Õ¨µ¯ÈË
-								¹ÅÀ­µÏÎÚË¹´ó±¬Õ¨!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26353.html"
-							title="º£ÔôÍõµÚ672¼¯¡¸×îºóµÄÊï¹â ÎÒÃÇ¶Ó³¤µÄÃØÃÜ!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ672¼¯¡¸×îºóµÄÊï¹â ÎÒÃÇ¶Ó³¤µÄÃØÃÜ!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-11-30/eea9fc2936a36564819b9b0d51f1ca7f.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26353.html"
-							title="º£ÔôÍõµÚ672¼¯¡¸×îºóµÄÊï¹â ÎÒÃÇ¶Ó³¤µÄÃØÃÜ!¡¹" target="_blank">º£ÔôÍõµÚ672¼¯¡¸×îºóµÄÊï¹â
-								ÎÒÃÇ¶Ó³¤µÄÃØÃÜ!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26283.html"
-							title="º£ÔôÍõµÚ671¼¯¡¸´òµ¹É°ÌÇ Ð¡ÈË¾ü¶ÓµÄÍ»»÷!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ671¼¯¡¸´òµ¹É°ÌÇ Ð¡ÈË¾ü¶ÓµÄÍ»»÷!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-11-23/2f0ee9432232076cb9af4249f6963cb4.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26283.html"
-							title="º£ÔôÍõµÚ671¼¯¡¸´òµ¹É°ÌÇ Ð¡ÈË¾ü¶ÓµÄÍ»»÷!¡¹" target="_blank">º£ÔôÍõµÚ671¼¯¡¸´òµ¹É°ÌÇ
-								Ð¡ÈË¾ü¶ÓµÄÍ»»÷!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26206.html"
-							title="º£ÔôÍõµÚ670¼¯¡¸ÁúÖ®×¦Õ¨ÁÑ!Â·Î÷¼«¾ßÍþÐ²µÄÒ»»÷!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ670¼¯¡¸ÁúÖ®×¦Õ¨ÁÑ!Â·Î÷¼«¾ßÍþÐ²µÄÒ»»÷!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-11-16/13181d61bb0253204a0103d80d398ad9.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26206.html"
-							title="º£ÔôÍõµÚ670¼¯¡¸ÁúÖ®×¦Õ¨ÁÑ!Â·Î÷¼«¾ßÍþÐ²µÄÒ»»÷!¡¹" target="_blank">º£ÔôÍõµÚ670¼¯¡¸ÁúÖ®×¦Õ¨ÁÑ!Â·Î÷¼«¾ßÍþÐ²µÄÒ»»÷!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26144.html"
-							title="º£ÔôÍõµÚ669¼¯¡¸»á¶¯µÄ³ÇÈû ×î¸ß¸É²¿Åý¿¨µÇ³¡!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ669¼¯¡¸»á¶¯µÄ³ÇÈû ×î¸ß¸É²¿Åý¿¨µÇ³¡!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-11-09/f19bd01300582e6697bdcd58c14204cc.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26144.html"
-							title="º£ÔôÍõµÚ669¼¯¡¸»á¶¯µÄ³ÇÈû ×î¸ß¸É²¿Åý¿¨µÇ³¡!¡¹" target="_blank">º£ÔôÍõµÚ669¼¯¡¸»á¶¯µÄ³ÇÈû
-								×î¸ß¸É²¿Åý¿¨µÇ³¡!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26073.html"
-							title="º£ÔôÍõµÚ668¼¯¡¸¾öÕ½¿ªÊ¼ Ó¢ÐÛµÏÑÇÂüµÙµÇ³¡!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ668¼¯¡¸¾öÕ½¿ªÊ¼ Ó¢ÐÛµÏÑÇÂüµÙµÇ³¡!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-11-02/398b6988cce0568c6e4f4118090b85a2.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26073.html"
-							title="º£ÔôÍõµÚ668¼¯¡¸¾öÕ½¿ªÊ¼ Ó¢ÐÛµÏÑÇÂüµÙµÇ³¡!¡¹" target="_blank">º£ÔôÍõµÚ668¼¯¡¸¾öÕ½¿ªÊ¼
-								Ó¢ÐÛµÏÑÇÂüµÙµÇ³¡!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/26008.html"
-							title="º£ÔôÍõµÚ667¼¯¡¸´ó½«¶Ô¾ö ÌÙ»¢VS¶à¸¥ÀÊÃ÷¸ç!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ667¼¯¡¸´ó½«¶Ô¾ö ÌÙ»¢VS¶à¸¥ÀÊÃ÷¸ç!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-10-26/57f8e8f3e260bb8cc40d951072e56a55.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/26008.html"
-							title="º£ÔôÍõµÚ667¼¯¡¸´ó½«¶Ô¾ö ÌÙ»¢VS¶à¸¥ÀÊÃ÷¸ç!¡¹" target="_blank">º£ÔôÍõµÚ667¼¯¡¸´ó½«¶Ô¾ö
-								ÌÙ»¢VS¶à¸¥ÀÊÃ÷¸ç!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/25935.html"
-							title="º£ÔôÍõµÚ666¼¯¡¸Ê¤×é¾ö¶¨ D×éÈÃÈËÕð¾ªµÄ½á¹û!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ666¼¯¡¸Ê¤×é¾ö¶¨ D×éÈÃÈËÕð¾ªµÄ½á¹û!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-10-19/d7c0c5a8f0995f7f15daa55a1810a1eb.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/25935.html"
-							title="º£ÔôÍõµÚ666¼¯¡¸Ê¤×é¾ö¶¨ D×éÈÃÈËÕð¾ªµÄ½á¹û!¡¹" target="_blank">º£ÔôÍõµÚ666¼¯¡¸Ê¤×é¾ö¶¨
-								D×éÈÃÈËÕð¾ªµÄ½á¹û!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/25854.html"
-							title="º£ÔôÍõµÚ665¼¯¡¸ÖËÈÈµÄË¼Äî ÀÙ±´¿¨VSË¹À³Âü!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ665¼¯¡¸ÖËÈÈµÄË¼Äî ÀÙ±´¿¨VSË¹À³Âü!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-10-12/9eb2b2efba0e13acba133d40eb50e389.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/25854.html"
-							title="º£ÔôÍõµÚ665¼¯¡¸ÖËÈÈµÄË¼Äî ÀÙ±´¿¨VSË¹À³Âü!¡¹" target="_blank">º£ÔôÍõµÚ665¼¯¡¸ÖËÈÈµÄË¼Äî
-								ÀÙ±´¿¨VSË¹À³Âü!¡¹</a></li>
-
-
-						<li><a
-							href="http://www.narutom.com/onepiece/video/25759.html"
-							title="º£ÔôÍõµÚ664¼¯¡¸SOP×÷Õ½¿ªÊ¼ ÎÚË÷À¼µÂÍ»»÷!¡¹" target="_blank"><img
-								alt="º£ÔôÍõµÚ664¼¯¡¸SOP×÷Õ½¿ªÊ¼ ÎÚË÷À¼µÂÍ»»÷!¡¹"
-								src="http://www.narutom.com/d/file/onepiece/video/2014-10-05/6ada779cea1cfc40281a69c8d499eb81.jpg" /></a><a
-							href="http://www.narutom.com/onepiece/video/25759.html"
-							title="º£ÔôÍõµÚ664¼¯¡¸SOP×÷Õ½¿ªÊ¼ ÎÚË÷À¼µÂÍ»»÷!¡¹" target="_blank">º£ÔôÍõµÚ664¼¯¡¸SOP×÷Õ½¿ªÊ¼
-								ÎÚË÷À¼µÂÍ»»÷!¡¹</a></li>
-
-
+						<s:iterator value="episodeList" var="episode">
+							<li><a href=""
+								title="${video.name}&nbsp;ç¬¬${episode.episodeNo}é›†<s:if
+											test="title != null">ã€Œ${episode.title}ã€</s:if>"
+								target="_blank"><img
+									alt="${video.name}&nbsp;ç¬¬${episode.episodeNo}é›†<s:if
+											test="title != null">ã€Œ${episode.title}ã€</s:if>"
+									src="${episode.snapshotUrl}" /></a><a href=""
+								title="${video.name}&nbsp;ç¬¬${episode.episodeNo}é›†<s:if
+											test="title != null">ã€Œ${episode.title}ã€</s:if>"
+								target="_blank">ç¬¬${episode.episodeNo}é›†<s:if
+										test="title != null">ã€Œ${episode.title}ã€</s:if></a></li>
+						</s:iterator>
 					</ul>
 				</div>
 				<div class="rblank"></div>
 				<div class="pagenav">
-					·ÖÒ³£ºÒ³´Î£º<b>1/35</b>&nbsp;Ã¿Ò³<b>20</b>&nbsp;×ÜÊý<b>686</b>&nbsp;&nbsp;&nbsp;&nbsp;Ê×Ò³&nbsp;&nbsp;ÉÏÒ»Ò³&nbsp;&nbsp;<a
-						href='http://www.narutom.com/onepiece/video/index_2.html'>ÏÂÒ»Ò³</a>&nbsp;&nbsp;<a
-						href='http://www.narutom.com/onepiece/video/index_35.html'>Î²Ò³</a>&nbsp;&nbsp;&nbsp;&nbsp;×ªµ½:<select
-						name=select
-						onchange="self.location.href=this.options[this.selectedIndex].value"><option
-							value='http://www.narutom.com/onepiece/video/index.html' selected>µÚ
-							1 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_2.html'>µÚ
-							2 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_3.html'>µÚ
-							3 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_4.html'>µÚ
-							4 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_5.html'>µÚ
-							5 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_6.html'>µÚ
-							6 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_7.html'>µÚ
-							7 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_8.html'>µÚ
-							8 Ò³</option>
-						<option value='http://www.narutom.com/onepiece/video/index_9.html'>µÚ
-							9 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_10.html'>µÚ
-							10 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_11.html'>µÚ
-							11 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_12.html'>µÚ
-							12 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_13.html'>µÚ
-							13 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_14.html'>µÚ
-							14 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_15.html'>µÚ
-							15 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_16.html'>µÚ
-							16 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_17.html'>µÚ
-							17 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_18.html'>µÚ
-							18 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_19.html'>µÚ
-							19 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_20.html'>µÚ
-							20 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_21.html'>µÚ
-							21 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_22.html'>µÚ
-							22 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_23.html'>µÚ
-							23 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_24.html'>µÚ
-							24 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_25.html'>µÚ
-							25 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_26.html'>µÚ
-							26 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_27.html'>µÚ
-							27 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_28.html'>µÚ
-							28 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_29.html'>µÚ
-							29 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_30.html'>µÚ
-							30 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_31.html'>µÚ
-							31 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_32.html'>µÚ
-							32 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_33.html'>µÚ
-							33 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_34.html'>µÚ
-							34 Ò³</option>
-						<option
-							value='http://www.narutom.com/onepiece/video/index_35.html'>µÚ
-							35 Ò³</option></select>
+					åˆ†é¡µï¼šé¡µæ¬¡ï¼š<b>${page}/${pageCount }</b>&nbsp;æ¯é¡µ<b>${queryCount }</b>&nbsp;æ€»æ•°<b>${total }</b>&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="./video/episodeAction!list?videoId=${video.id}&page=1">é¦–é¡µ</a>&nbsp;&nbsp;<a
+						href="./video/episodeAction!list?videoId=${video.id}&page=${page -1}">ä¸Šä¸€é¡µ</a>&nbsp;&nbsp;<a
+						href="./video/episodeAction!list?videoId=${video.id}&page=${page +1}">ä¸‹ä¸€é¡µ</a>&nbsp;&nbsp;<a
+						href="./video/episodeAction!list?videoId=${video.id}&page=${pageCount}">å°¾é¡µ</a>&nbsp;&nbsp;
+						&nbsp;&nbsp;è½¬åˆ°:&nbsp;&nbsp;&nbsp;&nbsp; 
+					<select name=select
+						onchange="self.location.href=this.options[this.selectedIndex].value">
+						<!-- é¡µç  -->
+						<s:bean name="org.apache.struts2.util.Counter" var="counter">
+							<s:param name="first" value="1" />
+							<s:param name="last" value="pageCount" />
+							<s:iterator>
+								<option id="${current-1 }"
+									value="./video/episodeAction!list?videoId=${video.id}&page=<s:property value="current-1" />">
+									ç¬¬<s:property value="current-1" />é¡µ
+								</option>
+							</s:iterator>
+						</s:bean>
+					</select>
+					<!-- è¿˜åŽŸé€‰ä¸­é¡µç  -->
+					<script type="text/javascript">
+						$("#${page}").attr("selected", true);
+					</script>
 				</div>
 			</div>
 			<div id="sidebar">
 				<div id="menunav" class="clearfix">
-					<div class="ltitle">±¾Õ¾º£ÔôÎ¢ÐÅ¹«ÖÚºÅ</div>
+					<div class="ltitle">æœ¬ç«™æµ·è´¼å¾®ä¿¡å…¬ä¼—å·</div>
 					<ul id="comiczt">
 						<div style="width: 180px; padding-left: 10px;">
-							<img src="/v3/wxop.jpg" /><BR>´ò¿ªÎ¢ÐÅÉ¨Ò»É¨£¬<br>¹Ø×¢±¾Õ¾¹«ÖÚºÅ£¬ÊÖ»úÎ¢ÐÅÖ±½Ó¿´¶¯»­Âþ»­£¡
+							<img src="/v3/wxop.jpg" /><BR>æ‰“å¼€å¾®ä¿¡æ‰«ä¸€æ‰«ï¼Œ<br>å…³æ³¨æœ¬ç«™å…¬ä¼—å·ï¼Œæ‰‹æœºå¾®ä¿¡ç›´æŽ¥çœ‹åŠ¨ç”»æ¼«ç”»ï¼
 						</div>
 					</ul>
 				</div>
 				<div class="blank"></div>
 
 				<div class="sidebarad">
-					<div class="ltitle">¸üÐÂ</div>
+					<div class="ltitle">æ›´æ–°</div>
 					<ul class="softolist">
 						<li><a href="http://www.narutom.com/comic/26113.html"
-							target="_blank" title="»ðÓ°ÈÌÕß×îÖÕ»°¡¸äöÎÐÃùÈË!¡¹">»ðÓ°ÈÌÕß×îÖÕ»°¡¸äöÎÐÃùÈË!¡¹</a></li>
+							target="_blank" title="ç«å½±å¿è€…æœ€ç»ˆè¯ã€Œæ¼©æ¶¡é¸£äºº!ã€">ç«å½±å¿è€…æœ€ç»ˆè¯ã€Œæ¼©æ¶¡é¸£äºº!ã€</a></li>
 						<li><a href="http://www.narutom.com/video/27197.html"
-							target="_blank" title="»ðÓ°ÈÌÕß622¼¯¡¸ÌÓ×ßVS×Ù¼£!¡¹"><font
-								color="#FF0000">»ðÓ°ÈÌÕß622¼¯¡¸ÌÓ×ßVS×Ù¼£!¡¹</font></a></li>
+							target="_blank" title="ç«å½±å¿è€…622é›†ã€Œé€ƒèµ°VSè¸ªè¿¹!ã€"><font
+								color="#FF0000">ç«å½±å¿è€…622é›†ã€Œé€ƒèµ°VSè¸ªè¿¹!ã€</font></a></li>
 						<li><a href="http://www.narutom.com/news/27204.html"
-							target="_blank" title="¶¯»­¡¸Î±Áµ:¡¹4ÔÂ10ÈÕÊ×²¥ ÐÂ½ÇÉ«¹«¿ªÉùÓÅÕÓ²Ö°®ÃÀ¼ÓÃË">¶¯»­¡¸Î±Áµ:¡¹4ÔÂ10ÈÕÊ×²¥
-								ÐÂ½Ç</a></li>
+							target="_blank" title="åŠ¨ç”»ã€Œä¼ªæ‹:ã€4æœˆ10æ—¥é¦–æ’­ æ–°è§’è‰²å…¬å¼€å£°ä¼˜æ²¼ä»“çˆ±ç¾ŽåŠ ç›Ÿ">åŠ¨ç”»ã€Œä¼ªæ‹:ã€4æœˆ10æ—¥é¦–æ’­
+								æ–°è§’</a></li>
 						<li><a href="http://www.narutom.com/juqingfenxi/27055.html"
-							target="_blank" title="FD·ÖÎö×é|·ÇÖ÷Á÷·ÖÎö - ²é¿ËÀ­ ">FD·ÖÎö×é|·ÇÖ÷Á÷·ÖÎö - ²é¿ËÀ­</a></li>
+							target="_blank" title="FDåˆ†æžç»„|éžä¸»æµåˆ†æž - æŸ¥å…‹æ‹‰ ">FDåˆ†æžç»„|éžä¸»æµåˆ†æž - æŸ¥å…‹æ‹‰</a></li>
 						<li><a
 							href="http://www.narutom.com/onepiece/video/27171.html"
-							target="_blank" title="º£ÔôÍõµÚ683¼¯¡¸´óµØÃù¶¯ ÆÆ»µÉñ¾Þ´óÅý¿¨½µÁÙ!¡¹">º£ÔôÍõµÚ683¼¯¡¸´óµØÃù¶¯
-								ÆÆ»µ</a></li>
+							target="_blank" title="æµ·è´¼çŽ‹ç¬¬683é›†ã€Œå¤§åœ°é¸£åŠ¨ ç ´åç¥žå·¨å¤§çµå¡é™ä¸´!ã€">æµ·è´¼çŽ‹ç¬¬683é›†ã€Œå¤§åœ°é¸£åŠ¨
+								ç ´å</a></li>
 						<li><a href="http://www.narutom.com/bleach/video/14765.html"
-							target="_blank" title="ËÀÉñµÚ366¼¯¡¸±ä»¯µÄÀúÊ·!²»±äµÄÐÄÁé!!¡¹[Íê½á]"><font
-								color="#5C44BB">ËÀÉñµÚ366¼¯¡¸±ä»¯µÄÀúÊ·!²»±ä</font></a></li>
+							target="_blank" title="æ­»ç¥žç¬¬366é›†ã€Œå˜åŒ–çš„åŽ†å²!ä¸å˜çš„å¿ƒçµ!!ã€[å®Œç»“]"><font
+								color="#5C44BB">æ­»ç¥žç¬¬366é›†ã€Œå˜åŒ–çš„åŽ†å²!ä¸å˜</font></a></li>
 						<li><a href="http://www.narutom.com/tongren/27036.html"
-							target="_blank" title="UZUMAKI NARUTO »­Ò³È«¼¯!">UZUMAKI NARUTO
-								»­Ò³È«¼¯!</a></li>
+							target="_blank" title="UZUMAKI NARUTO ç”»é¡µå…¨é›†!">UZUMAKI NARUTO
+								ç”»é¡µå…¨é›†!</a></li>
 						<li><a href="http://www.narutom.com/tongren/27030.html"
-							target="_blank" title="»ðÓ°ÈÌÕß×ôÖúÐ´ÂÖÑÛ´«µÚ3»°!">»ðÓ°ÈÌÕß×ôÖúÐ´ÂÖÑÛ´«µÚ3»°!</a></li>
+							target="_blank" title="ç«å½±å¿è€…ä½åŠ©å†™è½®çœ¼ä¼ ç¬¬3è¯!">ç«å½±å¿è€…ä½åŠ©å†™è½®çœ¼ä¼ ç¬¬3è¯!</a></li>
 						<li><a href="http://www.narutom.com/tongren/27029.html"
-							target="_blank" title="»ðÓ°ÈÌÕß×ôÖúÐ´ÂÖÑÛ´«µÚ2»°!">»ðÓ°ÈÌÕß×ôÖúÐ´ÂÖÑÛ´«µÚ2»°!</a></li>
+							target="_blank" title="ç«å½±å¿è€…ä½åŠ©å†™è½®çœ¼ä¼ ç¬¬2è¯!">ç«å½±å¿è€…ä½åŠ©å†™è½®çœ¼ä¼ ç¬¬2è¯!</a></li>
 					</ul>
 				</div>
 				<div class="blank"></div>
 				<div id="list_recommendation" class="clearfix">
-					<div class="ltitle">ÈÈÃÅ</div>
+					<div class="ltitle">çƒ­é—¨</div>
 					<ul class="softolist">
 						<li><a href="http://www.narutom.com/tongren/8343.html"
-							target="_blank" title="»ðÓ°ÈÌÕßÍâ´«-»ÆÉ«ÉÁ¹â">»ðÓ°ÈÌÕßÍâ´«-»ÆÉ«ÉÁ¹â</a></li>
+							target="_blank" title="ç«å½±å¿è€…å¤–ä¼ -é»„è‰²é—ªå…‰">ç«å½±å¿è€…å¤–ä¼ -é»„è‰²é—ªå…‰</a></li>
 						<li><a
 							href="http://www.narutom.com/article/huoyingrenzhexiaozuzhi.html"
-							target="_blank" title="»ðÓ°ÈÌÕßÏþ×éÖ¯È«×ÊÁÏ">»ðÓ°ÈÌÕßÏþ×éÖ¯È«×ÊÁÏ</a></li>
+							target="_blank" title="ç«å½±å¿è€…æ™“ç»„ç»‡å…¨èµ„æ–™">ç«å½±å¿è€…æ™“ç»„ç»‡å…¨èµ„æ–™</a></li>
 						<li><a href="http://www.narutom.com/tongren/8334.html"
-							target="_blank" title="ËÄ´ú·âÓ¡¾ÅÎ²(Í¬ÈËÂþ»­)">ËÄ´ú·âÓ¡¾ÅÎ²(Í¬ÈËÂþ»­)</a></li>
+							target="_blank" title="å››ä»£å°å°ä¹å°¾(åŒäººæ¼«ç”»)">å››ä»£å°å°ä¹å°¾(åŒäººæ¼«ç”»)</a></li>
 						<li><a href="http://www.narutom.com/tongren/8340.html"
-							target="_blank" title="»ðÓ°ÈÌÕßÍ¬ÈË£º´óÉßÍèvs÷ø">»ðÓ°ÈÌÕßÍ¬ÈË£º´óÉßÍèvs÷ø</a></li>
+							target="_blank" title="ç«å½±å¿è€…åŒäººï¼šå¤§è›‡ä¸¸vsé¼¬">ç«å½±å¿è€…åŒäººï¼šå¤§è›‡ä¸¸vsé¼¬</a></li>
 						<li><a href="http://www.narutom.com/video/8470.html"
-							target="_blank" title="»ðÓ°ÈÌÕß298-299¼¯¡¸°¢Ë¹ÂêÕ½ËÀ£¡¾øÍûºÍâú¿Þ¡¹">»ðÓ°ÈÌÕß298-299¼¯¡¸°¢Ë¹ÂêÕ½ËÀ</a></li>
+							target="_blank" title="ç«å½±å¿è€…298-299é›†ã€Œé˜¿æ–¯çŽ›æˆ˜æ­»ï¼ç»æœ›å’Œæ¸å“­ã€">ç«å½±å¿è€…298-299é›†ã€Œé˜¿æ–¯çŽ›æˆ˜æ­»</a></li>
 						<li><a href="http://www.narutom.com/video/8417.html"
-							target="_blank" title="»ðÓ°ÈÌÕß295¼¯¡¸ÀÏÉ®µÄÆíµ»¡¹">»ðÓ°ÈÌÕß295¼¯¡¸ÀÏÉ®µÄÆíµ»¡¹</a></li>
+							target="_blank" title="ç«å½±å¿è€…295é›†ã€Œè€åƒ§çš„ç¥ˆç¥·ã€">ç«å½±å¿è€…295é›†ã€Œè€åƒ§çš„ç¥ˆç¥·ã€</a></li>
 						<li><a
 							href="http://www.narutom.com/article/dashewan-qingren.html"
-							target="_blank" title="´óÉßÍèµîµÄÊ®´óç³ÎÅÇéÈË">´óÉßÍèµîµÄÊ®´óç³ÎÅÇéÈË</a></li>
+							target="_blank" title="å¤§è›‡ä¸¸æ®¿çš„åå¤§ç»¯é—»æƒ…äºº">å¤§è›‡ä¸¸æ®¿çš„åå¤§ç»¯é—»æƒ…äºº</a></li>
 						<li><a href="http://www.narutom.com/video/8455.html"
-							target="_blank" title="»ðÓ°ÈÌÕß296-297¼¯¡¸ÏþVS°¢Ë¹Âê°à¾öÕ½ÌØ±ðÆª¡¹">»ðÓ°ÈÌÕß296-297¼¯¡¸ÏþVS°¢Ë¹Âê</a></li>
+							target="_blank" title="ç«å½±å¿è€…296-297é›†ã€Œæ™“VSé˜¿æ–¯çŽ›ç­å†³æˆ˜ç‰¹åˆ«ç¯‡ã€">ç«å½±å¿è€…296-297é›†ã€Œæ™“VSé˜¿æ–¯çŽ›</a></li>
 						<li><a
 							href="http://www.narutom.com/pic/naruto_pic/huoyingsige-xiao.html"
-							target="_blank" title="»ðÓ°ËÄ¸ñ£ºÏþµÄ¸ãÐ¦Éú»î">»ðÓ°ËÄ¸ñ£ºÏþµÄ¸ãÐ¦Éú»î</a></li>
+							target="_blank" title="ç«å½±å››æ ¼ï¼šæ™“çš„æžç¬‘ç”Ÿæ´»">ç«å½±å››æ ¼ï¼šæ™“çš„æžç¬‘ç”Ÿæ´»</a></li>
 						<li><a href="http://www.narutom.com/video/8353.html"
-							target="_blank" title="»ðÓ°ÈÌÕß292¼¯¡¸À´×ÔÈÌÕßµÄÍþÐ²¡¹">»ðÓ°ÈÌÕß292¼¯¡¸À´×ÔÈÌÕßµÄÍþÐ²</a></li>
+							target="_blank" title="ç«å½±å¿è€…292é›†ã€Œæ¥è‡ªå¿è€…çš„å¨èƒã€">ç«å½±å¿è€…292é›†ã€Œæ¥è‡ªå¿è€…çš„å¨èƒ</a></li>
 					</ul>
 				</div>
 
@@ -485,6 +243,9 @@
 		</div>
 		<div class="line"></div>
 	</div>
+	<!-- é¡µè„š -->
+	<jsp:include page="footer.html" />
+
 	<div class="wrap2 vtg3">
 		<script type="text/javascript">
 			hym.show(2);

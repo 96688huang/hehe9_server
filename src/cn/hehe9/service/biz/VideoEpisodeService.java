@@ -18,4 +18,8 @@ public class VideoEpisodeService {
 	public List<VideoEpisode> list(Integer videoId, int page, int pageCount) {
 		return videoEpisodeDao.findEpisodesBy(videoId, page, pageCount);
 	}
+
+	public Integer count(Integer videoId) {
+		return videoEpisodeDao.countBy(videoId);
+	}
 }

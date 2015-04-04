@@ -26,8 +26,11 @@
 			</result>
 			<result name="toMain">/main.jsp</result>
 		</action>
-<!-- 		<action name="videoAction" class="videoAction" method="toMain">
-			<result name="toMain">/main.jsp</result>
-		</action> -->
+		<action name="episodeAction" class="videoEpisodeAction"
+			method="{1}">
+			<result name="toList">/list.jsp</result>
+		</action>
+		<!-- <action name="videoAction" class="videoAction" method="toMain"> <result 
+			name="toMain">/main.jsp</result> </action> -->
 	</package>
 </struts>    

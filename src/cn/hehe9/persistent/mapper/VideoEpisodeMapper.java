@@ -63,4 +63,12 @@ public interface VideoEpisodeMapper {
 	 * @return
 	 */
 	List<VideoEpisode> findBy(Map<String, Object> params);
+
+	/**
+	 * 根据条件, 统计记录数量
+	 *
+	 * @param params
+	 * @return
+	 */
+	Integer countBy(Map<String, Object> params);
 }

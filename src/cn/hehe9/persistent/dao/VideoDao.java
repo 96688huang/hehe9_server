@@ -77,10 +77,20 @@ public class VideoDao {
 
 	/**
 	 * 根据条件, 查询视频信息
+	 *
+	 * @param videoId	视频id
+	 * @return	视频信息
+	 */
+	public Video findById(Integer videoId) {
+		return videoMapper.selectByPrimaryKey(videoId);
+	}
+
+	/**
+	 * 根据条件, 查询视频信息
 	 * @param name
 	 * @return
 	 */
-	public List<Video> findBy(String name) {
+	public List<Video> findByName(String name) {
 		return findBriefBy(name, 1, Integer.MAX_VALUE);
 	}
 
@@ -91,7 +101,7 @@ public class VideoDao {
 	 * @param count	查询数量
 	 * @return
 	 */
-	public List<Video> findBy(String name, int page, int count) {
+	public List<Video> findByName(String name, int page, int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (StringUtils.isNotEmpty(name)) {
 			params.put("name", name);

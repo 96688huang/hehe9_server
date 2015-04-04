@@ -134,9 +134,9 @@
 				<s:iterator value="hotVideoListHolder" var="videoList">
 					<ul id="indexcartoonList">
 						<s:iterator value="videoList">
-							<li><a href="" title="${name} ${updateRemark}"
+							<li><a href="./video/episodeAction!list?videoId=${id }" title="${name} ${updateRemark}"
 								target="_blank"><img alt="${name} ${updateRemark}"
-									src="${iconUrl}"></a><a href=""
+									src="${iconUrl}"></a><a href="./video/episodeAction!list?videoId=${id }"
 								title="${name} ${updateRemark}" target="_blank"><font
 									color="#FF0000">${name}</font></a></li>
 						</s:iterator>
@@ -151,20 +151,19 @@
 					src="http://www.narutom.com/v2/v/i/key.html"></iframe>
 			</div>
 
-
 			<s:iterator value="hotEpisodeListHolder" var="episodeMap">
 				<s:iterator value="episodeMap" id="map">
 					<div class="index_downrank">
 						<div class="ltitle">
-							<span><a href="${map.key.listPageUrl}" title="${map.key.name}">更多</a></span>${map.key.name}
+							<span><a href="" title="${map.key.name}">更多</a></span>${map.key.name}
 						</div>
 						<div id="video_list_holder"></div>
 						<ul class="softolist">
 							<s:iterator value="#map.value" var="episode">
-								<li><a href="${map.key.listPageUrl}" target="_blank"
+								<li><a href="./video/episodeAction!list?videoId=${map.key.id }" target="_blank"
 									title="${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null"> &nbsp;[&nbsp;${episode.title}&nbsp;]</s:if>">${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null"> &nbsp;[&nbsp;${episode.title}&nbsp;]</s:if></a></li>
+											test="title != null">「${episode.title}」</s:if>">${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
+											test="title != null">「${episode.title}」</s:if></a></li>
 							</s:iterator>
 						</ul>
 					</div>
@@ -172,231 +171,44 @@
 			</s:iterator>
 
 			<div id="naruto_desk" style="height: 200px;">
-				<div class="ltitle">动画片大全</div>
+				<div class="ltitle">
+					<span><a href="" title="">更多</a></span>动画片大全
+				</div>
 				<div class="dmnew">
 					<s:iterator value="menuVideoList" var="menuVideo">
 						<a href="" title="${menuVideo.name}" target="_blank">${menuVideo.name}&nbsp;&nbsp;&nbsp;&nbsp;|</a>
 					</s:iterator>
-					<br/>
-					<a href="" title="" target="_blank" style="color:red;">更多=></a>
-					<!-- 
-					<a href="http://www.narutom.com/g/gaodaORIGIN/" title="高达ORIGIN"
-						target="_blank">高达ORIGIN</a><a
-						href="http://www.narutom.com/y/youxiwangzhongzhiban/"
-						title="游戏王重制版" target="_blank">游戏王重制版</a><a
-						href="http://www.narutom.com/c/chaoshenxueyuandisanji/"
-						title="超神学院第三季" target="_blank">超神学院第三季</a><a
-						href="http://www.narutom.com/j/jidongzhanshigaodaTHE%20ORIGIN/"
-						title="机动战士高达THE ORIGIN" target="_blank">机动战士高达THE ORIGIN</a><a
-						href="http://www.narutom.com/c/chunjiedemaliya/" title="纯洁的玛利亚"
-						target="_blank">纯洁的玛利亚</a><a
-						href="http://www.narutom.com/l/longzhuZfuhuodeF/" title="龙珠Z复活的F"
-						target="_blank">龙珠Z复活的F</a><a
-						href="http://www.narutom.com/ss/siwangyouxing/" title="死亡游行"
-						target="_blank">死亡游行</a><a
-						href="http://www.narutom.com/c/huangwujindefafuna/"
-						title="铳皇无尽的法夫纳" target="_blank">铳皇无尽的法夫纳</a><a
-						href="http://www.narutom.com/i/ISUCA/" title="ISUCA"
-						target="_blank">ISUCA</a><a
-						href="http://www.narutom.com/x/xinmeimowangdeqiyuezhe/"
-						title="新妹魔王的契约者" target="_blank">新妹魔王的契约者</a><a
-						href="http://www.narutom.com/m/meinangaoxiaodiqiufangweibuLOVE/"
-						title="美男高校地球防卫部LOVE" target="_blank">美男高校地球防卫部LOVE</a><a
-						href="http://www.narutom.com/x/xuanzhuanshaonv/" title="旋转少女"
-						target="_blank">旋转少女</a><a
-						href="http://www.narutom.com/z/zhanguowushuang/" title="战国无双"
-						target="_blank">战国无双</a><a
-						href="http://www.narutom.com/y/yuanqishaonvyuanjieshendierji/"
-						title="元气少女缘结神第二季" target="_blank">元气少女缘结神第二季</a><a
-						href="http://www.narutom.com/f/FALCOMxueyuandierji/"
-						title="Falcom学园第二季" target="_blank">Falcom学园第二季</a><a
-						href="http://www.narutom.com/j/jueduishuangren/" title="绝对双刃"
-						target="_blank">绝对双刃</a><a
-						href="http://www.narutom.com/z/zhentangejushaonvfuermosidisiji/"
-						title="侦探歌剧少女福尔摩斯第四季" target="_blank">侦探歌剧少女福尔摩斯第四季</a><a
-						href="http://www.narutom.com/a/anshajiaoshi/" title="暗杀教室"
-						target="_blank">暗杀教室</a><a
-						href="http://www.narutom.com/a/Aldnoah%20Zerodierji/"
-						title="Aldnoah Zero第二季" target="_blank">Aldnoah Zero第二季</a><a
-						href="http://www.narutom.com/j/jianduiCollection/"
-						title="舰队Collection" target="_blank">舰队Collection</a><a
-						href="http://www.narutom.com/dd/dongjingshishiguidierji/"
-						title="东京食尸鬼第二季" target="_blank">东京食尸鬼第二季</a><a
-						href="http://www.narutom.com/ss/shengjianshidejinzhouyongchang/"
-						title="圣剑使的禁咒咏唱" target="_blank">圣剑使的禁咒咏唱</a><a
-						href="http://www.narutom.com/ss/shaonianhaolaiwudierji/"
-						title="少年好莱坞第二季" target="_blank">少年好莱坞第二季</a><a
-						href="http://www.narutom.com/w/wutouqishiyiwenludierji/"
-						title="无头骑士异闻录第二季" target="_blank">无头骑士异闻录第二季</a><a
-						href="http://www.narutom.com/m/menghuanxiyou/" title="梦幻西游"
-						target="_blank">梦幻西游</a><a
-						href="http://www.narutom.com/c/cangdefanaEXODUS/"
-						title="苍穹的法芙娜EXODUS" target="_blank">苍穹的法芙娜EXODUS</a><a
-						href="http://www.narutom.com/y/yaoguaimingdan/" title="妖怪名单"
-						target="_blank">妖怪名单</a><a
-						href="http://www.narutom.com/dd/doubizhelianmeng/" title="逗逼者联盟"
-						target="_blank">逗逼者联盟</a><a
-						href="http://www.narutom.com/c/chongshidisanji/" title="虫师第三季"
-						target="_blank">虫师第三季</a><a
-						href="http://www.narutom.com/w/woyaochengweishuangmawei/"
-						title="我要成为双马尾" target="_blank">我要成为双马尾</a><a
-						href="http://www.narutom.com/g/guaidaoxiaochou/" title="怪盗小丑"
-						target="_blank">怪盗小丑</a><a
-						href="http://www.narutom.com/z/zuanshiwangpaidierji/"
-						title="钻石王牌第二季" target="_blank">钻石王牌第二季</a><a
-						href="http://www.narutom.com/t/tiantidezhixu/" title="天体的秩序"
-						target="_blank">天体的秩序</a><a
-						href="http://www.narutom.com/q/qiyuanzui/" title="七原罪"
-						target="_blank">七原罪</a><a
-						href="http://www.narutom.com/j/jingjiechufazhe/" title="境界触发者"
-						target="_blank">境界触发者</a><a
-						href="http://www.narutom.com/m/mingyunzhiyezhongzhiban/"
-						title="命运之夜重制版" target="_blank">命运之夜重制版</a><a
-						href="http://www.narutom.com/x/xunzhaoyishideweilai/"
-						title="寻找遗失的未来" target="_blank">寻找遗失的未来</a><a
-						href="http://www.narutom.com/z/zaoanlianweidangaodian/"
-						title="早安恋味蛋糕店" target="_blank">早安恋味蛋糕店</a><a
-						href="http://www.narutom.com/m/moshukuaidou1412/" title="魔术快斗1412"
-						target="_blank">魔术快斗1412</a><a
-						href="http://www.narutom.com/x/xiaoduiyintian/" title="笑对阴天"
-						target="_blank">笑对阴天</a><a
-						href="http://www.narutom.com/g/gaodaGzhifuguoxingdong/"
-						title="高达G之复国行动" target="_blank">高达G之复国行动</a><a
-						href="http://www.narutom.com/ss/siyueshinidehuangyan/"
-						title="四月是你的谎言" target="_blank">四月是你的谎言</a><a
-						href="http://www.narutom.com/j/jishengshou/" title="寄生兽"
-						target="_blank">寄生兽</a><a
-						href="http://www.narutom.com/g/guanjijiayikadierji/"
-						title="棺姬嘉依卡第二季" target="_blank">棺姬嘉依卡第二季</a><a
-						href="http://www.narutom.com/dd/dianqijieshangdemanhuadian/"
-						title="电器街上的漫画店" target="_blank">电器街上的漫画店</a><a
-						href="http://www.narutom.com/dd/datushuguandemuyangren/"
-						title="大图书馆的牧羊人" target="_blank">大图书馆的牧羊人</a><a
-						href="http://www.narutom.com/b/baixiang/" title="白箱"
-						target="_blank">白箱</a> -->
+					<br /> <a href="" title="" target="_blank" style="color: red;">更多=></a>
 				</div>
 			</div>
-			<div id="num_index">&nbsp;&nbsp;合作伙伴 &amp; 友情链接
-				&nbsp;&nbsp;&nbsp;(媒体合作 - veryer#gmail.com(#替换@) 欢迎PR≥5
-				日访问量&gt;10万IP的网站交换链接)</div>
-			<div id="friendlink">
-				<div style="margin: 6px;">
-					<a href="http://comic.qq.com/" target="_blank"><img
-						src="http://www.narutom.com/images/logo/qq.gif" alt="腾讯动漫"
-						border="0" width="88" height="31"></a> <a
-						href="http://game.weibo.com/" target="_blank"><img
-						src="http://www.narutom.com/images/logo/weiyouxi.gif" alt="微游戏"
-						border="0" width="88" height="31"></a> <a
-						href="http://www.dm5.com" target="_blank"><img
-						src="http://www.narutom.com/images/logo/dm5logo.gif" alt="你的我的动漫屋"
-						border="0" width="88" height="31"></a> <a
-						href="http://hao.360.cn/dongmankatong.html" target="_blank"><img
-						src="http://img.qihoo.com/images/2008/2010/dh.jpg" alt="360安全网址导航"
-						border="0" width="88" height="31"></a> <a
-						href="http://comic.zongheng.com/" target="_blank"><img
-						src="http://dx2.narutom.com/images/logo/zhlogo.gif" alt="原创动漫"
-						border="0" width="88" height="31"></a> <br> <a
-						href="http://www.narutom.com" title="火影忍者" target="_blank"><strong>火影忍者</strong></a>
-					<a href="http://www.hao123.com/cartoon.htm" title="hao123网址之家"
-						target="_blank">hao123网址之家</a> <a href="http://www.mianbao99.com/"
-						title="面包网" target="_blank">面包网</a> <a
-						href="http://game.weibo.com/" title="动漫游戏" target="_blank">动漫游戏</a>
-					<a href="http://comic.yesky.com/" title="天极动漫" target="_blank">天极动漫</a>
-					<a href="http://www.iqiyi.com/dongman/" title="爱奇艺动漫"
-						target="_blank">爱奇艺动漫</a> <a href="http://www.sasa123.com/"
-						title="日本动漫" target="_blank">日本动漫</a> <a
-						href="http://game.21cn.com/" title="单机游戏" target="_blank">单机游戏</a>
-					<a href="http://www.repian.com/" title="热片网" target="_blank">热片网</a>
-					<a href="http://www.mumayi.com/" title="木蚂蚁安卓游戏" target="_blank">木蚂蚁安卓游戏</a>
-					<a href="http://www.4399dmw.com/" title="好看的动漫" target="_blank">好看的动漫</a>
-					<a href="http://acg.178.com/" title="178动漫频道" target="_blank">178动漫频道</a>
-					<a href="http://xyx.duowan.com/ " title="在线小游戏" target="_blank">在线小游戏</a>
-					<a href="http://www.3dmgame.com" title="单机游戏" target="_blank">单机游戏</a>
-					<a href="http://www.xialv.com/" title="侠侣周边游" target="_blank">侠侣周边游</a>
-					<a href="http://pc.766.com/" title="单机游戏" target="_blank">单机游戏</a>
-					<a href="http://www.9ku.com/" title="流行歌曲大全" target="_blank">流行歌曲大全</a>
-					<a href="http://comic.letv.com/" title="乐视网动漫" target="_blank">乐视网动漫</a>
-					<a href="http://www.manmankan.com" title="火影忍者漫画" target="_blank">火影忍者漫画</a>
-					<a href="http://www.dm456.com/" title="日本动漫" target="_blank">日本动漫</a>
-					<a href="http://dnf.tgbus.com" title="地下城与勇士" target="_blank">地下城与勇士</a>
-					<a href="http://pc.tgbus.com/" title="单机游戏" target="_blank">单机游戏</a>
-					<a href="http://www.juqingba.cn/" title="分集剧情" target="_blank">分集剧情</a>
-					<a href="http://www.5068.com/" title="5068儿童网" target="_blank">5068儿童网</a>
-					<a href="http://pc.duowan.com/ " title="单机游戏下载" target="_blank">单机游戏下载</a>
-					<a href="http://www.07073.com/" title="07073游戏网" target="_blank">07073游戏网</a>
-					<a href="http://www.yue365.com/" title="365音乐网" target="_blank">365音乐网</a>
-					<a href="http://www.52tian.net/" title="动画片大全" target="_blank">动画片大全</a>
-					<a href="http://www.xxdm.com/" title="动画片大全" target="_blank">动画片大全</a>
-					<a href="http://www.imanhua.com" title="火影忍者" target="_blank">火影忍者</a>
-					<a href="http://www.tuku.cc/" title="CC漫画图库" target="_blank">CC漫画图库</a>
-					<a href="http://www.a67.com/" title="手机电影" target="_blank">手机电影</a>
-					<a href="http://www.77vcd.com/" title="琪琪影院" target="_blank">琪琪影院</a>
-					<a href="http://www.tianqi.com/" title="天气预报" target="_blank">天气预报</a>
-					<a href="http://www.61baobao.com/" title="儿歌视频大全" target="_blank">儿歌视频大全</a>
-					<a href="http://lol.tgbus.com/" title="英雄联盟" target="_blank">英雄联盟</a>
-					<a href="http://www.zhuoku.com" title="桌面壁纸" target="_blank">桌面壁纸</a>
-					<a href="http://www.youban.com/" title="儿歌视频大全" target="_blank">儿歌视频大全</a>
-					<a href="http://www.91danji.com" title="91单机游戏" target="_blank">91单机游戏</a>
-					<a href="http://www.yy8844.cn" title="音乐巴士" target="_blank">音乐巴士</a>
-					<a href="http://www.7060.la/" title="手机电影下载" target="_blank">手机电影下载</a>
-					<a href="http://www.yydm.com/" title="家庭教师" target="_blank">家庭教师</a>
-					<a href="http://www.kanshu.com/" title="小说阅读网" target="_blank">小说阅读网</a>
-					<a href="http://www.quanji.com/" title="电影下载" target="_blank">电影下载</a>
-					<a href="http://www.37.com/" title="三七玩" target="_blank">三七玩</a> <a
-						href="http://www.ik123.com/" title="dj舞曲" target="_blank">dj舞曲</a>
-					<a href="http://www.rexuedongman.com/" title="火影忍者漫画"
-						target="_blank">火影忍者漫画</a> <a href="http://www.9lala.com"
-						title="九啦啦在线漫画" target="_blank">漫画</a> <a
-						href="http://www.dj97.com" title="DJ" target="_blank">DJ</a> <a
-						href="http://www.hahadm.com/" title="哈哈动漫网" target="_blank">哈哈动漫网</a>
-					<a href="http://www.dodo8.com" title="火影忍者专题站-动动吧" target="_blank">火影忍者-动动吧</a>
-					<a href="http://www.hltm.cc/" title="" target="_blank">红旅动漫</a> <a
-						href="http://www.200dy.com/" title="200电影" target="_blank">200电影</a>
-					<a href="http://www.8090kk.com/" title="百度影音" target="_blank">百度影音</a>
-					<a href="http://www.vkeke.net/" title="百度影音" target="_blank">百度影音</a>
-					<a href="http://www.enterdesk.com/" title="桌面壁纸" target="_blank">桌面壁纸</a>
-					<a href="http://www.qqtu8.com/" title="搞笑图片" target="_blank">搞笑图片</a>
-					<a href="http://www.dududm.com/" title="动画片大全" target="_blank">动画片大全</a>
-					<a href="http://www.baidu.com/s?wd=%BB%F0%D3%B0%C8%CC%D5%DF"
-						title="火影忍者" target="_blank">火影忍者</a>
-				</div>
-			</div>
+			<!-- 友情链接 -->
+			<jsp:include page="friend_link.html" />
 		</div>
 	</div>
-	<div id="footer">
-		<p>
-			<a href="#">关于我们</a> -<a href="#">免责声明</a> - 链接合作 - 联系我们 - <a
-				href="/sitemap/">网站地图</a>
-		</p>
-		<p>
-			本站所有漫画均来自网友分享和上传，以便漫画爱好者研究漫画技巧和构图方式。若侵犯到您的权益，请立即联系我们(&#118;&#101;&#114;&#121;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;)删除。本站不负任何相关责任。<br />本站点所有微视频内容来源于土豆、优酷等,本站不参与也不提供任何视频的上传、下载,如有侵犯到您的版权,请联系我们,确认之后我们将立即删除.请支持正版,支持<a
-				href="http://www.narutom.com" title="火影忍者中文网">火影忍者中文网</a>.<br>Copyright
-			&reg; 2007-2013 <a href="http://www.narutom.com" title="火影忍者中文网"><font
-				face="Verdana, Arial, Helvetica, sans-serif"><b>Narutom<font
-						color="#CC0000">.Com</font></b></font></a>. All Rights Reserved .<a
-				href="http://www.miibeian.gov.cn/" target="_blank">苏ICP备11016708号-5</a>
-		</p>
-		<script type="text/javascript">
-			document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
-					+ Math.ceil(new Date() / 3600000)
-		</script>
-		<script type="text/javascript" src="/v2/js/yxf.js"></script>
-		<script language="javascript"
-			src="http://rwq.youle55.com/r/mr_1553_3945.js"></script>
-		<style>
+	<!-- 页脚 -->
+	<jsp:include page="footer.html" />
+
+	<script type="text/javascript">
+		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
+				+ Math.ceil(new Date() / 3600000)
+	</script>
+	<script type="text/javascript" src="/v2/js/yxf.js"></script>
+	<script language="javascript"
+		src="http://rwq.youle55.com/r/mr_1553_3945.js"></script>
+	<style>
 #cs_couplet_left, #cs_couplet_right, #cs_right_bottom, #ft_couplet_left,
 	#ft_couplet_right, #ft_right_bottom {
 	z-index: 2147483647;
 }
 </style>
-		<!--<script type="text/javascript">BAIDU_CLB_fillSlot("675989");</script>-->
-		<script type="text/javascript">
-			BAIDU_CLB_fillSlot("1045136");
-		</script>
-		<div id="BAIDU_DUP_wrapper_1045136_0"></div>
-		<script charset="utf-8"
-			src="http://cb.baidu.com/ecom?di=1045136&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=3&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.narutom.com%2F&amp;liu=&amp;ltr=&amp;lcr=&amp;ps=2486x0&amp;psr=1366x768&amp;par=1366x728&amp;pcs=1335x579&amp;pss=1335x2486&amp;pis=-1x-1&amp;cfv=11&amp;ccd=32&amp;chi=1&amp;cja=true&amp;cpl=30&amp;cmi=90&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=3603&amp;tlm=1425683925&amp;tcn=1425717704&amp;tpr=1425717700730&amp;dpt=none&amp;coa=&amp;baidu_id="></script>
-		<style>
+	<!--<script type="text/javascript">BAIDU_CLB_fillSlot("675989");</script>-->
+	<script type="text/javascript">
+		BAIDU_CLB_fillSlot("1045136");
+	</script>
+	<div id="BAIDU_DUP_wrapper_1045136_0"></div>
+	<script charset="utf-8"
+		src="http://cb.baidu.com/ecom?di=1045136&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=3&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.narutom.com%2F&amp;liu=&amp;ltr=&amp;lcr=&amp;ps=2486x0&amp;psr=1366x768&amp;par=1366x728&amp;pcs=1335x579&amp;pss=1335x2486&amp;pis=-1x-1&amp;cfv=11&amp;ccd=32&amp;chi=1&amp;cja=true&amp;cpl=30&amp;cmi=90&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=3603&amp;tlm=1425683925&amp;tcn=1425717704&amp;tpr=1425717700730&amp;dpt=none&amp;coa=&amp;baidu_id="></script>
+	<style>
 .body-bg-left, .body-bg-right {
 	display: block;
 	position: absolute;
@@ -422,65 +234,64 @@
 	top: 0px;
 }
 </style>
-		<div id="beitou" style="display: block;">
-			<!-- 左 -->
-			<a href="http://g.2ksm.com/s/1/999/3938.html?uid=503134"
-				target="_blank" class="body-bg-left"></a>
-			<!-- 右 -->
-			<a href="http://g.2ksm.com/s/1/999/3938.html?uid=503134"
-				target="_blank" class="body-bg-right"></a>
-		</div>
-		<!-- beitou -->
-		<div class="counts">
-			<script type="text/javascript" src="/tj.js"></script>
-			<div id="cnzz_stat_icon_30038114"></div>
-			<script src=" http://w.cnzz.com/c.php?id=30038114"
-				type="text/javascript"></script>
-			<script
-				src=" http://hm.baidu.com/h.js?ec1d3e383e58ca3346a6baf39b48040e"
-				type="text/javascript"></script>
-		</div>
-		<div id="cs_right_bottom"
-			style="position: fixed; bottom: 0px; right: 0px; overflow: hidden;">
-			<div style="margin: 0px; padding: 0px; width: 270px; height: 200px;">
-				<div style="position: absolute; z-index: 1;">
-					<a
-						href="http://c.x7ef.com/s/1/954/0.html?uid=301553&amp;ext=ZWIgICAgICAgICAgMWVTUFFVVVNMUlBRVkxTWVRVTFFMU1RTUlJMUVROUVRVTldWTlNMUlBRVVBTUFdRVlNUUFU%3D"
-						target="_blank" id="cs_click_746"><img
-						src="http://img.twcczhu.com/s/img/dot.gif" border="0" width="270"
-						height="200" style="background-color: transparent;"></a>
-				</div>
-				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-					codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,24,0"
-					width="270" height="200" align="middle">
-					<param name="movie"
-						value="http://c.x7ef.com/b/1/954/fkd9fdd.swf?uid=301553">
-					<param name="quality" value="high">
-					<param name="wmode" value="transparent">
-					<param name="scale" value="exactfit">
-					<embed pluginspage="http://www.macromedia.com/go/getflashplayer"
-						width="270" height="200" align="middle"
-						type="application/x-shockwave-flash"
-						src="http://c.x7ef.com/b/1/954/fkd9fdd.swf?uid=301553"
-						scale="exactfit" quality="high" wmode="transparent">
-				</object>
+	<div id="beitou" style="display: block;">
+		<!-- 左 -->
+		<a href="http://g.2ksm.com/s/1/999/3938.html?uid=503134"
+			target="_blank" class="body-bg-left"></a>
+		<!-- 右 -->
+		<a href="http://g.2ksm.com/s/1/999/3938.html?uid=503134"
+			target="_blank" class="body-bg-right"></a>
+	</div>
+	<!-- beitou -->
+	<div class="counts">
+		<script type="text/javascript" src="/tj.js"></script>
+		<div id="cnzz_stat_icon_30038114"></div>
+		<script src=" http://w.cnzz.com/c.php?id=30038114"
+			type="text/javascript"></script>
+		<script
+			src=" http://hm.baidu.com/h.js?ec1d3e383e58ca3346a6baf39b48040e"
+			type="text/javascript"></script>
+	</div>
+	<div id="cs_right_bottom"
+		style="position: fixed; bottom: 0px; right: 0px; overflow: hidden;">
+		<div style="margin: 0px; padding: 0px; width: 270px; height: 200px;">
+			<div style="position: absolute; z-index: 1;">
+				<a
+					href="http://c.x7ef.com/s/1/954/0.html?uid=301553&amp;ext=ZWIgICAgICAgICAgMWVTUFFVVVNMUlBRVkxTWVRVTFFMU1RTUlJMUVROUVRVTldWTlNMUlBRVVBTUFdRVlNUUFU%3D"
+					target="_blank" id="cs_click_746"><img
+					src="http://img.twcczhu.com/s/img/dot.gif" border="0" width="270"
+					height="200" style="background-color: transparent;"></a>
 			</div>
-			<div id="cs_rich_close" kc="0"
-				dsturl="http://c.x7ef.com/s/1/954/0.html?uid=301553"
-				eps="ZWIgICAgICAgICAgMWVTUFFVVVNMUlBRVkxTWVRVTFFMU1RTUlJMUVROUVRVTldWTlNMUlBRVVBTUFdRVlNUUFU%3D"
-				closetype="0"
-				style="z-index: 1999999; top: 3px; left: 234px; width: 25px; height: 13px; position: absolute; display: block;">
-				<a href="javascript:;" target="_self"><img
-					src="http://img.twcczhu.com/s/img/close.gif"
-					ck="cs_rich_close_hide" border="0"
-					style="width: 25px; height: 13px; cursor: pointer;"></a>
-			</div>
+			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+				codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,24,0"
+				width="270" height="200" align="middle">
+				<param name="movie"
+					value="http://c.x7ef.com/b/1/954/fkd9fdd.swf?uid=301553">
+				<param name="quality" value="high">
+				<param name="wmode" value="transparent">
+				<param name="scale" value="exactfit">
+				<embed pluginspage="http://www.macromedia.com/go/getflashplayer"
+					width="270" height="200" align="middle"
+					type="application/x-shockwave-flash"
+					src="http://c.x7ef.com/b/1/954/fkd9fdd.swf?uid=301553"
+					scale="exactfit" quality="high" wmode="transparent">
+			</object>
+		</div>
+		<div id="cs_rich_close" kc="0"
+			dsturl="http://c.x7ef.com/s/1/954/0.html?uid=301553"
+			eps="ZWIgICAgICAgICAgMWVTUFFVVVNMUlBRVkxTWVRVTFFMU1RTUlJMUVROUVRVTldWTlNMUlBRVVBTUFdRVlNUUFU%3D"
+			closetype="0"
+			style="z-index: 1999999; top: 3px; left: 234px; width: 25px; height: 13px; position: absolute; display: block;">
+			<a href="javascript:;" target="_self"><img
+				src="http://img.twcczhu.com/s/img/close.gif" ck="cs_rich_close_hide"
+				border="0" style="width: 25px; height: 13px; cursor: pointer;"></a>
+		</div>
 </body>
 <script type="text/javascript">
 	/*
 	 $(function(){
 	 $.ajax({  
-	 url:'/hehe9_ssm/video/videoAction!list',  
+	 url:'./video/videoAction!list',  
 	 type:'post',  
 	 data:"{}",  
 	 dataType:'json',  
@@ -491,34 +302,36 @@
 	 });
 	 */
 
+	/*
 	$(function() {
-		$.ajax({
-			url : '/hehe9_ssm/video/videoAction!list',
-			type : 'post',
-			dataType : 'json',
-			data : {
-				'word' : 'word',
-				'word' : 'wordcount'
-			//此处不能加‘，’号
-			},
-			error : function(e) {
-				alert("error occured!!!");
-			},
-			success : function(data) {
-				alert("succ");
-				$("#video_list_holder").text("aaaaaaaaaaaaaaaaaaaaa");
+	$.ajax({
+		url : './video/videoAction!list',
+		type : 'post',
+		dataType : 'json',
+		data : {
+			'word' : 'word',
+			'word' : 'wordcount'
+		//此处不能加‘，’号
+		},
+		error : function(e) {
+			alert("error occured!!!");
+		},
+		success : function(data) {
+			alert("succ");
+			$("#video_list_holder").text("aaaaaaaaaaaaaaaaaaaaa");
 
-				//var test = eval("(" + data + ")");
-				//非循环的结果获得
-				//var word = eval("(" + data + ")").word;
-				//var wrodcount = eval("(" + data + ")").wordcount;
-				//循环结果集
-				//$.each(test, function(i) {
-				//	desc += '<li>' + test[i].word + '(' + test[i].wordcount
-				//			+ '%)</li>';
-				//});
-			}
-		});
+			//var test = eval("(" + data + ")");
+			//非循环的结果获得
+			//var word = eval("(" + data + ")").word;
+			//var wrodcount = eval("(" + data + ")").wordcount;
+			//循环结果集
+			//$.each(test, function(i) {
+			//	desc += '<li>' + test[i].word + '(' + test[i].wordcount
+			//			+ '%)</li>';
+			//});
+		}
 	});
+	});
+	 */
 </script>
 </html>

@@ -17,4 +17,8 @@ public class VideoService {
 	public List<Video> listBrief(int page, int count) {
 		return videoDao.listBrief(page, count);
 	}
+
+	public Video findById(Integer videoId) {
+		return videoDao.findById(videoId);
+	}
 }
