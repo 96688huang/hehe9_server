@@ -191,9 +191,13 @@
 		<if test="videoId != null">
 			and video_id = #{videoId,jdbcType=INTEGER}
 		</if>
-		<if test="episodeNo != null">
-			and episode_no = #{episodeNo,jdbcType=VARCHAR}
-		</if>
+		<if test="episodeNos != null and episodeNos.size() &gt; 0">
+    	and episode_no in 
+	   		<foreach item="item" index="index" collection="episodeNos" open="("
+			separator="," close=")">
+			#{item}
+			</foreach>
+		</if>	
 		order by episode_no desc
 		limit #{offset}, #{count}
 	</select>

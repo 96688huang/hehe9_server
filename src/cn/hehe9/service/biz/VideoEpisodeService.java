@@ -15,11 +15,19 @@ public class VideoEpisodeService {
 	@Resource
 	private VideoEpisodeDao videoEpisodeDao;
 
-	public List<VideoEpisode> list(Integer videoId, int page, int pageCount) {
-		return videoEpisodeDao.findEpisodesBy(videoId, page, pageCount);
+	public List<VideoEpisode> list(Integer videoId, int page, int queryCount) {
+		return videoEpisodeDao.findEpisodesBy(videoId, page, queryCount);
+	}
+
+	public List<VideoEpisode> list(Integer videoId, int page, int queryCount, Integer... episodeNos) {
+		return videoEpisodeDao.findBy(videoId, page, queryCount, episodeNos);
 	}
 
 	public Integer count(Integer videoId) {
 		return videoEpisodeDao.countBy(videoId);
+	}
+
+	public VideoEpisode findById(Integer episodeId) {
+		return videoEpisodeDao.findById(episodeId);
 	}
 }

@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>updating</title>
+<title>main</title>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->

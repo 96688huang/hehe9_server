@@ -48,9 +48,13 @@ public class VideoEpisodeAction extends ActionSupport {
 	/** 分集总数 */
 	private Integer total;
 
+	/** 分集列表 */
 	private List<VideoEpisode> episodeList;
 
+	private static final String TO_LIST = "toList";
+
 	public String list() {
+		// page 非法处理
 		if (page <= 0 || !StringUtil.isNumeric(page + "")) {
 			page = 1;
 		}
@@ -61,7 +65,7 @@ public class VideoEpisodeAction extends ActionSupport {
 
 		int remainCount = total % queryCount > 0 ? 1 : 0;
 		pageCount = (total / queryCount) + remainCount;
-		return "toList";
+		return TO_LIST;
 	}
 
 	public Integer getVideoId() {

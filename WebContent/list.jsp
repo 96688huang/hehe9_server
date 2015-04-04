@@ -10,7 +10,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>updating</title>
+<title>list</title>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
@@ -127,7 +127,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 					<h1>${video.name}在线观看</h1>
 					<ul id="narutoList">
 						<s:iterator value="episodeList" var="episode">
-							<li><a href=""
+							<li><a href="./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}"
 								title="${video.name}&nbsp;第${episode.episodeNo}集<s:if
 											test="title != null">「${episode.title}」</s:if>"
 								target="_blank"><img
@@ -167,6 +167,14 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 					<script type="text/javascript">
 						$("#${page}").attr("selected", true);
 					</script>
+
+					<%-- 另一种实现方式					
+ 					<s:iterator>
+					<option value="<s:property />"
+					<s:if test="%{page==(current-1)}">selected="selected"</s:if>>
+					<s:property /> 
+					--%>
+					<!-- end -->
 				</div>
 			</div>
 			<div id="sidebar">
