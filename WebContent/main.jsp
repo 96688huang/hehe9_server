@@ -131,15 +131,14 @@
 					<a href="/cartoon/" title="热闹动画片" target="_blank">热门动画片</a>
 				</div>
 
-				<s:iterator value="hotVideoListHolder" var="holder">
+				<s:iterator value="hotVideoListHolder" var="videoList">
 					<ul id="indexcartoonList">
-						<s:iterator value="holder">
-							<li><a href="" title="${name} ${updateRemark}" target="_blank"><img
-										alt="${name} ${updateRemark}"
-										src="${iconUrl}"></a><a
-									href=""
-									title="${name} ${updateRemark}" target="_blank"><font
-										color="#FF0000">${name}</font></a></li>
+						<s:iterator value="videoList">
+							<li><a href="" title="${name} ${updateRemark}"
+								target="_blank"><img alt="${name} ${updateRemark}"
+									src="${iconUrl}"></a><a href=""
+								title="${name} ${updateRemark}" target="_blank"><font
+									color="#FF0000">${name}</font></a></li>
 						</s:iterator>
 					</ul>
 				</s:iterator>
@@ -151,133 +150,36 @@
 				<iframe scrolling="no" frameborder="0" width="980" height="90"
 					src="http://www.narutom.com/v2/v/i/key.html"></iframe>
 			</div>
-			<div class="index_downrank">
-				<div class="ltitle">
-					<span><a href="http://www.narutom.com/m/meishidefulu/"
-						title="美食的俘虏全集">更多</a></span>美食的俘虏
-				</div>
-				<div id="video_list_holder"></div>
-				<ul class="softolist">
-					<li><a href="http://www.narutom.com/m/meishidefulu/23991.html"
-						target="_blank" title="美食的俘虏第147集「最终话 阿虏和小松 踏上新旅程」">美食的俘虏第147集「最终话
-							阿虏和</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23923.html"
-						target="_blank" title="美食的俘虏第146集「传达过去吧 小松的呼唤 阿虏觉醒」">美食的俘虏第146集「传达过去吧
-							小</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23780.html"
-						target="_blank" title="美食的俘虏第145集「起死回生的一击 四大天王必杀技!」">美食的俘虏第145集「起死回生的一击</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23707.html"
-						target="_blank" title="美食的俘虏第144集「终而复始 阿虏VS乔亚」">美食的俘虏第144集「终而复始
-							阿虏</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23633.html"
-						target="_blank" title="美食的俘虏第143集「惊愕 黑幕遮挡的乔亚的真面目」">美食的俘虏第143集「惊愕
-							黑幕遮挡</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23557.html"
-						target="_blank" title="美食的俘虏第142集「史上最强敌人 乔压出场」">美食的俘虏第142集「史上最强敌人
-					</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23470.html"
-						target="_blank" title="美食的俘虏第141集「阿虏反击 终极规则」">美食的俘虏第141集「阿虏反击
-							终极</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23406.html"
-						target="_blank" title="美食的俘虏第140集「逆袭 泽布拉开战」">美食的俘虏第140集「逆袭
-							泽布拉开</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23341.html"
-						target="_blank" title="美食的俘虏第139集「决战时刻 萨尼 最后一搏」">美食的俘虏第139集「决战时刻
-							萨尼</a></li>
-					<li><a href="http://www.narutom.com/m/meishidefulu/23256.html"
-						target="_blank" title="美食的俘虏第138集「决斗 萨米VS多米洛特」">美食的俘虏第138集「决斗
-							萨米VS多</a></li>
-				</ul>
-			</div>
-			<div class="index_gamelist">
-				<div class="ltitle">
-					<span><a href="/onepiece/">更多</a></span>海贼王在线观看
-				</div>
-				<ul class="softblist">
-					<li><span class="today">(03-01)</span><a
-						href="http://www.narutom.com/onepiece/video/27171.html"
-						target="_blank" title="海贼王第683集「大地鸣动 破坏神巨大琵卡降临!」">海贼王第683集「大地鸣动
-							破坏神巨大琵卡降</a></li>
-					<li><span class="today">(02-15)</span><a
-						href="http://www.narutom.com/onepiece/video/27062.html"
-						target="_blank" title="海贼王第682集「突破敌阵 路飞索隆开始反击!」">海贼王第682集「突破敌阵
-							路飞索隆开始反击</a></li>
-					<li><span class="today">(02-08)</span><a
-						href="http://www.narutom.com/onepiece/video/27000.html"
-						target="_blank" title="海贼王第681集「价值5亿的男人 被瞄准的乌索兰德!」">海贼王第681集「价值5亿的男人
-							被瞄准的乌索</a></li>
-					<li><span class="today">(02-01)</span><a
-						href="http://www.narutom.com/onepiece/video/26936.html"
-						target="_blank" title="海贼王第680集「恶魔的陷阱!德雷斯罗萨歼灭战!」">海贼王第680集「恶魔的陷阱!德雷斯罗萨歼灭</a></li>
-					<li><span class="today">(01-25)</span><a
-						href="http://www.narutom.com/onepiece/video/26874.html"
-						target="_blank" title="海贼王第679集「飒爽登场!革命军总参谋长萨博?」">海贼王第679集「飒爽登场!革命军总参谋长萨</a></li>
-					<li><span class="today">(01-18)</span><a
-						href="http://www.narutom.com/onepiece/video/26805.html"
-						target="_blank" title="海贼王第678集「火拳炸裂!烧烧果实的力量复活?」">海贼王第678集「火拳炸裂!烧烧果实的力量复</a></li>
-					<li><span class="today">(01-11)</span><a
-						href="http://www.narutom.com/onepiece/video/26666.html"
-						target="_blank" title="海贼王第677集「传说复活!居鲁士全力一击?」">海贼王第677集「传说复活!居鲁士全力一击?」</a></li>
-					<li><span class="today">(12-28)</span><a
-						href="http://www.narutom.com/onepiece/video/26608.html"
-						target="_blank" title="海贼王第676集「作战失败!英雄乌索兰度战死?」">海贼王第676集「作战失败!英雄乌索兰度战死</a></li>
-					<li><span class="today">(12-21)</span><a
-						href="http://www.narutom.com/onepiece/video/26548.html"
-						target="_blank" title="海贼王第675集「命运般的邂逅 居鲁士与利库王!」">海贼王第675集「命运般的邂逅
-							居鲁士与利库</a></li>
-					<li><span class="today">(12-14)</span><a
-						href="http://www.narutom.com/onepiece/video/26481.html"
-						target="_blank" title="海贼王第674集「骗子乌索兰德逃跑中!」">海贼王第674集「骗子乌索兰德逃跑中!」</a></li>
-				</ul>
-			</div>
-			<div class="index_gamelist">
-				<div class="ltitle">
-					<span><a href="http://www.narutom.com/cartoon/seiya-omega/"
-						title="圣斗士星矢Ω全集，圣斗士星矢Ω在线观看">更多</a></span>圣斗士星矢Ω
-				</div>
-				<ul class="softblist">
-					<li><span class="today">(03-30)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23990.html"
-						target="_blank" title="圣斗士星矢Ω第97集「大结局」">圣斗士星矢Ω第97集「大结局」</a></li>
-					<li><span class="today">(03-23)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23924.html"
-						target="_blank" title="圣斗士星矢Ω第96集「最后的战斗 去吧!Ω圣斗士」">圣斗士星矢Ω第96集「最后的战斗
-							去吧!Ω圣</a></li>
-					<li><span class="today">(03-16)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23845.html"
-						target="_blank" title="圣斗士星矢Ω第95集「超越神 星矢的小宇宙!」">圣斗士星矢Ω第95集「超越神
-							星矢的小宇宙!</a></li>
-					<li><span class="today">(03-09)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23779.html"
-						target="_blank" title="圣斗士星矢Ω第94集「希望的战士 圣斗士的羁绊!」">圣斗士星矢Ω第94集「希望的战士
-							圣斗士的羁</a></li>
-					<li><span class="today">(03-02)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23705.html"
-						target="_blank" title="圣斗士星矢Ω第93集「时之神 撒旦降临!」">圣斗士星矢Ω第93集「时之神
-							撒旦降临!」</a></li>
-					<li><span class="today">(02-23)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23634.html"
-						target="_blank" title="圣斗士星矢Ω第92集「星矢的良心！从象回归！」">圣斗士星矢Ω第92集「星矢的良心！从象回归</a></li>
-					<li><span class="today">(02-16)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23556.html"
-						target="_blank" title="圣斗士星矢Ω第91集「雅典娜和帕拉斯 女神的决战！」">圣斗士星矢Ω第91集「雅典娜和帕拉斯
-							女神的</a></li>
-					<li><span class="today">(02-09)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23467.html"
-						target="_blank" title="圣斗士星矢Ω第90集「金牛突进 到达、帕拉斯的所在!」">圣斗士星矢Ω第90集「金牛突进
-							到达、帕拉斯</a></li>
-					<li><span class="today">(02-02)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23407.html"
-						target="_blank" title="圣斗士星矢Ω第89集「觉醒吧！究极的Ω！」">圣斗士星矢Ω第89集「觉醒吧！究极的Ω！」</a></li>
-					<li><span class="today">(01-26)</span><a
-						href="http://www.narutom.com/cartoon/seiya-omega/23342.html"
-						target="_blank" title="圣斗士星矢Ω第88集「残留的意志 伟大圣斗士的教诲!」">圣斗士星矢Ω第88集「残留的意志
-							伟大圣斗士</a></li>
-				</ul>
-			</div>
-			<div id="naruto_desk" style="height: 175px;">
+
+
+			<s:iterator value="hotEpisodeListHolder" var="episodeMap">
+				<s:iterator value="episodeMap" id="map">
+					<div class="index_downrank">
+						<div class="ltitle">
+							<span><a href="${map.key.listPageUrl}" title="${map.key.name}">更多</a></span>${map.key.name}
+						</div>
+						<div id="video_list_holder"></div>
+						<ul class="softolist">
+							<s:iterator value="#map.value" var="episode">
+								<li><a href="${map.key.listPageUrl}" target="_blank"
+									title="${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
+											test="title != null"> &nbsp;[&nbsp;${episode.title}&nbsp;]</s:if>">${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
+											test="title != null"> &nbsp;[&nbsp;${episode.title}&nbsp;]</s:if></a></li>
+							</s:iterator>
+						</ul>
+					</div>
+				</s:iterator>
+			</s:iterator>
+
+			<div id="naruto_desk" style="height: 200px;">
 				<div class="ltitle">动画片大全</div>
 				<div class="dmnew">
+					<s:iterator value="menuVideoList" var="menuVideo">
+						<a href="" title="${menuVideo.name}" target="_blank">${menuVideo.name}&nbsp;&nbsp;&nbsp;&nbsp;|</a>
+					</s:iterator>
+					<br/>
+					<a href="" title="" target="_blank" style="color:red;">更多=></a>
+					<!-- 
 					<a href="http://www.narutom.com/g/gaodaORIGIN/" title="高达ORIGIN"
 						target="_blank">高达ORIGIN</a><a
 						href="http://www.narutom.com/y/youxiwangzhongzhiban/"
@@ -371,7 +273,7 @@
 						href="http://www.narutom.com/dd/datushuguandemuyangren/"
 						title="大图书馆的牧羊人" target="_blank">大图书馆的牧羊人</a><a
 						href="http://www.narutom.com/b/baixiang/" title="白箱"
-						target="_blank">白箱</a>
+						target="_blank">白箱</a> -->
 				</div>
 			</div>
 			<div id="num_index">&nbsp;&nbsp;合作伙伴 &amp; 友情链接
@@ -575,38 +477,37 @@
 			</div>
 </body>
 <script type="text/javascript">
-/*
-$(function(){
-		$.ajax({  
-            url:'/hehe9_ssm/video/videoAction!list',  
-            type:'post',  
-            data:"{}",  
-            dataType:'json',  
-            success:function (data) {  
-                alert('aaaaaaa');
-            }  
-	});
-});
-*/
+	/*
+	 $(function(){
+	 $.ajax({  
+	 url:'/hehe9_ssm/video/videoAction!list',  
+	 type:'post',  
+	 data:"{}",  
+	 dataType:'json',  
+	 success:function (data) {  
+	 alert('aaaaaaa');
+	 }  
+	 });
+	 });
+	 */
 
-$(function() {
+	$(function() {
 		$.ajax({
-			url:'/hehe9_ssm/video/videoAction!list',  
-            type:'post',  
-            dataType:'json', 
-			data:{
-				'word':'word',
-				'word':'wordcount'
+			url : '/hehe9_ssm/video/videoAction!list',
+			type : 'post',
+			dataType : 'json',
+			data : {
+				'word' : 'word',
+				'word' : 'wordcount'
 			//此处不能加‘，’号
 			},
-			error:function(e) {
+			error : function(e) {
 				alert("error occured!!!");
 			},
-			success:function(data) {
+			success : function(data) {
 				alert("succ");
 				$("#video_list_holder").text("aaaaaaaaaaaaaaaaaaaaa");
-				
-				
+
 				//var test = eval("(" + data + ")");
 				//非循环的结果获得
 				//var word = eval("(" + data + ")").word;
@@ -618,6 +519,6 @@ $(function() {
 				//});
 			}
 		});
-	}); 
+	});
 </script>
 </html>

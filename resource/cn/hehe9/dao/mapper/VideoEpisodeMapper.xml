@@ -194,7 +194,7 @@
 		<if test="episodeNo != null">
 			and episode_no = #{episodeNo,jdbcType=VARCHAR}
 		</if>
-		order by id
+		order by episode_no desc
 		limit #{offset}, #{count}
 	</select>
 </mapper>

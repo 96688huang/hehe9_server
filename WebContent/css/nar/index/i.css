@@ -1,11 +1,11 @@
-html{color:#000;font-size:12px;font-family:'Microsoft YaHei','Î¢ÈíÑÅºÚ',Tahoma,Geneva,'ËÎÌå';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}body{font-size:12px;font-family:'Microsoft YaHei','Î¢ÈíÑÅºÚ',Tahoma,Geneva,'ËÎÌå'}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}fieldset,img{border:0}li{list-style:none}
+html{color:#000;font-size:12px;font-family:'Microsoft YaHei','Î¢ï¿½ï¿½ï¿½Åºï¿½',Tahoma,Geneva,'ï¿½ï¿½ï¿½ï¿½';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}body{font-size:12px;font-family:'Microsoft YaHei','Î¢ï¿½ï¿½ï¿½Åºï¿½',Tahoma,Geneva,'ï¿½ï¿½ï¿½ï¿½'}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}fieldset,img{border:0}li{list-style:none}
 a:link,a:visited {color:#007498;text-decoration:none;}
 a:hover,a:active {color:#003;text-decoration:underline;}
 a img {border:0;}
 .nmain {width:1000px;margin:0 auto;position: relative;z-index:100;background:#fff;}
 .wrap {width:980px;margin:0 auto;}
 .wrap2 {width:980px;margin:0 auto;z-index:100;}
-.clearfix:after {content:"»ðÓ°ÈÌÕßÍø - www.narutom.com";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix:after {content:"ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - www.narutom.com";display:block;height:0;clear:both;visibility:hidden;}
 .clearfix {display:inline-block;}
 .clearfix {display:block;}
 .softblist,.softolist , .narutolist2 {list-style:none;line-height:22px;}
@@ -17,7 +17,7 @@ a img {border:0;}
 .softblist li span,.softolist li span {float:right;}
 /*------------------------------*/
 
-/* Í·²¿¹²ÓÃCSS */
+/* Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CSS */
 #header {height:168px;margin:0 auto;width:980px;background:url('http://www.narutom.com/images/banner.jpg') repeat-x;}
 #logo {float:left;margin:5px 0 0 8px;display:inline;}
 #logo {font-size:12px;font-weight:normal;}
@@ -58,7 +58,7 @@ a img {border:0;}
 #hot_video {text-align:center;}
 #hot_down h2, .index_downrank h2 , #hot_video h2 , .index_downrank .ltitle , #hot_down .ltitle{background: #FEF9EB;color: #8F5400;border-bottom: 1px #F9F0C0 solid;}
 #common_tools h2 {padding: 0;text-align: center;}
-.index_downrank {float: left;border: 1px #E8CA78 solid;width: 235px;margin: 8px 0 0 0;}
+.index_downrank {float: left;border: 1px #E8CA78 solid;width: 235px;margin: 8px 0 0 8px;}
 .index_downrank ul {margin: 5px 10px;}
 .index_gamelist {float: left;margin: 8px 0 0 8px;width: 361px;border: 1px #88D3E3 solid;}
 .index_gamelist ul {margin: 5px 10px;}
@@ -92,8 +92,8 @@ a img {border:0;}
 #narutoList li a:hover img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
 #indexcartoonList {margin:0;padding:0;}
 #indexcartoonList li {float:left;width:126px;height:188px;text-align:center;margin:5px 4px;padding-left:2px;}
-#indexcartoonList li img ,¡¡#cartoonList li img {border:1px solid #d0d0d0;padding:3px;width:120px;height:160px;}
-#indexcartoonList li img ,¡¡#cartoonList li img a{border:1px solid #d0d0d0;padding:3px;}
+#indexcartoonList li img ,ï¿½ï¿½#cartoonList li img {border:1px solid #d0d0d0;padding:3px;width:120px;height:160px;}
+#indexcartoonList li img ,ï¿½ï¿½#cartoonList li img a{border:1px solid #d0d0d0;padding:3px;}
 #indexcartoonList li a:hover img{border:1px solid #069;padding:3px;}
 #cartoonList{width:888px;}
 #cartoonList li{float:left;width:128px;height:190px;text-align:center;margin:5px 8px;}
@@ -174,7 +174,7 @@ a:hover,a:visited:hover{text-shadow:#585858 0px 0px 3px;}
 .dmnew a:hover{color:#4e8000; text-decoration:none;}
 .dmnew a strong{color:#ff3c00;}
 .isea{text-align:center;width:280px;height:40px;margin:auto;border-top:1px solid #d0d0d0;clear:both;font-size:14px;vertical-align:middle;padding-top:10px;margin-top:5px;}
-.isea input {font:12px "Î¢ÈíÑÅºÚ","ËÎÌå",Verdana,Arial,sans-serif,"Times New Roman";}
+.isea input {font:12px "Î¢ï¿½ï¿½ï¿½Åºï¿½","ï¿½ï¿½ï¿½ï¿½",Verdana,Arial,sans-serif,"Times New Roman";}
 .bar{font-weight:bold;background:url(img/bg_line.png) repeat-x 0 -33px;height:30px;padding-left:10px;border-bottom:1px solid #d0d0d0}
 .reminderTab{height:28px}.reminderTab span{display:inline-block;cursor:pointer;width:36px;text-align:center;border-right:1px solid #FC6;border-bottom:1px solid #FC6;line-height:25px;height:25px;background-color:#FFC;color:#666}.reminderTab span.last{border-right:0}.reminderTab span.on{border-bottom:1px solid #FFF;color:#F00;font-weight:bold;width:36px;background-color:#FFF}
 .reminderContent{width:247px;margin:0 auto;height:133px;}
