@@ -43,9 +43,10 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 	
 </script>
 <%-- <script type="text/javascript" async=""
-	src="http://static.duoshuo.com/embed.js" charset="UTF-8"> --%>
-	
+	src="http://static.duoshuo.com/embed.js" charset="UTF-8"> 
 </script>
+--%>
+
 <link
 	href="http://bdimg.share.baidu.com/static/css/bdsstyle.css?cdnversion=20131219"
 	rel="stylesheet" type="text/css">
@@ -169,7 +170,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 				<div class="top">
 					<h1>
 						${video.name }第${episode.episodeNo }集
-						<s:if test="title != null">「${episode.title}」</s:if>
+						<s:if test="episode.title != null">「${episode.title}」</s:if>
 					</h1>
 				</div>
 				<div class="player" id="player">
@@ -187,10 +188,11 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
             class="vborder">
 
         </iframe> -->
-		<embed src="${episode.fileUrl }"
-			type="application/x-shockwave-flash" allowscriptaccess="always"
-			flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;"
-			allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>
+					<embed src="${episode.fileUrl }" id="naruto_v" class="vborder"
+						name="naruto_v" type="application/x-shockwave-flash"
+						allowscriptaccess="always"
+						flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;"
+						allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>
 				</div>
 			</div>
 			<div class="pr v-right" id="vright">
@@ -220,7 +222,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 		</div>
 	</div>
 	<div class="wraps gt1" id="cg3">
-	<%-- <script>
+		<%-- <script>
 			hym.show(3);
 		</script> --%>
 		<iframe scrolling="no" frameborder="0" width="980" height="90"
@@ -228,7 +230,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 	</div>
 	<div class="links wraps">
 		<div class="v-left l15 share">
-	<%-- <script type="text/javascript">
+			<%-- <script type="text/javascript">
 				_vshare();
 			</script> --%>
 			<!-- Baidu Button BEGIN -->
@@ -251,26 +253,30 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 			</script>
 		</div>
 		<div class="v-right r15 otherlink">
-			<li>上一条： <a
-				href="http://www.narutom.com/onepiece/video/27062.html">
-					海贼王第682集「突破敌阵 路飞索隆开始反击!」 </a>
+			<li>上集： <s:if test="preEpisode != null">
+					<a href="">${video.name }第${preEpisode.episodeNo }集 <s:if
+							test="preEpisode.title != null">「${preEpisode.title}」</s:if></a>
+				</s:if> <s:else>无</s:else>
 			</li>
-			<li>下一条： <a
-				href="http://www.narutom.com/onepiece/video/27223.html">
-					海贼王第684集「大集结 路飞与凶恶战士军团!」 </a>
+			<li>下集： <s:if test="nextEpisode != null">
+					<a href="">${video.name }第${nextEpisode.episodeNo }集 <s:if
+							test="nextEpisode.title != null">「${nextEpisode.title}」</s:if></a>
+				</s:if> <s:else>无</s:else>
 			</li>
 		</div>
 	</div>
 	<div class="wraps c-detail">
-		<h3 class="h31">海贼王第683集「大地鸣动 破坏神巨大琵卡降临!」剧情介绍：</h3>
-		<p>海贼王第683集「大地鸣动 破坏神巨大琵卡降临!」</p>
+		<h3 class="h31">剧情介绍：</h3>
+		<p>${video.name }第${episode.episodeNo }集
+			<s:if test="episode.title != null">「${episode.title}」</s:if>
+		</p>
 	</div>
 
 	<!-- TODO 多说评论 -->
-	
+
 	<!-- 页脚 -->
 	<jsp:include page="footer.html" />
-	
+
 	<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js">
 		
 	</script>
@@ -454,5 +460,30 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		document.getElementById("cg1").innerHTML = document
+				.getElementById("div_cg1").innerHTML;
+		document.getElementById("div_cg1").innerHTML = "";
+		document.getElementById("cg2").innerHTML = document
+				.getElementById("div_cg2").innerHTML;
+		document.getElementById("div_cg2").innerHTML = "";
+		document.getElementById("cg25").innerHTML = document
+				.getElementById("div_cg25").innerHTML;
+		document.getElementById("div_cg25").innerHTML = "";
+		player.lighter.bind();
+		var duoshuoQuery = {
+			short_name : "narutom"
+		};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';
+			ds.async = true;
+			ds.src = 'http://static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] || document
+					.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+	</script>
 </body>
 </html>

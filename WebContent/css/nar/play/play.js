@@ -59,8 +59,8 @@ player.lighter = {
 };
 
 
-//var _w = '100%';
-//var _h = 480;
+var _w = '100%';
+var _h = 480;
 //var _flv = _VideoSrc();
 //var _path = '';
 //function plays() {

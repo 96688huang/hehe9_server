@@ -72,13 +72,13 @@ public class VideoPlayAction extends ActionSupport {
 		}
 
 		if (episodeList.size() == NEAR_EPISODE_COUNT) {
-			preEpisode = episodeList.get(0);
+			nextEpisode = episodeList.get(0);	// 按分集倒序
 			episode = episodeList.get(1);
-			nextEpisode = episodeList.get(2);
+			preEpisode = episodeList.get(2);	
 		} else if (episodeList.size() == 2) {
 			episode = episodeList.get(0);
-			nextEpisode = episodeList.get(1);
-		} else {
+			preEpisode = episodeList.get(1);
+		} else if (episodeList.size() == 1){
 			episode = episodeList.get(0);
 		}
 		return TO_PLAY;
