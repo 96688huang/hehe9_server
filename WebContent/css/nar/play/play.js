@@ -59,8 +59,8 @@ player.lighter = {
 };
 
 
-var _w = '100%';
-var _h = 480;
+//var _w = '100%';
+//var _h = 480;
 //var _flv = _VideoSrc();
 //var _path = '';
 //function plays() {
@@ -96,63 +96,63 @@ function setWid(n) {
 //	return (_source == '') ? '/v3/js/flv.html' : '/v3/player/'+_source+'.html';
 //}
 // hym
-var hyms = new Array();
-var hym = {
-    data: function() {
-        this.src = "";
-        this.href = "";
-        this.width = "";
-        this.heigth = "";
-        this.type = "";
-        this.code = "";
-        this.enable = 1;
-    },
-    create: function(myhym, num) {
-        for (var i = 0; i < num; i++) {
-            myhym[i] = new hym.data();
-        }
-    },
-    get: function(id) {
-        if (!hyms[id]) return "";
-        if (!hyms[id].enable) return "";
-        var type = hyms[id].type || "";
-        switch (type) {
-        case "html":
-        case "htm":
-            return hyms[id].code;
-        case "iframe":
-            return "<iframe scrolling=\"no\" frameborder=\"0\" width=\"" + hyms[id].width + "\" height=\"" + hyms[id].height + "\" src=\"" + hyms[id].src + "\" ></iframe>";
-        case "img":
-            return "<a href=\"" + hyms[id].href + "\" target=\"_blank\"><img alt=\"" + hyms[id].alt + "\" src=\"" + hyms[id].src + "\" border=\"0\" width=\"" + hyms[id].width + "\" height=\"" + hyms[id].height + "\" /></a>";
-        default:
-            return "";
-        }
-    },
-    show: function(id) {
-        var code = hym.get(id);
-        if (code != "") {
-            document.write(code);
-        }
-    }
-};
-hym.create(hyms,6);
-hyms[0].type = "iframe";
-hyms[0].src = "http://www.narutom.com/v2/v/p/vl.html";
-hyms[0].width = 960;
-hyms[0].height = 60;
-hyms[1].type = "iframe";
-hyms[1].src  = "http://www.narutom.com/v2/v/p/v250.html";
-hyms[1].width = 250;
-hyms[1].height = 250;
-hyms[2].type = "html";
-hyms[2].code = "<script type=\"text/javascript\">var cpro_id = \"u1309564\";<\/script><script src=\"http://cpro.baidustatic.com/cpro/ui/c.js\" type=\"text/javascript\"><\/script>";
-hyms[3].type = "iframe";
-hyms[3].src = "http://img.88rpg.net/html/click/1553_2003.html";
-hyms[3].width = 980;
-hyms[3].height = 90;
-hyms[4].type = "html";
-hyms[4].code  = "";
-hyms[5].type = "html";
-hyms[5].code  = "<iframe src=\"http://www.narutom.com/v2/v/p/loading.html\" width=\"300\" height=\"300\" frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" allowtransparency=\"yes\"><\/iframe>";
-//hyms[5].type = "html";
-//hyms[5].code  = "<script type=\"text\/javascript\">var cpro_id = \"u1353427\";<\/script><script src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\" type=\"text\/javascript\"><\/script>";
+//	var hyms = new Array();
+//	var hym = {
+//	    data: function() {
+//	        this.src = "";
+//	        this.href = "";
+//	        this.width = "";
+//	        this.heigth = "";
+//	        this.type = "";
+//	        this.code = "";
+//	        this.enable = 1;
+//	    },
+//	    create: function(myhym, num) {
+//	        for (var i = 0; i < num; i++) {
+//	            myhym[i] = new hym.data();
+//	        }
+//	    },
+//	    get: function(id) {
+//	        if (!hyms[id]) return "";
+//	        if (!hyms[id].enable) return "";
+//	        var type = hyms[id].type || "";
+//	        switch (type) {
+//	        case "html":
+//	        case "htm":
+//	            return hyms[id].code;
+//	        case "iframe":
+//	            return "<iframe scrolling=\"no\" frameborder=\"0\" width=\"" + hyms[id].width + "\" height=\"" + hyms[id].height + "\" src=\"" + hyms[id].src + "\" ></iframe>";
+//	        case "img":
+//	            return "<a href=\"" + hyms[id].href + "\" target=\"_blank\"><img alt=\"" + hyms[id].alt + "\" src=\"" + hyms[id].src + "\" border=\"0\" width=\"" + hyms[id].width + "\" height=\"" + hyms[id].height + "\" /></a>";
+//	        default:
+//	            return "";
+//	        }
+//	    },
+//	    show: function(id) {
+//	        var code = hym.get(id);
+//	        if (code != "") {
+//	            document.write(code);
+//	        }
+//	    }
+//	};
+//	hym.create(hyms,6);
+//	hyms[0].type = "iframe";
+//	hyms[0].src = "http://www.narutom.com/v2/v/p/vl.html";
+//	hyms[0].width = 960;
+//	hyms[0].height = 60;
+//	hyms[1].type = "iframe";
+//	hyms[1].src  = "http://www.narutom.com/v2/v/p/v250.html";
+//	hyms[1].width = 250;
+//	hyms[1].height = 250;
+//	hyms[2].type = "html";
+//	hyms[2].code = "<script type=\"text/javascript\">var cpro_id = \"u1309564\";<\/script><script src=\"http://cpro.baidustatic.com/cpro/ui/c.js\" type=\"text/javascript\"><\/script>";
+//	hyms[3].type = "iframe";
+//	hyms[3].src = "http://img.88rpg.net/html/click/1553_2003.html";
+//	hyms[3].width = 980;
+//	hyms[3].height = 90;
+//	hyms[4].type = "html";
+//	hyms[4].code  = "";
+//	hyms[5].type = "html";
+//	hyms[5].code  = "<iframe src=\"http://www.narutom.com/v2/v/p/loading.html\" width=\"300\" height=\"300\" frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" allowtransparency=\"yes\"><\/iframe>";
+//	//hyms[5].type = "html";
+//	//hyms[5].code  = "<script type=\"text\/javascript\">var cpro_id = \"u1353427\";<\/script><script src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\" type=\"text\/javascript\"><\/script>";

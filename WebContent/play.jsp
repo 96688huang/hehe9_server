@@ -460,7 +460,10 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 			</div>
 		</div>
 	</div>
-
+	<div class="counts" id="div_cg1"></div>
+	<div class="counts" id="div_cg2"></div>
+	<div class="counts" id="div_cg25"></div>
+	<div id="light" title="双击关灯(Esc)"></div>
 	<script type="text/javascript">
 		document.getElementById("cg1").innerHTML = document
 				.getElementById("div_cg1").innerHTML;
@@ -472,18 +475,18 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 				.getElementById("div_cg25").innerHTML;
 		document.getElementById("div_cg25").innerHTML = "";
 		player.lighter.bind();
-		var duoshuoQuery = {
-			short_name : "narutom"
-		};
-		(function() {
-			var ds = document.createElement('script');
-			ds.type = 'text/javascript';
-			ds.async = true;
-			ds.src = 'http://static.duoshuo.com/embed.js';
-			ds.charset = 'UTF-8';
-			(document.getElementsByTagName('head')[0] || document
-					.getElementsByTagName('body')[0]).appendChild(ds);
-		})();
+		//var duoshuoQuery = {
+		//	short_name : "narutom"
+		//};
+		//(function() {
+		//	var ds = document.createElement('script');
+		//	ds.type = 'text/javascript';
+		//	ds.async = true;
+		//	ds.src = 'http://static.duoshuo.com/embed.js';
+		//	ds.charset = 'UTF-8';
+		//	(document.getElementsByTagName('head')[0] || document
+		//			.getElementsByTagName('body')[0]).appendChild(ds);
+		//})();
 	</script>
 </body>
 </html>
