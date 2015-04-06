@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.utils.StringUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
@@ -57,31 +58,32 @@ public class VideoPlayAction extends ActionSupport {
 	/** 视频最近几个分集的数量 */
 	private static final int NEAR_EPISODE_COUNT = 3;
 
-	private static final String TO_PLAY = "toPlay";
+	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
+	private static final String PLAY_PAGE = PageUrlFlagEnum.PLAY_PAGE.getUrlFlag();
 
 	public String play() {
 		if (videoId <= 0 || episodeId <= 0 || episodeNo <= 0) {
-			return TO_PLAY;
+			return MAIN_PAGE;
 		}
 
 		video = videoService.findById(videoId);
 		Integer[] episodeNoArr = new Integer[] { episodeNo - 1, episodeNo, episodeNo + 1 };
 		List<VideoEpisode> episodeList = videoEpisodeService.list(videoId, 1, NEAR_EPISODE_COUNT, episodeNoArr);
 		if (CollectionUtils.isEmpty(episodeList)) {
-			return TO_PLAY;
+			return PLAY_PAGE;
 		}
 
 		if (episodeList.size() == NEAR_EPISODE_COUNT) {
-			nextEpisode = episodeList.get(0);	// 按分集倒序
+			nextEpisode = episodeList.get(0); // 按分集倒序
 			episode = episodeList.get(1);
-			preEpisode = episodeList.get(2);	
+			preEpisode = episodeList.get(2);
 		} else if (episodeList.size() == 2) {
 			episode = episodeList.get(0);
 			preEpisode = episodeList.get(1);
-		} else if (episodeList.size() == 1){
+		} else if (episodeList.size() == 1) {
 			episode = episodeList.get(0);
 		}
-		return TO_PLAY;
+		return PLAY_PAGE;
 	}
 
 	public Integer getVideoId() {

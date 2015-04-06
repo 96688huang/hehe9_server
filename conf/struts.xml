@@ -20,15 +20,17 @@
 	</package>
 
 	<package name="video" namespace="/video" extends="struts-default, json-default">
-		<action name="videoAction" class="videoAction" method="{1}">
-			<result name="index" type="json">
-				<param name="videoList">videoList</param>
-			</result>
+		<global-results>
 			<result name="toMain">/main.jsp</result>
+		</global-results>
+	
+		<action name="videoAction" class="videoAction" method="{1}" />
+		<action name="videoListAction" class="videoListAction" method="{1}">
+			<result name="toList">/list.jsp</result>
 		</action>
 		<action name="episodeAction" class="videoEpisodeAction"
 			method="{1}">
-			<result name="toList">/list.jsp</result>
+			<result name="toEpisodeList">/episode_list.jsp</result>
 		</action>
 		<action name="playAction" class="videoPlayAction"
 			method="{1}">

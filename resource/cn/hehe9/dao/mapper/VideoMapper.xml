@@ -341,4 +341,18 @@
 		order by rank asc, id asc
 		limit #{offset}, #{count}
 	</select>
+	
+    <select id="countBy" parameterType="map" resultType="INTEGER">
+	select count(1)	from video
+		where 1=1
+		<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="firstChar != null and firstChar != ''">
+			and first_char = #{firstChar,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null and name != ''">
+			and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+	</select>
 </mapper>

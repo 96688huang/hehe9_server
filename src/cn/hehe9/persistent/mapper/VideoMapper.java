@@ -70,4 +70,12 @@ public interface VideoMapper {
 	 * @return
 	 */
 	public List<Video> findBy(Map<String, Object> params);
+
+	/**
+	 * 根据条件, 统计视频数量
+	 *
+	 * @param params
+	 * @return
+	 */
+	public Integer countBy(Map<String, Object> params);
 }

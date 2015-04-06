@@ -22,14 +22,6 @@ public class VideoDao {
 	@Resource
 	private VideoMapper videoMapper;
 
-	public List<Video> list(int page, int count) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		int offset = (page - 1) * count;
-		params.put("offset", offset);
-		params.put("count", count);
-		return videoMapper.findBy(params);
-	}
-
 	public List<Video> listBrief(int page, int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		int offset = (page - 1) * count;
@@ -85,34 +77,6 @@ public class VideoDao {
 		return videoMapper.selectByPrimaryKey(videoId);
 	}
 
-	/**
-	 * 根据条件, 查询视频信息
-	 * @param name
-	 * @return
-	 */
-	public List<Video> findByName(String name) {
-		return findBriefBy(name, 1, Integer.MAX_VALUE);
-	}
-
-	/**
-	 * 根据条件, 查询视频信息
-	 * @param name	名称
-	 * @param page	查询页码
-	 * @param count	查询数量
-	 * @return
-	 */
-	public List<Video> findByName(String name, int page, int count) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		if (StringUtils.isNotEmpty(name)) {
-			params.put("name", name);
-		}
-
-		int offset = (page - 1) * count;
-		params.put("offset", offset);
-		params.put("count", count);
-		return videoMapper.findBy(params);
-	}
-
 	public int save(Video video) {
 		video.setCreateTime(new Date());
 		return videoMapper.insertSelective(video);
@@ -120,6 +84,12 @@ public class VideoDao {
 
 	public int udpate(Video video) {
 		return videoMapper.updateByPrimaryKeySelective(video);
+	}
+
+	public Integer countBy(String name) {
+		Map<String, Object> params = new HashMap<String, Object>(1);
+		params.put("name", name);
+		return videoMapper.countBy(params);
 	}
 
 }

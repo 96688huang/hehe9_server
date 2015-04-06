@@ -97,5 +97,4 @@
 			cron="0 28 20 * * ?" />
 	</task:scheduled-tasks>
 
-
 </beans>

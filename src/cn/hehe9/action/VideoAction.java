@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.utils.DateUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.StringUtil;
@@ -55,15 +56,7 @@ public class VideoAction extends ActionSupport {
 	/** 动画片大全的视频数量 */
 	private final int MAIN_MENU_VIDEOS_COUNT = 40;
 
-	public String list() {
-		List<Video> list = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
-		System.err.println(list.get(0).toString());
-		if (list == null || list.isEmpty()) {
-			return null;
-		}
-		String videoList = JacksonUtil.encodeQuietly(list);
-		return "toMain";
-	}
+	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 
 	public String toMain() {
 		// TODO 查看缓存中是否存在首页
@@ -98,7 +91,7 @@ public class VideoAction extends ActionSupport {
 
 		// TODO 把首页加入缓存
 
-		return "toMain";
+		return MAIN_PAGE;
 	}
 
 	public List<Video> getHotVideoList() {

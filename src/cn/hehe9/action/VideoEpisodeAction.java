@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.hehe9.common.constants.PageUrlFlagEnum;
+import cn.hehe9.common.constants.Paging;
 import cn.hehe9.common.utils.StringUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
@@ -36,36 +38,34 @@ public class VideoEpisodeAction extends ActionSupport {
 	/** 视频信息 */
 	private Video video;
 
-	/** 页码 */
-	private Integer page = 1;
+	//	/** 页码 */
+	//	private Integer page = 1;
+	//
+	//	/** 查询分集的数量 */
+	//	private Integer queryCount = 20;
+	//
+	//	/** 页的数量 */
+	//	private Integer pageCount;
+	//
+	//	/** 分集总数 */
+	//	private Integer total;
 
-	/** 查询分集的数量 */
-	private Integer queryCount = 20;
-
-	/** 页的数量 */
-	private Integer pageCount;
-
-	/** 分集总数 */
-	private Integer total;
+	private Paging paging;
 
 	/** 分集列表 */
 	private List<VideoEpisode> episodeList;
 
-	private static final String TO_LIST = "toList";
+	private static final String EPISODE_LIST_PAGE = PageUrlFlagEnum.EPISODE_LIST_PAGE.getUrlFlag();
 
 	public String list() {
-		// page 非法处理
-		if (page <= 0 || !StringUtil.isNumeric(page + "")) {
-			page = 1;
+		if (paging == null) {
+			paging = new Paging();
 		}
 
 		video = videoService.findById(videoId);
-		episodeList = videoEpisodeService.list(videoId, page, queryCount);
-		total = videoEpisodeService.count(videoId);
-
-		int remainCount = total % queryCount > 0 ? 1 : 0;
-		pageCount = (total / queryCount) + remainCount;
-		return TO_LIST;
+		episodeList = videoEpisodeService.list(videoId, paging.getPage(), paging.getPageCount());
+		paging.setTotal(videoEpisodeService.count(videoId));
+		return EPISODE_LIST_PAGE;
 	}
 
 	public Integer getVideoId() {
@@ -84,36 +84,44 @@ public class VideoEpisodeAction extends ActionSupport {
 		this.video = video;
 	}
 
-	public Integer getPage() {
-		return page;
+	//	public Integer getPage() {
+	//		return page;
+	//	}
+	//
+	//	public void setPage(Integer page) {
+	//		this.page = page;
+	//	}
+	//
+	//	public Integer getQueryCount() {
+	//		return queryCount;
+	//	}
+	//
+	//	public void setQueryCount(Integer queryCount) {
+	//		this.queryCount = queryCount;
+	//	}
+	//
+	//	public Integer getPageCount() {
+	//		return pageCount;
+	//	}
+	//
+	//	public void setPageCount(Integer pageCount) {
+	//		this.pageCount = pageCount;
+	//	}
+	//
+	//	public Integer getTotal() {
+	//		return total;
+	//	}
+	//
+	//	public void setTotal(Integer total) {
+	//		this.total = total;
+	//	}
+
+	public Paging getPaging() {
+		return paging;
 	}
 
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	public Integer getQueryCount() {
-		return queryCount;
-	}
-
-	public void setQueryCount(Integer queryCount) {
-		this.queryCount = queryCount;
-	}
-
-	public Integer getPageCount() {
-		return pageCount;
-	}
-
-	public void setPageCount(Integer pageCount) {
-		this.pageCount = pageCount;
-	}
-
-	public Integer getTotal() {
-		return total;
-	}
-
-	public void setTotal(Integer total) {
-		this.total = total;
+	public void setPaging(Paging paging) {
+		this.paging = paging;
 	}
 
 	public List<VideoEpisode> getEpisodeList() {

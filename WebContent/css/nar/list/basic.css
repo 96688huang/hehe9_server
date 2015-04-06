@@ -1,0 +1,95 @@
+/* 全局共用属性CSS */
+*{
+	margin:0;
+	padding:0;
+}
+body {
+	CURSOR: url('http://www.narutom.com/style/narutom.gif');
+	font:12px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman";
+	text-align:center;
+	color:#666;
+	background:#fff;
+}
+body p,body ul,body dl {
+	text-align:left;
+}
+ul,dl {
+	list-style:none;
+}
+/* 确保访问后的状态优先于鼠标变换状态 */
+a:link,a:visited {
+	color:#007498;
+	text-decoration:none;
+}
+a:hover,a:active {
+	color:#003;
+	text-decoration:underline;
+}
+a img {
+	border:0;
+}
+.nmain {
+	width:950px;margin:0 auto;
+	position: relative;
+        z-index:100;
+}
+.wrap {
+	width:900px;
+	margin:0 auto;
+}
+.wrap2 {
+	width:960px;
+	margin:0 auto;z-index:100;
+}
+.clearfix:after {
+	content:"火影忍者网 - www.narutom.com";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.clearfix {
+	display:inline-block;
+}
+.clearfix {
+	display:block;
+}
+.softblist,.softolist , .narutolist2 {
+	list-style:none;
+	line-height:22px;
+}
+.softblist li,.softolist li, {
+	height:22px;
+	line-height:22px;
+	overflow:hidden;
+	white-space:normal;
+	padding-left:15px;
+	background:url('../images/li_bg3.gif') no-repeat left 7px;
+}
+ .narutolist li {
+ 	float:left;
+ 	list-style:none;
+	line-height:22px;
+	background:url('../images/li_bg4.gif') no-repeat left 5px;
+	height:22px;
+	line-height:22px;
+	overflow:hidden;
+	white-space:normal;
+	padding-left:12px;
+	background:url('../images/li_bg3.gif') no-repeat left 5px;
+	width:80px;
+ }
+.softolist li {
+	background:url('../images/li_bg4.gif') no-repeat left 7px;
+	padding-left:12px;overflow:hidden;
+}
+.softolist li a:link,.softolist li a:visited, .narutolist li a:link, .narutolist li a:visited{
+	color:#8F5400;
+}
+.softolist li a:hover,.softolist li a:active , .narutolist li a:hover, .narutolist li a:active{
+	color:#f00;
+	text-decoration:underline;
+}
+.softblist li span,.softolist li span {
+	float:right;
+}

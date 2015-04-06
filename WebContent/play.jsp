@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 	String path = request.getContextPath();
@@ -27,7 +27,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 
 <link rel="stylesheet" href="./css/nar/play/p.css" media="all"
 	type="text/css">
-<link rel="stylesheet" href="./css/nar/index/bdsstyle.css"
+<link rel="stylesheet" href="./css/nar/bdsstyle.css"
 	type="text/css">
 
 
@@ -110,30 +110,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 			</div>
 		</div>
 	</div>
-	<div class="header" id="topper">
-		<div class="wrap top" id="header">
-			<div class="logo">
-				<a href="http://www.narutom.com/"> 火影忍者中文网 </a>
-			</div>
-			<div class="menu">
-				<a href="http://www.narutom.com/video/" title="火影忍者全集,火影忍者在线观看">
-					火影忍者 </a> | <a href="http://www.narutom.com/onepiece/" title="海贼王">
-					海贼王 </a> | <a href="http://www.narutom.com/jinjidejuren/" title="进击的巨人">
-					进击的巨人 </a> | <a href="http://www.narutom.com/fairytail/" title="妖精的尾巴">
-					妖精的尾巴 </a> | <a href="http://www.narutom.com/bleach/" title="死神">
-					死神 </a> | <a href="http://www.narutom.com/m/meishidefulu/"
-					title="美食的俘虏"> 美食的俘虏 </a> | <a
-					href="http://www.narutom.com/ss/shiwangelengxiaohua/"
-					title="十万个冷笑话"> 十万个冷笑话 </a> | <a
-					href="http://www.narutom.com/cartoon/xialan/" title="侠岚"> 侠岚 </a> |
-				<a href="http://www.narutom.com/cartoon/quanzhilieren/"
-					title="新全职猎人"> 全职猎人重制版 </a> | <a
-					href="http://www.narutom.com/cartoon/seiya-omega/"
-					title="圣斗士星矢Ω，圣斗士星矢欧米茄"> 圣斗士星矢Ω </a>
-			</div>
-		</div>
-	</div>
-
+	<jsp:include page="head.jsp" />
 
 	<div class="wraps gt1" id="cg1">
 		<!-- <script src="http://www.77u.com/page/s.php?s=50&amp;w=960&amp;h=60"></script> -->

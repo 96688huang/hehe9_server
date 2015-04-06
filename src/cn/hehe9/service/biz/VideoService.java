@@ -21,4 +21,16 @@ public class VideoService {
 	public Video findById(Integer videoId) {
 		return videoDao.findById(videoId);
 	}
+
+	public List<Video> findBriefByName(String name, int page, int queryCount) {
+		return videoDao.findBriefBy(name, page, queryCount);
+	}
+
+	public Integer countBy(String name) {
+		return videoDao.countBy(name);
+	}
+
+	public Integer countBy() {
+		return videoDao.countBy(null);
+	}
 }
