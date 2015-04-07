@@ -52,8 +52,10 @@
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
 					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
 			</div>
-			<div id="naruto_desk" style="height: 660px;">
+			<div id="naruto_desk">
 				<div class="ltitle">${displayTitle}</div>
+				<form id="queryForm" action="./video/videoListAction!list" method = "post">
+				<input name="searchName" type="hidden" value="${searchName }" />
 				<ul id="indexcartoonList">
 					<s:iterator value="videoList">
 						<li><a href="./video/episodeAction!list?videoId=${id }"
@@ -64,6 +66,7 @@
 								color="#FF0000">${name}</font></a></li>
 					</s:iterator>
 				</ul>
+				</form>
 				<%-- 				<c:set value="name" var="name" scope=”request” /> 
 				<c:choose>
 					<c:when test="${isSearch == true }">
@@ -75,7 +78,7 @@
 				</c:choose> --%>
 				
 				<div class="rblank"></div>
-				<jsp:include page="list_paging.jsp" />
+				<jsp:include page="pagination.jsp" />
 			</div>
 			
 			<%-- 			<div class="itabg">

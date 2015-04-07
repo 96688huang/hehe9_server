@@ -10,7 +10,7 @@ package cn.hehe9.common.constants;
  * <br> 创建时间：2015年4月6日 下午2:41:41
  * <br>==========================
  */
-public class Paging {
+public class Pagination {
 	/** 页码 */
 	private int page = 1;
 	/** 查询数量 */

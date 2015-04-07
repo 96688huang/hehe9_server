@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.hehe9.common.constants.PageUrlFlagEnum;
-import cn.hehe9.common.constants.Paging;
+import cn.hehe9.common.constants.Pagination;
 import cn.hehe9.common.utils.StringUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
@@ -50,7 +50,7 @@ public class VideoEpisodeAction extends ActionSupport {
 	//	/** 分集总数 */
 	//	private Integer total;
 
-	private Paging paging;
+	private Pagination pagination;
 
 	/** 分集列表 */
 	private List<VideoEpisode> episodeList;
@@ -58,13 +58,13 @@ public class VideoEpisodeAction extends ActionSupport {
 	private static final String EPISODE_LIST_PAGE = PageUrlFlagEnum.EPISODE_LIST_PAGE.getUrlFlag();
 
 	public String list() {
-		if (paging == null) {
-			paging = new Paging();
+		if (pagination == null) {
+			pagination = new Pagination();
 		}
 
 		video = videoService.findById(videoId);
-		episodeList = videoEpisodeService.list(videoId, paging.getPage(), paging.getPageCount());
-		paging.setTotal(videoEpisodeService.count(videoId));
+		episodeList = videoEpisodeService.list(videoId, pagination.getPage(), pagination.getPageCount());
+		pagination.setTotal(videoEpisodeService.count(videoId));
 		return EPISODE_LIST_PAGE;
 	}
 
@@ -116,12 +116,12 @@ public class VideoEpisodeAction extends ActionSupport {
 	//		this.total = total;
 	//	}
 
-	public Paging getPaging() {
-		return paging;
+	public Pagination getPagination() {
+		return pagination;
 	}
 
-	public void setPaging(Paging paging) {
-		this.paging = paging;
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
 	}
 
 	public List<VideoEpisode> getEpisodeList() {

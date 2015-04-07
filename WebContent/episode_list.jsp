@@ -54,6 +54,8 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 			<div id="content2">
 				<div class="listitem">
 					<h1>${video.name}在线观看</h1>
+					<form id="queryForm" action="./video/episodeAction!list?" method = "post">
+					<input name="videoId" value="${video.id }" type="hidden"/>
 					<ul id="narutoList">
 						<s:iterator value="episodeList" var="episode">
 							<li><a href="./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}"
@@ -69,9 +71,10 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 										test="title != null">「${episode.title}」</s:if></a></li>
 						</s:iterator>
 					</ul>
+					</form>
 				</div>
 				<div class="rblank"></div>
-				<jsp:include page="episode_paging.jsp"	/>
+				<jsp:include page="pagination.jsp"	/>
 			</div>
 			<div id="sidebar">
 				<div id="menunav" class="clearfix">
