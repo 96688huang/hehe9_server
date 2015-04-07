@@ -1,5 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
-	contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 	String path = request.getContextPath();
@@ -7,39 +6,38 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<div id="Head" class="Ncontainer">
-	<div id="narutologo">
-		<span class="red BOLD"><a href="http://www.narutom.com/">火影忍者中文网</a></span>
-	</div>
-	<div id="topbanner">
-		<div class="container">
-			<div id="search">
-				<form id="searchForm" action="./video/videoListAction!list"
-					method="post">
-					<input id="searchName" type="text" name="searchName">&nbsp;&nbsp;
-					<input class="button" type="submit" value="搜&nbsp;索">
-				</form>
-
-				<%-- 				   <s:form action="videoListAction!list" namespace="/video" method="post">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">		
+		<div id="Head" class="Ncontainer">
+			<div id="narutologo">
+				<span class="red BOLD"><a href="http://www.narutom.com/">火影忍者中文网</a></span>
+			</div>
+			<div id="topbanner">
+				<div class="container">
+				  <div id="search">
+				  	<form action="./video/videoListAction!list" method="post">
+					    <input type="text" name="searchName">&nbsp;&nbsp;
+					    <input class="button" type="submit" value="搜&nbsp;索">
+				    </form>
+				    
+<%-- 				   <s:form action="videoListAction!list" namespace="/video" method="post">
 					    <s:textfield type="text" name="name"/>&nbsp;&nbsp;
 					    <s:submit class="button" type="submit" value="搜&nbsp;索"/>
 				    </s:form> --%>
-			</div>
-		</div>
-
-		<!-- <script type="text/javascript">
+				  </div>
+				</div>
+			
+				<!-- <script type="text/javascript">
 					hym.show(0);
 				</script> -->
-		<!-- 原广告位 -->
-		<!-- <iframe scrolling="no" frameborder="0" width="600" height="60"
+				<!-- 原广告位 -->
+				<!-- <iframe scrolling="no" frameborder="0" width="600" height="60"
 					src="http://www.narutom.com/v2/v/i/4399.html"></iframe> -->
-	</div>
-</div>
-<div id="Narutonav" class="Ncontainer">
-	<ul>
-		<li><a href="./"><span>首 页</span></a></li>
-		<!-- <li><a href="http://www.narutom.com/comic/"
+			</div>
+		</div>
+		<div id="Narutonav" class="Ncontainer">
+			<ul>
+				<li><a href="http://www.narutom.com/"><span>首 页</span></a></li>
+				<li><a href="http://www.narutom.com/comic/"
 					onmouseover="showMenu(1)">火影忍者</a></li>
 				<li><a href="http://www.narutom.com/bleach/"
 					onmouseover="showMenu(2)" title="死神">死神</a></li>
@@ -49,23 +47,11 @@
 					onmouseover="showMenu(5)" title="妖精的尾巴">妖精的尾巴</a></li>
 				<li><a href="http://www.narutom.com/cartoon/"
 					onmouseover="showMenu(4)">在线动漫</a></li>
-				<li><a href="http://bbs.narutom.com/" target="_blank">火影论坛</a></li> -->
-	</ul>
-</div>
-<div id="Ntop" class="Ncontainer">
-	<div class="Nleft"></div>
-	<div id="narutolist1" class="listMenu" style="display: ''">
-		<a>热门搜索：</a>&nbsp;&nbsp; <a href="javascript:onSearch('航海王')"
-			title="海贼王">海贼王</a>&nbsp; <a href="javascript:onSearch('猪猪侠')"
-			title="猪猪侠">猪猪侠</a>&nbsp;<a href="javascript:onSearch('尸兄')"
-			title="尸兄">尸兄</a>&nbsp; <a href="javascript:onSearch('七龙珠')"
-			title="七龙珠">七龙珠</a>&nbsp; <a href="javascript:onSearch('熊出没')"
-			title="熊出末">熊出没</a>&nbsp; <a href="javascript:onSearch('灌篮高手')"
-			title="灌篮高手">灌篮高手</a>&nbsp; <a href="javascript:onSearch('妖精的尾巴')"
-			title="妖精的尾巴">妖精的尾巴</a>
-	</div>
-
-	<!-- 
+				<li><a href="http://bbs.narutom.com/" target="_blank">火影论坛</a></li>
+			</ul>
+		</div>
+		<div id="Ntop" class="Ncontainer">
+			<div class="Nleft"></div>
 			<div id="narutolist1" class="listMenu" style="display: ''">
 				<a href="http://www.narutom.com/news/" title="动漫新闻,最新的火影死神等动漫情报">动漫新闻</a>
 				| <a href="http://www.narutom.com/comic/" title="火影忍者漫画">火影漫画</a> |
@@ -112,17 +98,5 @@
 					href="http://www.narutom.com/cartoon/xiaolirenchuan/" title="小李忍传"
 					target="_blank">小李忍传</a> |<a href="http://www.narutom.com/cartoon/"
 					title="更多动漫" target="_blank">更多动漫</a>
-			</div> -->
-</div>
-<script type="text/javascript">
-	function onSearch(keyword) {
-		if (keyword == null || keyword == '' || keyword == undefined) {
-			return;
-		}
-
-		$("#searchName").attr("value", keyword);
-		$("#searchForm").submit();
-	}
-
-	
-</script>
+			</div>
+		</div>

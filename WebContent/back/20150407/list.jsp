@@ -25,12 +25,12 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
+<link rel="stylesheet" href="./css/nar/index/i.css" media="all"
+	type="text/css">
 <link rel="stylesheet" href="./css/nar/bdsstyle.css" type="text/css">
 <link rel="stylesheet" href="./css/nar/search.css" type="text/css">
 <link rel="stylesheet" href="./css/nar/list/index_layout2.css"
 	media="all" type="text/css">
-<link rel="stylesheet" href="./css/nar/index/i.css" media="all"
-	type="text/css">
 </head>
 <body>
 	<div class="nmain">
