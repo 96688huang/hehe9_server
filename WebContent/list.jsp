@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -52,20 +53,23 @@
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
 					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
 			</div>
-			<div id="naruto_desk">
+			<div id="naruto_desk" style="height: 650px; padding:10px;">
 				<div class="ltitle">${displayTitle}</div>
-				<form id="queryForm" action="./video/videoListAction!list" method = "post">
-				<input name="searchName" type="hidden" value="${searchName }" />
-				<ul id="indexcartoonList">
-					<s:iterator value="videoList">
-						<li><a href="./video/episodeAction!list?videoId=${id }"
-							title="${name} ${updateRemark}" target="_blank"><img
-								alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
-							href="./video/episodeAction!list?videoId=${id }"
-							title="${name} ${updateRemark}" target="_blank"><font
-								color="#FF0000">${name}</font></a></li>
+				<form id="queryForm" action="./video/videoListAction!list"
+					method="post">
+					<input name="searchName" type="hidden" value="${searchName }" />
+					<s:iterator value="videoListHolder" var="videoList">
+						<ul id="indexcartoonList">
+							<s:iterator value="videoList">
+								<li><a href="./video/episodeAction!list?videoId=${id }"
+									title="${name} ${updateRemark}" target="_blank"><img
+										alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
+									href="./video/episodeAction!list?videoId=${id }"
+									title="${name} ${updateRemark}" target="_blank"><font
+										color="#FF0000">${name}</font></a></li>
+							</s:iterator>
+						</ul>
 					</s:iterator>
-				</ul>
 				</form>
 				<%-- 				<c:set value="name" var="name" scope=”request” /> 
 				<c:choose>
@@ -76,11 +80,11 @@
 						<c:set value="./video/videoListAction!list" var="requestUrl" scope="request"/>
 					</c:otherwise>
 				</c:choose> --%>
-				
+
 				<div class="rblank"></div>
 				<jsp:include page="pagination.jsp" />
 			</div>
-			
+
 			<%-- 			<div class="itabg">
 				<script type="text/javascript">
 					hym.show(3);

@@ -1,5 +1,6 @@
 package cn.hehe9.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -34,18 +35,21 @@ public class VideoListAction extends ActionSupport {
 	/** 展示的标题 */
 	private String displayTitle;
 
-	/** 视频列表 */
-	private List<Video> videoList;
+	/** 视频列表容器 */
+	private List<List<Video>> videoListHolder;
 
 	/** 分页参数*/
 	private Pagination pagination = new Pagination();
+	
+	/** 列表页视频的数量 */
+	private final int VIDEOS_COUNT_PER_LINE = 6;
 
 	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 	private static final String LIST_PAGE = PageUrlFlagEnum.LIST_PAGE.getUrlFlag();
 
 	public String listHot() {
 		displayTitle = VideoListTitleEnum.VIDEOS_HOT.getTitle();
-		videoList = videoService.listBrief(pagination.getPage(), pagination.getQueryCount());
+		List<Video> videoList = videoService.listBrief(pagination.getPage(), pagination.getQueryCount());
 		pagination.setTotal(videoService.countBy());
 		return LIST_PAGE;
 	}
@@ -57,7 +61,20 @@ public class VideoListAction extends ActionSupport {
 			displayTitle = VideoListTitleEnum.SEARCH_RESULT.getTitle();
 		}
 
-		videoList = videoService.findBriefByName(searchName, pagination.getPage(), pagination.getQueryCount());
+		videoListHolder = new ArrayList<List<Video>>(VIDEOS_COUNT_PER_LINE);
+		List<Video> videoList = videoService.findBriefByName(searchName, pagination.getPage(), pagination.getQueryCount());
+		int count = 0;
+		for (;;) {
+			int preNextCount = count + VIDEOS_COUNT_PER_LINE;
+			int nextCount = preNextCount > videoList.size() ? videoList.size() : preNextCount;
+			videoListHolder.add(videoList.subList(count, nextCount));
+			count = preNextCount;
+
+			if (nextCount >= videoList.size()) {
+				break;
+			}
+		}
+		
 		pagination.setTotal(videoService.countBy(searchName));
 		return LIST_PAGE;
 	}
@@ -78,12 +95,12 @@ public class VideoListAction extends ActionSupport {
 		this.displayTitle = displayTitle;
 	}
 
-	public List<Video> getVideoList() {
-		return videoList;
+	public List<List<Video>> getVideoListHolder() {
+		return videoListHolder;
 	}
-
-	public void setVideoList(List<Video> videoList) {
-		this.videoList = videoList;
+	
+	public void setVideoListHolder(List<List<Video>> videoListHolder) {
+		this.videoListHolder = videoListHolder;
 	}
 
 	public Pagination getPagination() {

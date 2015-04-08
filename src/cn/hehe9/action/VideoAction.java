@@ -36,7 +36,6 @@ public class VideoAction extends ActionSupport {
 	@Resource
 	private VideoEpisodeService videoEpisodeService;
 
-	private List<Video> hotVideoList;
 	private List<List<Video>> hotVideoListHolder;
 
 	private List<VideoEpisode> hotEpisodeList;
@@ -62,7 +61,7 @@ public class VideoAction extends ActionSupport {
 		// TODO 查看缓存中是否存在首页
 
 		// 最热门的视频列表
-		hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
+		List<Video> hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
 		hotVideoListHolder = new ArrayList<List<Video>>();
 		int count = 0;
 		for (;;) {
@@ -92,14 +91,6 @@ public class VideoAction extends ActionSupport {
 		// TODO 把首页加入缓存
 
 		return MAIN_PAGE;
-	}
-
-	public List<Video> getHotVideoList() {
-		return hotVideoList;
-	}
-
-	public void setHotVideoList(List<Video> hotVideoList) {
-		this.hotVideoList = hotVideoList;
 	}
 
 	public List<List<Video>> getHotVideoListHolder() {
