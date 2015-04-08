@@ -55,7 +55,7 @@
 <div id="Ntop" class="Ncontainer">
 	<div class="Nleft"></div>
 	<div id="narutolist1" class="listMenu" style="display: ''">
-		<a>热门搜索：</a>&nbsp;&nbsp; <a href="javascript:onSearch('航海王')"
+		<span style="color:red; margin-left: 25px;">热门搜索：</span>&nbsp;&nbsp; <a href="javascript:onSearch('航海王')"
 			title="海贼王">海贼王</a>&nbsp; <a href="javascript:onSearch('猪猪侠')"
 			title="猪猪侠">猪猪侠</a>&nbsp;<a href="javascript:onSearch('尸兄')"
 			title="尸兄">尸兄</a>&nbsp; <a href="javascript:onSearch('七龙珠')"

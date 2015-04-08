@@ -10,7 +10,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>list</title>
+<title>episode list</title>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
@@ -38,12 +38,14 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 		<div id="nav">
 			<p>
 				<label>您的位置: <!--empire.url--> <a
-					href="http://www.narutom.com/" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
-					href="http://www.narutom.com/onepiece/" class="classlinkclass">海贼王</a>&nbsp;>&nbsp;<a
-					href="http://www.narutom.com/onepiece/video/"
-					class="classlinkclass">海贼王在线观看</a>&nbsp;><!--empire.url--></label><span><script
+					href="./" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
+					href="./video/episodeAction!list?videoId=${video.id }" class="classlinkclass">${video.name }</a>&nbsp;>&nbsp;
+					<a class="classlinkclass">${video.name }在线观看</a>&nbsp;><!--empire.url--></label><span><script
 						src="/style/nav.js"></script></span>
 			</p>
+		</div>
+		<div align="center" style="width: 100%">
+			<img alt="${video.name }" src="${video.posterBigUrl }">
 		</div>
 		<div class="wrap2 vtg3">
 			<script type="text/javascript">
@@ -51,6 +53,24 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 			</script>
 		</div>
 		<div id="container2" class="clearfix">
+		<div id="sidebar" style="float: right;">
+				<div class="sidebarad">
+					<div class="ltitle">${video.name }</div>
+						<div style="margin: 10px auto 10px auto; width: 100%; text-align: center;"><img alt="${video.name }" src="${video.iconUrl }"></div>
+						<div style="width: 100%;" align="center">
+						<div style="width: 80%; text-align: left;">
+						${video.author }<p/>
+						<div style="margin:10px auto 10px auto ;height: 1px; width:100%; overflow: hidden; background: url(./img/line1.png) repeat-x;"></div>
+						<h1>剧情：</h1><p/>
+						${video.storyLine }<p/>
+						<div style="margin:10px auto 10px auto ;height: 1px; width:100%; overflow: hidden; background: url(./img/line1.png) repeat-x;"></div>
+						${video.playCountWeekly }<p/>
+						总播放量：${video.playCountTotal }
+						</div>
+						</div>
+				</div>
+				<!-- <div class="blank"></div> -->
+			</div>
 			<div id="content2">
 				<div class="listitem">
 					<h1>${video.name}在线观看</h1>
@@ -76,80 +96,11 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 				<div class="rblank"></div>
 				<jsp:include page="pagination.jsp"	/>
 			</div>
-			<div id="sidebar">
-				<div id="menunav" class="clearfix">
-					<div class="ltitle">本站海贼微信公众号</div>
-					<ul id="comiczt">
-						<div style="width: 180px; padding-left: 10px;">
-							<img src="/v3/wxop.jpg" /><BR>打开微信扫一扫，<br>关注本站公众号，手机微信直接看动画漫画！
-						</div>
-					</ul>
-				</div>
-				<div class="blank"></div>
-
-				<div class="sidebarad">
-					<div class="ltitle">更新</div>
-					<ul class="softolist">
-						<li><a href="http://www.narutom.com/comic/26113.html"
-							target="_blank" title="火影忍者最终话「漩涡鸣人!」">火影忍者最终话「漩涡鸣人!」</a></li>
-						<li><a href="http://www.narutom.com/video/27197.html"
-							target="_blank" title="火影忍者622集「逃走VS踪迹!」"><font
-								color="#FF0000">火影忍者622集「逃走VS踪迹!」</font></a></li>
-						<li><a href="http://www.narutom.com/news/27204.html"
-							target="_blank" title="动画「伪恋:」4月10日首播 新角色公开声优沼仓爱美加盟">动画「伪恋:」4月10日首播
-								新角</a></li>
-						<li><a href="http://www.narutom.com/juqingfenxi/27055.html"
-							target="_blank" title="FD分析组|非主流分析 - 查克拉 ">FD分析组|非主流分析 - 查克拉</a></li>
-						<li><a
-							href="http://www.narutom.com/onepiece/video/27171.html"
-							target="_blank" title="海贼王第683集「大地鸣动 破坏神巨大琵卡降临!」">海贼王第683集「大地鸣动
-								破坏</a></li>
-						<li><a href="http://www.narutom.com/bleach/video/14765.html"
-							target="_blank" title="死神第366集「变化的历史!不变的心灵!!」[完结]"><font
-								color="#5C44BB">死神第366集「变化的历史!不变</font></a></li>
-						<li><a href="http://www.narutom.com/tongren/27036.html"
-							target="_blank" title="UZUMAKI NARUTO 画页全集!">UZUMAKI NARUTO
-								画页全集!</a></li>
-						<li><a href="http://www.narutom.com/tongren/27030.html"
-							target="_blank" title="火影忍者佐助写轮眼传第3话!">火影忍者佐助写轮眼传第3话!</a></li>
-						<li><a href="http://www.narutom.com/tongren/27029.html"
-							target="_blank" title="火影忍者佐助写轮眼传第2话!">火影忍者佐助写轮眼传第2话!</a></li>
-					</ul>
-				</div>
-				<div class="blank"></div>
-				<div id="list_recommendation" class="clearfix">
-					<div class="ltitle">热门</div>
-					<ul class="softolist">
-						<li><a href="http://www.narutom.com/tongren/8343.html"
-							target="_blank" title="火影忍者外传-黄色闪光">火影忍者外传-黄色闪光</a></li>
-						<li><a
-							href="http://www.narutom.com/article/huoyingrenzhexiaozuzhi.html"
-							target="_blank" title="火影忍者晓组织全资料">火影忍者晓组织全资料</a></li>
-						<li><a href="http://www.narutom.com/tongren/8334.html"
-							target="_blank" title="四代封印九尾(同人漫画)">四代封印九尾(同人漫画)</a></li>
-						<li><a href="http://www.narutom.com/tongren/8340.html"
-							target="_blank" title="火影忍者同人：大蛇丸vs鼬">火影忍者同人：大蛇丸vs鼬</a></li>
-						<li><a href="http://www.narutom.com/video/8470.html"
-							target="_blank" title="火影忍者298-299集「阿斯玛战死！绝望和恸哭」">火影忍者298-299集「阿斯玛战死</a></li>
-						<li><a href="http://www.narutom.com/video/8417.html"
-							target="_blank" title="火影忍者295集「老僧的祈祷」">火影忍者295集「老僧的祈祷」</a></li>
-						<li><a
-							href="http://www.narutom.com/article/dashewan-qingren.html"
-							target="_blank" title="大蛇丸殿的十大绯闻情人">大蛇丸殿的十大绯闻情人</a></li>
-						<li><a href="http://www.narutom.com/video/8455.html"
-							target="_blank" title="火影忍者296-297集「晓VS阿斯玛班决战特别篇」">火影忍者296-297集「晓VS阿斯玛</a></li>
-						<li><a
-							href="http://www.narutom.com/pic/naruto_pic/huoyingsige-xiao.html"
-							target="_blank" title="火影四格：晓的搞笑生活">火影四格：晓的搞笑生活</a></li>
-						<li><a href="http://www.narutom.com/video/8353.html"
-							target="_blank" title="火影忍者292集「来自忍者的威胁」">火影忍者292集「来自忍者的威胁</a></li>
-					</ul>
-				</div>
-
-			</div>
 		</div>
 		</div>
 		<div class="line"></div>
+		<!-- 友情链接 -->
+		<jsp:include page="friend_link.html" />
 	</div>
 	<!-- 页脚 -->
 	<jsp:include page="footer.html" />

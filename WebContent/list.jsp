@@ -13,7 +13,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>main</title>
+<title>list</title>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 
 <!-- 可选的Bootstrap主题文件（一般不用引入） -->
@@ -53,7 +53,7 @@
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
 					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
 			</div>
-			<div id="naruto_desk" style="height: 650px; padding:10px;">
+			<div id="naruto_desk" style="width:958px; height: 650px; padding:10px;">
 				<div class="ltitle">${displayTitle}</div>
 				<form id="queryForm" action="./video/videoListAction!list"
 					method="post">

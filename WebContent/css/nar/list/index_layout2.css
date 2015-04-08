@@ -318,8 +318,8 @@ margin:0;padding:0;font-size:12px;font-weight:normal;display:compact;
 	margin:5px 0 0 0;
 }
 #sidebar {
-	float:left;
-	width:202px;
+	float:right;
+	width:270px;
 }
 #sidebar h2 , #sidebar .ltitle{
 	border-top:1px #E8CA78 solid;
@@ -382,8 +382,8 @@ margin:0;padding:0;font-size:12px;font-weight:normal;display:compact;
 	width:690px;
 }
 #content2 {
-	float:right;
-	width:750px;
+	float:left;
+	width:700px;
 }
 #content .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #naruto_name , #cartoon_List{
 	border:1px #88D3E3 solid;

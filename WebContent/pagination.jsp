@@ -10,7 +10,7 @@
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <div class="pagenav">
-	分页：页次：<b>${pagination.page}/${pagination.pageCount }</b>&nbsp;每页<b>${pagination.queryCount }</b>&nbsp;总数<b>${pagination.total }</b>&nbsp;&nbsp;&nbsp;&nbsp;
+	分页：页次：<b>${pagination.page}/${pagination.pageCount }</b>&nbsp;每页&nbsp;<b>${pagination.queryCount }</b>&nbsp;总数&nbsp;<b>${pagination.total }</b>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="javascript:getListByPage('1');">首页</a>&nbsp;&nbsp;
 	
 	<c:if test="${pagination.page - 1} > 0">
@@ -58,7 +58,6 @@
 	});
 
 	function getListByPage(page) {
-		alert("page -->" + page);
 		$("#page_id").attr("value", page);
 		$("#queryForm").submit();
 	}
