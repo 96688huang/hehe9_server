@@ -1,0 +1,5 @@
+/* Build by ued.5173.com 
+ Date:2015-01-13 14:24:20 
+ Version:3.00 */
+ (function(c){c.fed=c.fed||{};c.extend(c.fed,{swfobject:function(d,a){a=$.extend({width:100,height:100,transparent:true,url:"",background:"",callback:function(){}},a);var b="";b+='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" id="'+a.id+'" width="'+a.width+'" height="'+a.height+'" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">';b+='  <param name="movie" value="'+a.url+'" />';b+='  <param name="quality" value="high" />';if(a.transparent)b+='  <param name="wmode" value="transparent">';if(a.background)b+='  <param name="bgcolor" value="'+a.background+'" />';b+='  <param name="allowScriptAccess" value="always" />';b+='  <embed src="'+a.url+'" quality="high" name="Timer" align="middle" width="'+a.width+'" height="'+a.height+'" play="true" loop="false" allowScriptAccess="always" type="application/x-shockwave-flash"  pluginspage="http://www.macromedia.com/go/getflashplayer" wmode="transparent"></embed>';b+="</object>";$(b).appendTo($(d))}})})(jQuery);
+
