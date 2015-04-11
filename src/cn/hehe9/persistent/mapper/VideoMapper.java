@@ -78,4 +78,11 @@ public interface VideoMapper {
 	 * @return
 	 */
 	public Integer countBy(Map<String, Object> params);
+
+	/**
+	 * 按首字母分组查询记录
+	 * @return	视频列表
+	 */
+
+	public List<Video> listBriefGroupByFirstChar(Map<String, Object> params);
 }

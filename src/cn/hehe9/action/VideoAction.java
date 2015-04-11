@@ -2,11 +2,13 @@ package cn.hehe9.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,9 +56,36 @@ public class VideoAction extends ActionSupport {
 
 	/** 动画片大全的视频数量 */
 	private final int MAIN_MENU_VIDEOS_COUNT = 40;
+	
+	/** 字母菜单每组视频的数量 */
+	private final int COUNT_PER_FIRST_CHAR = 30;
 
+	/** 字母列表 */
+	private static final String[] LETTERS = new String[26];
+	
+	/** 字母菜单 */
+	private Map<String, List<Video>> letterMenuVideoMap;
+	
 	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
+	
+	private static final String OTHER = "其他";
+	
+	static{
+		// 初始化字母列表
+		for(int i = 0; i < 26; i++){
+			LETTERS[i] = String.valueOf((char)((char)'A' + i));
+		}
+	}
 
+	{
+		// 初始化菜单视频容器
+		letterMenuVideoMap = new LinkedHashMap<String, List<Video>>(LETTERS.length + 1);
+		for(String letter : LETTERS){
+			letterMenuVideoMap.put(letter, new ArrayList<Video>(32));
+		}
+		letterMenuVideoMap.put(OTHER, new ArrayList<Video>());
+	}
+	
 	public String toMain() {
 		// TODO 查看缓存中是否存在首页
 
@@ -76,7 +105,8 @@ public class VideoAction extends ActionSupport {
 		}
 
 		// 最热门的视频分集列表
-		hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE);
+//		hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE);
+		hotVideoList = hotVideoList.subList(0, MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE);
 		hotEpisodeListHolder = new ArrayList<Map<Video, List<VideoEpisode>>>();
 		for (Video video : hotVideoList) {
 			List<VideoEpisode> episodeList = videoEpisodeService.list(video.getId(), 1, MAIN_HOT_VIDEOS_ESPICODE_COUNT);
@@ -85,9 +115,27 @@ public class VideoAction extends ActionSupport {
 			hotEpisodeListHolder.add(map);
 		}
 
-		// 动画片大全
-		menuVideoList = videoService.listBrief(1, MAIN_MENU_VIDEOS_COUNT);
-
+//		// 动画片大全
+//		menuVideoList = videoService.listBrief(1, MAIN_MENU_VIDEOS_COUNT);
+		
+		// 字母菜单视频
+		List<Video> letterVideoList = videoService.listBriefGroupByFirstChar(COUNT_PER_FIRST_CHAR);
+		for(;;){
+			if(CollectionUtils.isEmpty(letterVideoList)){
+				break;
+			}
+			
+			// 归类
+			Video video = letterVideoList.get(0);
+			List<Video> groupVides = letterMenuVideoMap.get(video.getFirstChar().toUpperCase());
+			if(groupVides == null){	// 此处只判断null，不要判断是否empty，因为初始化容器时， 是empty。
+				groupVides = letterMenuVideoMap.get(OTHER);
+			}
+			groupVides.add(video);
+			
+			// 删除该元素
+			letterVideoList.remove(0);
+		}
 		// TODO 把首页加入缓存
 
 		return MAIN_PAGE;
@@ -125,6 +173,15 @@ public class VideoAction extends ActionSupport {
 		this.menuVideoList = menuVideoList;
 	}
 
+	public Map<String, List<Video>> getLetterMenuVideoMap() {
+		return letterMenuVideoMap;
+	}
+
+	public void setLetterMenuVideoMap(Map<String, List<Video>> letterMenuVideoMap) {
+		this.letterMenuVideoMap = letterMenuVideoMap;
+	}
+
+	
 	// List<List<Map<String,Object>>> jsonList = new
 	// ArrayList<List<Map<String,Object>>>();
 	// List<Map<String, Object>> itemList = new ArrayList<Map<String,Object>>();

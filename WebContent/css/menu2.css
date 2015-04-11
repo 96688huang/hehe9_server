@@ -3,7 +3,7 @@
 
 .menu2_nav{position:relative;left:0px;top:0px;width:100%;height:35px;background:#E8FAFE;border-top:1px solid #88D3E3;}
 .menu2_nav .menu2_list{list-style-type:none;margin-left:15px;}
-.menu2_nav .menu2_list li{float:left;position:relative;height:35px;line-height:26px;}
+.menu2_nav .menu2_list li{float:left;position:relative;height:35px;line-height:26px; margin-left:4px;}
 .menu2_nav .menu2_list li .menu2_name{font-size: 14px; float:left;display:block;margin-top:5px;height:30px;padding:0 10px 0 10px;color:#007498;font-weight:bold;text-decoration:none;}
 .menu2_nav .menu2_list li .game_hover_current,
 .menu2_nav .menu2_list li .menu2_name:hover{font-weight:normal; background-color:#fff;color:#007498;margin-top:4px;padding:0 9px 0 9px;border:1px solid #88D3E3;border-bottom:0;}
@@ -37,4 +37,4 @@
 .menu2_nav .menu2_list .sp{width:730px;right:0;}
 .menu2_nav .menu2_list .sc{width:700px;right:0;}
 */
-.content{margin:15px auto 0 auto;width:980px;height:500px;}
+.content{margin:15px auto 15px auto;width:980px;height:500px;}

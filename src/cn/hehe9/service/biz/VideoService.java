@@ -17,13 +17,17 @@ public class VideoService {
 	public List<Video> listBrief(int page, int count) {
 		return videoDao.listBrief(page, count);
 	}
-
-	public Video findById(Integer videoId) {
-		return videoDao.findById(videoId);
+	
+	public List<Video> listBriefGroupByFirstChar(int countPerFirstChar){
+		return videoDao.listBriefGroupByFirstChar(countPerFirstChar);
 	}
 
 	public List<Video> findBriefByName(String name, int page, int queryCount) {
 		return videoDao.findBriefBy(name, page, queryCount);
+	}
+	
+	public Video findById(Integer videoId) {
+		return videoDao.findById(videoId);
 	}
 
 	public Integer countBy(String name) {

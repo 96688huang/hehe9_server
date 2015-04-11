@@ -92,4 +92,15 @@ public class VideoDao {
 		return videoMapper.countBy(params);
 	}
 
+	/**
+	 * 按首字母分组查询记录
+	 * @param countPerFirstChar	每组字母查询前多少条记录
+	 * @return	视频列表
+	 */
+	public List<Video> listBriefGroupByFirstChar(int countPerFirstChar) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("countPerFirstChar", countPerFirstChar);
+		return videoMapper.listBriefGroupByFirstChar(params);
+	}
+
 }

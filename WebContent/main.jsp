@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -20,17 +21,18 @@
 	href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<%-- <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script> --%>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/menu2.js"></script>
 <link rel="stylesheet" href="./css/nar/index/i.css" media="all"
 	type="text/css">
 <link rel="stylesheet" href="./css/nar/bdsstyle.css" type="text/css">
 <link rel="stylesheet" href="./css/nar/search.css" type="text/css">
 
-<script type="text/javascript" src="./js/menu2.js"></script>
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 <link rel="stylesheet" href="./css/menu2.css" type="text/css">
 
@@ -105,40 +107,17 @@
 				</s:iterator>
 			</s:iterator>
 
-			<div id="naruto_desk" style="height: 200px;">
-
+			<div id="naruto_desk" style="height: 500px;">
 				<!-- 字母下拉菜单 -->
 				<div class="menu2_menu_container">
 					<div class="menu2_nav" id="letterMainNav">
 						<ul class="menu2_list">
-							<li><a href="#" class="menu2_name">A</a></li>
-							<li><a href="#" class="menu2_name">B</a></li>
-							<li><a href="#" class="menu2_name">C</a></li>
-							<li><a href="#" class="menu2_name">D</a></li>
-							<li><a href="#" class="menu2_name">E</a></li>
-							<li><a href="#" class="menu2_name">F</a></li>
-							<li><a href="#" class="menu2_name">G</a></li>
-							<li><a href="#" class="menu2_name">H</a></li>
-							<li><a href="#" class="menu2_name">I</a></li>
-							<li><a href="#" class="menu2_name">J</a></li>
-							<li><a href="#" class="menu2_name">K</a></li>
-							<li><a href="#" class="menu2_name">L</a></li>
-							<li><a href="#" class="menu2_name">M</a></li>
-							<li><a href="#" class="menu2_name">N</a></li>
-							<li><a href="#" class="menu2_name">O</a></li>
-							<li><a href="#" class="menu2_name">P</a></li>
-							<li><a href="#" class="menu2_name">Q</a></li>
-							<li><a href="#" class="menu2_name">R</a></li>
-							<li><a href="#" class="menu2_name">S</a></li>
-							<li><a href="#" class="menu2_name">T</a></li>
-							<li><a href="#" class="menu2_name">U</a></li>
-							<li><a href="#" class="menu2_name">V</a></li>
-							<li><a href="#" class="menu2_name">W</a></li>
-							<li><a href="#" class="menu2_name">X</a></li>
-							<li><a href="#" class="menu2_name">Y</a></li>
-							<li><a href="#" class="menu2_name">Z</a></li>
+							<s:iterator value="letterMenuVideoMap" var="map">
+								<li><a href="#" class="menu2_name">${map.key}</a></li>
+							</s:iterator>
 						</ul>	
 							
+				<s:iterator value="letterMenuVideoMap" var="map">
 				<div class="menu2_hover_cont wlyx">
 				<div class="menu2_nav_cont">
 					<div class="menu2_nav_li">
@@ -146,8 +125,26 @@
 						热门动画
 						</div>
 						<div class="menu2_nav_li_r">
-							<a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
-							<a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+							<s:iterator value="#map.value" var="video" status="st">
+								<a href="#">${video.name }</a>┊
+							</s:iterator>
+							
+<%-- 							<s:set name="letterVideoCount" value="0"/>
+							<s:iterator value="#map.value" var="video" status="st">
+							 	<s:property value="#letterVideoCount"/>
+								<s:set name="letterVideoCount" value="#letterVideoCount + 1"/>
+								<a href="#">${video.name }</a>┊
+								<s:if test="letterVideoCount == 10">
+									<s:property value="#letterVideoCount"/>
+									<s:set name="letterVideoCount" value="0"/>
+									<br />
+								</s:if>
+							
+							<s:if test="#st.index > 0 && #st.index / 10 == 0">
+								<br />
+							</s:if >
+							
+							</s:iterator> --%>
 						</div>
 					</div>
 					<div class="menu2_nav_li">
@@ -161,34 +158,8 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="menu2_hover_cont wlyx">
-				<div class="menu2_nav_cont">
-					<div class="menu2_nav_li">
-						<div class="menu2_nav_li_l">
-						热门动画
-						</div>
-						<div class="menu2_nav_li_r">
-							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
-							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
-						</div>
-					</div>
-					<div class="menu2_nav_li">
-						<div class="menu2_nav_li_l">
-						高清漫画
-						</div>
-						<div class="menu2_nav_li_r">
-							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
-							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
-						</div>
-					</div>
-				</div>
+			</s:iterator>
 			</div>
-					</div>
-				</div>
-
-
-
 				<%--
 				<div class="ltitle">
 					动画片大全<span><a href="./video/videoListAction!list" title="">更多</a></span>
@@ -200,11 +171,10 @@
 					<br /> <a href="" title="" target="_blank" style="color: red;">更多=></a>
 				</div>
 			 --%>
-			 
+			 </div>
 			 </div>
 				<!-- 友情链接 -->
 				<jsp:include page="friend_link.html" />
-			</div>
 		</div>
 		<!-- 页脚 -->
 		<jsp:include page="footer.html" />
