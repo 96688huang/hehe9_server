@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新浪游戏频道网站导航菜单 - 源码之家</title>
+<style type="text/css">
+
+*{margin:0;padding:0;}
+body{font:14px "微软雅黑", arial, serif;color:#333;}
+a,a:link,a:visited{color:#039;}
+img{border:0;}
+
+.menu2_menu_container{margin:0 auto 0 auto;width:988px;height:128px;background:url(images/menu2_menu_container_z.jpg) no-repeat center top;}
+
+.menu2_nav{position:relative;left:4px;top:92px;width:950px;height:35px;background:#333;border-top:1px solid #444;}
+.menu2_nav .menu2_list{list-style-type:none;margin-left:15px;}
+.menu2_nav .menu2_list li{float:left;position:relative;height:35px;line-height:26px;}
+.menu2_nav .menu2_list li .menu2_name{float:left;display:block;margin-top:5px;height:30px;padding:0 10px 0 10px;color:#ccc;font-weight:bold;text-decoration:none;}
+.menu2_nav .menu2_list li .game_hover_current,
+.menu2_nav .menu2_list li .menu2_name:hover{background-color:#fff;color:#575757;margin-top:4px;padding:0 9px 0 9px;border:1px solid #666;border-bottom:0;}
+
+.menu2_hover_cont{display:none;position:absolute;width:auto;height:auto; top:35px;border:1px solid #666;border-top:0;border-bottom-width:2px;background:#fff;z-index:1000;}
+.menu2_hover_cont .menu2_nav_cont{padding:15px;padding-bottom:0;}
+.menu2_hover_cont .menu2_nav_li{display:inline-block;width:100%;height:100%;*height:auto;*margin-top:7px;padding-bottom:5px;*padding-bottom:12px;border-bottom:1px dashed #ccc;}
+.menu2_hover_cont .menu2_nav_li_l{float:left;width:80px;color:#f60;font-weight:bold;}
+.menu2_hover_cont .menu2_nav_li_r{float:left; color:#999;font-family:"宋体";font-size:10px;line-height:26px;}
+.menu2_hover_cont .menu2_nav_li_r a{padding:0 1px 0 1px;color:#666;font-size:12px;text-decoration:none;}
+.menu2_hover_cont .menu2_nav_li_r a:hover{color:red;}
+.menu2_hover_cont .menu2_nav_li_r a.orange{color:#f60;}
+
+
+/* .menu2_nav .menu2_list .wlyx{width:720px;left:0;} */
+.menu2_nav .menu2_list .djdj{width:800px;left:0;}
+.menu2_nav .menu2_list .yy{width:740px;left:0;}
+.menu2_nav .menu2_list .dwsy{width:750px;left:0;}
+.menu2_nav .menu2_list .xsk{width:740px;left:0;}
+.menu2_nav .menu2_list .cgwr{width:610px;left:0;}
+.menu2_nav .menu2_list .xz{width:630px;right:0;}
+.menu2_nav .menu2_list .mt{width:580px;right:0;}
+.menu2_nav .menu2_list .kyx{width:610px;right:0;}
+.menu2_nav .menu2_list .wt{width:510px;right:0;}
+.menu2_nav .menu2_list .cy{width:540px;right:0;}
+.menu2_nav .menu2_list .wb{width:710px;right:0;}
+.menu2_nav .menu2_list .xyx{width:740px;right:0;}
+.menu2_nav .menu2_list .sp{width:730px;right:0;}
+.menu2_nav .menu2_list .sc{width:700px;right:0;}
+
+.content{margin:15px auto 0 auto;width:980px;height:500px;background:#ccc;}
+</style>
+
+<script type="text/javascript">
+var $$ = function (id) {
+	return document.getElementById(id);
+}
+
+var getByClass = function (oParent, sClass) {
+	var aEle = oParent.getElementsByTagName("*");
+	var re = new RegExp("\\b" + sClass + "\\b");
+	var arr = [];
+
+	for (var i = 0; i < aEle.length; i++) {
+		if (re.test(aEle[i].className)) {
+			arr.push(aEle[i]);
+		}
+	}
+	return arr;
+}
+
+var setMainNav = function () {
+	var oMainNav = $$("letterMainNav");
+	var aLi = getByClass(oMainNav, "menu2_list")[0].getElementsByTagName("li");
+	var aGameHover = getByClass(oMainNav, "menu2_name");
+	var aHoverCont = getByClass(oMainNav, "menu2_hover_cont");
+
+	for (var i = 0; i < aGameHover.length; i++) {
+		aGameHover[i].index = i;
+		aGameHover[i].onmouseover = function () {
+			this.className += " "+"game_hover_current";
+			for (var j = 0; j < aHoverCont.length; j++) {
+				aHoverCont[j].index_j = j;
+				aHoverCont[j].style.display = "none";
+				aHoverCont[j].onmouseover = function () {
+					this.style.display = "block";
+					aGameHover[this.index_j].className += " "+"game_hover_current";
+				}
+
+				aHoverCont[j].onmouseout = function () {
+					this.style.display = "none";
+				}
+			}
+			if (aHoverCont[this.index]) {
+				aHoverCont[this.index].style.display = "block";
+			}
+		}
+	}
+
+	for (var i = 0; i < aLi.length; i++) {
+		aLi[i].index = i;
+		aLi[i].onmouseout = function () {
+			if (aHoverCont[this.index]) {
+				aHoverCont[this.index].style.display = "none";
+			}
+			aGameHover[this.index].className = "menu2_name";
+		}
+	}
+}
+
+window.onload = function () {
+	setMainNav();
+}
+</script>
+
+</head>
+<body>
+
+	<div class="menu2_menu_container">
+		<div class="menu2_nav" id="letterMainNav">
+			<ul class="menu2_list">
+				<li>
+					<a href="#" class="menu2_name">A</a>
+				</li>
+				<li>
+					<a href="#" class="menu2_name">B</a>
+				</li>
+				<li>
+					<a href="#" class="menu2_name">C</a>
+				</li>
+			</ul>
+			
+			<div class="menu2_hover_cont wlyx">
+				<div class="menu2_nav_cont">
+					<div class="menu2_nav_li">
+						<div class="menu2_nav_li_l">
+						热门动画
+						</div>
+						<div class="menu2_nav_li_r">
+							<a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+							<a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+						</div>
+					</div>
+					<div class="menu2_nav_li">
+						<div class="menu2_nav_li_l">
+						高清漫画
+						</div>
+						<div class="menu2_nav_li_r">
+							<a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+							<a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="menu2_hover_cont wlyx">
+				<div class="menu2_nav_cont">
+					<div class="menu2_nav_li">
+						<div class="menu2_nav_li_l">
+						热门动画
+						</div>
+						<div class="menu2_nav_li_r">
+							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+						</div>
+					</div>
+					<div class="menu2_nav_li">
+						<div class="menu2_nav_li_l">
+						高清漫画
+						</div>
+						<div class="menu2_nav_li_r">
+							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+							<a href="#">问道22</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a href="#">星辰变</a><br />    
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</body>
+</html>

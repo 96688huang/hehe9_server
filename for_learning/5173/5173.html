@@ -9,7 +9,19 @@
     </title>
     <base target="_blank">
     
-    <link 
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<!-- <link rel="stylesheet"
+	href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+<!--  <link 
         rel="stylesheet"
         href="http://img01.5173cdn.com/common/build/2.00/css/common.css?t=20150319151915"
         type="text/css">
@@ -17,167 +29,8 @@
     <link 
         rel="stylesheet"
         href="http://img01.5173cdn.com/www_v2/build/1.00/css/index.css?t=20150319151915"
-        type="text/css">
+        type="text/css">-->
 
-<style type="text/css">
-div {
-display: block;
-}
-
-body {
-color: #333;
-font-family: arial;
-line-height: 1.5;
-background: #fff;
-}
-body {
-font-size: 12px;
-background: #FFF;
-font-family: Arial,simsun,sans-serif,"Microsoft YaHei",Mingliu,Verdana,Helvetica,Lucida;
-}
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
-padding: 0;
-margin: 0;
-}
-
-
-.cate_box .box_tit, .spike .time_info h4, .spike .time_info .icon_clock,
-	.app_list a, .goods_caption h2, .recharge_list .line, .guesslike_con .switchable_prev,
-	.guesslike_con .switchable_next, .site_data .switchable_prev,
-	.site_data .switchable_next, .main_slider .switchable_prev,
-	.main_slider .switchable_next, .signout_box .close_btn, .gg_float .close_btn,
-	.goods_right .tit_box h3, .float_feedback a.feedback, .main_menu_list .s_1word,
-	.main_menu_list .s_2word {
-	background:
-		url(http://img01.5173cdn.com/www_v2/build/1.00/images/index_sprites.png)
-		no-repeat;
-}
-
-.cate_box {
-	margin-top: 10px;
-	width: 728px;
-	border: 1px solid #ddd;
-	position: relative;
-	height: 760px;
-}
-
-.cate_box .box_tit {
-	display: none;
-	width: 33px;
-	height: 91px;
-	border: 1px solid #ddd;
-	position: absolute;
-	top: -1px;
-	left: -35px;
-	text-indent: -999em;
-	background-position: 9px 12px;
-}
-
-cate_index_nav {
-	width: 718px;
-	height: 28px;
-	padding-left: 10px;
-	border-bottom: 1px solid #ddd;
-	background: #F5F5F5;
-	position: relative;
-	z-index: 10;
-}
-
-.cate_index_nav li {
-	float: left;
-	height: 22px;
-	padding: 6px 0 0 0;
-}
-
-.cate_index_nav a {
-	border-left: 1px solid #F5F5F5;
-	border-right: 1px solid #F5F5F5;
-	font-size: 14px;
-	color: #666;
-	width: 26px;
-	display: block;
-	line-height: 16px;
-	height: 15px;
-	overflow: hidden;
-	text-align: center;
-	border-top: 1px solid #F5F5F5;
-	margin-left: -1px;
-}
-
-.cate_index_nav a:hover {
-	color: #f60;
-	text-decoration: none;
-}
-
-.cate_index_nav .current a {
-	font-weight: 700;
-	border-color: #8db6fa;
-	background: #fff;
-	height: 22px;
-	_margin-bottom: -1px;
-	position: relative;
-	z-index: 5;
-	color: #f60;
-}
-
-.cate_index_list {
-	position: absolute;
-	top: 28px;
-	left: -1px;
-	width: 725px;
-	overflow: hidden;
-	border: 1px solid #8db6fa;
-	padding: 10px 0 10px 3px;
-	background: #fff;
-	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
-	z-index: 4;
-}
-
-.cate_index_list li {
-	width: 122px;
-	padding-left: 23px;
-	float: left;
-	height: 28px;
-	line-height: 28px;
-	overflow: hidden;
-	background-position: 14px -618px;
-	background-repeat: no-repeat;
-}
-
-.cate_index_list a {
-	color: #333;
-}
-
-.cate_index_list .hot, .cate_index_list a:hover {
-	color: #f60;
-}
-
-.cate_index_list .tip {
-	color: #999;
-	font-size: 14px;
-	background: none;
-	height: 32px;
-	line-height: 32px;
-	width: 500px;
-}
-
-.cate_index_list .tip img {
-	float: left;
-	margin-right: 5px;
-}
-
-.con_left {
-	width: 730px;
-	float: left;
-	position: relative;
-	overflow: hidden;
-}
-
-.content {
-	width: 1000px;
-	margin: -2px auto 0;
-}
-</style>
     <!--urchin-->
     <body style="zoom: 1;">
       <div class="header">
@@ -187,6 +40,21 @@ cate_index_nav {
         <!--网站Logo+四级联动搜索条-->
 
       </div>
+      
+      
+      <div class="dropdown">
+  <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+    <li><a tabindex="-1" href="#">Action</a></li>
+    <li><a tabindex="-1" href="#">Another action</a></li>
+    <li><a tabindex="-1" href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li><a tabindex="-1" href="#">Separated link</a></li>
+  </ul>
+</div>
+      
+      
+      
       <div class="content">
 
         <div class="con_left">
