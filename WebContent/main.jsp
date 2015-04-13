@@ -107,7 +107,7 @@
 				</s:iterator>
 			</s:iterator>
 
-			<div id="naruto_desk" style="height: 500px;">
+			<div id="naruto_desk" style="height: 200px;">
 				<!-- 字母下拉菜单 -->
 				<div class="menu2_menu_container">
 					<div class="menu2_nav" id="letterMainNav">
@@ -132,7 +132,7 @@
 										<s:iterator value="#map.value" var="video"
 											status="videoStatus">
 											<div style="display: inline-block;">
-												<a href="./video/episodeAction!list?videoId=${video.id }">${video.name }</a>┊
+												<a href="./video/episodeAction!list?videoId=${video.id }">${video.name }</a>&nbsp;┊&nbsp;
 											</div>
 										</s:iterator>
 										<div style="display: inline-block;">

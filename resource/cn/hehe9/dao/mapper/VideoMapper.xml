@@ -370,9 +370,11 @@
 	</select>
 	
 	<select id="listBriefGroupByFirstChar" parameterType="map" resultMap="BriefResultMap">
+	<![CDATA[
 		select a.id, a.name, a.first_char from video a 
 		where 
-		#{countPerFirstChar} >= (select count(1) from video b where a.id = b.id)
+		#{countPerFirstChar} >= (select count(1) from video b where a.first_char = b.first_char and a.id < b.id)
 		order by a.first_char asc
+		]]>
 	</select>
 </mapper>

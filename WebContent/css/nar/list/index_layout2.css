@@ -475,10 +475,10 @@ margin:0;padding:0;font-size:12px;font-weight:normal;display:compact;
 	background:#fff;
 	width:100%;
 	clear:both;
-	border-top:1px #E8CA78 solid;
+	/* border-top:1px #E8CA78 solid; */
 }
 .rblank {
-	border-top:1px #88D3E3 solid;
+	/* border-top:1px #88D3E3 solid; */
 }
 .pagenav {
 	border:1px #88D3E3 solid;

@@ -14,9 +14,9 @@ public class Pagination {
 	/** 页码 */
 	private int page = 1;
 	/** 查询数量 */
-	private int queryCount = 20;
+	private int queryCount = 21;
 	/** 每页的数量 */
-	private int pageCount = 20;
+	private int pageCount = 21;
 	/** 总数 */
 	private int total;
 

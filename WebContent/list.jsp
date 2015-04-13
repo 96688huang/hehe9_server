@@ -55,14 +55,15 @@
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
 					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
 			</div>
-			<div id="naruto_desk" style="width:958px; height: 650px; padding:10px;">
+			<div id="naruto_desk" style="width:958px; height: 670px; padding:5px;">
 				<div class="ltitle">${displayTitle}</div>
 				<form id="queryForm" action="./video/videoListAction!list"
 					method="post">
 					<input name="searchName" type="hidden" value="${searchName }" />
 					<s:iterator value="videoListHolder" var="videoList">
+						<div style="display: inline-block;"> <!-- 强制一行 -->
 						<ul id="indexcartoonList">
-							<s:iterator value="videoList">
+							<s:iterator value="videoList" status="videoListStatus">
 								<li><a href="./video/episodeAction!list?videoId=${id }"
 									title="${name} ${updateRemark}" target="_blank"><img
 										alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
@@ -71,18 +72,10 @@
 										color="#FF0000">${name}</font></a></li>
 							</s:iterator>
 						</ul>
+						</div>
 					</s:iterator>
 				</form>
-				<%-- 				<c:set value="name" var="name" scope=”request” /> 
-				<c:choose>
-					<c:when test="${isSearch == true }">
-						<c:set value="./video/videoListAction!search?name=${name }" var="requestUrl" scope="request"/>
-					</c:when>
-					<c:otherwise>
-						<c:set value="./video/videoListAction!list" var="requestUrl" scope="request"/>
-					</c:otherwise>
-				</c:choose> --%>
-
+				<br />
 				<div class="rblank"></div>
 				<jsp:include page="pagination.jsp" />
 			</div>
