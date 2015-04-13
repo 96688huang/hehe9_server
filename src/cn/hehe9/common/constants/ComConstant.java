@@ -1,6 +1,23 @@
 package cn.hehe9.common.constants;
 
 public class ComConstant {
+	
+	/** 字母列表 */
+	public static final String[] LETTERS = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+	
+	/** 下划线 */
+	public static final String UNDER_LINE = "_";
+
+	/** 中文名: 其他 */
+	public static final String OTHER_CNS = "其他";
+	
+//	static{
+//		// 初始化字母列表
+//		for(int i = 0; i < 26; i++){
+//			LETTERS[i] = String.valueOf((char)((char)'A' + i));
+//		}
+//	}
+	
 	/**
 	 * 日志前缀
 	 */

@@ -38,6 +38,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="source_id" property="sourceId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="icon_url" property="iconUrl" jdbcType="VARCHAR" />
     <result column="update_remark" property="updateRemark" jdbcType="VARCHAR" />
     <result column="first_char" property="firstChar" jdbcType="VARCHAR" />
   </resultMap>

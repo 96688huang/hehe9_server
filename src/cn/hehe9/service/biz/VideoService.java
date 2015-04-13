@@ -22,19 +22,19 @@ public class VideoService {
 		return videoDao.listBriefGroupByFirstChar(countPerFirstChar);
 	}
 
-	public List<Video> findBriefByName(String name, int page, int queryCount) {
-		return videoDao.findBriefBy(name, page, queryCount);
+	public List<Video> findBriefByName(String firstChar, String name, int page, int queryCount) {
+		return videoDao.findBriefBy(firstChar, name, page, queryCount);
 	}
 	
 	public Video findById(Integer videoId) {
 		return videoDao.findById(videoId);
 	}
 
-	public Integer countBy(String name) {
-		return videoDao.countBy(name);
+	public Integer countBy(String firstChar, String name) {
+		return videoDao.countBy(firstChar, name);
 	}
 
 	public Integer countBy() {
-		return videoDao.countBy(null);
+		return videoDao.countBy(null, null);
 	}
 }

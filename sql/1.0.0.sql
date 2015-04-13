@@ -26,7 +26,7 @@ CREATE TABLE `video` (
   `icon_url` varchar(255) DEFAULT NULL COMMENT '图标url',
   `list_page_url` varchar(255) NOT NULL COMMENT '视频列表页面url',
   `update_remark` varchar(255) DEFAULT NULL COMMENT '更新备注',
-  `first_char`	char(1)	DEFAULT NULL COMMENT '视频名称首字母，或英文首字母',
+  `first_char`	varchar(20)	DEFAULT NULL COMMENT '视频名称首字母，或英文首字母',
   `rank` int(11) NOT NULL DEFAULT '10000' COMMENT '排名, 越小越靠前',
   `hot` int(11) NOT NULL DEFAULT '0' COMMENT '热度',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',

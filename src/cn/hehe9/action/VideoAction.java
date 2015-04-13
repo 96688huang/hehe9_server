@@ -9,16 +9,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
-import cn.hehe9.common.utils.DateUtil;
-import cn.hehe9.common.utils.JacksonUtil;
-import cn.hehe9.common.utils.StringUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
 import cn.hehe9.service.biz.VideoEpisodeService;
@@ -60,30 +57,18 @@ public class VideoAction extends ActionSupport {
 	/** 字母菜单每组视频的数量 */
 	private final int COUNT_PER_FIRST_CHAR = 30;
 
-	/** 字母列表 */
-	private static final String[] LETTERS = new String[26];
-	
 	/** 字母菜单 */
 	private Map<String, List<Video>> letterMenuVideoMap;
 	
 	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 	
-	private static final String OTHER = "其他";
-	
-	static{
-		// 初始化字母列表
-		for(int i = 0; i < 26; i++){
-			LETTERS[i] = String.valueOf((char)((char)'A' + i));
-		}
-	}
-
 	{
 		// 初始化菜单视频容器
-		letterMenuVideoMap = new LinkedHashMap<String, List<Video>>(LETTERS.length + 1);
-		for(String letter : LETTERS){
+		letterMenuVideoMap = new LinkedHashMap<String, List<Video>>(ComConstant.LETTERS.length + 1);
+		for(String letter : ComConstant.LETTERS){
 			letterMenuVideoMap.put(letter, new ArrayList<Video>(32));
 		}
-		letterMenuVideoMap.put(OTHER, new ArrayList<Video>());
+		letterMenuVideoMap.put(ComConstant.OTHER_CNS, new ArrayList<Video>());
 	}
 	
 	public String toMain() {
@@ -129,7 +114,7 @@ public class VideoAction extends ActionSupport {
 			Video video = letterVideoList.get(0);
 			List<Video> groupVides = letterMenuVideoMap.get(video.getFirstChar().toUpperCase());
 			if(groupVides == null){	// 此处只判断null，不要判断是否empty，因为初始化容器时， 是empty。
-				groupVides = letterMenuVideoMap.get(OTHER);
+				groupVides = letterMenuVideoMap.get(ComConstant.OTHER_CNS);
 			}
 			groupVides.add(video);
 			

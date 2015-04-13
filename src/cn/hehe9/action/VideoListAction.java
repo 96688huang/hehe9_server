@@ -29,7 +29,10 @@ public class VideoListAction extends ActionSupport {
 	private VideoService videoService;
 
 	//--- 请求参数 ----
+	/** 视频名称 */
 	private String searchName;
+	/** 视频名称首字母 */
+	private String firstChar;
 
 	//---- 回复参数
 	/** 展示的标题 */
@@ -47,12 +50,12 @@ public class VideoListAction extends ActionSupport {
 	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 	private static final String LIST_PAGE = PageUrlFlagEnum.LIST_PAGE.getUrlFlag();
 
-	public String listHot() {
-		displayTitle = VideoListTitleEnum.VIDEOS_HOT.getTitle();
-		List<Video> videoList = videoService.listBrief(pagination.getPage(), pagination.getQueryCount());
-		pagination.setTotal(videoService.countBy());
-		return LIST_PAGE;
-	}
+//	public String listHot() {
+//		displayTitle = VideoListTitleEnum.VIDEOS_HOT.getTitle();
+//		List<Video> videoList = videoService.listBrief(pagination.getPage(), pagination.getQueryCount());
+//		pagination.setTotal(videoService.countBy());
+//		return LIST_PAGE;
+//	}
 
 	public String list() {
 		if (StringUtils.isEmpty(searchName)) {
@@ -62,7 +65,7 @@ public class VideoListAction extends ActionSupport {
 		}
 
 		videoListHolder = new ArrayList<List<Video>>(VIDEOS_COUNT_PER_LINE);
-		List<Video> videoList = videoService.findBriefByName(searchName, pagination.getPage(), pagination.getQueryCount());
+		List<Video> videoList = videoService.findBriefByName(firstChar, searchName, pagination.getPage(), pagination.getQueryCount());
 		int count = 0;
 		for (;;) {
 			int preNextCount = count + VIDEOS_COUNT_PER_LINE;
@@ -74,8 +77,7 @@ public class VideoListAction extends ActionSupport {
 				break;
 			}
 		}
-		
-		pagination.setTotal(videoService.countBy(searchName));
+		pagination.setTotal(videoService.countBy(firstChar, searchName));
 		return LIST_PAGE;
 	}
 
@@ -87,6 +89,14 @@ public class VideoListAction extends ActionSupport {
 		this.searchName = searchName;
 	}
 
+	public String getFirstChar() {
+		return firstChar;
+	}
+	
+	public void setFirstChar(String firstChar) {
+		this.firstChar = firstChar;
+	}
+	
 	public String getDisplayTitle() {
 		return displayTitle;
 	}

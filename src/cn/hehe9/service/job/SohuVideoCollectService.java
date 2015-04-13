@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -163,7 +164,12 @@ public class SohuVideoCollectService extends BaseTask {
 			
 			List<String> chars = Pinyin4jUtil.convertToHeadChars(video.getName());
 			if(chars != null && chars.size() > 0){
-				video.setFirstChar(String.valueOf(chars.get(0).charAt(0)).toUpperCase());
+				String firstChar = String.valueOf(chars.get(0).charAt(0)).toUpperCase();
+				if(ArrayUtils.contains(ComConstant.LETTERS, firstChar)){
+					video.setFirstChar(firstChar);	
+				}else{
+					video.setFirstChar(ComConstant.OTHER_CNS);
+				}
 			}
 
 			// story line brief

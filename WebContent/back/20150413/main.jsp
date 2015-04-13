@@ -39,7 +39,7 @@
 </head>
 <body>
 	<div class="nmain">
-		<jsp:include page="head.jsp" />
+		<%-- <jsp:include page="head.jsp" /> --%>
 		<div class="wrap clearfix">
 			<%-- <div id="login">
 				<p>
@@ -132,33 +132,50 @@
 										<s:iterator value="#map.value" var="video"
 											status="videoStatus">
 											<div style="display: inline-block;">
-												<a href="./video/episodeAction!list?videoId=${video.id }">${video.name }</a>┊
+												<a href="#">${video.name } ${index }</a>┊
 											</div>
 										</s:iterator>
-										<div style="display: inline-block;">
-											<s:if test="#map.value.size > 0">
-											<a href="./video/videoListAction!list?firstChar=${map.key }" style="color: red;">更多...</a>
-											</s:if>
-											<s:else>
-											<a style="color: gray;">无</a>
-											</s:else>
-										</div>
+
+										<%-- 						<s:set name="index" value="0" />
+							<s:iterator value="#map.value" var="video" status="videoStatus">
+							<s:set name="index" value="#videoStatus.index"/>
+								<a href="#">${video.name } ${index }</a>┊
+								<c:if test="${index > 0 && index % 5 == 0 }">
+									<br />
+								</c:if>
+							</s:iterator>
+							<br /> --%>
+
+										<%-- 							<s:set name="letterVideoCount" value="0"/>
+							<s:iterator value="#map.value" var="video" status="st">
+							 	<s:property value="#letterVideoCount"/>
+								<s:set name="letterVideoCount" value="#letterVideoCount + 1"/>
+								<a href="#">${video.name }</a>┊
+								<s:if test="letterVideoCount == 10">
+									<s:property value="#letterVideoCount"/>
+									<s:set name="letterVideoCount" value="0"/>
+									<br />
+								</s:if>
+							 
+							<s:if test="#st.index > 0 && #st.index / 10 == 0">
+								<br />
+							</s:if >
+							
+							</s:iterator> --%>
 									</div>
 								</div>
-								<%-- <div class="menu2_nav_li">
+								<div class="menu2_nav_li">
 									<div class="menu2_nav_li_l">高清漫画</div>
 									<div class="menu2_nav_li_r">
-										<s:iterator value="#map.value" var="video"
-											status="videoStatus">
-											<div style="display: inline-block;">
-												<a href="#">${video.name }</a>┊
-											</div>
-										</s:iterator>
-										<div style="display: inline-block;">
-											<a href="#" style="color: red;">更多...</a>
-										</div>
+										<a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a href="#">魔兽世界</a>┊<a
+											href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a href="#">颓废之心</a>┊<a
+											href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a href="#">龙之谷</a>┊<a
+											href="#">星辰变</a><br /> <a href="#">问道</a>┊<a href="#">DOTA2</a>┊<a
+											href="#">魔兽世界</a>┊<a href="#">梦幻西游</a>┊<a href="#">九阴真经</a>┊<a
+											href="#">颓废之心</a>┊<a href="#">英雄联盟</a>┊<a href="#">天龙八部</a>┊<a
+											href="#">龙之谷</a>┊<a href="#">星辰变</a><br />
 									</div>
-								</div> --%>
+								</div>
 							</div>
 					</div>
 					</s:iterator>
@@ -177,10 +194,10 @@
 			</div>
 		</div>
 		<!-- 友情链接 -->
-		<jsp:include page="friend_link.html" />
+		<%-- <jsp:include page="friend_link.html" /> --%>
 	</div>
 	<!-- 页脚 -->
-	<jsp:include page="footer.html" />
+	<%-- <jsp:include page="footer.html" /> --%>
 
 	<script type="text/javascript">
 		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="

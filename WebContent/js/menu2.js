@@ -34,7 +34,7 @@ var setMainNav = function () {
 				}
 
 				aHoverCont[j].onmouseout = function () {
-					this.style.display = "none";
+					// this.style.display = "none"; //鼠标离开后, 不隐藏;
 				}
 			}
 			if (aHoverCont[this.index]) {
@@ -47,7 +47,7 @@ var setMainNav = function () {
 		aLi[i].index = i;
 		aLi[i].onmouseout = function () {
 			if (aHoverCont[this.index]) {
-				aHoverCont[this.index].style.display = "none";
+				// aHoverCont[this.index].style.display = "none"; //鼠标离开后, 不隐藏;
 			}
 			aGameHover[this.index].className = "menu2_name";
 		}

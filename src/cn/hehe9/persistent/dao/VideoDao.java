@@ -36,7 +36,7 @@ public class VideoDao {
 	 * @return
 	 */
 	public List<Video> searchBriefByName(String name) {
-		return findBriefBy(name);
+		return findBriefBy(null, name);
 	}
 
 	/**
@@ -44,8 +44,8 @@ public class VideoDao {
 	 * @param name
 	 * @return
 	 */
-	public List<Video> findBriefBy(String name) {
-		return findBriefBy(name, 1, Integer.MAX_VALUE);
+	public List<Video> findBriefBy(String firstChar, String name) {
+		return findBriefBy(firstChar, name, 1, Integer.MAX_VALUE);
 	}
 
 	/**
@@ -55,9 +55,12 @@ public class VideoDao {
 	 * @param count	查询数量
 	 * @return
 	 */
-	public List<Video> findBriefBy(String name, int page, int count) {
+	public List<Video> findBriefBy(String firstChar, String name, int page, int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		if (StringUtils.isNotEmpty(name)) {
+		if (StringUtils.isNotBlank(firstChar)) {
+			params.put("firstChar", firstChar);
+		}
+		if (StringUtils.isNotBlank(name)) {
 			params.put("name", name);
 		}
 
@@ -86,9 +89,14 @@ public class VideoDao {
 		return videoMapper.updateByPrimaryKeySelective(video);
 	}
 
-	public Integer countBy(String name) {
+	public Integer countBy(String firstChar, String name) {
 		Map<String, Object> params = new HashMap<String, Object>(1);
-		params.put("name", name);
+		if (StringUtils.isNotBlank(firstChar)) {
+			params.put("firstChar", firstChar);
+		}
+		if (StringUtils.isNotBlank(name)) {
+			params.put("name", name);
+		}
 		return videoMapper.countBy(params);
 	}
 
@@ -102,5 +110,4 @@ public class VideoDao {
 		params.put("countPerFirstChar", countPerFirstChar);
 		return videoMapper.listBriefGroupByFirstChar(params);
 	}
-
 }
