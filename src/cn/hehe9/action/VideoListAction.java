@@ -43,29 +43,32 @@ public class VideoListAction extends ActionSupport {
 
 	/** 分页参数*/
 	private Pagination pagination = new Pagination();
-	
+
 	/** 列表页视频的数量 */
-	private final int VIDEOS_COUNT_PER_LINE = 7;
+	private final int VIDEOS_COUNT_PER_LINE = 5;
 
 	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 	private static final String LIST_PAGE = PageUrlFlagEnum.LIST_PAGE.getUrlFlag();
 
-//	public String listHot() {
-//		displayTitle = VideoListTitleEnum.VIDEOS_HOT.getTitle();
-//		List<Video> videoList = videoService.listBrief(pagination.getPage(), pagination.getQueryCount());
-//		pagination.setTotal(videoService.countBy());
-//		return LIST_PAGE;
-//	}
+	//	public String listHot() {
+	//		displayTitle = VideoListTitleEnum.VIDEOS_HOT.getTitle();
+	//		List<Video> videoList = videoService.listBrief(pagination.getPage(), pagination.getQueryCount());
+	//		pagination.setTotal(videoService.countBy());
+	//		return LIST_PAGE;
+	//	}
 
 	public String list() {
-		if (StringUtils.isEmpty(searchName)) {
-			displayTitle = VideoListTitleEnum.VIDEO_BOOK.getTitle();
-		} else {
+		if (StringUtils.isNotBlank(searchName)) {
 			displayTitle = VideoListTitleEnum.SEARCH_RESULT.getTitle();
+		} else if (StringUtils.isNotBlank(firstChar)) {
+			displayTitle = firstChar.trim() + VideoListTitleEnum.FIRST_CHAR_VIDEO.getTitle();
+		} else {
+			displayTitle = VideoListTitleEnum.VIDEO_BOOK.getTitle();
 		}
 
 		videoListHolder = new ArrayList<List<Video>>(VIDEOS_COUNT_PER_LINE);
-		List<Video> videoList = videoService.findBriefByName(firstChar, searchName, pagination.getPage(), pagination.getQueryCount());
+		List<Video> videoList = videoService.findBriefByName(firstChar, searchName, pagination.getPage(),
+				pagination.getQueryCount());
 		int count = 0;
 		for (;;) {
 			int preNextCount = count + VIDEOS_COUNT_PER_LINE;
@@ -92,11 +95,11 @@ public class VideoListAction extends ActionSupport {
 	public String getFirstChar() {
 		return firstChar;
 	}
-	
+
 	public void setFirstChar(String firstChar) {
 		this.firstChar = firstChar;
 	}
-	
+
 	public String getDisplayTitle() {
 		return displayTitle;
 	}
@@ -108,7 +111,7 @@ public class VideoListAction extends ActionSupport {
 	public List<List<Video>> getVideoListHolder() {
 		return videoListHolder;
 	}
-	
+
 	public void setVideoListHolder(List<List<Video>> videoListHolder) {
 		this.videoListHolder = videoListHolder;
 	}
@@ -116,7 +119,7 @@ public class VideoListAction extends ActionSupport {
 	public Pagination getPagination() {
 		return pagination;
 	}
-	
+
 	public void setPagination(Pagination pagination) {
 		this.pagination = pagination;
 	}

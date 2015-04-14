@@ -9,7 +9,7 @@
 			+ path + "/";
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<div class="pagenav">
+<div class="pagenav" style="position:absolute; bottom:0px; width: 97%;">
 	分页：页次：<b>${pagination.page}/${pagination.pageCount }</b>&nbsp;每页&nbsp;<b>${pagination.queryCount }</b>&nbsp;总数&nbsp;<b>${pagination.total }</b>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="javascript:getListByPage('1');">首页</a>&nbsp;&nbsp;
 	

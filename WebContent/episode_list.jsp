@@ -71,7 +71,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 				</div>
 				<!-- <div class="blank"></div> -->
 			</div>
-			<div id="content2">
+			<div id="content2" style="position:relative;">
 				<div class="listitem">
 					<h1>${video.name}在线观看</h1>
 					<form id="queryForm" action="./video/episodeAction!list?" method = "post">

@@ -16,6 +16,9 @@ public enum VideoListTitleEnum {
 
 	/** 动画片大全 */
 	VIDEO_BOOK("动画片大全"),
+	
+	/** 动画片大全 */
+	FIRST_CHAR_VIDEO(" 字母动画"),
 
 	/** 搜索结果 */
 	SEARCH_RESULT("搜索结果");

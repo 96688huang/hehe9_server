@@ -55,7 +55,7 @@
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
 					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
 			</div>
-			<div id="naruto_desk" style="width:958px; height: 670px; padding:5px;">
+			<div id="naruto_desk" style="width:100%; height: 870px; padding:5px; position:relative;">
 				<div class="ltitle">${displayTitle}</div>
 				<form id="queryForm" action="./video/videoListAction!list"
 					method="post">
@@ -75,11 +75,10 @@
 						</div>
 					</s:iterator>
 				</form>
-				<br />
 				<div class="rblank"></div>
 				<jsp:include page="pagination.jsp" />
 			</div>
-
+		
 			<%-- 			<div class="itabg">
 				<script type="text/javascript">
 					hym.show(3);
