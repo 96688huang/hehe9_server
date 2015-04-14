@@ -85,4 +85,9 @@ public interface VideoMapper {
 	 */
 
 	public List<Video> listBriefGroupByFirstChar(Map<String, Object> params);
+
+	/**
+	 * 查询视频列表: 排除大数据量的字段
+	 */
+	public List<Video> findExceptBigDataBy(Map<String, Object> params);
 }

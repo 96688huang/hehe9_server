@@ -3,14 +3,11 @@ package cn.hehe9.service.job;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
-
-import net.sourceforge.pinyin4j.PinyinHelper;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import cn.hehe9.common.bean.AppConfig;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
@@ -49,6 +47,7 @@ public class SohuVideoCollectService extends BaseTask {
 	static {
 		// video fields
 		videoCompareFieldNames.add("name");
+		videoCompareFieldNames.add("author");
 		videoCompareFieldNames.add("playCountWeekly");
 		videoCompareFieldNames.add("playCountTotal");
 		videoCompareFieldNames.add("posterBigUrl");
@@ -76,6 +75,11 @@ public class SohuVideoCollectService extends BaseTask {
 					.startsWith("/") ? "/" + collectPageUrl : collectPageUrl));
 
 			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, SOHU_VIDEO);
+			if (doc == null) {
+				logger.error("{}collect videos fail. sourceId = {}, collectPageUrl = {}", new Object[] { SOHU_VIDEO,
+						sourceId, collectPageUrl });
+			}
+
 			Elements liEle = doc.select("ul.st-list>li");
 
 			// 计数器
@@ -130,8 +134,8 @@ public class SohuVideoCollectService extends BaseTask {
 	}
 
 	private void parseVideoInfo(int sourceId, Element liItem) {
-		Video video = new Video();
-		video.setSourceId(sourceId);
+		Video videoFromNet = new Video();
+		videoFromNet.setSourceId(sourceId);
 		try {
 			Elements st_picDiv = liItem.select("div.st-pic");
 
@@ -141,16 +145,16 @@ public class SohuVideoCollectService extends BaseTask {
 			String sk = items.attr("_s_k");
 			String iconUrl = items.select("img").attr("src");
 
-			video.setListPageUrl(listPageUrl);
-			video.setIconUrl(iconUrl);
+			videoFromNet.setListPageUrl(listPageUrl);
+			videoFromNet.setIconUrl(iconUrl);
 
 			// update remark
 			String updateRemark = st_picDiv.select("span.maskTx").html();
-			video.setUpdateRemark(updateRemark);
+			videoFromNet.setUpdateRemark(updateRemark);
 
 			// play count per week
 			String playCountWeekly = liItem.select("p.num-bf").html();
-			video.setPlayCountWeekly(playCountWeekly);
+			videoFromNet.setPlayCountWeekly(playCountWeekly);
 
 			Elements list_hover_Div = liItem.select("div.list-hover");
 
@@ -160,63 +164,73 @@ public class SohuVideoCollectService extends BaseTask {
 			if (StringUtils.isEmpty(name)) {
 				name = aEle.html();
 			}
-			video.setName(name);
-			
-			List<String> chars = Pinyin4jUtil.convertToHeadChars(video.getName());
-			if(chars != null && chars.size() > 0){
-				String firstChar = String.valueOf(chars.get(0).charAt(0)).toUpperCase();
-				if(ArrayUtils.contains(ComConstant.LETTERS, firstChar)){
-					video.setFirstChar(firstChar);	
-				}else{
-					video.setFirstChar(ComConstant.OTHER_CNS);
-				}
+			videoFromNet.setName(name);
+
+			// first char
+			String firstChar = Pinyin4jUtil.getFirstChar(videoFromNet.getName()).toUpperCase();
+			if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
+				videoFromNet.setFirstChar(firstChar);
+			} else {
+				videoFromNet.setFirstChar(ComConstant.OTHER_CNS);
 			}
 
 			// story line brief
 			String storyLine = list_hover_Div.select("p.lh-info").html();
-			video.setStoryLine(storyLine);
+			videoFromNet.setStoryLine(storyLine);
 
 			// play count total
 			String playCountTotal = list_hover_Div.select("a.acount").first().html();
-			video.setPlayCountTotal(playCountTotal);
+			videoFromNet.setPlayCountTotal(playCountTotal);
 
-			List<Video> list = videoDao.searchBriefByName(video.getName());
+			List<Video> list = videoDao.searchBriefByName(videoFromNet.getName());
 			if (list == null || list.isEmpty()) {
-				videoDao.save(video);
+				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
+				videoDao.save(videoFromNet);
 				if (logger.isDebugEnabled()) {
-					logger.debug("{}add new video : {}", SOHU_VIDEO, JacksonUtil.encode(video));
+					logger.debug("{}add new video : {}", SOHU_VIDEO, JacksonUtil.encode(videoFromNet));
 				}
 				return;
 			}
 
 			boolean isMatcheRecord = false;
-			for (Video oldVideo : list) {
-				// (多个名字时, 以英文逗号分隔)
-				boolean contains = ListUtil.asList(StringUtils.deleteWhitespace(oldVideo.getName()).split(","))
-						.contains(StringUtils.deleteWhitespace(video.getName()));
-				if (contains) { // 名字相同, 则更新
-					isMatcheRecord = true;
-					// 比较关键字段是否有更新
-					boolean isSame = BeanUtil.isFieldsValueSame(video, oldVideo, videoCompareFieldNames, null);
-					if (!isSame) {
-						video.setId(oldVideo.getId()); // id
-						videoDao.udpate(video); // 不同则更新
-						// for log
-						video.setStoryLine(null);
-						video.setStoryLineBrief(null);
-						logger.info("{}update video : \r\n OLD : {}\r\n NEW : {}", new Object[] { SOHU_VIDEO,
-								JacksonUtil.encode(oldVideo), JacksonUtil.encode(video) });
+			for (Video videoFromDb : list) {
+				boolean isIconUrlSame = videoFromNet.getIconUrl().trim().equals(videoFromDb.getIconUrl().trim());
+				if (isIconUrlSame) {
+					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同视频的视频)
+					boolean isNameSame = ListUtil.asList(
+							StringUtils.deleteWhitespace(videoFromDb.getName()).split(ComConstant.LEFT_SLASH))
+							.contains(StringUtils.deleteWhitespace(videoFromNet.getName()));
+					if (isNameSame) {
+						isMatcheRecord = true;
+						// 比较关键字段是否有更新
+						boolean isFieldsSame = BeanUtil.isFieldsValueSame(videoFromNet, videoFromDb,
+								videoCompareFieldNames, null);
+						if (!isFieldsSame) {
+							videoFromNet.setId(videoFromDb.getId()); // id
+							videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
+							videoDao.udpate(videoFromNet); // 不同则更新
+
+							// for log
+							videoFromNet.setStoryLine(null);
+							videoFromNet.setStoryLineBrief(null);
+							logger.info("{}update video : \r\n OLD : {}\r\n NEW : {}", new Object[] { SOHU_VIDEO,
+									JacksonUtil.encode(videoFromDb), JacksonUtil.encode(videoFromNet) });
+						}
+						break;
 					}
 				}
 			}
-			if (!isMatcheRecord) { // 如果找不到要更新的记录, 则新增
-				videoDao.save(video);
+
+			// 如果找不到要更新的记录, 则新增
+			if (!isMatcheRecord) {
+				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
+				videoDao.save(videoFromNet);
 				if (logger.isDebugEnabled()) {
-					logger.debug("{}add new video : {}", SOHU_VIDEO, JacksonUtil.encode(video));
+					logger.debug("{}add new video : {}", SOHU_VIDEO, JacksonUtil.encode(videoFromNet));
 				}
 			}
 		} catch (Exception e) {
-			logger.error(SOHU_VIDEO + "parse video info fail. video = " + JacksonUtil.encodeQuietly(video), e);
+			logger.error(SOHU_VIDEO + "parse video info fail. video = " + JacksonUtil.encodeQuietly(videoFromNet), e);
 		}
 	}
 }

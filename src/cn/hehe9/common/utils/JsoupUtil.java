@@ -1,5 +1,6 @@
 package cn.hehe9.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ public class JsoupUtil {
 	 */
 	public static Document connect(String connectUrl, int connectTimeOut, int reconnectCount, long reconnectInterval,
 			String logPrefix) {
+		if (StringUtils.isBlank(connectUrl)) {
+			return null;
+		}
+
 		Document doc = null;
 		for (int i = 0; i < reconnectCount; i++) {
 			try {

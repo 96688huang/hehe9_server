@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -65,6 +64,10 @@ public class SohuEpisodeCollectService extends BaseTask {
 	public void collectEpisodeFromListPage(final Video video) throws Exception {
 		Document doc = JsoupUtil.connect(video.getListPageUrl(), CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL,
 				SOHU_EPISODE);
+		if (doc == null) {
+			logger.error("{}collect episode from list page fail. video = {}", SOHU_EPISODE,
+					JacksonUtil.encodeQuietly(video));
+		}
 
 		// 分集标题
 		Elements pagecontDiv = doc.select(".pagecont");
@@ -77,7 +80,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 				String wzText = listJsItem.select(".wz").text();
 
 				String episodeNo = StringUtil.pickInteger(bitText);
-				if (StringUtils.isNotEmpty(episodeNo)) {
+				if (StringUtils.isNotBlank(episodeNo)) {
 					titleMap.put(Integer.parseInt(episodeNo), wzText);
 				}
 			}
@@ -105,8 +108,9 @@ public class SohuEpisodeCollectService extends BaseTask {
 		Elements holeEles = doc.select("div.right div.blockRA div.cont p");
 		for (Element element : holeEles) {
 			String authorEtc = element.text();
-			buf.append(authorEtc).append(SystemUtils.LINE_SEPARATOR);
+			buf.append(authorEtc).append("<br/>"); // 加上<br/>, 以便在页面上显示换行效果;
 		}
+
 		video.setAuthor(buf.toString());
 		videoDao.udpate(video);
 
@@ -159,29 +163,30 @@ public class SohuEpisodeCollectService extends BaseTask {
 			Integer episodeNo = StringUtils.isEmpty(no) ? null : Integer.parseInt(no);
 			String fileUrl = parseVideoFileUrl(playPageUrl);
 
-			VideoEpisode ve = new VideoEpisode();
-			ve.setVideoId(video.getId());
-			ve.setSnapshotUrl(snapshotUrl);
-			ve.setPlayPageUrl(playPageUrl);
-			ve.setEpisodeNo(episodeNo);
-			ve.setFileUrl(fileUrl);
-			ve.setTitle(titleMap.get(episodeNo));
+			VideoEpisode episodeFromNet = new VideoEpisode();
+			episodeFromNet.setVideoId(video.getId());
+			episodeFromNet.setSnapshotUrl(snapshotUrl);
+			episodeFromNet.setPlayPageUrl(playPageUrl);
+			episodeFromNet.setEpisodeNo(episodeNo);
+			episodeFromNet.setFileUrl(fileUrl);
+			episodeFromNet.setTitle(titleMap.get(episodeNo));
 
-			VideoEpisode veFromDb = videoEpisodeDao.findByVideoIdEpisodeNo(video.getId(), ve.getEpisodeNo());
-			if (veFromDb == null) {
-				videoEpisodeDao.save(ve);
+			VideoEpisode episodeFromDb = videoEpisodeDao.findByVideoIdEpisodeNo(video.getId(),
+					episodeFromNet.getEpisodeNo());
+			if (episodeFromDb == null) {
+				videoEpisodeDao.save(episodeFromNet);
 				if (logger.isDebugEnabled()) {
-					logger.debug("{}add video episode : {}", SOHU_EPISODE, JacksonUtil.encode(ve));
+					logger.debug("{}add video episode : {}", SOHU_EPISODE, JacksonUtil.encode(episodeFromNet));
 				}
 				return;
 			}
 
-			boolean isSame = BeanUtil.isFieldsValueSame(ve, veFromDb, episodeCompareFieldNames, null);
+			boolean isSame = BeanUtil.isFieldsValueSame(episodeFromNet, episodeFromDb, episodeCompareFieldNames, null);
 			if (!isSame) {
-				ve.setId(veFromDb.getId()); // 主键id
-				videoEpisodeDao.udpate(ve); // 不同则更新
+				episodeFromNet.setId(episodeFromDb.getId()); // 主键id
+				videoEpisodeDao.udpate(episodeFromNet); // 不同则更新
 				logger.info("{}update video episode : \r\n OLD : {}\r\n NEW : {}", new Object[] { SOHU_EPISODE,
-						JacksonUtil.encode(veFromDb), JacksonUtil.encode(ve) });
+						JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
 			}
 		} catch (Exception e) {
 			logger.error(SOHU_EPISODE + "parse episode fail. video : " + JacksonUtil.encodeQuietly(video), e);
@@ -192,13 +197,19 @@ public class SohuEpisodeCollectService extends BaseTask {
 	 * 解析播放页面的视频url
 	 * 
 	 * @param playPageUrl	播放页面url
-	 * @return
+	 * @return	视频url
 	 * @throws IOException
 	 */
 	private String parseVideoFileUrl(String playPageUrl) throws IOException {
-		// FIXME 加入超时及重试机制
 		Document doc = JsoupUtil.connect(playPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, SOHU_EPISODE);
-		return doc == null ? "" : doc.select("meta[property=og:videosrc]").attr("content");
-	}
+		if (doc == null) {
+			return null;
+		}
 
+		String fileUrl = doc.select("meta[property=og:videosrc]").attr("content");
+		if (StringUtils.isBlank(fileUrl)) {
+			fileUrl = doc.select("meta[property=og:video]").attr("content");
+		}
+		return fileUrl;
+	}
 }

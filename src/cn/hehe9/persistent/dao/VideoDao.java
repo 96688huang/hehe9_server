@@ -22,12 +22,37 @@ public class VideoDao {
 	@Resource
 	private VideoMapper videoMapper;
 
+	/**
+	 * 查询视频列表: 仅查询简要的数据
+	 */
 	public List<Video> listBrief(int page, int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		int offset = (page - 1) * count;
 		params.put("offset", offset);
 		params.put("count", count);
 		return videoMapper.findBriefBy(params);
+	}
+
+	/**
+	 * 查询视频列表: 排除大数据量的字段
+	 */
+	public List<Video> listExceptBigData(int page, int count) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		int offset = (page - 1) * count;
+		params.put("offset", offset);
+		params.put("count", count);
+		return videoMapper.findExceptBigDataBy(params);
+	}
+
+	/**
+	 * 查询视频列表: 查询视频的所有的数据
+	 */
+	public List<Video> list(int page, int count) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		int offset = (page - 1) * count;
+		params.put("offset", offset);
+		params.put("count", count);
+		return videoMapper.findBy(params);
 	}
 
 	/**

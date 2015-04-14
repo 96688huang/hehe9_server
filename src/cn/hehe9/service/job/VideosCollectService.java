@@ -50,7 +50,7 @@ public class VideosCollectService {
 	public void collectEpisode() {
 		int page = 1;
 		while (true) {
-			List<Video> list = videoService.listBrief(page, QUERY_COUNT_PER_TIME);
+			List<Video> list = videoService.listExceptBigData(page, QUERY_COUNT_PER_TIME);
 			if (list == null || list.isEmpty()) {
 				return;
 			}

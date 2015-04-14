@@ -2,7 +2,9 @@ package cn.hehe9.common.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -22,7 +24,7 @@ public class Pinyin4jUtil {
 	 * 返回拼音类型：各中方的首字母
 	 */
 	public static final String CONVERT_TYPE_HEAD_CHARS = "HEAD_CHAR";
-	
+
 	/**
 	 * 字符串集合转换字符串(逗号分隔)
 	 * 
@@ -43,12 +45,27 @@ public class Pinyin4jUtil {
 		return str.toString().toLowerCase();
 	}
 
-	public static List<String> convertToAllChars(String string) {
-		return convertTo(string, null);
+	/**
+	 * 获取首字母
+	 *
+	 * @param string 中文或英文字符(串)
+	 * @return	获取成功, 返回首字母; 否则 返回空字符串""
+	 */
+	public static String getFirstChar(String string) {
+		if(StringUtils.isBlank(string)){
+			return "";
+		}
+		
+		String[] pingyiLetters = PinyinHelper.toHanyuPinyinStringArray(string.charAt(0));
+		return ArrayUtils.isNotEmpty(pingyiLetters) ? String.valueOf(pingyiLetters[0].charAt(0)) : "";
 	}
-	
+
+	public static List<String> convertToAllChars(String string) {
+		return convertTo(string, CONVERT_TYPE_ALL_CHARS);
+	}
+
 	public static List<String> convertToHeadChars(String string) {
-		return convertTo(string, null);
+		return convertTo(string, CONVERT_TYPE_HEAD_CHARS);
 	}
 
 	/**
@@ -78,11 +95,8 @@ public class Pinyin4jUtil {
 
 			String[][] temp = new String[string.length()][];
 			for (int i = 0; i < srcChar.length; i++) {
-				char c = srcChar[i];
-
 				try {
-					temp[i] = PinyinHelper.toHanyuPinyinStringArray(srcChar[i],
-							hanYuPinOutputFormat);
+					temp[i] = PinyinHelper.toHanyuPinyinStringArray(srcChar[i], hanYuPinOutputFormat);
 
 					if (temp[i] == null) {// 如果str.charAt(i)非汉字，则保持原样
 						temp[i] = new String[] { String.valueOf(srcChar[i]) };
@@ -91,8 +105,7 @@ public class Pinyin4jUtil {
 						if (CONVERT_TYPE_HEAD_CHARS.equalsIgnoreCase(convertType)) {
 							String[] temptemp = new String[temp[i].length];
 							for (int j = 0; j < temp[i].length; j++) {
-								temptemp[j] = String.valueOf(temp[i][j]
-										.charAt(0));
+								temptemp[j] = String.valueOf(temp[i][j].charAt(0));
 							}
 							temp[i] = temptemp;
 						}
@@ -155,10 +168,22 @@ public class Pinyin4jUtil {
 	}
 
 	public static void main(String[] args) {
-		String str = "单单芳abc";
-		System.out.println(makeStringByStringList(convertToAllChars(str)));
-		System.out.println(makeStringByStringList(convertTo(str,
-				CONVERT_TYPE_HEAD_CHARS)));
+		String name = "海贼王";
+
+		System.out.println(ArrayUtils.toString(PinyinHelper.toGwoyeuRomatzyhStringArray(name.charAt(0))));
+		System.out.println(ArrayUtils.toString(PinyinHelper.toHanyuPinyinStringArray(name.charAt(0))));
+		System.out.println(ArrayUtils.toString(PinyinHelper.toMPS2PinyinStringArray(name.charAt(0))));
+		System.out.println(ArrayUtils.toString(PinyinHelper.toTongyongPinyinStringArray(name.charAt(0))));
+		System.out.println(ArrayUtils.toString(PinyinHelper.toWadeGilesPinyinStringArray(name.charAt(0))));
+		System.out.println(ArrayUtils.toString(PinyinHelper.toYalePinyinStringArray(name.charAt(0))));
+
+		//		System.out.println(convertToAllChars("海贼王"));
+		//		System.out.println(convertToHeadChars("海贼王"));
+
+		//		String str = "单单芳abc";
+		//		System.out.println(makeStringByStringList(convertToAllChars(str)));
+		//		System.out.println(makeStringByStringList(convertTo(str,
+		//				CONVERT_TYPE_HEAD_CHARS)));
 	}
 
 }

@@ -9,11 +9,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.hehe9.common.bean.AppConfig;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.persistent.entity.Video;

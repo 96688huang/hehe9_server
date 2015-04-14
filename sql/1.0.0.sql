@@ -32,7 +32,8 @@ CREATE TABLE `video` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  INDEX idx_first_char(`first_char`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='视频信息';
 
 CREATE TABLE `video_episode` (

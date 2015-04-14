@@ -142,7 +142,7 @@ public class StringUtil {
 	 * @param flg
 	 * @return
 	 */
-	public static String formatListToString(List list, String flg) {
+	public static String formatListToString(List<Object> list, String flg) {
 		if (list == null || list.size() < 1) {
 			return "";
 		}
@@ -432,7 +432,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 从字符串中挑选出数字
+	 * 从字符串中挑选出整型数字, <b>不</b>包括小数点
 	 * @param string
 	 * @return
 	 */
@@ -441,7 +441,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 从字符串中挑选出数字
+	 * 从字符串中挑选出数字, 包括小数点;
 	 * @param string
 	 * @return
 	 */
