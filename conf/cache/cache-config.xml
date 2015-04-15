@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache-config version="v0" node="mc" expiration="15m">
+  <!--   注意     -->
+  <!-- [核心功能]列表的缓存时间30s，详情内容新增操作生效时间30s,如游戏信息、广告信息
+       [重点功能]列表的缓存时间3min，详情内容新增操作生效时间1min，如某类游戏列表、基础(客户端参数等)
+       [其他功能]缓存时间根据业务特性设置
+   -->
+  <!--  ######  -->
+  
+  <!-- 公会圈 -->
+  <!-- 
+  <cache-entry key="guild_social_user_info" node="mc" expiration="5m" reload-at="3m" comment="公会圈用户基本信息"/>
+  <cache-entry key="guild_social_topic" node="mc" expiration="60m" reload-at="30m" comment="公会话题"/>
+  <cache-entry key="guild_social_topic_like" node="mc" expiration="60m" reload-at="3m" comment="用户赞过的话题列表"/>
+  <cache-entry key="guild_social_topic_comment" node="mc" expiration="60m" reload-at="30m" comment="公会话题评论"/> -->
+  
+  <cache-entry key="index_page" node="mc" expiration="5m" reload-at="30m" comment="首页" version="v1"/>
+  
+</cache-config>
+

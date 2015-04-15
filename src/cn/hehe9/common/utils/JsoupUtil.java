@@ -13,7 +13,7 @@ public class JsoupUtil {
 	 * 连接远程url
 	 * @param connectUrl		远程url
 	 * @param reconnectCount	重连次数
-	 * @param connectTimeOut	连接超时时间
+	 * @param connectTimeOut	连接超时时间(毫秒)
 	 * @param reconnectInterval	重连间隔(毫秒)
 	 * @param logPrefix			日志前缀
 	 * @return
@@ -28,6 +28,9 @@ public class JsoupUtil {
 		for (int i = 0; i < reconnectCount; i++) {
 			try {
 				doc = Jsoup.connect(connectUrl).timeout(connectTimeOut).get();
+				if (doc != null) {
+					return doc;
+				}
 			} catch (Exception e) {
 				logger.warn("{}connect faile, reconnect after {} seconds, url = {}", new Object[] { logPrefix,
 						reconnectInterval / 1000, connectUrl });

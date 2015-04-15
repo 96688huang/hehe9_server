@@ -19,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import cn.hehe9.common.bean.AppConfig;
-import cn.hehe9.common.bean.AppHelper;
+import cn.hehe9.common.app.AppConfig;
+import cn.hehe9.common.app.AppHelper;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;

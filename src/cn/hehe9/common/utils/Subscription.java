@@ -1,4 +1,4 @@
-package cn.hehe9.common.bean;
+package cn.hehe9.common.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;
