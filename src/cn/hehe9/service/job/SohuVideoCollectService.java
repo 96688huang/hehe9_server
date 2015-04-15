@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import cn.hehe9.common.bean.AppConfig;
+import cn.hehe9.common.bean.AppHelper;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
@@ -161,8 +162,8 @@ public class SohuVideoCollectService extends BaseTask {
 			// name
 			Element aEle = list_hover_Div.select("a[_s_k=" + sk + "]").first();
 			String name = aEle.attr("title");
-			if (StringUtils.isEmpty(name)) {
-				name = aEle.html();
+			if (StringUtils.isBlank(name)) {
+				name = aEle.text();
 			}
 			videoFromNet.setName(name);
 
@@ -176,7 +177,7 @@ public class SohuVideoCollectService extends BaseTask {
 
 			// story line brief
 			String storyLine = list_hover_Div.select("p.lh-info").html();
-			videoFromNet.setStoryLine(storyLine);
+			videoFromNet.setStoryLine(AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "..."));
 
 			// play count total
 			String playCountTotal = list_hover_Div.select("a.acount").first().html();

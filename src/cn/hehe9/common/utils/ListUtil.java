@@ -1,6 +1,7 @@
 package cn.hehe9.common.utils;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +129,10 @@ public class ListUtil {
 	 * @author chenxx
 	 */
 	public static <T> List<T> asList(T... t) {
+		if(t == null || t.length == 0){
+			return null;
+		}
+		
 		List<T> list = new ArrayList<T>();
 		Class<?> clazz = null;
 		for(int i=0; i<t.length; i++) {
@@ -139,6 +144,5 @@ public class ListUtil {
 		}
 		return list;
 	}
-
 }
 

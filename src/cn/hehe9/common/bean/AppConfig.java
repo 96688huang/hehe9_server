@@ -17,6 +17,8 @@ public class AppConfig {
 
 	private static IniReader config = new IniReader(PathUtils.find("./app.ini"));
 	public static final String[] aliasArr = config.getStringArray("app", "video_alias");
+	/** 剧情最大长度 */
+	public static final int CONTENT_MAX_LENGTH = config.getInt("app", "content_max_length");
 	public static final Map<String, String> aliasMap = new HashMap<String, String>();
 
 	// init

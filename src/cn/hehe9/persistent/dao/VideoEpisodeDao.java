@@ -29,20 +29,21 @@ public class VideoEpisodeDao {
 	}
 
 	public VideoEpisode findByVideoIdEpisodeNo(Integer videoId, Integer episodeNo) {
-		List<VideoEpisode> episodes = findBy(videoId, episodeNo, 1, 1);
+		List<VideoEpisode> episodes = findBy(videoId, 1, 1, episodeNo);
 		return CollectionUtils.isEmpty(episodes) ? null : episodes.get(0);
 	}
 
 	public List<VideoEpisode> findEpisodesBy(Integer videoId, int page, int queryCount) {
 		return findBy(videoId, page, queryCount);
 	}
-	
+
 	/**
-	 * 根据条件, 查询视频信息
-	 * @param episodeNo	集数
-	 * @param page	查询页码
-	 * @param count	查询数量
-	 * @return
+	 * 根据条件, 查询视频信息列表
+	 * @param videoId		视频id
+	 * @param page			查询页码
+	 * @param count			查询数量
+	 * @param episodeNos	集数(可多个)
+	 * @return	视频列表
 	 */
 	public List<VideoEpisode> findBy(Integer videoId, int page, int queryCount, Integer... episodeNos) {
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -50,11 +51,7 @@ public class VideoEpisodeDao {
 		params.put("episodeNos", ListUtil.asList(episodeNos));
 		params.put("offset", (page - 1) * queryCount);
 		params.put("count", queryCount);
-		List<VideoEpisode> result = videoEpisodeMapper.findBy(params);
-		if (result == null || result.isEmpty()) {
-			return null;
-		}
-		return result;
+		return videoEpisodeMapper.findBy(params);
 	}
 
 	public int udpate(VideoEpisode ve) {

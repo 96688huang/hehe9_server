@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import cn.hehe9.common.bean.AppConfig;
+import cn.hehe9.common.bean.AppHelper;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
@@ -81,7 +83,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 				String episodeNo = StringUtil.pickInteger(bitText);
 				if (StringUtils.isNotBlank(episodeNo)) {
-					titleMap.put(Integer.parseInt(episodeNo), wzText);
+					titleMap.put(Integer.parseInt(episodeNo), AppHelper.subString(wzText, AppConfig.CONTENT_MAX_LENGTH));
 				}
 			}
 		}
@@ -93,15 +95,15 @@ public class SohuEpisodeCollectService extends BaseTask {
 		// 简介
 		String storyLine = doc.select("#ablum2").select("div.wz").text();
 		if (StringUtils.isEmpty(video.getStoryLine())) {
-			video.setStoryLine(storyLine);
+			video.setStoryLine(AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "..."));
 		}
 
 		// 作者， 年份， 类型等信息
 		// 动漫名称
 		String name = doc.select("div.right div.blockRA h2 span").text();
 		if (StringUtils.isNotEmpty(name) && !video.getName().contains(name)) {
-			logger.error("{}name from episode is diff with video, nameFromEpisoce = {}, nameFromVide={}", new Object[] {
-					SOHU_EPISODE, name, video.getName() });
+			logger.warn("{}name from episode(net) is different with video, nameFromEpisoceNet = {}, nameFromVideo={}",
+					new Object[] { SOHU_EPISODE, name, video.getName() });
 		}
 
 		StringBuffer buf = new StringBuffer();
@@ -154,9 +156,9 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 	private void parseEpisode(Video video, Map<Integer, String> titleMap, Element ele) {
 		try {
-			String playPageUrl = ele.select("a").first().attr("href");
+			String episodeNoStr = ele.select("a").last().text();
+			String playPageUrl = ele.select("a").last().attr("href");
 			String snapshotUrl = ele.select("img").attr("src");
-			String episodeNoStr = ele.select("img").attr("alt");
 
 			// parse episodeNo
 			String no = StringUtil.pickInteger(episodeNoStr);
