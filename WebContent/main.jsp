@@ -28,10 +28,13 @@
 
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <script type="text/javascript" src="./js/menu2.js"></script>
-<link rel="stylesheet" href="./css/nar/index/i.css" media="all"
+<!-- <link rel="stylesheet" href="./css/nar/i.css" media="all"
 	type="text/css">
 <link rel="stylesheet" href="./css/nar/bdsstyle.css" type="text/css">
-<link rel="stylesheet" href="./css/nar/search.css" type="text/css">
+<link rel="stylesheet" href="./css/nar/search.css" type="text/css"> -->
+
+<link rel="stylesheet" href="./css/pick.css" type="text/css">
+<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
 
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 <link rel="stylesheet" href="./css/menu2.css" type="text/css">
@@ -51,13 +54,13 @@
 				</p>
 			</div> --%>
 			<div class="ita" id="itaTop">
-				<script type="text/javascript">
+				<%-- <script type="text/javascript">
 					hym.show(1);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
-					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
+					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe> --%>
 			</div>
-			<div id="naruto_desk" style="height: 630px;">
+			<div id="naruto_desk">
 				<div class="ltitle">
 					<a href="./video/videoListAction!listHot" title="热门动画片"
 						target="_blank">热门动画片</a>
@@ -77,11 +80,11 @@
 				</s:iterator>
 			</div>
 			<div class="itabg">
-				<script type="text/javascript">
+				<%-- <script type="text/javascript">
 					hym.show(3);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="90"
-					src="http://www.narutom.com/v2/v/i/key.html"></iframe>
+					src="http://www.narutom.com/v2/v/i/key.html"></iframe> --%>
 			</div>
 
 			<s:iterator value="hotEpisodeListHolder" var="episodeMap">
@@ -107,7 +110,7 @@
 				</s:iterator>
 			</s:iterator>
 
-			<div id="naruto_desk" style="height: 200px;">
+			<div id="naruto_desk">
 				<!-- 字母下拉菜单 -->
 				<div class="menu2_menu_container">
 					<div class="menu2_nav" id="letterMainNav">
@@ -182,18 +185,15 @@
 	<!-- 页脚 -->
 	<jsp:include page="footer.html" />
 
-	<script type="text/javascript">
+	<%-- <script type="text/javascript">
 		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
 				+ Math.ceil(new Date() / 3600000)
 	</script>
 	<script type="text/javascript" src="/v2/js/yxf.js"></script>
 	<script language="javascript"
 		src="http://rwq.youle55.com/r/mr_1553_3945.js"></script>
-	<style>
-#cs_couplet_left, #cs_couplet_right, #cs_right_bottom, #ft_couplet_left,
-	#ft_couplet_right, #ft_right_bottom {
-	z-index: 2147483647;
-}
+<style type="text/css">
+#cs_couplet_left, #cs_couplet_right, #cs_right_bottom, #ft_couplet_left,	#ft_couplet_right, #ft_right_bottom {	z-index: 2147483647; }
 </style>
 	<!--<script type="text/javascript">BAIDU_CLB_fillSlot("675989");</script>-->
 	<script type="text/javascript">
@@ -279,9 +279,23 @@
 			<a href="javascript:;" target="_self"><img
 				src="http://img.twcczhu.com/s/img/close.gif" ck="cs_rich_close_hide"
 				border="0" style="width: 25px; height: 13px; cursor: pointer;"></a>
-		</div>
+		</div> --%>
 </body>
 <script type="text/javascript">
+
+/*
+$(function(){
+    $(".course_box").hover(function(){
+        $(this).addClass("animated swing");
+        $(this).find(".desc").show().removeClass("fadeOut").addClass("animated fadeIn");
+    },function(){
+        $(this).removeClass("animated swing");
+        $(this).find(".desc").hide().remoceClass("fadeIn").addClass("animated fadeOut");
+    });
+});
+*/
+
+
 	/*
 	 $(function(){
 	 $.ajax({  

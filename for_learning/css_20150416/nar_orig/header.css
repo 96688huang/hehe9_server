@@ -1,0 +1,100 @@
+/* 头部共用CSS */
+#header {
+	height:168px;margin:0 auto;width:900px;
+	background:url('../images/banner.jpg') repeat-x;
+}
+#logo {
+	float:left;
+	margin:5px 0 0 8px;
+	display:inline;
+}
+#logo {
+	font-size:12px;
+	font-weight:normal;
+}
+#logo a {
+	padding:85px 0px 0 128px;
+	display:block;
+	font-size:12px;
+	text-decoration:none;
+	color:#666;
+	text-align:left;
+	width:340px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	width:120px;
+}
+#logo a span {
+	font-size:10px;
+}
+#logo a:hover {
+	color:#2E3092;
+	/*background:url('../images/logo2.png') no-repeat;*/
+}
+#search {
+	float:right;
+	width:265px;
+	margin-top:24px;
+}
+#search input {
+	width:190px;
+	height:20px;
+	line-height:20px;
+	border:1px #FAB666 solid;
+	background:#F7F5F5;
+	color:#707070;
+	text-indent:0.5em;
+	vertical-align:bottom;
+	font-size:12px;
+	filter:alpha(opacity=50); opacity:0.5;
+}
+#search input.onfocus {
+	border:1px #C6DF9C solid;
+	background:#fff;
+}
+#search input.btn {
+	width:55px;
+	height:25px;
+	padding:0 5px;
+	border:0;
+	background:none;
+}
+#menu {
+	float:left;
+	width:100%;
+	clear:both;
+	height:35px;
+	line-height:35px;
+	margin-top:13px;
+}
+#menu li {
+	float:left;
+}
+#menu li a {
+	font-size:12px;
+	font-weight:bold;
+	color:#fff;
+	padding:0 6px 0 7px;
+	display:block;
+	text-decoration:none;
+}
+#menu li a:hover {
+	background:url('../images/menu_hover.png') repeat-x;
+	color:#000;
+}
+#login {
+	background:#E8F3F9;
+	border:1px #88D3E3 solid;
+	margin:3px 0 0 0;
+}
+#login p {
+	margin:2px;
+	padding-left:25px;
+	border:1px #D3E9ED solid;
+	/*background:#fff url('../images/login.gif') no-repeat 5px 1px;*/
+}
+#login p span {
+	float:right;
+	margin-right:5px;
+	display:inline;
+}

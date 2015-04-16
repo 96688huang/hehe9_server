@@ -14,7 +14,7 @@
   <cache-entry key="guild_social_topic_like" node="mc" expiration="60m" reload-at="3m" comment="用户赞过的话题列表"/>
   <cache-entry key="guild_social_topic_comment" node="mc" expiration="60m" reload-at="30m" comment="公会话题评论"/> -->
   
-  <cache-entry key="index_page" node="mc" expiration="5m" reload-at="30m" comment="首页" version="v1"/>
+  <cache-entry key="index_page" node="mc" expiration="60m" reload-at="30m" comment="首页" version="v1"/>
   
 </cache-config>
 

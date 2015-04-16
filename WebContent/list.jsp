@@ -28,12 +28,15 @@
 
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 
-<link rel="stylesheet" href="./css/nar/bdsstyle.css" type="text/css">
+<!-- <link rel="stylesheet" href="./css/nar/bdsstyle.css" type="text/css">
 <link rel="stylesheet" href="./css/nar/search.css" type="text/css">
 <link rel="stylesheet" href="./css/nar/list/index_layout2.css"
 	media="all" type="text/css">
-<link rel="stylesheet" href="./css/nar/index/i.css" media="all"
-	type="text/css">
+<link rel="stylesheet" href="./css/nar/i.css" media="all"
+	type="text/css"> -->
+
+<link rel="stylesheet" href="./css/pick.css" type="text/css">
+<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
 </head>
 <body>
 	<div class="nmain">

@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -59,10 +58,11 @@ public class VideoAction extends ActionSupport {
 	private List<Video> menuVideoList;
 
 	/** 首页热门视频数量 */
-	private final int MAIN_HOT_VIDEOS_COUNT = 21;
+	private final int MAIN_HOT_VIDEOS_COUNT = 24;
 	/** 首页每行热门视频的数量 */
-	private final int MAIN_HOT_VIDEOS_COUNT_PER_LINE_ = 7;
+	private final int MAIN_HOT_VIDEOS_COUNT_PER_LINE_ = 6;
 	/** 首页热门视频数量(用于展示分集) */
+	
 	private final int MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE = 4;
 	/** 分集数量 */
 	private final int MAIN_HOT_VIDEOS_ESPICODE_COUNT = 10;
@@ -94,15 +94,13 @@ public class VideoAction extends ActionSupport {
 	public String toMain() throws Exception {
 
 		// check cache
-		String indexPageContent = cacheService.getIndexPageCache();
-		if (StringUtils.isNotBlank(indexPageContent)) {
-			inputStream = new ByteArrayInputStream(indexPageContent.getBytes("UTF-8"));
-			return SUCCESS;
+		if(AppConfig.MEMCACHE_ENABLE){
+			String indexPageContent = cacheService.getIndexPageCache();
+			if (StringUtils.isNotBlank(indexPageContent)) {
+				inputStream = new ByteArrayInputStream(indexPageContent.getBytes("UTF-8"));
+				return SUCCESS;
+			}
 		}
-
-		// TODO
-		logger.error("toMain ---- isRequestingIndex : " + isRequestingIndex.get() + ", thread id : "
-				+ Thread.currentThread().getId());
 
 		// 最热门的视频列表
 		List<Video> hotVideoList = initHotVideos();
@@ -174,7 +172,7 @@ public class VideoAction extends ActionSupport {
 	 */
 	private void saveIndexCacheAsyncIfNeeded() {
 		// 请求首页html内容(加上判断是为了避免递归 死循环请求)
-		if (!isRequestingIndex.getAndSet(true)) {
+		if (AppConfig.MEMCACHE_ENABLE && !isRequestingIndex.getAndSet(true)) {
 			Runnable requestTask = new Runnable() {
 				@Override
 				public void run() {

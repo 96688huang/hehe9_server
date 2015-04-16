@@ -23,13 +23,17 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
-<link rel="stylesheet" href="./css/nar/bdsstyle.css"
+<!-- <link rel="stylesheet" href="./css/nar/bdsstyle.css"
 	type="text/css">
 <link rel="stylesheet" href="./css/nar/list/index_layout2.css" media="all"
 	type="text/css">
-<link rel="stylesheet" href="./css/nar/list/i.css"
+<link rel="stylesheet" href="./css/nar/i.css"
 	type="text/css">
-<link rel="stylesheet" href="./css/nar/search.css" type="text/css">
+<link rel="stylesheet" href="./css/nar/search.css" type="text/css"> -->
+
+<link rel="stylesheet" href="./css/pick.css" type="text/css">
+<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
+
 </head>
 <body>
 	<div class="nmain">
@@ -71,7 +75,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 				</div>
 				<!-- <div class="blank"></div> -->
 			</div>
-			<div id="content2" style="position:relative;">
+			<div id="content2" style="position:relative; height: 800px;">
 				<div class="listitem">
 					<h1>${video.name}在线观看</h1>
 					<form id="queryForm" action="./video/episodeAction!list?" method = "post">
