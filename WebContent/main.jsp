@@ -53,13 +53,15 @@
 						target="_blank">火影623集「决不放弃的强大毅力!」</a>(3月12日晚上放送! ) | 火影忍者漫画已完结
 				</p>
 			</div> --%>
+			<%-- 
 			<div class="ita" id="itaTop">
-				<%-- <script type="text/javascript">
+				<script type="text/javascript">
 					hym.show(1);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
-					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe> --%>
+					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe> 
 			</div>
+			--%>
 			<div id="naruto_desk">
 				<div class="ltitle">
 					<a href="./video/videoListAction!listHot" title="热门动画片"
@@ -79,21 +81,24 @@
 					</ul>
 				</s:iterator>
 			</div>
+			<%-- 
 			<div class="itabg">
-				<%-- <script type="text/javascript">
+				<script type="text/javascript">
 					hym.show(3);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="90"
-					src="http://www.narutom.com/v2/v/i/key.html"></iframe> --%>
+					src="http://www.narutom.com/v2/v/i/key.html"></iframe>
 			</div>
+			--%>
 
 			<s:iterator value="hotEpisodeListHolder" var="episodeMap">
 				<s:iterator value="episodeMap" id="map">
 					<div class="index_downrank">
 						<div class="ltitle">
-							<span><a
+							${map.key.name} <a
 								href="./video/episodeAction!list?videoId=${map.key.id}"
-								title="${map.key.name}">更多</a></span>${map.key.name}
+								title="${map.key.name}"><img class="more"
+								src="./img/jian/more.jpg"></a>
 						</div>
 						<div id="video_list_holder"></div>
 						<ul class="softolist">
@@ -110,13 +115,13 @@
 				</s:iterator>
 			</s:iterator>
 
+			<!-- 字母下拉菜单 -->
 			<div id="naruto_desk">
-				<!-- 字母下拉菜单 -->
 				<div class="menu2_menu_container">
 					<div class="menu2_nav" id="letterMainNav">
 						<ul class="menu2_list">
 							<s:iterator value="letterMenuVideoMap" var="map">
-								<li><a href="#" class="menu2_name">${map.key}</a></li>
+								<li><span class="menu2_name">${map.key}</span></li>
 							</s:iterator>
 						</ul>
 
@@ -130,23 +135,34 @@
 							</s:else>
 							<div class="menu2_nav_cont">
 								<div class="menu2_nav_li">
-									<div class="menu2_nav_li_l">热门动画</div>
-									<div class="menu2_nav_li_r">
-										<s:iterator value="#map.value" var="video"
-											status="videoStatus">
-											<div style="display: inline-block;">
-												<a href="./video/episodeAction!list?videoId=${video.id }">${video.name }</a>&nbsp;┊&nbsp;
-											</div>
-										</s:iterator>
-										<div style="display: inline-block;">
-											<s:if test="#map.value.size > 0">
-											<a href="./video/videoListAction!list?firstChar=${map.key }" style="color: red;">更多...</a>
-											</s:if>
-											<s:else>
-											<a style="color: gray;">无</a>
-											</s:else>
-										</div>
-									</div>
+									<table style="height: 100%; width: 100%;">
+										<tr>
+											<td width="15px">
+												<div class="menu2_nav_li_l">热门动画</div>
+											</td>
+											<td width="5px">&nbsp;</td>
+											<td>
+												<div class="menu2_nav_li_r">
+													<s:iterator value="#map.value" var="video"
+														status="videoStatus">
+														<div style="display: inline-block;">
+															<a href="./video/episodeAction!list?videoId=${video.id }">${video.name }</a>&nbsp;┊&nbsp;
+														</div>
+													</s:iterator>
+													<div style="display: inline-block;">
+														<s:if test="#map.value.size > 0">
+															<a
+																href="./video/videoListAction!list?firstChar=${map.key }"><img
+																class="more" src="./img/jian/more.jpg"></a>
+														</s:if>
+														<s:else>
+															<a style="color: gray; font-weight: bold;">无</a>
+														</s:else>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</table>
 								</div>
 								<%-- <div class="menu2_nav_li">
 									<div class="menu2_nav_li_l">高清漫画</div>
@@ -179,11 +195,12 @@
 			 --%>
 			</div>
 		</div>
+		<div class="line"></div>
 		<!-- 友情链接 -->
-		<jsp:include page="friend_link.html" />
+		<jsp:include page="friend_link.jsp" />
 	</div>
 	<!-- 页脚 -->
-	<jsp:include page="footer.html" />
+	<jsp:include page="footer.jsp" />
 
 	<%-- <script type="text/javascript">
 		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
@@ -282,19 +299,17 @@
 		</div> --%>
 </body>
 <script type="text/javascript">
-
-/*
-$(function(){
-    $(".course_box").hover(function(){
-        $(this).addClass("animated swing");
-        $(this).find(".desc").show().removeClass("fadeOut").addClass("animated fadeIn");
-    },function(){
-        $(this).removeClass("animated swing");
-        $(this).find(".desc").hide().remoceClass("fadeIn").addClass("animated fadeOut");
-    });
-});
-*/
-
+	/*
+	 $(function(){
+	 $(".course_box").hover(function(){
+	 $(this).addClass("animated swing");
+	 $(this).find(".desc").show().removeClass("fadeOut").addClass("animated fadeIn");
+	 },function(){
+	 $(this).removeClass("animated swing");
+	 $(this).find(".desc").hide().remoceClass("fadeIn").addClass("animated fadeOut");
+	 });
+	 });
+	 */
 
 	/*
 	 $(function(){

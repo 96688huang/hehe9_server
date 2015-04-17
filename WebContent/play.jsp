@@ -254,7 +254,7 @@
 	<!-- TODO 多说评论 -->
 
 	<!-- 页脚 -->
-	<jsp:include page="footer.html" />
+	<jsp:include page="footer.jsp" />
 
 	<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js">
 		

@@ -90,10 +90,10 @@
 					src="http://www.narutom.com/v2/v/i/key.html"></iframe>
 			</div> --%>
 			<!-- 友情链接 -->
-			<jsp:include page="friend_link.html" />
+			<jsp:include page="friend_link.jsp" />
 		</div>
 	</div>
 	<!-- 页脚 -->
-	<jsp:include page="footer.html" />
+	<jsp:include page="footer.jsp" />
 </body>
 </html>

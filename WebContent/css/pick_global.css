@@ -16,9 +16,9 @@
 /* ������� */#index_class li {margin: 1px;width: 113px;float: left;text-align: center;display: inline;}
 /* ������� */#search_result label,#search_result a label {color:#f00;font-weight:bold;}
 /*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
-/*----------------------------*/h2,h3,h4,h5,h6,h7{font-weight:normal;}
-/*------------------------------*//* ͷ������CSS */#header {height:168px;margin:0 auto;width:980px;background:url('http://www.narutom.com/images/banner.jpg') repeat-x;}
-/*------------------------------------------------*/#recommend_down {float: left;width: 300px;height:370px;clear: left;border: 1px #88D3E3 solid;margin: 5px 0 0 0;}
+h2,h3,h4,h5,h6,h7{font-weight:normal;}
+#header {height:168px;margin:0 auto;width:980px;background:url('http://www.narutom.com/images/banner.jpg') repeat-x;}
+#recommend_down {float: left;width: 300px;height:370px;clear: left;border: 1px #88D3E3 solid;margin: 5px 0 0 0;}
 @-moz-keyframes pulse{0%{-moz-transform:scale(1)}50%{-moz-transform:scale(1.1)}100%{-moz-transform:scale(1)}}
 @-moz-keyframes swing {20% { -moz-transform: rotate(15deg); }40% { -moz-transform: rotate(-10deg); }60% { -moz-transform: rotate(5deg); }80% { -moz-transform: rotate(-5deg); }100% { -moz-transform: rotate(0deg);}}
 @-moz-keyframes swing {20% { -moz-transform: rotate(15deg); }40% { -moz-transform: rotate(-10deg); }60% {-moz-transform: rotate(5deg); }80% { -moz-transform: rotate(-5deg); }100% { -moz-transform: rotate(0deg);}}
@@ -28,14 +28,18 @@
 @-webkit-keyframes pulse{0%{-webkit-transform:scale(1)}50%{-webkit-transform:scale(1.1)}100%{-webkit-transform:scale(1)}}
 @-webkit-keyframes swing {20%, 40%, 60%, 80%, 100% { -webkit-transform-origin: top center; }20% { -webkit-transform: rotate(15deg);}40%{-webkit-transform: rotate(-10deg);}60%{-webkit-transform: rotate(5deg);}80%{-webkit-transform: rotate(-5deg);}100%{-webkit-transform: rotate(0deg);}}
 @-webkit-keyframes swing {20%, 40%, 60%, 80%, 100% { -webkit-transform-origin: top center; }20% { -webkit-transform:rotate(15deg);}40%{-webkit-transform: rotate(-10deg);}60%{-webkit-transform: rotate(5deg);}80%{-webkit-transform:rotate(-5deg);}100%{-webkit-transform: rotate(0deg);}}
-@CHARSET "UTF-8";#bdshare ul, #bdshare_s ul, #bdshare ul li, #bdshare_s ul li,#bdshare_l_c ul li, #bdshare_m_c ul li, #bdshare_pop ul, #bdshare_pop ul li{list-style: none;margin: 0;padding: 0}
+
+@CHARSET "UTF-8";
+#bdshare ul, #bdshare_s ul, #bdshare ul li, #bdshare_s ul li,#bdshare_l_c ul li, #bdshare_m_c ul li, #bdshare_pop ul, #bdshare_pop ul li{list-style: none;margin: 0;padding: 0}
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 @keyframes swing {20%{ transform: rotate(15deg);}40% { transform: rotate(-10deg);}60%{transform: rotate(5deg);}80%{transform: rotate(-5deg);}100%{transform: rotate(0deg);}}
 @keyframes swing {20%{ transform: rotate(15deg);}40% { transform: rotate(-10deg);}60%{transform:rotate(5deg);}80%{transform: rotate(-5deg);}100%{transform: rotate(0deg);}}
 a img {border:0;}
 a.more,#search_result dd i.game_date {color:green;}
-a:hover,a:active {color:#003;text-decoration:underline;}
-a:hover,a:visited:hover{text-shadow:#585858 0px 0px 3px;}
+/* a:hover,a:active {color:#003;text-decoration:underline;} */
+/* 阴影效果 a:hover,a:visited:hover{text-shadow:#585858 0px 0px 3px;} */
+a:hover,a:active {color:#FF0000;text-decoration:underline;}
+
 a:link,a:visited {color:#007498;text-decoration:none;}
 a{color:202020;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;}
 body p,body ul,body dl {text-align:left;}

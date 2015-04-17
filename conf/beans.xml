@@ -99,7 +99,7 @@
 	<!-- 定时任务配置 -->
 	<task:scheduled-tasks>
 		<task:scheduled ref="videosCollectJob" method="executeJob"
-			cron="0 57 10 * * ?" />
+			cron="0 0 0 * * ?" />
 	</task:scheduled-tasks>
 
 </beans>

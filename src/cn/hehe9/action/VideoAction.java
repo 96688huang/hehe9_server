@@ -58,9 +58,9 @@ public class VideoAction extends ActionSupport {
 	private List<Video> menuVideoList;
 
 	/** 首页热门视频数量 */
-	private final int MAIN_HOT_VIDEOS_COUNT = 24;
+	private final int MAIN_HOT_VIDEOS_COUNT = 21;
 	/** 首页每行热门视频的数量 */
-	private final int MAIN_HOT_VIDEOS_COUNT_PER_LINE_ = 6;
+	private final int MAIN_HOT_VIDEOS_COUNT_PER_LINE_ = 7;
 	/** 首页热门视频数量(用于展示分集) */
 	
 	private final int MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE = 4;

@@ -8,7 +8,6 @@
 #Narutonav li{ width:108px; height:25px; float:left;}
 #Narutonav span{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(/img/nav_on.gif) no-repeat;}
 #Narutonav span{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(http://www.narutom.com/img/nav_on.gif) no-repeat;}
-#Narutonav span{ width:102px; height:25px; line-height:25px; text-align:center; float:left;background:url(http://www.narutom.com/img/nav_on.gif) no-repeat;}
 #Narutonav{ height:25px; background:url(/img/nav_b.gif) no-repeat bottom;margin-top:10px;}
 #Narutonav{ height:25px; background:url(http://www.narutom.com/img/nav_b.gif) no-repeat bottom;margin-top:10px;}
 #Ntop .Nleft{ width:8px; height:28px; background: url(/img/top_l.jpg); float:left;}
@@ -62,33 +61,23 @@
 #content dt,#content2 dt {padding-left:25px;background:url(../images/game_name.gif) no-repeat left 2px;height:25px;line-height:25px;overflow:hidden;}
 #content2 .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #naruto_name , #cartoon_List{border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all;}
 #content2 {float:left;width:700px;}
+#footer{width: 981px;}
 #footer a {color:#fff;text-decoration:underline;}
 #footer a:hover {color:#F0F8FF;text-decoration:none;}
 #footer p {text-align:center;}
 #footer {margin:8px 0 0 0;border-top:3px #FFF3AD solid;background:#676767;color:#fff;}
-#friendlink img {margin:1px; border:1px solid #333;}
-#friendlink li a {display:block;color: #666;width:100%;height:100%;}
-#friendlink li a:hover {color: #06c;text-decoration:none;}
-#friendlink li {width: 99px;float: left;text-align: center;height:20px;overflow:hidden;}
-#friendlink ul {padding-left:1px;display:inline;margin:8px;}
-#friendlink {border:1px #88D3E3 solid;background:#fff;width:898px;padding-bottom:1px;}
-#friendlink {border:1px #88D3E3 solid;background:#fff;width:978px;padding-bottom:1px;}
 #game_name span a , .ltitle span a {float:right;font-size:12px;font-weight:bold;margin-right:5px;display:inline;}
-#hot_down h2, .index_downrank h2 , #hot_video h2 , .index_downrank .ltitle , #hot_down .ltitle{background: #FEF9EB;color: #8F5400;border-bottom: 1px #F9F0C0 solid;}
 #indexcartoonList img,#indexcartoonList:hover{-webkit-animation-fill-mode: both;-moz-animation-fill-mode: both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration: 0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration: 0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;}
 #indexcartoonList img:hover{-webkit-transform-origin: top center;-moz-transform-origin: top center;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name: swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;}
 #indexcartoonList li a:hover img{border:1px solid #069;padding:3px;}
 #indexcartoonList li img ,#cartoonList li img A:hover{border:2px solid #D4D4D4;}
 #indexcartoonList li img ,#cartoonList li img a{border:1px solid #d0d0d0;padding:3px;}
 #indexcartoonList li img ,#cartoonList li img {border:1px solid #d0d0d0;padding:3px;width:120px;height:160px;}
-#indexcartoonList li img ,#cartoonList li img {border:2px solid #D4D4D4;}
-#indexcartoonList li {float:left;width:128px;height:188px;text-align:center;margin:5px 8px;padding-left:5px;padding-right:5px;}
+/* #indexcartoonList li img ,#cartoonList li img {border:2px solid #D4D4D4;} */
+#indexcartoonList li {float:left;width:126px;height:188px;text-align:center;margin:5px 4px;padding-left:2px;}
 #indexcartoonList {margin:0;padding:0;}
 #kof_desk h2,#naruto_desk h2{padding: 0;text-align: center;}
-#last_updated a.type, .index_downrank a.type {color: #999;}
-#last_updated a.type:hover, .index_downrank a.type:hover {color: #f60;text-decoration: underline;}
 #light{background:#000; position:absolute; width:100%; height:100%; z-index:100; top:0; left:0; display:none;}
-#list_rank .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
 #login p span {float:right;margin-right:5px;display:inline;}
 #login p {margin:2px;padding-left:25px;border:1px #D3E9ED solid;/*background:#fff url('../images/login.gif') no-repeat 5px 1px;*/}
 #login p{margin:2px;padding-left:20px;height:30px;line-height:30px;}#login p a{color:#039;}
@@ -99,9 +88,9 @@
 #narutoList li a:hover img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
 #narutoList li img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #eee; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
 #narutoList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden;}
-#narutoList li {float:left;width:160px;height:158px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 0 0 17px;overflow:hidden;}
+/* #narutoList li {float:left;width:160px;height:158px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 0 0 17px;overflow:hidden;} */
 #narutoListall {margin:18px 0 0 10px;}
-#naruto_desk,.naruto_desk{width: 980px;border: 1px #88D3E3 solid;float: left;clear: both;}
+#naruto_desk,.naruto_desk{width: 980px;border: 1px #88D3E3 solid;float: left;clear: both; margin: auto;}
 #narutologo h1{ display:none;}
 #narutologo img{ float:left; margin-left:8px;}
 #narutologo span{ float:left; margin:60px 0 0 60px;}
@@ -116,16 +105,29 @@
 #navpre label{float:left;}
 #navpre span { float:right;}
 #navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
+/* #friendlink {border:1px #88D3E3 solid;background:#fff;width:898px;padding-bottom:1px;} */
+/* #friendlink {border:1px #88D3E3 solid;background:#fff;width:978px;padding-bottom:1px;} */
+/* #num_index,#friendlink {float:left; width:898px;clear:both;margin:8px 0 0 0;border:1px #E8CA78 solid;background:#f7f7f7;text-align:left;} */
+/* 
+#num_index,#friendlink {width:978px;clear:both;margin:8px 0 0 0; height:30px;line-height:30px; border:1px #E8CA78 solid;background:#f7f7f7;text-align:left;}
 #num_index dd a {margin:0 4px;padding:0 3px;color:#7E5D05;}
 #num_index dd a:hover {color:#0A4F72;text-decoration:none;border:1px #0373AB solid;background:url(../images/num_index_btnbghover.png) repeat-x;}
 #num_index dl {padding:5px 0;float:left;font-size:14px;font-weight:bold;color:#7E5D05;}
 #num_index dt,#num_index dd a {margin:0 10px;display:inline;background:url(../images/num_index_btnbg.png) repeat-x;height:20px;line-height:20px;border:1px #C59105 solid;float:left;padding:0 5px;}
 #num_index span{float:right;padding-right:6px;}
-#num_index,#friendlink {/*float:left;*/width:898px;clear:both;margin:8px 0 0 0;border:1px #E8CA78 solid;background:#f7f7f7;text-align:left;}
-#num_index,#friendlink {width:978px;clear:both;margin:8px 0 0 0;border:1px #E8CA78 solid;background:#f7f7f7;text-align:left;}
-#num_index{margin-top:8px;height:30px;line-height:30px;}
+#friendlink img {margin:1px; border:1px solid #333;}
+#friendlink li a {display:block;color: #666;width:100%;height:100%;}
+#friendlink li a:hover {color: #06c;text-decoration:none;}
+#friendlink li {width: 99px;float: left;text-align: center;height:20px;overflow:hidden;}
+#friendlink ul {padding-left:1px;display:inline;margin:8px;}
+*/
+/* start : below is by myself*/
+#friendlink {width:980px; height:50px; clear:both;margin:8px 0 0 0;line-height:50px; border:1px #E8CA78 solid;background:#f7f7f7;text-align:left;}
+#friendlink ul li {display: inline-block; margin: 12px 8px;}
+/* end */
+
 #recommend_down .ltitle span {margin-left:10px;border:1px solid #555;background:#fff;height:18px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;}
-#recommend_down .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;}
+/* #recommend_down .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;} */
 #search input {width:190px;height:20px;line-height:20px;border:1px #FAB666 solid;background:#F7F5F5;color:#707070;text-indent:0.5em;vertical-align:bottom;font-size:12px;filter:alpha(opacity=50); opacity:0.5;}
 #search input.btn {width:55px;height:25px;padding:0 5px;border:0;background:none;}
 #search input.onfocus {border:1px #C6DF9C solid;background:#fff;}
@@ -187,10 +189,6 @@
 .dmnew{height:150px; line-height:30px; overflow:hidden;}
 .h31,.h41{padding:0 10px; color:#426f00; font-size:16px; font-family: "Microsoft Yahei" simhei; text-align:left;}
 .h31{height:40px; line-height:40px;}
-.index_downrank .ltitle span ,.index_gamelist .ltitle span{height:18px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;float:right;}
-.index_downrank .ltitle span.curPos ,.index_gamelist .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;}
-.index_downrank ul {margin: 5px 10px;}
-.index_downrank {float: left;border: 1px #E8CA78 solid;width: 227px; margin: 8px;}
 .ita2{width:900px;height:90px;text-align:left;margin-top:6px;margin-bottom:2px;display:table;clear:both;over-flow:hidden;}
 .ita2{width:900px;text-align:left;margin-top:6px;margin-bottom:2px;display:table;clear:both;over-flow:hidden;padding-top:10px;}
 .itabg{width:980px;height:90px;border:1px solid #d0d0d0;clear: both;display:inline;overflow:hidden;}
@@ -208,9 +206,8 @@
 .listitemall ul{ list-style:none;width:660px;}
 .listitemall {border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all; }
 .ltitle span {margin-left:10px;border:1px solid #555;background:#fff;height:10px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;}
-.ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;}
+/* .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;} */
 .nmain {width:1000px;margin:0 auto;position: relative;z-index:100;background:#fff;}
-.nmain {width:950px;margin:0 auto;position: relative;z-index:100;}
 .pagenav select {font-size:12px;position:relative;top:2px;}
 .pagenav span {float:right;}
 .pagenav {border:1px #88D3E3 solid;border-bottom:0;height:25px;line-height:25px;background:#f8f8f8;color:#007498;text-align:left;padding:0 10px;}
@@ -227,12 +224,27 @@
 .softolist li a:link,.softolist li a:visited, .narutolist li a:link, .narutolist li a:visited{color:#8F5400;}
 .softolist li {background:url('../images/li_bg4.gif') no-repeat left 7px;padding-left:12px;overflow:hidden;}
 .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
+.wrap {width:980px;margin:0 auto;}
+.wrap2 {width:980px;margin:0 auto;z-index:100;}
 .wrap h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
 .wrap2 h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap2 .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
-/* �б�ҳCSS */#nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
-/* ������� */#search_result label,#search_result a label {color:#f00;font-weight:bold;}
+#nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
+#search_result label,#search_result a label {color:#f00;font-weight:bold;}
 /*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
-@CHARSET "UTF-8";#bdshare ul, #bdshare_s ul, #bdshare ul li, #bdshare_s ul li,#bdshare_l_c ul li, #bdshare_m_c ul li, #bdshare_pop ul, #bdshare_pop ul li{list-style: none;margin: 0;padding: 0}
+
+@CHARSET "UTF-8";
+#bdshare ul, #bdshare_s ul, #bdshare ul li, #bdshare_s ul li,#bdshare_l_c ul li, #bdshare_m_c ul li, #bdshare_pop ul, #bdshare_pop ul li{list-style: none;margin: 0;padding: 0}
 a.more,#search_result dd i.game_date {color:green;}
 span.bds_more {background: url(../images/is.png?cdnversion=20131219) no-repeat 0 5px!important}
 span.bds_more, .bds_tools a {display: block;font-family: '宋体', Arial;height: 16px;float: left;cursor: pointer;padding-top: 6px;padding-bottom: 3px;padding-left: 22px}
+
+#hot_down h2, .index_downrank h2 , #hot_video h2 , .index_downrank .ltitle , #hot_down .ltitle{background: #FEF9EB;color: #8F5400;border-bottom: 1px #F9F0C0 solid;}
+
+.index_downrank .ltitle .more {float: right; margin: 5px;}
+.index_downrank .ltitle span ,.index_gamelist .ltitle span{height:18px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;float:right;}
+/* .index_downrank .ltitle span.curPos ,.index_gamelist .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;} */
+.index_downrank ul {margin: 5px 10px;}
+.index_downrank {float: left;border: 1px #E8CA78 solid;width: 227px; margin: 8px;}
+#last_updated a.type, .index_downrank a.type {color: #999;}
+#last_updated a.type:hover, .index_downrank a.type:hover { /* color: #f60; */text-decoration: underline;}
+#list_rank .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}

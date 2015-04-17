@@ -104,10 +104,10 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 		</div>
 		<div class="line"></div>
 		<!-- 友情链接 -->
-		<jsp:include page="friend_link.html" />
+		<jsp:include page="friend_link.jsp" />
 	</div>
 	<!-- 页脚 -->
-	<jsp:include page="footer.html" />
+	<jsp:include page="footer.jsp" />
 
 	<div class="wrap2 vtg3">
 		<script type="text/javascript">
