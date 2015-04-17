@@ -39,6 +39,8 @@
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 <link rel="stylesheet" href="./css/menu2.css" type="text/css">
 
+<!-- <link rel="stylesheet" href="./css/search.css" type="text/css"> -->
+
 </head>
 <body>
 	<div class="nmain">

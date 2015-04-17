@@ -1,21 +1,22 @@
 #kof_desk {	border: 1px #88D3E3 solid;float: left;clear: both;margin-top: 8px;width: 808px; height:168px;}
-/* banner���CSS */.banner {clear: both;width: 810px;float: left;text-align: center;background: #fff;margin: 8px 0 0 0;overflow: hidden;}
-/* new style */li{list-style-type:none; }
-/* ȫ����ȡ��ȫ�� */.full{position:absolute;left:0px;top:0px;z-index:1;padding:0;margin:0;background-color: #000;}
-/* ͷ������CSS */#header {height:168px;margin:0 auto;width:900px;background:url('../images/banner.jpg') repeat-x;}
-/* 全局共用属性CSS */*{margin:0;padding:0;}
-/* 确保访问后的状态优先于鼠标变换状态 */a:link,a:visited {color:#007498;text-decoration:none;}
-/* 确保访问后的状态优先于鼠标变换状态 */a:link,a:visited {color:#333;text-decoration:none;}
-/* �û�ע�� */#regform {border:1px #88D3E3 solid;margin:8px 0 0 0;}
-/* �б�ҳCSS */#nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
-/* �쳵 */.dmga {float:right; margin:10px;}
-/* �쳵 */.skuaicheForm{display:none;}
-/* ��ĸ���� */#index_soft,#game_navpage,#index_class {border:1px #88D3E3 solid;margin:5px 0 0 0;}
-/* ���ù��� */#common_tools {border: 1px #88D3E3 solid;float: left;clear: both;margin-top: 8px;width: 808px;}
-/* ����ҳ�沼��CSS */.game_img {float:right;width:260px;text-align:left;margin:10px;display:inline;}
-/* ������� */#index_class li {margin: 1px;width: 113px;float: left;text-align: center;display: inline;}
-/* ������� */#search_result label,#search_result a label {color:#f00;font-weight:bold;}
-/*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
+.banner {clear: both;width: 810px;float: left;text-align: center;background: #fff;margin: 8px 0 0 0;overflow: hidden;}
+li{list-style-type:none; }
+.full{position:absolute;left:0px;top:0px;z-index:1;padding:0;margin:0;background-color: #000;}
+#header {height:168px;margin:0 auto;width:900px;background:url('../images/banner.jpg') repeat-x;}
+*{margin:0;padding:0;}
+a:link,a:visited {color:#007498;text-decoration:none;}
+a:link,a:visited {color:#333;text-decoration:none;}
+#regform {border:1px #88D3E3 solid;margin:8px 0 0 0;}
+#nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
+.dmga {float:right; margin:10px;}
+.skuaicheForm{display:none;}
+#index_soft,#game_navpage,#index_class {border:1px #88D3E3 solid;margin:5px 0 0 0;}
+#common_tools {border: 1px #88D3E3 solid;float: left;clear: both;margin-top: 8px;width: 808px;}
+.game_img {float:right;width:260px;text-align:left;margin:10px;display:inline;}
+#index_class li {margin: 1px;width: 113px;float: left;text-align: center;display: inline;}
+#search_result label,#search_result a label {color:#f00;font-weight:bold;}
+/*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/
+#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
 h2,h3,h4,h5,h6,h7{font-weight:normal;}
 #header {height:168px;margin:0 auto;width:980px;background:url('http://www.narutom.com/images/banner.jpg') repeat-x;}
 #recommend_down {float: left;width: 300px;height:370px;clear: left;border: 1px #88D3E3 solid;margin: 5px 0 0 0;}
@@ -44,7 +45,9 @@ a:link,a:visited {color:#007498;text-decoration:none;}
 a{color:202020;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;}
 body p,body ul,body dl {text-align:left;}
 body {CURSOR: url('http://www.narutom.com/style/narutom.gif');font:12px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman";text-align:center;color:#666;background:#fff;}
-html{color:#000;font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}body{font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体'}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}fieldset,img{border:0}li{list-style:none}
+html{color:#000;font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}body{font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体'}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}
+fieldset,img{border:0}li{list-style:none}
 p#voice_nav input {float:right;font-size:12px;color:#3E5E8A;border:1px #476C9E solid;height:20px;line-height:20px;vertical-align:middle;background:url(../images/voice_btn.png) repeat-x;position:relative;top:5px;}
 p#voice_nav span {float:left;}
 p#voice_nav {background:#FCFFF6;border:1px #BFDB89 solid;padding:0 5px;margin:5px;height:30px;line-height:30px;text-align:left;}
