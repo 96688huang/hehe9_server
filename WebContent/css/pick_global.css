@@ -45,7 +45,8 @@ a:link,a:visited {color:#007498;text-decoration:none;}
 a{color:202020;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;}
 body p,body ul,body dl {text-align:left;}
 body {CURSOR: url('http://www.narutom.com/style/narutom.gif');font:12px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman";text-align:center;color:#666;background:#fff;}
-html{color:#000;font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}body{font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体'}
+html{color:#000;font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}
+body{font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体'}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}
 fieldset,img{border:0}li{list-style:none}
 p#voice_nav input {float:right;font-size:12px;color:#3E5E8A;border:1px #476C9E solid;height:20px;line-height:20px;vertical-align:middle;background:url(../images/voice_btn.png) repeat-x;position:relative;top:5px;}

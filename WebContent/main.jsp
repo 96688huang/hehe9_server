@@ -39,7 +39,7 @@
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 <link rel="stylesheet" href="./css/menu2.css" type="text/css">
 
-<!-- <link rel="stylesheet" href="./css/search.css" type="text/css"> -->
+<link rel="stylesheet" href="./css/search.css" type="text/css">
 
 </head>
 <body>
@@ -201,6 +201,7 @@
 		<!-- 友情链接 -->
 		<jsp:include page="friend_link.jsp" />
 	</div>
+	</div> <!-- 注: 因标签判断的缘故, 需要多一个div结束符 -->
 	<!-- 页脚 -->
 	<jsp:include page="footer.jsp" />
 

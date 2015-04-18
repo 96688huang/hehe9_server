@@ -1,23 +1,23 @@
 #Head{ height:78px; text-align:left;width:980px;overfolw:hidden;clear:both;}
-#Narutonav a, #Narutonav a:visited{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(/img/nav.gif) no-repeat;font-size:14px;color:#069;}
-#Narutonav a, #Narutonav a:visited{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(http://www.narutom.com/img/nav.gif) no-repeat;font-size:14px;color:#069;}
-#Narutonav a, #Narutonav a:visited{ width:102px; height:25px; line-height:25px; text-align:center; float:left;background:url(http://www.narutom.com/img/nav.gif) no-repeat;font-size:12px;color:#069;}
-#Narutonav a:hover{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(/img/nav_over.gif) no-repeat; text-decoration:none;color:green;}
-#Narutonav a:hover{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(http://www.narutom.com/img/nav_over.gif) no-repeat; text-decoration:none;color:green;}
-#Narutonav a:hover{ width:102px; height:25px; line-height:25px; text-align:center; float:left;background:url(http://www.narutom.com/img/nav_over.gif) no-repeat; text-decoration:none;color:green;}
-#Narutonav li{ width:108px; height:25px; float:left;}
-#Narutonav span{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(/img/nav_on.gif) no-repeat;}
-#Narutonav span{ width:102px; height:25px; line-height:25px; text-align:center; float:left; background:url(http://www.narutom.com/img/nav_on.gif) no-repeat;}
-#Narutonav{ height:25px; background:url(/img/nav_b.gif) no-repeat bottom;margin-top:10px;}
-#Narutonav{ height:25px; background:url(http://www.narutom.com/img/nav_b.gif) no-repeat bottom;margin-top:10px;}
-#Ntop .Nleft{ width:8px; height:28px; background: url(/img/top_l.jpg); float:left;}
-#Ntop .Nleft{ width:8px; height:28px; background: url(http://www.narutom.com/img/top_l.jpg); float:left;}
+
+#Narutonav{ height:33px;}
+#Narutonav ul{ height:33px; float:left;}
+#Narutonav li{ width:108px; height:33px; float:left;}
+/* #Narutonav span{ width:102px; line-height:33px; text-align:center; float:left;} */
+/** A标签文字垂直居中, 用line-height, 不用padding-top */
+#Narutonav a, #Narutonav a:visited{width:102px; height:33px; line-height:33px; text-align:center;  float:left; font-size:14px;color:#FFF; background: url("../img/jian/menu_bg.jpg") repeat-x;}
+#Narutonav a:hover{ width:102px; height:33px; line-height:33px; text-align:center; float:left; background: url("../img/jian/menu_li_hover.jpg"); text-decoration:none;color:#FFF;}
+.Ncontainer{width:980px; margin:0 auto;background:#fff;}
+
+.listMenu { height:32px;line-height:32px;text-align:left;}
+.listMenu a:hover{background: #FFF; color: #FF0000;}
+
+#Ntop{ height:32px;width:980px; /* border-bottom:#CAD8D8 1px solid; */ background: url("../img/jian/title_bg.gif") repeat-x; text-align:left;margin-bottom:10px;}
 #Ntop a {margin:0 5px;}
+/* #Ntop .Nleft{ width:8px; height:28px; background: background: url("./img/jian/topnav_bg.jpg") repeat-x; float:left;} */
+
 #Ntop2{ height:28px;width:960px; border-bottom:#CAD8D8 1px solid;background: url(/img/top_bg.jpg); text-align:left;margin-bottom:10px;}
 #Ntop2{ height:28px;width:960px; border-bottom:#CAD8D8 1px solid;background: url(http://www.narutom.com/img/top_bg.jpg); text-align:left;margin-bottom:10px;}
-#Ntop{ height:28px;width:900px; border-bottom:#CAD8D8 1px solid;background: url(/img/top_bg.jpg); text-align:left;margin-bottom:10px;}
-#Ntop{ height:28px;width:980px; border-bottom:#CAD8D8 1px solid;background: url(http://www.narutom.com/img/top_bg.jpg); text-align:left;margin-bottom:10px;}
-#Ntop{ height:28px;width:980px; border-bottom:#CAD8D8 1px solid;background:url(http://www.narutom.com/img/top_bg.jpg); text-align:left;margin-bottom:10px;}
 #bdshare .bds_fl5, #bdshare .bds_buzz, #bdshare .bds_zx {display: none}
 #bdshare a, #bdshare_s a, #bdshare_pop a {text-decoration: none;cursor: pointer}
 #bdshare a:hover, #bdshare_s a:hover, #bdshare_pop a:hover {color: #333;opacity: .8;filter: alpha(opacity = 80)}
@@ -61,11 +61,12 @@
 #content dt,#content2 dt {padding-left:25px;background:url(../images/game_name.gif) no-repeat left 2px;height:25px;line-height:25px;overflow:hidden;}
 #content2 .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #naruto_name , #cartoon_List{border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all;}
 #content2 {float:left;width:700px;}
-#footer{width: 981px;}
+
+#footer {margin:8px 0 0 0;border-top:3px #FFF3AD solid;background:#676767;color:#fff;}
+#footer p {text-align:center;}
 #footer a {color:#fff;text-decoration:underline;}
 #footer a:hover {color:#F0F8FF;text-decoration:none;}
-#footer p {text-align:center;}
-#footer {margin:8px 0 0 0;border-top:3px #FFF3AD solid;background:#676767;color:#fff;}
+
 #game_name span a , .ltitle span a {float:right;font-size:12px;font-weight:bold;margin-right:5px;display:inline;}
 #indexcartoonList {margin:0 auto;padding:0;}
 #indexcartoonList li {float:left;width:126px;height:188px;text-align:center;margin:5px 5px;padding-left:3px;}
@@ -90,7 +91,7 @@
 #narutoList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden;}
 /* #narutoList li {float:left;width:160px;height:158px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 0 0 17px;overflow:hidden;} */
 #narutoListall {margin:18px 0 0 10px;}
-#naruto_desk,.naruto_desk{width: 980px;border: 1px #88D3E3 solid;float: left;clear: both; margin: auto;}
+#naruto_desk,.naruto_desk{width: 980px;border: 1px #88D3E3 solid; float: left;clear: both; margin: 8px auto 8px auto;}
 /*
 #narutologo h1{ display:none;}
 #narutologo img{ float:left; margin-left:8px;}
@@ -144,16 +145,14 @@
 #search_result dl {margin:15px 0;}
 #search_result dl:hover,#search_result dl.sfhover {background:#f8f8f8;border:1px #eee solid;border-width:1px 0;margin:14px 0;}
 #search_result dt {font-size:14px;font-weight:bold;}
-#sidebar h2 , #sidebar .ltitle{border-top:1px #E8CA78 solid;margin:0 1px 1px 1px;background: #FEF9EB;color: #8F5400;border-bottom: 1px #F9F0C0 solid;}
+#sidebar h2 , #sidebar .ltitle{ height:25px; line-height: 25px; border-top:1px #E8CA78 solid;margin:0 1px 1px 1px;background: #FEF9EB;color: #8F5400;border-bottom: 1px #F9F0C0 solid;}
 #sidebar ul {padding:5px;}
 #sidebar {float:right;width:270px;}
 #topbanner{height:68px;width:468px;margin-top:10px;float:right;text-align:left;margin-right:10px;}
 #topbanner{height:68px;width:600px;margin-top:10px;float:right;text-align:left;margin-right:10px;}
 #vright{float:right;width:131px;height:440px;padding:0;}
 #witer{color:green;font-family:"微软雅黑"}
-.Ncontainer2{width:960px; margin:0 auto;background:#fff;}
-.Ncontainer2{width:980px; margin:0 auto;background:#fff;}
-.Ncontainer{width:980px; margin:0 auto;background:#fff;}
+
 .PlayBody .play .pl .player{width: 720px;text-align:center;}
 .PlayBody .play .pl .top .Err{float: left;margin-left: 10px;color: #004FA5;}
 .PlayBody .play .pl .top a {FONT-WEIGHT: bold;}
@@ -202,8 +201,7 @@
 .line {height:1px;overflow:hidden;background:url('../images/container_border.gif')}
 .line2 {height:1px;overflow:hidden;background:url('../images/container_border2.gif')}
 .lines {margin:auto;width:980px;height:1px;margin-top:1px;border-bottom:1px solid dotted;clear: both;}
-.listMenu { height:28px;line-height:28px;margin-left:10px;text-align:center;}
-.listMenu { height:28px;line-height:28px;margin-left:10px;text-align:left;}
+
 .listitemall h1 {	height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
 .listitemall ul li a:hover{ background:#3A76CE; padding:0; color:#FFF;}
 .listitemall ul li a:visited {color:#999;}
@@ -213,9 +211,12 @@
 .ltitle span {margin-left:10px;border:1px solid #555;background:#fff;height:10px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;}
 /* .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;} */
 .nmain {width:1000px;margin:0 auto;position: relative;z-index:100;background:#fff;}
+
+/*
 .pagenav select {font-size:12px;position:relative;top:2px;}
 .pagenav span {float:right;}
-.pagenav {border:1px #88D3E3 solid;border-bottom:0;height:25px;line-height:25px;background:#f8f8f8;color:#007498;text-align:left;padding:0 10px;}
+*/
+.pagenav {border-top:1px #88D3E3 solid;height:25px;line-height:25px;background:#f8f8f8;color:#007498;text-align:left;}
 .pagenav2 {font-size:12px;height:25px;line-height:25px;color:#007498;text-align:left;padding:0 5px;margin:5px 2px;text-align:left;}
 .pos a.lighter{background:url(http://www.narutom.com/img/light.png) -5px -7px no-repeat; position:relative;color:#ff0000;z-index:10001;padding:4px 8px; padding-left:26px;  width:30px;}
 .r250{width:250px;height:250px;overflow:hidden;}
@@ -231,8 +232,8 @@
 .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
 .wrap {width:980px;margin:0 auto;}
 .wrap2 {width:980px;margin:0 auto;z-index:100;}
-.wrap h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
-.wrap2 h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap2 .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
+.wrap h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px; background: url("../img/jian/menubg2.gif") repeat-x;}
+/* .wrap2 h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap2 .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;} */
 #nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
 #search_result label,#search_result a label {color:#f00;font-weight:bold;}
 /*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}

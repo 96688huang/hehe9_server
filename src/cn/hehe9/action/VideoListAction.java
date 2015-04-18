@@ -45,7 +45,7 @@ public class VideoListAction extends ActionSupport {
 	private Pagination pagination = new Pagination();
 
 	/** 列表页视频的数量 */
-	private final int VIDEOS_COUNT_PER_LINE = 5;
+	private final int VIDEOS_COUNT_PER_LINE = 7;
 
 	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 	private static final String LIST_PAGE = PageUrlFlagEnum.LIST_PAGE.getUrlFlag();

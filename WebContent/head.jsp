@@ -11,9 +11,10 @@
 <link rel="stylesheet" href="./css/search.css" type="text/css">
 
 <div id="Head" class="Ncontainer">
-	<div style="display: inline-block;">
-		<img alt="" src="./img/gif/as_1.gif" /> <img
-			style="margin-bottom: 20px;" alt="" src="./img/logo_brief.png" />
+	<div
+		style="display: inline-block; background: url('./img/gif/as_1.gif') no-repeat;">
+		<img style="float: right; margin: 15px auto 10px 200px;" alt=""
+			src="./img/logo_brief.png" />
 	</div>
 	<div id="searchBar">
 		<form id="searchForm" action="./video/videoListAction!list"
@@ -23,22 +24,23 @@
 		</form>
 	</div>
 </div>
+
 <div id="Narutonav" class="Ncontainer">
 	<ul>
-		<li><a href="./"><span>首 页</span></a></li>
+		<li><a href="./">首 页</a></li>
 	</ul>
 </div>
 <div id="Ntop" class="Ncontainer">
 	<div class="Nleft"></div>
-	<div id="narutolist1" class="listMenu">
+	<div class="listMenu">
 		<span style="color: red; margin-left: 25px;">热门搜索：</span>&nbsp;&nbsp;
-		<a href="javascript:onSearch('航海王')" title="海贼王">海贼王</a>&nbsp; <a
-			href="javascript:onSearch('猪猪侠')" title="猪猪侠">猪猪侠</a>&nbsp;<a
-			href="javascript:onSearch('尸兄')" title="尸兄">尸兄</a>&nbsp; <a
-			href="javascript:onSearch('七龙珠')" title="七龙珠">七龙珠</a>&nbsp; <a
-			href="javascript:onSearch('熊出没')" title="熊出末">熊出没</a>&nbsp; <a
-			href="javascript:onSearch('灌篮高手')" title="灌篮高手">灌篮高手</a>&nbsp; <a
-			href="javascript:onSearch('妖精的尾巴')" title="妖精的尾巴">妖精的尾巴</a>
+		<a href="javascript:onSearch('航海王')" title="海贼王">&nbsp;海贼王&nbsp;</a>&nbsp;
+		<a href="javascript:onSearch('猪猪侠')" title="猪猪侠">&nbsp;猪猪侠&nbsp;</a>&nbsp;<a
+			href="javascript:onSearch('尸兄')" title="尸兄">&nbsp;尸兄&nbsp;</a>&nbsp;
+		<a href="javascript:onSearch('七龙珠')" title="七龙珠">&nbsp;七龙珠&nbsp;</a>&nbsp;
+		<a href="javascript:onSearch('熊出没')" title="熊出末">&nbsp;熊出没&nbsp;</a>&nbsp;
+		<a href="javascript:onSearch('灌篮高手')" title="灌篮高手">&nbsp;灌篮高手&nbsp;</a>&nbsp;
+		<a href="javascript:onSearch('妖精的尾巴')" title="妖精的尾巴">&nbsp;妖精的尾巴&nbsp;</a>
 	</div>
 </div>
 

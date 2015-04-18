@@ -58,13 +58,13 @@
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
 					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
 			</div>
-			<div id="naruto_desk" style="width:100%; height: 870px; padding:5px; position:relative;">
+			<div id="naruto_desk">
 				<div class="ltitle">${displayTitle}</div>
 				<form id="queryForm" action="./video/videoListAction!list"
 					method="post">
 					<input name="searchName" type="hidden" value="${searchName }" />
 					<s:iterator value="videoListHolder" var="videoList">
-						<div style="display: inline-block;"> <!-- 强制一行 -->
+						<div style="display: inline-block; float: left;"> <!-- 强制在一行, 靠左展示 -->
 						<ul id="indexcartoonList">
 							<s:iterator value="videoList" status="videoListStatus">
 								<li><a href="./video/episodeAction!list?videoId=${id }"

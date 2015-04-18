@@ -44,7 +44,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 				<label>您的位置: <!--empire.url--> <a
 					href="./" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
 					href="./video/episodeAction!list?videoId=${video.id }" class="classlinkclass">${video.name }</a>&nbsp;>&nbsp;
-					<a class="classlinkclass">${video.name }在线观看</a>&nbsp;><!--empire.url--></label><span><script
+					<a class="classlinkclass">${video.name }&nbsp;在线观看</a>&nbsp;><!--empire.url--></label><span><script
 						src="/style/nav.js"></script></span>
 			</p>
 		</div>
@@ -77,7 +77,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 			</div>
 			<div id="content2" style="position:relative; height: 800px;">
 				<div class="listitem">
-					<h1>${video.name}在线观看</h1>
+					<h1>${video.name}&nbsp;在线观看</h1>
 					<form id="queryForm" action="./video/episodeAction!list?" method = "post">
 					<input name="videoId" value="${video.id }" type="hidden"/>
 					<ul id="narutoList">
