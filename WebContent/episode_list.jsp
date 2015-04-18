@@ -41,21 +41,21 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 	<div class="wrap2 clearfix">
 		<div id="nav">
 			<p>
-				<label>您的位置: <!--empire.url--> <a
+				<label>您的位置: <a
 					href="./" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
 					href="./video/episodeAction!list?videoId=${video.id }" class="classlinkclass">${video.name }</a>&nbsp;>&nbsp;
 					<a class="classlinkclass">${video.name }&nbsp;在线观看</a>&nbsp;><!--empire.url--></label><span><script
 						src="/style/nav.js"></script></span>
 			</p>
 		</div>
-		<div align="center" style="width: 100%">
+		<div align="center" style="width: 100%; margin: auto auto 5px auto;">
 			<img alt="${video.name }" src="${video.posterBigUrl }">
 		</div>
-		<div class="wrap2 vtg3">
+		<%-- <div class="wrap2 vtg3">
 			<script type="text/javascript">
 				hym.show(1);
 			</script>
-		</div>
+		</div> --%>
 		<div id="container2" class="clearfix">
 		<div id="sidebar" style="float: right;">
 				<div class="sidebarad">

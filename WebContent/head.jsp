@@ -33,7 +33,7 @@
 <div id="Ntop" class="Ncontainer">
 	<div class="Nleft"></div>
 	<div class="listMenu">
-		<span style="color: red; margin-left: 25px;">热门搜索：</span>&nbsp;&nbsp;
+		<span style="color: red; margin-left: 25px; font-weight: bold;">热门搜索：</span>&nbsp;&nbsp;
 		<a href="javascript:onSearch('航海王')" title="海贼王">&nbsp;海贼王&nbsp;</a>&nbsp;
 		<a href="javascript:onSearch('猪猪侠')" title="猪猪侠">&nbsp;猪猪侠&nbsp;</a>&nbsp;<a
 			href="javascript:onSearch('尸兄')" title="尸兄">&nbsp;尸兄&nbsp;</a>&nbsp;

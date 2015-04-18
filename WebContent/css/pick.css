@@ -53,7 +53,7 @@
 #bdshare_pop {-webkit-border-radius: 5px;-moz-border-radius: 5px}
 #bdshare_pop {-webkit-box-shadow: 0 0 7px #aaa;-moz-box-shadow: 0 0 7px #aaa}
 #bdshare_pop {width: 300px;border: 6px solid #8f8f8f;padding: 0;background: #f6f6f6;position: absolute;z-index: 1000000;text-align: left}
-#container2 {background:url(../images/container_bg2.gif) repeat-y;margin:5px 0 0 0;}
+#container2 {background:url(../images/container_bg2.gif) repeat-y;margin:5px 0 5px 0;}
 #content .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #naruto_name , #cartoon_List{border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all;}
 #content dl,#content2 dl {margin:8px 8px 0 8px;background:#f8f8f8;border:1px #eee solid;}
 #content dl:hover,#content2 dl:hover,#content dl.sfhover {background:#f8f8f8;border:1px #eee solid;margin:8px 8px 0 8px;}
@@ -218,7 +218,7 @@
 */
 .pagenav {border-top:1px #88D3E3 solid;height:25px;line-height:25px;background:#f8f8f8;color:#007498;text-align:left;}
 .pagenav2 {font-size:12px;height:25px;line-height:25px;color:#007498;text-align:left;padding:0 5px;margin:5px 2px;text-align:left;}
-.pos a.lighter{background:url(http://www.narutom.com/img/light.png) -5px -7px no-repeat; position:relative;color:#ff0000;z-index:10001;padding:4px 8px; padding-left:26px;  width:30px;}
+.pos a.lighter{background:url('../img/mine/light.png') -5px -7px no-repeat; position:relative;color:#ff0000;z-index:10001;padding:4px 8px; padding-left:26px;  width:30px;}
 .r250{width:250px;height:250px;overflow:hidden;}
 .rblank {/* border-top:1px #88D3E3 solid; */}
 .setwid,#setwid{font-size:14px;color:ff0000;}
@@ -231,6 +231,7 @@
 .softolist li {background:url('../images/li_bg4.gif') no-repeat left 7px;padding-left:12px;overflow:hidden;}
 .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
 .wrap {width:980px;margin:0 auto;}
+.wraps{width: 980px;margin: 0 auto;}
 .wrap2 {width:980px;margin:0 auto;z-index:100;}
 .wrap h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px; background: url("../img/jian/menubg2.gif") repeat-x;}
 /* .wrap2 h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap2 .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;} */
@@ -254,3 +255,9 @@ span.bds_more, .bds_tools a {display: block;font-family: '宋体', Arial;height:
 #last_updated a.type, .index_downrank a.type {color: #999;}
 #last_updated a.type:hover, .index_downrank a.type:hover { /* color: #f60; */text-decoration: underline;}
 #list_rank .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
+
+.v-left {float: left;}
+.v-right {float: right;}
+.v-left, .v-right {display: inline;}
+.l15{margin-left:15px;}
+.r15{margin-right:15px;}

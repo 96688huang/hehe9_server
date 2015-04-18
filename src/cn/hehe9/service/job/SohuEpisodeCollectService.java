@@ -109,15 +109,26 @@ public class SohuEpisodeCollectService extends BaseTask {
 		StringBuffer buf = new StringBuffer();
 		Elements holeEles = doc.select("div.right div.blockRA div.cont p");
 		for (Element element : holeEles) {
+			if (buf.length() > AppConfig.CONTENT_MAX_LENGTH_100) {
+				break;
+			}
 			String authorEtc = element.text();
 			buf.append(authorEtc).append("<br/>"); // 加上<br/>, 以便在页面上显示换行效果;
 		}
 
-		video.setAuthor(buf.toString());
+		video.setAuthor(AppHelper.subString(buf.toString(), AppConfig.CONTENT_MAX_LENGTH_100, "..."));
 		videoDao.udpate(video);
 
 		// 播放页url， 分集截图，集数等
 		Element div = doc.select("div.similarLists").first();
+		if (div == null) {
+			div = doc.select("#similarLists").first();
+		}
+		if (div == null) {
+			logger.error("collect episodes fail, as element is null. video = " + JacksonUtil.encodeQuietly(video));
+			return;
+		}
+
 		Elements liElements = div.select("ul>li");
 
 		// 计数器

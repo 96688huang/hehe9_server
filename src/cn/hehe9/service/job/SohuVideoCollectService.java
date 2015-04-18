@@ -48,7 +48,7 @@ public class SohuVideoCollectService extends BaseTask {
 	static {
 		// video fields
 		videoCompareFieldNames.add("name");
-		videoCompareFieldNames.add("author");
+		//videoCompareFieldNames.add("author");
 		videoCompareFieldNames.add("playCountWeekly");
 		videoCompareFieldNames.add("playCountTotal");
 		videoCompareFieldNames.add("posterBigUrl");

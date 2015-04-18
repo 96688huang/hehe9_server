@@ -1,9 +1,9 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 <html>
@@ -23,9 +23,12 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
-<script type="text/javascript" src="./js/jquery.min.js"></script>
+<%-- <script type="text/javascript" async=""
+	src="http://static.duoshuo.com/embed.js" charset="UTF-8"> 
+</script>
+--%>
 
-<script src="./css/nar/play/play.js"></script>
+<%-- <script type="text/javascript" src="./js/jquery.min.js"></script>
 
 <link rel="stylesheet" href="./css/nar/play/p.css" media="all"
 	type="text/css">
@@ -42,12 +45,7 @@
 </script>
 <script type="text/javascript"
 	src="http://img.twcczhu.com/js/rr/rich03.js?v3">
-	
 </script>
-<%-- <script type="text/javascript" async=""
-	src="http://static.duoshuo.com/embed.js" charset="UTF-8"> 
-</script>
---%>
 
 <link
 	href="http://bdimg.share.baidu.com/static/css/bdsstyle.css?cdnversion=20131219"
@@ -59,10 +57,22 @@
 	src="http://bdimg.share.baidu.com/static/js/logger.js?cdnversion=396111">
 	
 </script>
-<!-- end -->
+<!-- end --> --%>
+
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/menu2.js"></script>
+
+<link rel="stylesheet" href="./css/pick.css" type="text/css">
+<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
+
+<link rel="stylesheet" href="./css/common.css" type="text/css">
+
+<script src="./css/nar/play/play.js"></script>
+
 </head>
 <body>
-	<div id="BAIDU_DUP_fp_wrapper"
+
+	<%-- <div id="BAIDU_DUP_fp_wrapper"
 		style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;">
 
 		<iframe id="BAIDU_DUP_fp_iframe"
@@ -111,41 +121,42 @@
 				</p>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	<jsp:include page="head.jsp" />
 
-	<div class="wraps gt1" id="cg1">
-		<!-- <script src="http://www.77u.com/page/s.php?s=50&amp;w=960&amp;h=60"></script> -->
+	<!-- 	<div class="wraps gt1" id="cg1">
+		<script src="http://www.77u.com/page/s.php?s=50&amp;w=960&amp;h=60"></script>
 		<iframe
 			src="http://www.77u.com/page/?s=50&amp;loc=http%3A//www.narutom.com/onepiece/video/27171.html&amp;ref=http%3A//www.narutom.com/onepiece/&amp;zhv=926"
 			width="960" height="60" frameborder="0" marginwidth="0"
 			marginheight="0" vspace="0" hspace="0" allowtransparency="true"
 			scrolling="no"> </iframe>
-	</div>
-	<div class="pos wraps">
-		<div class="v-left l15">
-			您的位置：
-			<!--empire.url-->
-			<a href="http://www.narutom.com/" class="classlinkclass"> 首页 </a>
-			&nbsp;&gt;&nbsp; <a href="http://www.narutom.com/onepiece/"
-				class="classlinkclass"> ${video.name } </a> &nbsp;&gt;&nbsp; <a
-				href="http://www.narutom.com/onepiece/video/" class="classlinkclass">
-				${video.name }在线观看 </a> &nbsp;&gt;
-			<!--empire.url-->
-			<strong> ${video.name }第${episode.episodeNo }集<s:if
-					test="title != null">「${episode.title}」</s:if>在线观看
+	</div> -->
+	<div style="width: 980px; margin: 0 auto; height: 30px;">
+		<!-- <div class="v-left l15"> -->
+		<div
+			style="display: inline; float: left; text-align: left; margin: auto auto auto 8px;">
+			您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+				${video.name } </a> &nbsp;&gt;&nbsp; <strong>第${episode.episodeNo }集&nbsp;<s:if
+					test="episode.title != null">「${episode.title}」</s:if>
 			</strong>
 		</div>
-		<div class="v-right r15">
+		<!-- <div class="v-right r15"> -->
+		<div style="display: inline;">
 			<span id="setwid"> <a href="javascript:void(0);"
 				onclick="javascript:setWid(1);" id="witer"> 宽屏 </a>
+			</span> | <a href="javascript:void(0);" id="lighter"
+				style="background: url('./img/mine/light.png') no-repeat left top; padding-left: 20px; color: #ff0000; z-index: 10001; width: 30px;">
+				关灯 </a> | <a href="#pl"> 我要评论 </a>
+			<%-- 			<span id="setwid"> <a href="javascript:void(0);"
+				onclick="javascript:setWid(1);" id="witer"> 宽屏 </a>
 			</span> / <a href="javascript:void(0);" class="lighter" id="lighter"> 关灯
-			</a> / <a href="#pl"> 我要评论 </a>
+			</a> / <a href="#pl"> 我要评论 </a> --%>
 		</div>
 	</div>
 	<div class="PlayBody">
 		<div class="play">
-			<div class="pl v-left" id="vleft">
+			<div class="pl" id="vleft">
 				<div class="top">
 					<h1>
 						${video.name }第${episode.episodeNo }集
@@ -174,12 +185,13 @@
 						allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>
 				</div>
 			</div>
+			<%-- 
 			<div class="pr v-right" id="vright">
 				<div class="r250 mb10" id="cg2">
-					<%-- <script
+					<script
 						src="http://www.77u.com/page/s.php?s=112&amp;w=250&amp;h=250">
 						
-					</script> --%>
+					</script>
 					<iframe
 						src="http://www.77u.com/page/?s=112&amp;loc=http%3A//www.narutom.com/onepiece/video/27171.html&amp;ref=http%3A//www.narutom.com/onepiece/&amp;zhv=926"
 						width="250" height="250" frameborder="0" marginwidth="0"
@@ -187,31 +199,32 @@
 						scrolling="no"> </iframe>
 				</div>
 				<div class="r250" id="cg25">
-					<%-- <script
+					<script
 						src="http://www.77u.com/page/s.php?s=137&amp;w=250&amp;h=250">
 						
-					</script> --%>
+					</script>
 					<iframe
 						src="http://www.77u.com/page/?s=137&amp;loc=http%3A//www.narutom.com/onepiece/video/27171.html&amp;ref=http%3A//www.narutom.com/onepiece/&amp;zhv=926"
 						width="250" height="250" frameborder="0" marginwidth="0"
 						marginheight="0" vspace="0" hspace="0" allowtransparency="true"
 						scrolling="no"> </iframe>
-				</div>
-			</div>
+				</div> 
+				--%>
 		</div>
 	</div>
-	<div class="wraps gt1" id="cg3">
-		<%-- <script>
+	</div>
+	<%-- 	<div class="wraps gt1" id="cg3">
+		<script>
 			hym.show(3);
-		</script> --%>
+		</script>
 		<iframe scrolling="no" frameborder="0" width="980" height="90"
 			src="http://img.88rpg.net/html/click/1553_2003.html"> </iframe>
-	</div>
+	</div> --%>
 	<div class="links wraps">
-		<div class="v-left l15 share">
-			<%-- <script type="text/javascript">
+		<%-- 		<div class="v-left l15 share">
+			<script type="text/javascript">
 				_vshare();
-			</script> --%>
+			</script>
 			<!-- Baidu Button BEGIN -->
 			<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
 				<a class="bds_qzone" title="分享到QQ空间" href="#"> </a> <a
@@ -230,25 +243,32 @@
 				src="http://bdimg.share.baidu.com/static/js/bds_s_v2.js?cdnversion=396084">
 				
 			</script>
+		</div> --%>
+		<div style="margin: 8px; font-size: 14px;">
+			<ul>
+				<li><b>上一集： </b> <s:if test="preEpisode != null">
+						<a href="">${video.name }第${preEpisode.episodeNo }集 <s:if
+								test="preEpisode.title != null">「${preEpisode.title}」</s:if></a>
+					</s:if> <s:else>无</s:else></li>
+				<li><b>下一集：</b> <s:if test="nextEpisode != null">
+						<a href="">${video.name }第${nextEpisode.episodeNo }集 <s:if
+								test="nextEpisode.title != null">「${nextEpisode.title}」</s:if></a>
+					</s:if> <s:else>无</s:else></li>
+			</ul>
 		</div>
-		<div class="v-right r15 otherlink">
-			<li>上集： <s:if test="preEpisode != null">
-					<a href="">${video.name }第${preEpisode.episodeNo }集 <s:if
-							test="preEpisode.title != null">「${preEpisode.title}」</s:if></a>
-				</s:if> <s:else>无</s:else>
-			</li>
-			<li>下集： <s:if test="nextEpisode != null">
-					<a href="">${video.name }第${nextEpisode.episodeNo }集 <s:if
-							test="nextEpisode.title != null">「${nextEpisode.title}」</s:if></a>
-				</s:if> <s:else>无</s:else>
-			</li>
+		<div>
+			<div class="line"></div>
+			<h1 align="left">
+				<b>剧情：</b>
+			</h1>
+			<br />
+			<p style="font-size: 14px;">
+				<s:if test="episode.title == null">${video.name }第${episode.episodeNo }集</s:if>
+				<s:else>
+				「${episode.title}」
+				</s:else>
+			</p>
 		</div>
-	</div>
-	<div class="wraps c-detail">
-		<h3 class="h31">剧情介绍：</h3>
-		<p>${video.name }第${episode.episodeNo }集
-			<s:if test="episode.title != null">「${episode.title}」</s:if>
-		</p>
 	</div>
 
 	<!-- TODO 多说评论 -->
@@ -256,7 +276,7 @@
 	<!-- 页脚 -->
 	<jsp:include page="footer.jsp" />
 
-	<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js">
+	<%-- <script type="text/javascript" src="http://cbjs.baidu.com/js/m.js">
 		
 	</script>
 	<script type="text/javascript"
@@ -466,6 +486,6 @@
 		//	(document.getElementsByTagName('head')[0] || document
 		//			.getElementsByTagName('body')[0]).appendChild(ds);
 		//})();
-	</script>
+	</script> --%>
 </body>
 </html>
