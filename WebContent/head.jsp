@@ -8,23 +8,20 @@
 			+ path + "/";
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="./css/search.css" type="text/css">
+
 <div id="Head" class="Ncontainer">
 	<div style="display: inline-block;">
-		<%-- <span class="red BOLD"><a href="http://www.narutom.com/">火影忍者中文网</a></span> --%>
-		<img alt="" src="./img/gif/as_1.gif" />
-		<img style="margin-bottom: 20px;" alt="" src="./img/logo_brief.png" />
+		<img alt="" src="./img/gif/as_1.gif" /> <img
+			style="margin-bottom: 20px;" alt="" src="./img/logo_brief.png" />
 	</div>
-	<!-- 	<div id="topbanner">
-		<div class="container"> -->
-	<div id="search" style="padding: 25px;">
+	<div id="searchBar">
 		<form id="searchForm" action="./video/videoListAction!list"
 			method="post">
-			<input style="height: 30px; width: 170px; color:#000;" id="searchName" type="text" name="searchName">&nbsp;&nbsp;
-			<input style="height: 30px; width: 70px; text-align: center; background-color: #0000FF; color: #FFF;" type="submit" value="搜&nbsp;索">
+			<input id="searchName" type="text" name="searchName">&nbsp;&nbsp;
+			<input id="searchBtn" type="submit" value="搜&nbsp;索">
 		</form>
 	</div>
-	<!-- 		</div>
-	</div> -->
 </div>
 <div id="Narutonav" class="Ncontainer">
 	<ul>
@@ -44,6 +41,7 @@
 			href="javascript:onSearch('妖精的尾巴')" title="妖精的尾巴">妖精的尾巴</a>
 	</div>
 </div>
+
 <script type="text/javascript">
 	function onSearch(keyword) {
 		if (keyword == null || keyword == '' || keyword == undefined) {
