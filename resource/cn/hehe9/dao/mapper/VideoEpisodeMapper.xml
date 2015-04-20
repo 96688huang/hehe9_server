@@ -202,6 +202,23 @@
 		limit #{offset}, #{count}
 	</select>
 	
+	<select id="findByRange" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from video_episode
+		where 1=1
+		<if test="videoId != null">
+			and video_id = #{videoId,jdbcType=INTEGER}
+		</if>
+		<if test="minEpisodeNo != null">
+			and episode_no >= #{minEpisodeNo}
+		</if>
+		<if test="maxEpisodeNo != null">
+			<![CDATA[and episode_no <= #{maxEpisodeNo}]]>
+		</if>
+		order by episode_no desc
+	</select>
+	
 	<select id="countBy" parameterType="map" resultType="INTEGER">
 		select count(1) from video_episode where video_id = #{videoId}
 	</select>

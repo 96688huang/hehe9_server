@@ -71,4 +71,12 @@ public interface VideoEpisodeMapper {
 	 * @return
 	 */
 	Integer countBy(Map<String, Object> params);
+
+	/**
+	 * 根据最大最小分集号, 查询范围内的分集列表
+	 *
+	 * @param params
+	 * @return
+	 */
+	List<VideoEpisode> findByRange(Map<String, Object> params);
 }

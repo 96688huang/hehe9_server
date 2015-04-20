@@ -67,7 +67,7 @@
 
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 
-<script src="./css/nar/play/play.js"></script>
+<script src="./js/play.js"></script>
 
 </head>
 <body>
@@ -143,75 +143,59 @@
 		</div>
 		<!-- <div class="v-right r15"> -->
 		<div style="display: inline;">
-			<span id="setwid"> <a href="javascript:void(0);"
-				onclick="javascript:setWid(1);" id="witer"> 宽屏 </a>
-			</span> | <a href="javascript:void(0);" id="lighter"
-				style="background: url('./img/mine/light.png') no-repeat left top; padding-left: 20px; color: #ff0000; z-index: 10001; width: 30px;">
-				关灯 </a> | <a href="#pl"> 我要评论 </a>
-			<%-- 			<span id="setwid"> <a href="javascript:void(0);"
-				onclick="javascript:setWid(1);" id="witer"> 宽屏 </a>
-			</span> / <a href="javascript:void(0);" class="lighter" id="lighter"> 关灯
-			</a> / <a href="#pl"> 我要评论 </a> --%>
+			<span id="playPanel"> <a href="javascript:void(0);"
+				onclick="javascript:changePlayPanel(1);" id="witer"> 宽屏 </a>
+			</span>
 		</div>
 	</div>
 	<div class="PlayBody">
 		<div class="play">
-			<div class="pl" id="vleft">
-				<div class="top">
-					<h1>
-						${video.name }第${episode.episodeNo }集
-						<s:if test="episode.title != null">「${episode.title}」</s:if>
-					</h1>
-				</div>
-				<div class="player" id="player">
-					<%--         <script type="text/javascript">
-          plays();
-        </script> --%>
-					<!--         <iframe 
-            src="http://www.narutom.com/v3/player/sohu.html?v=2263872"
-            id="naruto_v"
-            name="naruto_v"
-            frameborder="0"
-            width="100%"
-            height="480"
-            scrolling="no"
-            class="vborder">
-
-        </iframe> -->
-					<embed src="${episode.fileUrl }" id="naruto_v" class="vborder"
-						name="naruto_v" type="application/x-shockwave-flash"
-						allowscriptaccess="always"
-						flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;"
-						allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>
-				</div>
-			</div>
-			<%-- 
-			<div class="pr v-right" id="vright">
-				<div class="r250 mb10" id="cg2">
-					<script
-						src="http://www.77u.com/page/s.php?s=112&amp;w=250&amp;h=250">
-						
-					</script>
-					<iframe
-						src="http://www.77u.com/page/?s=112&amp;loc=http%3A//www.narutom.com/onepiece/video/27171.html&amp;ref=http%3A//www.narutom.com/onepiece/&amp;zhv=926"
-						width="250" height="250" frameborder="0" marginwidth="0"
-						marginheight="0" vspace="0" hspace="0" allowtransparency="true"
-						scrolling="no"> </iframe>
-				</div>
-				<div class="r250" id="cg25">
-					<script
-						src="http://www.77u.com/page/s.php?s=137&amp;w=250&amp;h=250">
-						
-					</script>
-					<iframe
-						src="http://www.77u.com/page/?s=137&amp;loc=http%3A//www.narutom.com/onepiece/video/27171.html&amp;ref=http%3A//www.narutom.com/onepiece/&amp;zhv=926"
-						width="250" height="250" frameborder="0" marginwidth="0"
-						marginheight="0" vspace="0" hspace="0" allowtransparency="true"
-						scrolling="no"> </iframe>
-				</div> 
-				--%>
+			<table>
+				<tr>
+					<td style="width: 720px; height: 513px; vertical-align: top;">
+						<div class="pl" id="vleft">
+							<div class="top">
+								<h1>
+									${video.name }第${episode.episodeNo }集
+									<s:if test="episode.title != null">「${episode.title}」</s:if>
+								</h1>
+							</div>
+							<div class="player" id="player">
+								<embed src="${episode.fileUrl }" id="naruto_v" class="vborder"
+									name="naruto_v" type="application/x-shockwave-flash"
+									allowscriptaccess="always"
+									flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;"
+									allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>
+							</div>
+						</div>
+					</td>
+					<td>&nbsp;</td>
+					<td style="width: 250px; height: 580px; vertical-align: top;">
+						<div class="pr" id="vright">
+							<ul id="narutoList">
+								<s:iterator value="episodeList" var="episode">
+									<li class="font_12" style="width: 250px; text-align: left;"><a
+										href="./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}"
+										title="${video.name}&nbsp;第${episode.episodeNo}集<s:if
+											test="title != null">「${episode.title}」</s:if>"
+										target="_blank"><img
+											alt="${video.name}&nbsp;第${episode.episodeNo}集<s:if
+											test="title != null">「${episode.title}」</s:if>"
+											src="${episode.snapshotUrl}" /></a>
+									<!--  -->
+										<a href=""
+										title="${video.name}&nbsp;第${episode.episodeNo}集<s:if
+											test="title != null">「${episode.title}」</s:if>"
+										target="_blank">第${episode.episodeNo}集<s:if
+												test="title != null">
+												<br />「${episode.title}」</s:if></a></li>
+								</s:iterator>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</table>
 		</div>
-	</div>
 	</div>
 	<%-- 	<div class="wraps gt1" id="cg3">
 		<script>

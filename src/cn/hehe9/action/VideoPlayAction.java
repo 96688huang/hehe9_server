@@ -5,14 +5,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.hehe9.common.constants.PageUrlFlagEnum;
-import cn.hehe9.common.utils.StringUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
 import cn.hehe9.service.biz.VideoEpisodeService;
@@ -23,6 +21,11 @@ import com.opensymphony.xwork2.ActionSupport;
 @Controller
 @Scope("prototype")
 public class VideoPlayAction extends ActionSupport {
+
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 3207061567116252849L;
 
 	private static final Logger logger = LoggerFactory.getLogger(VideoPlayAction.class);
 
@@ -58,6 +61,12 @@ public class VideoPlayAction extends ActionSupport {
 	/** 视频最近几个分集的数量 */
 	private static final int NEAR_EPISODE_COUNT = 3;
 
+	/** 最大分集与最小分集, 距离当前点播分集的上下间隔 */
+	private static final int EPISODE_INTERVAL = 2;
+
+	/** 播放页右边的分集列表 */
+	private List<VideoEpisode> episodeList;
+
 	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 	private static final String PLAY_PAGE = PageUrlFlagEnum.PLAY_PAGE.getUrlFlag();
 
@@ -68,21 +77,40 @@ public class VideoPlayAction extends ActionSupport {
 
 		video = videoService.findById(videoId);
 		Integer[] episodeNoArr = new Integer[] { episodeNo - 1, episodeNo, episodeNo + 1 };
-		List<VideoEpisode> episodeList = videoEpisodeService.list(videoId, 1, NEAR_EPISODE_COUNT, episodeNoArr);
-		if (CollectionUtils.isEmpty(episodeList)) {
+		List<VideoEpisode> episodeListTmp = videoEpisodeService.list(videoId, 1, NEAR_EPISODE_COUNT, episodeNoArr);
+		if (CollectionUtils.isEmpty(episodeListTmp)) {
 			return PLAY_PAGE;
 		}
 
-		if (episodeList.size() == NEAR_EPISODE_COUNT) {
-			nextEpisode = episodeList.get(0); // 按分集倒序
-			episode = episodeList.get(1);
-			preEpisode = episodeList.get(2);
-		} else if (episodeList.size() == 2) {
-			episode = episodeList.get(0);
-			preEpisode = episodeList.get(1);
-		} else if (episodeList.size() == 1) {
-			episode = episodeList.get(0);
+		if (episodeListTmp.size() == NEAR_EPISODE_COUNT) {
+			nextEpisode = episodeListTmp.get(0); // 按分集倒序
+			episode = episodeListTmp.get(1);
+			preEpisode = episodeListTmp.get(2);
+		} else if (episodeListTmp.size() == 2) {
+			episode = episodeListTmp.get(0);
+			preEpisode = episodeListTmp.get(1);
+		} else if (episodeListTmp.size() == 1) {
+			episode = episodeListTmp.get(0);
 		}
+
+		// 播放页右边的分集列表
+		VideoEpisode maxEpisode = videoEpisodeService.getMaxEpisode(videoId);
+		if (maxEpisode == null) {
+			return PLAY_PAGE;
+		}
+
+		int maxEpisodeNo = maxEpisode.getEpisodeNo();
+		int minEpisodeNo = episodeNo;
+		if (episodeNo + EPISODE_INTERVAL <= maxEpisodeNo) {
+			maxEpisodeNo = episodeNo + EPISODE_INTERVAL;
+		} else if (episodeNo == maxEpisodeNo) {
+			int tmp = episodeNo - 2 * EPISODE_INTERVAL + 1;
+			minEpisodeNo = tmp > 0 ? tmp : 0;
+		} else {
+			int tmp = maxEpisodeNo - 2 * EPISODE_INTERVAL + 1;
+			minEpisodeNo = tmp > 0 ? tmp : 0;
+		}
+		this.episodeList = videoEpisodeService.listByRange(videoId, minEpisodeNo, maxEpisodeNo);
 		return PLAY_PAGE;
 	}
 
@@ -142,4 +170,11 @@ public class VideoPlayAction extends ActionSupport {
 		this.episode = episode;
 	}
 
+	public List<VideoEpisode> getEpisodeList() {
+		return episodeList;
+	}
+
+	public void setEpisodeList(List<VideoEpisode> episodeList) {
+		this.episodeList = episodeList;
+	}
 }

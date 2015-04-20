@@ -67,4 +67,12 @@ public class VideoEpisodeDao {
 	public VideoEpisode findById(Integer episodeId) {
 		return videoEpisodeMapper.selectByPrimaryKey(episodeId);
 	}
+
+	public List<VideoEpisode> findByRange(Integer videoId, int minEpisodeNo, int maxEpisodeNo) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("videoId", videoId);
+		params.put("minEpisodeNo", minEpisodeNo);
+		params.put("maxEpisodeNo", maxEpisodeNo);
+		return videoEpisodeMapper.findByRange(params);
+	}
 }
