@@ -27,7 +27,8 @@ public class VideoPlayAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 3207061567116252849L;
 
-	private static final Logger logger = LoggerFactory.getLogger(VideoPlayAction.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(VideoPlayAction.class);
 
 	@Resource
 	private VideoService videoService;
@@ -35,7 +36,7 @@ public class VideoPlayAction extends ActionSupport {
 	@Resource
 	private VideoEpisodeService videoEpisodeService;
 
-	//--- 请求参数 ---
+	// --- 请求参数 ---
 	/** 视频id */
 	private Integer videoId;
 
@@ -45,7 +46,7 @@ public class VideoPlayAction extends ActionSupport {
 	/** 视频分集集数 */
 	private Integer episodeNo;
 
-	//--- 回复参数 ---
+	// --- 回复参数 ---
 	/** 视频信息 */
 	private Video video;
 
@@ -67,8 +68,10 @@ public class VideoPlayAction extends ActionSupport {
 	/** 播放页右边的分集列表 */
 	private List<VideoEpisode> episodeList;
 
-	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
-	private static final String PLAY_PAGE = PageUrlFlagEnum.PLAY_PAGE.getUrlFlag();
+	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE
+			.getUrlFlag();
+	private static final String PLAY_PAGE = PageUrlFlagEnum.PLAY_PAGE
+			.getUrlFlag();
 
 	public String play() {
 		if (videoId <= 0 || episodeId <= 0 || episodeNo <= 0) {
@@ -76,22 +79,24 @@ public class VideoPlayAction extends ActionSupport {
 		}
 
 		video = videoService.findById(videoId);
-		Integer[] episodeNoArr = new Integer[] { episodeNo - 1, episodeNo, episodeNo + 1 };
-		List<VideoEpisode> episodeListTmp = videoEpisodeService.list(videoId, 1, NEAR_EPISODE_COUNT, episodeNoArr);
-		if (CollectionUtils.isEmpty(episodeListTmp)) {
-			return PLAY_PAGE;
-		}
-
-		if (episodeListTmp.size() == NEAR_EPISODE_COUNT) {
-			nextEpisode = episodeListTmp.get(0); // 按分集倒序
-			episode = episodeListTmp.get(1);
-			preEpisode = episodeListTmp.get(2);
-		} else if (episodeListTmp.size() == 2) {
-			episode = episodeListTmp.get(0);
-			preEpisode = episodeListTmp.get(1);
-		} else if (episodeListTmp.size() == 1) {
-			episode = episodeListTmp.get(0);
-		}
+		// Integer[] episodeNoArr = new Integer[] { episodeNo - 1, episodeNo,
+		// episodeNo + 1 };
+		// List<VideoEpisode> episodeListTmp = videoEpisodeService.list(videoId,
+		// 1, NEAR_EPISODE_COUNT, episodeNoArr);
+		// if (CollectionUtils.isEmpty(episodeListTmp)) {
+		// return PLAY_PAGE;
+		// }
+		//
+		// if (episodeListTmp.size() == NEAR_EPISODE_COUNT) {
+		// nextEpisode = episodeListTmp.get(0); // 按分集倒序
+		// episode = episodeListTmp.get(1);
+		// preEpisode = episodeListTmp.get(2);
+		// } else if (episodeListTmp.size() == 2) {
+		// episode = episodeListTmp.get(0);
+		// preEpisode = episodeListTmp.get(1);
+		// } else if (episodeListTmp.size() == 1) {
+		// episode = episodeListTmp.get(0);
+		// }
 
 		// 播放页右边的分集列表
 		VideoEpisode maxEpisode = videoEpisodeService.getMaxEpisode(videoId);
@@ -110,7 +115,25 @@ public class VideoPlayAction extends ActionSupport {
 			int tmp = maxEpisodeNo - 2 * EPISODE_INTERVAL + 1;
 			minEpisodeNo = tmp > 0 ? tmp : 0;
 		}
-		this.episodeList = videoEpisodeService.listByRange(videoId, minEpisodeNo, maxEpisodeNo);
+		this.episodeList = videoEpisodeService.listByRange(videoId,
+				minEpisodeNo, maxEpisodeNo);
+		if (CollectionUtils.isEmpty(this.episodeList)) {
+			return PLAY_PAGE;
+		}
+		
+		// 上集/下集/当前集
+		int episodeSize = this.episodeList.size();
+		VideoEpisode firstEpisode = this.episodeList.get(0);
+		VideoEpisode secondEpisode = episodeSize >= 2 ? this.episodeList.get(1) : null;
+		VideoEpisode thirdEpisode = episodeSize >= 3 ? this.episodeList.get(2) : null;
+		if(episodeNo.equals(firstEpisode.getEpisodeNo())){
+			episode = firstEpisode;
+			preEpisode = secondEpisode;
+		}else if(episodeNo < firstEpisode.getEpisodeNo()){
+			nextEpisode = firstEpisode;
+			episode = secondEpisode;
+			preEpisode = thirdEpisode;
+		}
 		return PLAY_PAGE;
 	}
 

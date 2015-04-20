@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 
 import cn.hehe9.common.constants.ComConstant;
 
@@ -17,7 +18,13 @@ public class AppConfig {
 
 	}
 
-	private static IniReader config = new IniReader(PathUtils.find("./app.ini"));
+	private static String prefix = SystemUtils.IS_OS_MAC
+			|| SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_LINUX ? "/" : "";
+	private static String abstractUrl = PathUtils.find("/app.ini");
+	private static IniReader config = new IniReader(
+			StringUtils.isNotBlank(prefix) && !abstractUrl.startsWith("/") ? prefix
+					+ abstractUrl
+					: abstractUrl);
 
 	private static String APP = SectionEnum.APP.val();
 	private static String MEMCACHE = SectionEnum.MEMCACHE.val();

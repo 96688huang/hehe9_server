@@ -3,7 +3,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 <html>
@@ -154,6 +155,7 @@
 				<tr>
 					<td style="width: 720px; height: 513px; vertical-align: top;">
 						<div class="pl" id="vleft">
+							<br />
 							<div class="top">
 								<h1>
 									${video.name }第${episode.episodeNo }集
@@ -173,22 +175,23 @@
 					<td style="width: 250px; height: 580px; vertical-align: top;">
 						<div class="pr" id="vright">
 							<ul id="narutoList">
-								<s:iterator value="episodeList" var="episode">
+								<s:iterator value="episodeList" var="episodeItem">
 									<li class="font_12" style="width: 250px; text-align: left;"><a
-										href="./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}"
-										title="${video.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null">「${episode.title}」</s:if>"
+										href="./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}"
+										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if
+											test="title != null">「${episodeItem.title}」</s:if>"
 										target="_blank"><img
-											alt="${video.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null">「${episode.title}」</s:if>"
-											src="${episode.snapshotUrl}" /></a>
-									<!--  -->
-										<a href=""
-										title="${video.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null">「${episode.title}」</s:if>"
-										target="_blank">第${episode.episodeNo}集<s:if
+											alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if
+											test="title != null">「${episodeItem.title}」</s:if>"
+											src="${episodeItem.snapshotUrl}" /></a> 
+											<!--  --> 
+											<a href=""
+										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>"
+										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if
+											test="title != null">「${episodeItem.title}」</s:if>"
+										target="_blank">第${episodeItem.episodeNo}集 <s:if
 												test="title != null">
-												<br />「${episode.title}」</s:if></a></li>
+												<br />「${episodeItem.title}」</s:if></a></li>
 								</s:iterator>
 							</ul>
 						</div>
