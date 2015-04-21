@@ -44,9 +44,9 @@
 		<div class="wrap clearfix">
 			<%-- <div id="login">
 				<p>
-					<span><a href="http://www.narutom.com/lianxu/"
+					<span><a href="http://www.hehe9.cn/lianxu/"
 						target="_blank">火影连续无插曲版</a> &nbsp; <a
-						href="http://www.narutom.com/cartoon/narutocn/" target="_blank"><font
+						href="http://www.hehe9.cn/cartoon/narutocn/" target="_blank"><font
 							color="#ff0000">火影忍者国语版</font></a> </span>火影情报：<a href="/news/27198.html"
 						target="_blank">火影623集「决不放弃的强大毅力!」</a>(3月12日晚上放送! ) | 火影忍者漫画已完结
 				</p>
@@ -56,7 +56,7 @@
 					hym.show(1);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
-					src="http://www.narutom.com/v2/v/i/1377.html?20150302"></iframe>
+					src="http://www.hehe9.cn/v2/v/i/1377.html?20150302"></iframe>
 			</div>
 			<div id="naruto_desk">
 				<div class="ltitle">${displayTitle}</div>
@@ -87,7 +87,7 @@
 					hym.show(3);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="90"
-					src="http://www.narutom.com/v2/v/i/key.html"></iframe>
+					src="http://www.hehe9.cn/v2/v/i/key.html"></iframe>
 			</div> --%>
 			<!-- 友情链接 -->
 			<jsp:include page="friend_link.jsp" />

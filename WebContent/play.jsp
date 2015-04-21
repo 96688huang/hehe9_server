@@ -38,7 +38,7 @@
 
 
 <!-- link -->
-<link href="http://www.narutom.com/v3/css/p.css?20131009"
+<link href="http://www.hehe9.cn/v3/css/p.css?20131009"
 	type="text/css" rel="stylesheet">
 <script type="text/javascript" async="" charset="utf-8"
 	src="http://c.cnzz.com/core.php?web_id=30038114&amp;t=q">
@@ -77,14 +77,14 @@
 		style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;">
 
 		<iframe id="BAIDU_DUP_fp_iframe"
-			src="http://pos.baidu.com/wh/o.htm?ltr=http%3A%2F%2Fwww.narutom.com%2Fonepiece%2F"
+			src="http://pos.baidu.com/wh/o.htm?ltr=http%3A%2F%2Fwww.hehe9.cn%2Fonepiece%2F"
 			style="width: 0px; height: 0px; visibility: hidden; display: none;">
 
 		</iframe>
 	</div>
 
 	<script
-		src="http://s.00oo00.com/stat.php?uid=25533&amp;wid=28775&amp;adstype=3&amp;visit_count=2&amp;isnew=0&amp;ismonitor=0&amp;url=http%3A%2F%2Fwww.narutom.com%2Fonepiece%2Fvideo%2F27171.html&amp;ref=http%3A%2F%2Fwww.narutom.com%2Fonepiece%2F">
+		src="http://s.00oo00.com/stat.php?uid=25533&amp;wid=28775&amp;adstype=3&amp;visit_count=2&amp;isnew=0&amp;ismonitor=0&amp;url=http%3A%2F%2Fwww.hehe9.cn%2Fonepiece%2Fvideo%2F27171.html&amp;ref=http%3A%2F%2Fwww.hehe9.cn%2Fonepiece%2F">
 		
 	</script>
 	<script
@@ -128,7 +128,7 @@
 	<!-- 	<div class="wraps gt1" id="cg1">
 		<script src="http://www.77u.com/page/s.php?s=50&amp;w=960&amp;h=60"></script>
 		<iframe
-			src="http://www.77u.com/page/?s=50&amp;loc=http%3A//www.narutom.com/onepiece/video/27171.html&amp;ref=http%3A//www.narutom.com/onepiece/&amp;zhv=926"
+			src="http://www.77u.com/page/?s=50&amp;loc=http%3A//www.hehe9.cn/onepiece/video/27171.html&amp;ref=http%3A//www.hehe9.cn/onepiece/&amp;zhv=926"
 			width="960" height="60" frameborder="0" marginwidth="0"
 			marginheight="0" vspace="0" hspace="0" allowtransparency="true"
 			scrolling="no"> </iframe>
@@ -267,7 +267,7 @@
 		
 	</script>
 	<script type="text/javascript"
-		src="http://www.narutom.com/v2/js/yxf.js">
+		src="http://www.hehe9.cn/v2/js/yxf.js">
 		
 	</script>
 	<script language="javascript"
@@ -280,7 +280,7 @@
 	z-index: 2147483647;
 }
 </style>
-	<!-- <script type="text/javascript" src="http://www.narutom.com/js/foot.js"></script> -->
+	<!-- <script type="text/javascript" src="http://www.hehe9.cn/js/foot.js"></script> -->
 	<script type="text/javascript">
 		BAIDU_CLB_fillSlot("600142");
 	</script>
@@ -294,14 +294,14 @@
 		</iframe>
 	</div>
 	<script charset="utf-8"
-		src="http://cb.baidu.com/ecom?di=600142&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=1&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.narutom.com%2Fonepiece%2Fvideo%2F27171.html&amp;liu=&amp;ltr=http%3A%2F%2Fwww.narutom.com%2Fonepiece%2F&amp;lcr=&amp;ps=1061x0&amp;psr=1920x1080&amp;par=1920x1040&amp;pcs=1903x908&amp;pss=1903x1061&amp;pis=-1x-1&amp;cfv=15&amp;ccd=24&amp;chi=1&amp;cja=true&amp;cpl=31&amp;cmi=48&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=32&amp;tlm=1425800896&amp;tcn=1425900056&amp;tpr=1425900055981&amp;dpt=none&amp;coa=&amp;baidu_id=">
+		src="http://cb.baidu.com/ecom?di=600142&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=1&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.hehe9.cn%2Fonepiece%2Fvideo%2F27171.html&amp;liu=&amp;ltr=http%3A%2F%2Fwww.hehe9.cn%2Fonepiece%2F&amp;lcr=&amp;ps=1061x0&amp;psr=1920x1080&amp;par=1920x1040&amp;pcs=1903x908&amp;pss=1903x1061&amp;pis=-1x-1&amp;cfv=15&amp;ccd=24&amp;chi=1&amp;cja=true&amp;cpl=31&amp;cmi=48&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=32&amp;tlm=1425800896&amp;tcn=1425900056&amp;tpr=1425900055981&amp;dpt=none&amp;coa=&amp;baidu_id=">
 		
 	</script>
 	<script charset="utf-8"
 		src="http://dup.baidustatic.com/painter/clb/fixed7o.js">
 		
 	</script>
-	<script type="text/javascript" src="http://www.narutom.com/tj.js">
+	<script type="text/javascript" src="http://www.hehe9.cn/tj.js">
 		
 	</script>
 	<script type="text/javascript">
@@ -309,7 +309,7 @@
 	</script>
 	<div id="BAIDU_DUP_wrapper_676368_0"></div>
 	<script charset="utf-8"
-		src="http://cb.baidu.com/ecom?di=676368&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=2&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.narutom.com%2Fonepiece%2Fvideo%2F27171.html&amp;liu=&amp;ltr=http%3A%2F%2Fwww.narutom.com%2Fonepiece%2F&amp;lcr=&amp;ps=1061x0&amp;psr=1920x1080&amp;par=1920x1040&amp;pcs=1903x908&amp;pss=1903x1061&amp;pis=-1x-1&amp;cfv=15&amp;ccd=24&amp;chi=1&amp;cja=true&amp;cpl=31&amp;cmi=48&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=316&amp;tlm=1425800896&amp;tcn=1425900056&amp;tpr=1425900055981&amp;dpt=none&amp;coa=&amp;baidu_id=">
+		src="http://cb.baidu.com/ecom?di=676368&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=2&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.hehe9.cn%2Fonepiece%2Fvideo%2F27171.html&amp;liu=&amp;ltr=http%3A%2F%2Fwww.hehe9.cn%2Fonepiece%2F&amp;lcr=&amp;ps=1061x0&amp;psr=1920x1080&amp;par=1920x1040&amp;pcs=1903x908&amp;pss=1903x1061&amp;pis=-1x-1&amp;cfv=15&amp;ccd=24&amp;chi=1&amp;cja=true&amp;cpl=31&amp;cmi=48&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=316&amp;tlm=1425800896&amp;tcn=1425900056&amp;tpr=1425900055981&amp;dpt=none&amp;coa=&amp;baidu_id=">
 		
 	</script>
 	<script src="http://rc.71sem.com/view.php?uid=25533">
