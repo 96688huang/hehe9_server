@@ -30,6 +30,7 @@ import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.dao.VideoEpisodeDao;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
+import cn.hehe9.service.job.base.BaseTask;
 
 @Component
 public class SohuEpisodeCollectService extends BaseTask {

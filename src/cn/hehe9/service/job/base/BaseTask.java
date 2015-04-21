@@ -1,4 +1,4 @@
-package cn.hehe9.service.job;
+package cn.hehe9.service.job.base;
 
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;

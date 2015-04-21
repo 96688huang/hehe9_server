@@ -1,4 +1,4 @@
-package cn.hehe9.model;
+package cn.hehe9.tmp;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import cn.hehe9.common.utils.StringUtil;
 
-public class TT {
+public class CssPicker {
 
 	/**
 	 * 抽取除了id和class的css代码

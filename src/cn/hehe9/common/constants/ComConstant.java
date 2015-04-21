@@ -27,5 +27,7 @@ public class ComConstant {
 		public static final String COLLECT_VIDEOS = "[ collect videos ] ";
 		public static final String SOHU_VIDEO = "[ sohu video ] ";
 		public static final String SOHU_EPISODE = "[ sohu episode ] ";
+		public static final String YOUKU_VIDEO = "[ youku video ] ";
+		public static final String YOUKU_EPISODE = "[ youku episode ] ";
 	}
 }
