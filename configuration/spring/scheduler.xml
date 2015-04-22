@@ -20,7 +20,7 @@
 		<task:scheduled ref="sohuCollectJob" method="executeJob"
 			cron="0 0 0 * * ?" />
 		<task:scheduled ref="youkuCollectJob" method="executeJob"
-			cron="0 22 19 * * ?" />
+			cron="0 54 19 * * ?" />
 	</task:scheduled-tasks>
 	
 </beans>

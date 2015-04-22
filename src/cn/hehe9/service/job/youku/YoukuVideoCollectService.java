@@ -102,13 +102,18 @@ public class YoukuVideoCollectService extends BaseTask {
 			}
 
 			// 下一页
-			String nextPage = doc.select(".yk-pager .yk-pages .next a").attr("href");
-			if (logger.isDebugEnabled()) {
-				logger.debug("{}nextPage : ", YOUKU_VIDEO, nextPage);
+			Elements a = doc.select(".yk-pager .yk-pages .next a");
+			if(a == null){
+				return;
 			}
+			String nextPage = a.attr("href");
 
 			// 递归解析
 			if (StringUtils.isNotEmpty(nextPage)) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("{}nextPage : ", YOUKU_VIDEO, nextPage);
+				}
+				
 				collectVideos(sourceId, nextPage, rootUrl);
 			}
 		} catch (Exception e) {
