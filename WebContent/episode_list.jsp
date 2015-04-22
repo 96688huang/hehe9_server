@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -68,8 +69,13 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 						<h1>剧情：</h1><p/>
 						<div style="max-height: 200px; overflow: hidden;">${video.storyLine }</div><p/>
 						<div style="margin:10px auto 10px auto ;height: 1px; width:100%; overflow: hidden; background: url(./img/line1.png) repeat-x;"></div>
-						${video.playCountWeekly }<p/>
-						总播放量：${video.playCountTotal }
+						<c:if test="${video.playCountWeekly  != null}">
+							${video.playCountWeekly }
+							<p/>
+						</c:if>
+						<c:if test="${video.playCountTotal != null}">
+							总播放量：${video.playCountTotal }
+						</c:if>
 						</div>
 						</div>
 				</div>
