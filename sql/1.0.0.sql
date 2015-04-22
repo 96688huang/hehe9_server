@@ -33,6 +33,7 @@ CREATE TABLE `video` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
+  INDEX idx_name(`name`),
   INDEX idx_first_char(`first_char`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='视频信息';
 

@@ -1,4 +1,4 @@
-package cn.hehe9.service.job;
+package cn.hehe9.service.job.sohu;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,89 +64,97 @@ public class SohuEpisodeCollectService extends BaseTask {
 	 * @param indexUrl
 	 * @throws Exception
 	 */
-	public void collectEpisodeFromListPage(final Video video) throws Exception {
-		Document doc = JsoupUtil.connect(video.getListPageUrl(), CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL,
-				SOHU_EPISODE);
-		if (doc == null) {
-			logger.error("{}collect episode from list page fail. video = {}", SOHU_EPISODE,
-					JacksonUtil.encodeQuietly(video));
-		}
+	public void collectEpisodeFromListPage(final Video video) {
+		try {
+			Document doc = JsoupUtil.connect(video.getListPageUrl(), CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL,
+					SOHU_EPISODE);
+			if (doc == null) {
+				logger.error("{}collect episode from list page fail. video = {}", SOHU_EPISODE,
+						JacksonUtil.encodeQuietly(video));
+			}
 
-		// 分集标题
-		Elements pagecontDiv = doc.select(".pagecont");
-		//{ key : episodeNo, value : title }
-		final Map<Integer, String> titleMap = new HashMap<Integer, String>();
-		for (Element pagecontItem : pagecontDiv) {
-			Elements listJs = pagecontItem.select(".listJs");
-			for (Element listJsItem : listJs) {
-				String bitText = listJsItem.select(".bti").text();
-				String wzText = listJsItem.select(".wz").text();
+			// 分集标题
+			Elements pagecontDiv = doc.select(".pagecont");
+			//{ key : episodeNo, value : title }
+			final Map<Integer, String> titleMap = new HashMap<Integer, String>();
+			for (Element pagecontItem : pagecontDiv) {
+				Elements listJs = pagecontItem.select(".listJs");
+				for (Element listJsItem : listJs) {
+					String bitText = listJsItem.select(".bti").text();
+					String wzText = listJsItem.select(".wz").text();
 
-				String episodeNo = StringUtil.pickInteger(bitText);
-				if (StringUtils.isNotBlank(episodeNo)) {
-					titleMap.put(Integer.parseInt(episodeNo), AppHelper.subString(wzText, AppConfig.CONTENT_MAX_LENGTH));
+					String episodeNo = StringUtil.pickInteger(bitText);
+					if (StringUtils.isNotBlank(episodeNo)) {
+						titleMap.put(Integer.parseInt(episodeNo),
+								AppHelper.subString(wzText, AppConfig.CONTENT_MAX_LENGTH));
+					}
 				}
 			}
-		}
 
-		// 大图
-		String posterBigUrl = doc.select("#picFocus>a>img").attr("src");
-		video.setPosterBigUrl(posterBigUrl);
+			// 大图
+			String posterBigUrl = doc.select("#picFocus>a>img").attr("src");
+			video.setPosterBigUrl(posterBigUrl);
 
-		// 简介
-		String storyLine = doc.select("#ablum2").select("div.wz").text();
-		if (StringUtils.isEmpty(video.getStoryLine())) {
-			video.setStoryLine(AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "..."));
-		}
-
-		// 作者， 年份， 类型等信息
-		// 动漫名称
-		String name = doc.select("div.right div.blockRA h2 span").text();
-		if (StringUtils.isNotEmpty(name) && !video.getName().contains(name)) {
-			logger.warn("{}name from episode(net) is different with video, nameFromEpisoceNet = {}, nameFromVideo={}",
-					new Object[] { SOHU_EPISODE, name, video.getName() });
-		}
-
-		StringBuffer buf = new StringBuffer();
-		Elements holeEles = doc.select("div.right div.blockRA div.cont p");
-		for (Element element : holeEles) {
-			if (buf.length() > AppConfig.CONTENT_MAX_LENGTH_100) {
-				break;
+			// 简介
+			String storyLine = doc.select("#ablum2").select("div.wz").text();
+			if (StringUtils.isEmpty(video.getStoryLine())) {
+				video.setStoryLine(AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "..."));
 			}
-			String authorEtc = element.text();
-			buf.append(authorEtc).append("<br/>"); // 加上<br/>, 以便在页面上显示换行效果;
-		}
 
-		video.setAuthor(AppHelper.subString(buf.toString(), AppConfig.CONTENT_MAX_LENGTH_100, "..."));
-		videoDao.udpate(video);
+			// 作者， 年份， 类型等信息
+			// 动漫名称
+			String name = doc.select("div.right div.blockRA h2 span").text();
+			if (StringUtils.isNotEmpty(name) && !video.getName().contains(name)) {
+				logger.warn(
+						"{}name from episode(net) is different with video, nameFromEpisoceNet = {}, nameFromVideo={}",
+						new Object[] { SOHU_EPISODE, name, video.getName() });
+			}
 
-		// 播放页url， 分集截图，集数等
-		Element div = doc.select("div.similarLists").first();
-		if (div == null) {
-			div = doc.select("#similarLists").first();
-		}
-		if (div == null) {
-			logger.error("collect episodes fail, as element is null. video = " + JacksonUtil.encodeQuietly(video));
-			return;
-		}
+			StringBuffer buf = new StringBuffer();
+			Elements holeEles = doc.select("div.right div.blockRA div.cont p");
+			for (Element element : holeEles) {
+				if (buf.length() > AppConfig.CONTENT_MAX_LENGTH_100) {
+					break;
+				}
+				String authorEtc = element.text();
+				buf.append(authorEtc).append("<br/>"); // 加上<br/>, 以便在页面上显示换行效果;
+			}
 
-		Elements liElements = div.select("ul>li");
+			video.setAuthor(AppHelper.subString(buf.toString(), AppConfig.CONTENT_MAX_LENGTH_100, "..."));
+			videoDao.udpate(video);
 
-		// 计数器
-		final AtomicInteger episodeCounter = createCouter();
-		// 同步锁对象
-		final Object episodeSyncObj = createSyncObject();
+			// 播放页url， 分集截图，集数等
+			Element div = doc.select("div.similarLists").first();
+			if (div == null) {
+				div = doc.select("#similarLists").first();
+			}
+			if (div == null) {
+				logger.error(SOHU_EPISODE + "collect episodes fail, as element is null. video = "
+						+ JacksonUtil.encodeQuietly(video));
+				return;
+			}
 
-		for (final Element ele : liElements) {
-			final int totalEpisodeCount = liElements.size();
-			parseEpisodeAsync(video, titleMap, ele, totalEpisodeCount, episodeCounter, episodeSyncObj);
-		}
+			Elements liElements = div.select("ul>li");
 
-		// 等待被唤醒(被唤醒后, 重置计数器)
-		int lastCount = waitingForNotify(episodeCounter, liElements.size(), episodeSyncObj, SOHU_EPISODE, logger);
-		if (logger.isDebugEnabled()) {
-			logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_EPISODE, lastCount,
-					episodeCounter.get() });
+			// 计数器
+			final AtomicInteger episodeCounter = createCouter();
+			// 同步锁对象
+			final Object episodeSyncObj = createSyncObject();
+
+			for (final Element ele : liElements) {
+				parseEpisodeAsync(video, titleMap, ele, liElements.size(), episodeCounter, episodeSyncObj);
+			}
+
+			// 等待被唤醒(被唤醒后, 重置计数器)
+			int lastCount = waitingForNotify(episodeCounter, liElements.size(), episodeSyncObj, SOHU_EPISODE, logger);
+			if (logger.isDebugEnabled()) {
+				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_EPISODE, lastCount,
+						episodeCounter.get() });
+			}
+		} catch (Exception e) {
+			logger.error(
+					SOHU_EPISODE + "collect episodes from list page fail. video : " + JacksonUtil.encodeQuietly(video),
+					e);
 		}
 	}
 

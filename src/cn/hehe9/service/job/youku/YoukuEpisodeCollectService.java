@@ -1,0 +1,314 @@
+package cn.hehe9.service.job.youku;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import cn.hehe9.common.app.AppConfig;
+import cn.hehe9.common.app.AppHelper;
+import cn.hehe9.common.constants.ComConstant;
+import cn.hehe9.common.utils.BeanUtil;
+import cn.hehe9.common.utils.HtmlUnitUtil;
+import cn.hehe9.common.utils.JacksonUtil;
+import cn.hehe9.common.utils.JsoupUtil;
+import cn.hehe9.common.utils.StringUtil;
+import cn.hehe9.persistent.dao.VideoDao;
+import cn.hehe9.persistent.dao.VideoEpisodeDao;
+import cn.hehe9.persistent.entity.Video;
+import cn.hehe9.persistent.entity.VideoEpisode;
+import cn.hehe9.service.job.base.BaseTask;
+
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebRequest;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
+@Component
+public class YoukuEpisodeCollectService extends BaseTask {
+	private static final Logger logger = LoggerFactory.getLogger(YoukuEpisodeCollectService.class);
+
+	@Resource
+	private VideoDao videoDao;
+
+	@Resource
+	private VideoEpisodeDao videoEpisodeDao;
+
+	private static final String YOUKU_EPISODE = ComConstant.LogPrefix.YOUKU_EPISODE;
+
+	// 线程池
+	private int processCount = Runtime.getRuntime().availableProcessors();
+	private ExecutorService episodeThreadPool = Executors.newFixedThreadPool(processCount + 1);
+
+	/** 用于比较Episode的属性名称 */
+	private static List<String> episodeCompareFieldNames = new ArrayList<String>();
+	static {
+		// video episode fields
+		episodeCompareFieldNames.add("video_id");
+		episodeCompareFieldNames.add("title");
+		episodeCompareFieldNames.add("play_page_url");
+		episodeCompareFieldNames.add("snapshot_url");
+		episodeCompareFieldNames.add("file_url");
+	}
+
+	/**
+	 * 解析某视频的播放url, 视频url, 第几集等信息
+	 * 
+	 * @param indexUrl
+	 * @throws Exception
+	 */
+	public void collectEpisodeFromListPage(final Video video) {
+		try {
+			String listPageUrl = video.getListPageUrl();
+			String referer = listPageUrl;
+			WebClient client = HtmlUnitUtil.createSimpleWebClient();
+
+			// 设置请求中的内容
+			WebRequest request = new WebRequest(new URL(listPageUrl));
+			request.setAdditionalHeader("Referer", referer);
+			//		request.setCharset("UTF-8");
+
+			HtmlPage page = client.getPage(request);
+
+			// 找到"分集剧情"的超链接
+			Iterator<DomElement> iit = page.getElementById("subnav_point").getChildElements().iterator();
+			HtmlAnchor anchor = (HtmlAnchor) iit.next();
+			System.out.println(anchor.asXml());
+			page = anchor.click(); // 点击"分集剧情"
+			Thread.sleep(200);
+			page = anchor.click(); //  再次点击"分集剧情", 获取点击后的页面内容
+
+			DomElement episodeListLiEles = null;
+			List<DomElement> ulList = page.getElementsByIdAndOrName("zySeriesTab"); // 点击"分集剧情"后, 页面中会出现两个id=zySeriesTab的ul
+
+			// 筛选出我们想要的div(因为包含截图信息)
+			for (DomElement ulItem : ulList) {
+				Iterator<DomElement> liIt = ulItem.getChildElements().iterator();
+				DomElement li = liIt.next();
+				HtmlAnchor ha = (HtmlAnchor) li.getChildElements().iterator().next();
+
+				String onClickJs = ha.getAttribute("onclick");
+				if (onClickJs.contains("point_reload_")) {
+					episodeListLiEles = ulItem;
+					break;
+				}
+			}
+
+			// 遍历分集li, 点击各范围分集出现的超链接
+			HtmlAnchor ha = null;
+			Iterator<DomElement> liIt = episodeListLiEles.getChildElements().iterator();
+			while (liIt.hasNext()) {
+				DomElement liItem = liIt.next();
+				// 得到分集的超链接点击位置 (点击后, 会出现范围内的分集列表信息, 如 1-20集)
+				ha = (HtmlAnchor) liItem.getChildElements().iterator().next();
+				// 点击
+				ha.click();
+				// 随机睡眠 50 - 100ms, 等待对方服务器加载完成;
+				long sleepTime = new Random().nextInt(50) + 50;
+				Thread.sleep(sleepTime);
+			}
+
+			Thread.sleep(500); //等待对方服务器加载完成;
+			page = ha.click(); //获取点击完所有分集展示超链接后的页面内容(这里多点击了一次)
+
+			String htmlPage = page.asXml();
+			client.close();
+
+			// 交给 jsoup 解析具体内容
+			Document doc = Jsoup.parse(htmlPage);
+			Elements liEles = doc.select("#showInfo .baseinfo li");
+
+			// 倒数二个li都是演员/导演信息
+			StringBuilder authorBuf = new StringBuilder(50);
+			if (liEles.size() >= 2) {
+				Element autorLi = liEles.get(liEles.size() - 2);
+				String authorActors = autorLi.select("span").first().text();
+				if (StringUtils.isNotBlank(authorActors)) {
+					authorBuf.append(authorActors).append("<br />");
+				}
+			}
+
+			Element authorLastLi = liEles.last();
+			Elements authorSpans = authorLastLi.select("span");
+			for (Element spanItem : authorSpans) {
+				String authorDirector = spanItem.text();
+				if (StringUtils.isNotBlank(authorDirector)) {
+					authorBuf.append(authorDirector).append("<br />");
+				}
+			}
+			video.setAuthor(authorBuf.toString());
+
+			// 总播放量
+			String playCountTotal = doc.select("#showInfo .basedata .play").text().replace("总播放:", "");
+			video.setPlayCountTotal(playCountTotal);
+
+			// 剧情
+			Elements spanEles = doc.select("#show_info_short span");
+			String storyLine = spanEles.last().text();
+			storyLine = AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "...");
+			video.setStoryLine(storyLine);
+			videoDao.udpate(video);
+
+			// 注 : 需要点击指定的超链接, 才能出现下面的html代码(使用 HtmlUnit)
+			Elements episodeAreaDivs = doc.select("#point_area .item");
+			if (CollectionUtils.isEmpty(episodeAreaDivs)) {
+				logger.error(YOUKU_EPISODE + "collect episodes fail, as element is null. video = "
+						+ JacksonUtil.encodeQuietly(video));
+				return;
+			}
+
+			// 计数器
+			final AtomicInteger episodeCounter = createCouter();
+			// 同步锁对象
+			final Object episodeSyncObj = createSyncObject();
+
+			for (Element episodeDiv : episodeAreaDivs) {
+				final int totalEpisodeCount = episodeAreaDivs.size();
+				parseEpisodeAsync(video, episodeDiv, totalEpisodeCount, episodeCounter, episodeSyncObj);
+			}
+
+			// 等待被唤醒(被唤醒后, 重置计数器)
+			int lastCount = waitingForNotify(episodeCounter, episodeAreaDivs.size(), episodeSyncObj, YOUKU_EPISODE,
+					logger);
+			if (logger.isDebugEnabled()) {
+				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_EPISODE, lastCount,
+						episodeCounter.get() });
+			}
+		} catch (Exception e) {
+			logger.error(
+					YOUKU_EPISODE + "collect episodes from list page fail. video : " + JacksonUtil.encodeQuietly(video),
+					e);
+		}
+	}
+
+	private void parseEpisodeAsync(final Video video, final Element episodeDiv, final int totalEpisodeCount,
+			final AtomicInteger episodeCounter, final Object episodeSyncObj) {
+		Runnable episodeTask = new Runnable() {
+			public void run() {
+				try {
+					parseEpisode(video, episodeDiv, episodeDiv);
+				} finally {
+					String logMsg = logger.isDebugEnabled() ? String.format("%s准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
+							new Object[] { YOUKU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
+					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
+				}
+			}
+		};
+		episodeThreadPool.execute(episodeTask);
+	}
+
+	private void parseEpisode(Video video, Element episodeDiv, Element ele) {
+		try {
+			VideoEpisode episodeFromNet = new VideoEpisode();
+			String playPageUrl = episodeDiv.select(".link a").attr("href");
+			String title = episodeDiv.select(".link a").attr("title");
+			String episodeNo = StringUtil.pickInteger(title);
+			if (StringUtils.isBlank(episodeNo)) {
+				logger.error("{}parse episode fail. as parse episodeNo is blank. video : {}", YOUKU_EPISODE,
+						JacksonUtil.encodeQuietly(video));
+				return;
+			}
+
+			String snapshotUrl = episodeDiv.select(".thumb img").attr("src");
+			String fileUrl = parseVideoFileUrl(playPageUrl);
+			//	String time = episodeDiv.select(".time .num").text();	// 播放时长
+
+			episodeFromNet.setVideoId(video.getId());
+			episodeFromNet.setSnapshotUrl(snapshotUrl);
+			episodeFromNet.setPlayPageUrl(playPageUrl);
+			episodeFromNet.setEpisodeNo(Integer.parseInt(episodeNo));
+			episodeFromNet.setTitle(title);
+			episodeFromNet.setFileUrl(fileUrl);
+
+			VideoEpisode episodeFromDb = videoEpisodeDao.findByVideoIdEpisodeNo(video.getId(),
+					episodeFromNet.getEpisodeNo());
+			if (episodeFromDb == null) {
+				videoEpisodeDao.save(episodeFromNet);
+				if (logger.isDebugEnabled()) {
+					logger.debug("{}add video episode : {}", YOUKU_EPISODE, JacksonUtil.encode(episodeFromNet));
+				}
+				return;
+			}
+
+			boolean isSame = BeanUtil.isFieldsValueSame(episodeFromNet, episodeFromDb, episodeCompareFieldNames, null);
+			if (!isSame) {
+				episodeFromNet.setId(episodeFromDb.getId()); // 主键id
+				videoEpisodeDao.udpate(episodeFromNet); // 不同则更新
+				logger.info("{}update video episode : \r\n OLD : {}\r\n NEW : {}", new Object[] { YOUKU_EPISODE,
+						JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
+			}
+
+		} catch (Exception e) {
+			logger.error(YOUKU_EPISODE + "parse episode fail. video : " + JacksonUtil.encodeQuietly(video), e);
+		}
+	}
+
+	/**
+	 * 解析播放页面的视频url
+	 * 
+	 * @param playPageUrl	播放页面url
+	 * @return	视频url
+	 * @throws IOException
+	 */
+	private String parseVideoFileUrl(String playPageUrl) throws IOException {
+		Document doc = JsoupUtil.connect(playPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_EPISODE);
+		if (doc == null) {
+			return null;
+		}
+
+		// 从分享的地方获取file url
+		String fileUrl = doc.select("#link2").attr("value");
+		if (StringUtils.isNotBlank(fileUrl)) {
+			return fileUrl;
+		}
+
+		// id = link3
+		if (StringUtils.isBlank(fileUrl)) {
+			fileUrl = doc.select("#link3").attr("value");
+		}
+
+		// id = s_msn1
+		if (StringUtils.isBlank(fileUrl)) {
+			String shareUrl = doc.select("#s_msn1").attr("href");
+			String[] itemArr = shareUrl.replace("&amp;", "").split("&");
+			for (String item : itemArr) {
+				if (StringUtils.startsWithIgnoreCase(item, "swfurl=")) {
+					fileUrl = item.split("=")[1];
+					break;
+				}
+			}
+		}
+
+		// id = s_mop1
+		if (StringUtils.isBlank(fileUrl)) {
+			String shareUrl = doc.select("#s_mop1").attr("href");
+			String[] itemArr = shareUrl.replace("&amp;", "").split("&");
+			for (String item : itemArr) {
+				if (StringUtils.startsWithIgnoreCase(item, "swfurl=")) {
+					fileUrl = item.split("=")[1];
+					break;
+				}
+			}
+		}
+		return fileUrl;
+	}
+}

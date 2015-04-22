@@ -371,11 +371,14 @@
 		<if test="id != null">
 			and id = #{id,jdbcType=INTEGER}
 		</if>
+		<if test="sourceId != null">
+			and source_id = #{source_id,jdbcType=INTEGER}
+		</if>
 		<if test="firstChar != null and firstChar != ''">
 			and first_char = #{firstChar,jdbcType=VARCHAR}
 		</if>
 		<if test="name != null and name != ''">
-			and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+			and name like CONCAT(#{name,jdbcType=VARCHAR},'%')
 		</if>
 	</sql>
 

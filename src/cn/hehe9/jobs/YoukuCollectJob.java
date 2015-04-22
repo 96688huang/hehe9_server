@@ -7,17 +7,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import cn.hehe9.common.constants.ComConstant;
-import cn.hehe9.service.job.VideosCollectService;
+import cn.hehe9.service.job.youku.YoukuService;
 
 @Component
-public class VideosCollectJob extends AbstractJob {
+public class YoukuCollectJob extends AbstractJob {
 
-	private final static Logger logger = LoggerFactory.getLogger(VideosCollectJob.class);
+	private final static Logger logger = LoggerFactory.getLogger(YoukuCollectJob.class);
 
-	private final static String COLLECT_VIDEO = ComConstant.LogPrefix.COLLECT_VIDEOS;
+	private final static String COLLECT_VIDEO = ComConstant.LogPrefix.SOHU_SERVICE;
 
 	@Resource
-	private VideosCollectService videosCollectService;
+	private YoukuService youkuService;
 
 	// NOTE: 可采用下面注解的方式配置, 也可以 spring 配置文件中配置.
 	//	@Scheduled(cron = "0 0 3 * * ?")
@@ -26,7 +26,7 @@ public class VideosCollectJob extends AbstractJob {
 		try {
 			logger.info("{}job start...", COLLECT_VIDEO);
 
-			videosCollectService.collectVideos();
+			youkuService.collectVideos();
 
 			logger.info("{}job complete. used {} s", COLLECT_VIDEO, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {
@@ -37,7 +37,7 @@ public class VideosCollectJob extends AbstractJob {
 		try {
 			logger.info("{}job start...", COLLECT_VIDEO);
 
-			videosCollectService.collectEpisode();
+			youkuService.collectEpisode();
 
 			logger.info("{}job complete. used {} s", COLLECT_VIDEO, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {

@@ -24,10 +24,12 @@ public class ComConstant {
 	 * 日志前缀
 	 */
 	public static class LogPrefix {
-		public static final String COLLECT_VIDEOS = "[ collect videos ] ";
-		public static final String SOHU_VIDEO = "[ sohu video ] ";
-		public static final String SOHU_EPISODE = "[ sohu episode ] ";
-		public static final String YOUKU_VIDEO = "[ youku video ] ";
-		public static final String YOUKU_EPISODE = "[ youku episode ] ";
+		public static final String SOHU_SERVICE = "[ SOHU SERVICE ] ";
+		public static final String SOHU_VIDEO = "[ SOHU VIDEO ] ";
+		public static final String SOHU_EPISODE = "[ SOHU EPISODE ] ";
+		
+		public static final String YOUKU_SERVICE = "[ YOUKU SERVICE ] ";
+		public static final String YOUKU_VIDEO = "[ YOUKU VIDEO ] ";
+		public static final String YOUKU_EPISODE = "[ YOUKU EPISODE ] ";
 	}
 }

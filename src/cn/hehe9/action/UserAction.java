@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.hehe9.common.utils.JacksonUtil;
-import cn.hehe9.jobs.VideosCollectJob;
+import cn.hehe9.jobs.SohuCollectJob;
 import cn.hehe9.persistent.entity.VideoSource;
 import cn.hehe9.service.biz.VideoSourceService;
 
@@ -26,7 +26,7 @@ public class UserAction extends ActionSupport {
 	private static final Logger logger = LoggerFactory.getLogger(UserAction.class);
 	
 	@Autowired
-	private VideosCollectJob videosCollectJob;
+	private SohuCollectJob videosCollectJob;
 	
 	@Autowired
 	private VideoSourceService videoSourceService;

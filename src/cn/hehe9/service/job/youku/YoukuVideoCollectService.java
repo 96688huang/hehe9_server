@@ -1,4 +1,4 @@
-package cn.hehe9.service.job;
+package cn.hehe9.service.job.youku;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,7 +168,7 @@ public class YoukuVideoCollectService extends BaseTask {
 				videoFromNet.setFirstChar(ComConstant.OTHER_CNS);
 			}
 
-			List<Video> list = videoDao.searchBriefByName(videoFromNet.getName());
+			List<Video> list = videoDao.searchBriefByName(sourceId, videoFromNet.getName());
 			if (list == null || list.isEmpty()) {
 				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
 				videoDao.save(videoFromNet);

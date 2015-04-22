@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.entity.Video;
 
@@ -18,8 +19,8 @@ public class VideoService {
 		return videoDao.listBrief(page, count);
 	}
 
-	public List<Video> listExceptBigData(int page, int count) {
-		return videoDao.listExceptBigData(page, count);
+	public List<Video> listExceptBigData(Integer sourceId, int page, int count) {
+		return videoDao.listExceptBigData(sourceId, page, count);
 	}
 
 	public List<Video> list(int page, int count) {
@@ -31,7 +32,7 @@ public class VideoService {
 	}
 
 	public List<Video> findBriefByName(String firstChar, String name, int page, int queryCount) {
-		return videoDao.findBriefBy(firstChar, name, page, queryCount);
+		return videoDao.findBriefBy(null, firstChar, name, page, queryCount);
 	}
 
 	public Video findById(Integer videoId) {

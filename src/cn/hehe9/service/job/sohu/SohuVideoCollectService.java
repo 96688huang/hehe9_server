@@ -1,4 +1,4 @@
-package cn.hehe9.service.job;
+package cn.hehe9.service.job.sohu;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,8 +53,8 @@ public class SohuVideoCollectService extends BaseTask {
 		videoCompareFieldNames.add("playCountWeekly");
 		videoCompareFieldNames.add("playCountTotal");
 		videoCompareFieldNames.add("posterBigUrl");
-//		videoCompareFieldNames.add("posterMidUrl");
-//		videoCompareFieldNames.add("posterSmallUrl");
+		//		videoCompareFieldNames.add("posterMidUrl");
+		//		videoCompareFieldNames.add("posterSmallUrl");
 		videoCompareFieldNames.add("iconUrl");
 		videoCompareFieldNames.add("listPageUrl");
 		videoCompareFieldNames.add("updateRemark");
@@ -92,8 +92,6 @@ public class SohuVideoCollectService extends BaseTask {
 			// 分别解析每部动漫的信息
 			for (final Element liItem : liEle) {
 				parseVideoInfoAsync(sourceId, liItem, liEle.size(), videoCounter, videoSyncObj);
-
-				//				return; // TODO
 			}
 
 			// 等待被唤醒(被唤醒后, 重置计数器)
@@ -184,7 +182,7 @@ public class SohuVideoCollectService extends BaseTask {
 			String playCountTotal = list_hover_Div.select("a.acount").first().html();
 			videoFromNet.setPlayCountTotal(playCountTotal);
 
-			List<Video> list = videoDao.searchBriefByName(videoFromNet.getName());
+			List<Video> list = videoDao.searchBriefByName(sourceId, videoFromNet.getName());
 			if (list == null || list.isEmpty()) {
 				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
 				videoDao.save(videoFromNet);

@@ -14,7 +14,7 @@
 	<!-- 配置spring配置文件加载的位置 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:beans.xml</param-value>
+		<param-value>classpath:/spring/*.xml</param-value>
 	</context-param>
 
 	<!-- 编码配置 -->

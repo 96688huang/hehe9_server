@@ -8,10 +8,12 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.mapper.VideoMapper;
 
@@ -36,9 +38,10 @@ public class VideoDao {
 	/**
 	 * 查询视频列表: 排除大数据量的字段
 	 */
-	public List<Video> listExceptBigData(int page, int count) {
+	public List<Video> listExceptBigData(Integer sourceId, int page, int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		int offset = (page - 1) * count;
+		params.put("source_id", sourceId);
 		params.put("offset", offset);
 		params.put("count", count);
 		return videoMapper.findExceptBigDataBy(params);
@@ -60,8 +63,17 @@ public class VideoDao {
 	 * @param name
 	 * @return
 	 */
+	public List<Video> searchBriefByName(Integer sourceId, String name) {
+		return findBriefBy(sourceId, null, name);
+	}
+
+	/**
+	 * 根据名称, 查询简要信息
+	 * @param name
+	 * @return
+	 */
 	public List<Video> searchBriefByName(String name) {
-		return findBriefBy(null, name);
+		return findBriefBy(null, null, name);
 	}
 
 	/**
@@ -69,8 +81,8 @@ public class VideoDao {
 	 * @param name
 	 * @return
 	 */
-	public List<Video> findBriefBy(String firstChar, String name) {
-		return findBriefBy(firstChar, name, 1, Integer.MAX_VALUE);
+	public List<Video> findBriefBy(Integer sourceId, String firstChar, String name) {
+		return findBriefBy(sourceId, firstChar, name, 1, Integer.MAX_VALUE);
 	}
 
 	/**
@@ -80,8 +92,10 @@ public class VideoDao {
 	 * @param count	查询数量
 	 * @return
 	 */
-	public List<Video> findBriefBy(String firstChar, String name, int page, int count) {
+	public List<Video> findBriefBy(Integer sourceId, String firstChar, String name, int page, int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("sourceId", sourceId);
+		
 		if (StringUtils.isNotBlank(firstChar)) {
 			params.put("firstChar", firstChar);
 		}

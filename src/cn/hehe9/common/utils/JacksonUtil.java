@@ -24,146 +24,142 @@ import java.text.SimpleDateFormat;
  */
 public class JacksonUtil {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    private static ObjectMapper includeObjectMapper = new ObjectMapper();
-    private static ObjectMapper excludeObjectMapper = new ObjectMapper();
+	private static ObjectMapper objectMapper = new ObjectMapper();
+	private static ObjectMapper includeObjectMapper = new ObjectMapper();
+	private static ObjectMapper excludeObjectMapper = new ObjectMapper();
 
-    static {
-        objectMapper.setDateFormat(new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss.SSSSSS"));
-        // 设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
-        objectMapper.setDeserializationConfig(
-                objectMapper.getDeserializationConfig()
-                        .without(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES));
-        // 设置不输出值为 null 的属性
-        objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        // 忽略未知filterId异常
-        objectMapper.setFilters(new SimpleFilterProvider().setFailOnUnknownId(false));
+	static {
+		objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS"));
+		// 设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
+		objectMapper.setDeserializationConfig(objectMapper.getDeserializationConfig().without(
+				DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES));
+		// 设置不输出值为 null 的属性
+		objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+		// 忽略未知filterId异常
+		objectMapper.setFilters(new SimpleFilterProvider().setFailOnUnknownId(false));
 
-        includeObjectMapper.setDateFormat(new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss.SSSSSS"));
-        // 设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
-        includeObjectMapper.setDeserializationConfig(
-                includeObjectMapper.getDeserializationConfig()
-                        .without(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES));
-        //设置不输出值为 null 的属性
-        includeObjectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        includeObjectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+		includeObjectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS"));
+		// 设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
+		includeObjectMapper.setDeserializationConfig(includeObjectMapper.getDeserializationConfig().without(
+				DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES));
+		//设置不输出值为 null 的属性
+		includeObjectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+		includeObjectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
 
-        excludeObjectMapper.setDateFormat(new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss.SSSSSS"));
-        // 设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
-        excludeObjectMapper.setDeserializationConfig(
-                excludeObjectMapper.getDeserializationConfig()
-                        .without(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES));
-        //设置不输出值为 null 的属性
-        excludeObjectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        excludeObjectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-    }
+		excludeObjectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS"));
+		// 设置输入时忽略JSON字符串中存在而Java对象实际没有的属性
+		excludeObjectMapper.setDeserializationConfig(excludeObjectMapper.getDeserializationConfig().without(
+				DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES));
+		//设置不输出值为 null 的属性
+		excludeObjectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+		excludeObjectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+	}
 
-    /**
-     * 将JSON字符串根据指定的Class反序列化成Java对象。
-     *
-     * @param json      JSON字符串
-     * @param pojoClass Java对象Class
-     * @return 反序列化生成的Java对象
-     * @throws Exception 如果反序列化过程中发生错误，将抛出异常
-     */
-    public static Object decode(String json, Class<?> pojoClass)
-            throws Exception {
-        try {
-            return objectMapper.readValue(json, pojoClass);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+	/**
+	 * 将JSON字符串根据指定的Class反序列化成Java对象。
+	 *
+	 * @param json      JSON字符串
+	 * @param pojoClass Java对象Class
+	 * @return 反序列化生成的Java对象
+	 * @throws Exception 如果反序列化过程中发生错误，将抛出异常
+	 */
+	public static Object decode(String json, Class<?> pojoClass) throws Exception {
+		try {
+			return objectMapper.readValue(json, pojoClass);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
-    /**
-     * 将JSON字符串根据指定的Class反序列化成Java对象。
-     *
-     * @param json      JSON字符串
-     * @param reference 类型引用
-     * @return 反序列化生成的Java对象
-     * @throws Exception 如果反序列化过程中发生错误，将抛出异常
-     */
-    public static Object decode(String json, TypeReference<?> reference) throws Exception {
-        try {
-            return objectMapper.readValue(json, reference);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+	/**
+	 * 将JSON字符串根据指定的Class反序列化成Java对象。
+	 *
+	 * @param json      JSON字符串
+	 * @param reference 类型引用
+	 * @return 反序列化生成的Java对象
+	 * @throws Exception 如果反序列化过程中发生错误，将抛出异常
+	 */
+	public static Object decode(String json, TypeReference<?> reference) throws Exception {
+		try {
+			return objectMapper.readValue(json, reference);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
-    /**
-     * 将Java对象序列化成JSON字符串。
-     *
-     * @param obj 待序列化生成JSON字符串的Java对象
-     * @return JSON字符串
-     * @throws Exception 如果序列化过程中发生错误，将抛出异常
-     */
-    public static String encode(Object obj) throws Exception {
-        try {
-            return objectMapper.writeValueAsString(obj);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-    
-    /**
-     * 将Java对象序列化成JSON字符串, 如果序列化失败, 则返回空字符串
-     *
-     * @param obj 待序列化生成JSON字符串的Java对象
-     * @return JSON字符串
-     */
-    public static String encodeQuietly(Object obj){
-    	try {
-    		return objectMapper.writeValueAsString(obj);
-    	} catch (Exception e) {
-    		// ignore exception
-    	}
-    	return "";
-    }
+	/**
+	 * 将Java对象序列化成JSON字符串。
+	 *
+	 * @param obj 待序列化生成JSON字符串的Java对象
+	 * @return JSON字符串
+	 * @throws Exception 如果序列化过程中发生错误，将抛出异常
+	 */
+	public static String encode(Object obj) throws Exception {
+		try {
+			return objectMapper.writeValueAsString(obj);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
-    /**
-     * 过滤Java对象。
-     *
-     * @param source  需要处理的java对象
-     * @param includes  需要保留的节点
-     * @param excludes  需要过滤的节点
-     * @param filterId  过滤器编码
-     * @return Object 类型为source对应的类型
-     * @throws Exception
-     */
-    public static Object filter(Object source, String[] includes,
-                                String[] excludes, String filterId) throws Exception {
-        if(source == null) {
-            return null;
-        }
-        if(ArrayUtils.isEmpty(includes) && ArrayUtils.isEmpty(excludes)) {
-            return source;
-        }
+	/**
+	 * 将Java对象序列化成JSON字符串, 如果序列化失败, 则返回空字符串
+	 *
+	 * @param obj 待序列化生成JSON字符串的Java对象
+	 * @return JSON字符串
+	 */
+	public static String encodeQuietly(Object obj) {
+		if (obj == null) {
+			return "";
+		}
 
-        boolean hadFilter = false;
-        String jsonResult = null;
-        if(ArrayUtils.isNotEmpty(includes)) {
-            SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider().addFilter(filterId,
-                    SimpleBeanPropertyFilter.filterOutAllExcept(includes));
-            jsonResult = includeObjectMapper.writer(simpleFilterProvider).writeValueAsString(source);
-            hadFilter = true;
-        }
+		try {
+			return objectMapper.writeValueAsString(obj);
+		} catch (Exception e) {
+			// ignore exception
+		}
+		return "";
+	}
 
-        if(ArrayUtils.isNotEmpty(excludes)) {
-            SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider().addFilter(filterId,
-                    SimpleBeanPropertyFilter.serializeAllExcept(excludes));
-            excludeObjectMapper.getSerializationConfig().addMixInAnnotations(Object.class, source.getClass());
-            Object target = source;
-            if(hadFilter) {
-                target = decode(jsonResult, source.getClass());
-            }
-            jsonResult = excludeObjectMapper.writer(simpleFilterProvider).writeValueAsString(target);
-            hadFilter = true;
-        }
+	/**
+	 * 过滤Java对象。
+	 *
+	 * @param source  需要处理的java对象
+	 * @param includes  需要保留的节点
+	 * @param excludes  需要过滤的节点
+	 * @param filterId  过滤器编码
+	 * @return Object 类型为source对应的类型
+	 * @throws Exception
+	 */
+	public static Object filter(Object source, String[] includes, String[] excludes, String filterId) throws Exception {
+		if (source == null) {
+			return null;
+		}
+		if (ArrayUtils.isEmpty(includes) && ArrayUtils.isEmpty(excludes)) {
+			return source;
+		}
 
-        return hadFilter ? decode(jsonResult, source.getClass()) : source;
-    }
+		boolean hadFilter = false;
+		String jsonResult = null;
+		if (ArrayUtils.isNotEmpty(includes)) {
+			SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider().addFilter(filterId,
+					SimpleBeanPropertyFilter.filterOutAllExcept(includes));
+			jsonResult = includeObjectMapper.writer(simpleFilterProvider).writeValueAsString(source);
+			hadFilter = true;
+		}
+
+		if (ArrayUtils.isNotEmpty(excludes)) {
+			SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider().addFilter(filterId,
+					SimpleBeanPropertyFilter.serializeAllExcept(excludes));
+			excludeObjectMapper.getSerializationConfig().addMixInAnnotations(Object.class, source.getClass());
+			Object target = source;
+			if (hadFilter) {
+				target = decode(jsonResult, source.getClass());
+			}
+			jsonResult = excludeObjectMapper.writer(simpleFilterProvider).writeValueAsString(target);
+			hadFilter = true;
+		}
+
+		return hadFilter ? decode(jsonResult, source.getClass()) : source;
+	}
 }

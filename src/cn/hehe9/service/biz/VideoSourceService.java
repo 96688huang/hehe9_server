@@ -17,4 +17,8 @@ public class VideoSourceService {
 	public List<VideoSource> list() {
 		return videoSourceDao.list(1, Integer.MAX_VALUE);
 	}
+
+	public VideoSource findByName(String name) {
+		return videoSourceDao.findBy(name);
+	}
 }
