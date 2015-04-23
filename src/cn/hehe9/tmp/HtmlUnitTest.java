@@ -1,6 +1,5 @@
 package cn.hehe9.tmp;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -10,14 +9,8 @@ import java.util.Random;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLDivElement;
-import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLLIElement;
-import com.gargoylesoftware.htmlunit.util.WebClientUtils;
 
 public class HtmlUnitTest {
 	public static void main(String[] args) throws Exception {

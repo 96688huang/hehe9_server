@@ -1,5 +1,7 @@
 package cn.hehe9.common.utils;
 
+import java.text.SimpleDateFormat;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonMethod;
@@ -9,8 +11,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
 import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
 import org.codehaus.jackson.type.TypeReference;
-
-import java.text.SimpleDateFormat;
 
 /**
  * 用途。

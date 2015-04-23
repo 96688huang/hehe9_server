@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.entity.Video;
 

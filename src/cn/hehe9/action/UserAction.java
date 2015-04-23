@@ -1,16 +1,12 @@
 package cn.hehe9.action;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.jobs.SohuCollectJob;
-import cn.hehe9.persistent.entity.VideoSource;
 import cn.hehe9.service.biz.VideoSourceService;
 
 import com.opensymphony.xwork2.ActionSupport;

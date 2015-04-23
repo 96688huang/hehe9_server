@@ -38,7 +38,7 @@ public class YoukuService extends BaseTask {
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();
-	private ExecutorService threadPool = Executors.newFixedThreadPool(1);	// TODO
+	private ExecutorService threadPool = Executors.newFixedThreadPool(processCount);
 
 	private static final String YOUKU_JOB = ComConstant.LogPrefix.YOUKU_JOB;
 

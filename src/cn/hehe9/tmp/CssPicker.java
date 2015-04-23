@@ -11,10 +11,6 @@ import java.io.PrintWriter;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.lang3.StringUtils;
-
-import cn.hehe9.common.utils.StringUtil;
-
 public class CssPicker {
 
 	/**

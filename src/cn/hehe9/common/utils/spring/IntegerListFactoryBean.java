@@ -1,9 +1,9 @@
 package cn.hehe9.common.utils.spring;
 
-import org.springframework.beans.factory.FactoryBean;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.FactoryBean;
 
 /**
  * <b><code>IntegerListFactoryBean</code></b>

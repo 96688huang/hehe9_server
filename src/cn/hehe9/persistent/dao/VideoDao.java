@@ -8,12 +8,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.mapper.VideoMapper;
 
