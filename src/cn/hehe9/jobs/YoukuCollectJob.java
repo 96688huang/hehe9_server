@@ -14,7 +14,7 @@ public class YoukuCollectJob extends AbstractJob {
 
 	private final static Logger logger = LoggerFactory.getLogger(YoukuCollectJob.class);
 
-	private final static String COLLECT_VIDEO = ComConstant.LogPrefix.SOHU_SERVICE;
+	private final static String YOUKU_JOB = ComConstant.LogPrefix.YOUKU_JOB;
 
 	@Resource
 	private YoukuService youkuService;
@@ -24,24 +24,24 @@ public class YoukuCollectJob extends AbstractJob {
 	public void executeJob() {
 		long startTime = System.currentTimeMillis();
 		try {
-			logger.info("{}job start...", COLLECT_VIDEO);
+			logger.info("{}video job start...", YOUKU_JOB);
 
 			youkuService.collectVideos();
 
-			logger.info("{}job complete. used {} s", COLLECT_VIDEO, getUsedTimeAsSecond(startTime));
+			logger.info("{}video job complete. used {} s", YOUKU_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {
-			logger.error(COLLECT_VIDEO + "job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
+			logger.error(YOUKU_JOB + "video job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
 
 		startTime = System.currentTimeMillis();
 		try {
-			logger.info("{}job start...", COLLECT_VIDEO);
+			logger.info("{}episode job start...", YOUKU_JOB);
 
 			youkuService.collectEpisode();
 
-			logger.info("{}job complete. used {} s", COLLECT_VIDEO, getUsedTimeAsSecond(startTime));
+			logger.info("{}episode job complete. used {} s", YOUKU_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {
-			logger.error(COLLECT_VIDEO + "job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
+			logger.error(YOUKU_JOB + "episode job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
 	}
 }

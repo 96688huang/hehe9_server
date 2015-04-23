@@ -372,7 +372,7 @@
 			and id = #{id,jdbcType=INTEGER}
 		</if>
 		<if test="sourceId != null">
-			and source_id = #{source_id,jdbcType=INTEGER}
+			and source_id = #{sourceId,jdbcType=INTEGER}
 		</if>
 		<if test="firstChar != null and firstChar != ''">
 			and first_char = #{firstChar,jdbcType=VARCHAR}

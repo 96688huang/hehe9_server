@@ -14,7 +14,7 @@ public class SohuCollectJob extends AbstractJob {
 
 	private final static Logger logger = LoggerFactory.getLogger(SohuCollectJob.class);
 
-	private final static String COLLECT_VIDEO = ComConstant.LogPrefix.SOHU_SERVICE;
+	private final static String SOHU_JOB = ComConstant.LogPrefix.SOHU_JOB;
 
 	@Resource
 	private SohuService sohuService;
@@ -24,24 +24,24 @@ public class SohuCollectJob extends AbstractJob {
 	public void executeJob() {
 		long startTime = System.currentTimeMillis();
 		try {
-			logger.info("{}job start...", COLLECT_VIDEO);
+			logger.info("{}video job start...", SOHU_JOB);
 
 			sohuService.collectVideos();
 
-			logger.info("{}job complete. used {} s", COLLECT_VIDEO, getUsedTimeAsSecond(startTime));
+			logger.info("{}video job complete. used {} s", SOHU_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {
-			logger.error(COLLECT_VIDEO + "job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
+			logger.error(SOHU_JOB + "video job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
 
 		startTime = System.currentTimeMillis();
 		try {
-			logger.info("{}job start...", COLLECT_VIDEO);
+			logger.info("{}episode job start...", SOHU_JOB);
 
 			sohuService.collectEpisode();
 
-			logger.info("{}job complete. used {} s", COLLECT_VIDEO, getUsedTimeAsSecond(startTime));
+			logger.info("{}episode job complete. used {} s", SOHU_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {
-			logger.error(COLLECT_VIDEO + "job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
+			logger.error(SOHU_JOB + "episode job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
 	}
 }

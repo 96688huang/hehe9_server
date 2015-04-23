@@ -41,7 +41,7 @@ public class VideoDao {
 	public List<Video> listExceptBigData(Integer sourceId, int page, int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		int offset = (page - 1) * count;
-		params.put("source_id", sourceId);
+		params.put("sourceId", sourceId);
 		params.put("offset", offset);
 		params.put("count", count);
 		return videoMapper.findExceptBigDataBy(params);

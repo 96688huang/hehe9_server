@@ -29,14 +29,16 @@ import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.HtmlUnitUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
+import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.common.utils.StringUtil;
+import cn.hehe9.common.utils.UserAgentUtil;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.dao.VideoEpisodeDao;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
 import cn.hehe9.service.job.base.BaseTask;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -79,62 +81,8 @@ public class YoukuEpisodeCollectService extends BaseTask {
 	public void collectEpisodeFromListPage(final Video video) {
 		try {
 			String listPageUrl = video.getListPageUrl();
-			String referer = listPageUrl;
-			WebClient client = HtmlUnitUtil.createSimpleWebClient();
-
-			// 设置请求中的内容
-			WebRequest request = new WebRequest(new URL(listPageUrl));
-			request.setAdditionalHeader("Referer", referer);
-			//		request.setCharset("UTF-8");
-
-			HtmlPage page = client.getPage(request);
-
-			// 找到"分集剧情"的超链接
-			Iterator<DomElement> iit = page.getElementById("subnav_point").getChildElements().iterator();
-			HtmlAnchor anchor = (HtmlAnchor) iit.next();
-			System.out.println(anchor.asXml());
-			page = anchor.click(); // 点击"分集剧情"
-			Thread.sleep(200);
-			page = anchor.click(); //  再次点击"分集剧情", 获取点击后的页面内容
-
-			DomElement episodeListLiEles = null;
-			List<DomElement> ulList = page.getElementsByIdAndOrName("zySeriesTab"); // 点击"分集剧情"后, 页面中会出现两个id=zySeriesTab的ul
-
-			// 筛选出我们想要的div(因为包含截图信息)
-			for (DomElement ulItem : ulList) {
-				Iterator<DomElement> liIt = ulItem.getChildElements().iterator();
-				DomElement li = liIt.next();
-				HtmlAnchor ha = (HtmlAnchor) li.getChildElements().iterator().next();
-
-				String onClickJs = ha.getAttribute("onclick");
-				if (onClickJs.contains("point_reload_")) {
-					episodeListLiEles = ulItem;
-					break;
-				}
-			}
-
-			// 遍历分集li, 点击各范围分集出现的超链接
-			HtmlAnchor ha = null;
-			Iterator<DomElement> liIt = episodeListLiEles.getChildElements().iterator();
-			while (liIt.hasNext()) {
-				DomElement liItem = liIt.next();
-				// 得到分集的超链接点击位置 (点击后, 会出现范围内的分集列表信息, 如 1-20集)
-				ha = (HtmlAnchor) liItem.getChildElements().iterator().next();
-				// 点击
-				ha.click();
-				// 随机睡眠 50 - 100ms, 等待对方服务器加载完成;
-				long sleepTime = new Random().nextInt(50) + 50;
-				Thread.sleep(sleepTime);
-			}
-
-			Thread.sleep(500); //等待对方服务器加载完成;
-			page = ha.click(); //获取点击完所有分集展示超链接后的页面内容(这里多点击了一次)
-
-			String htmlPage = page.asXml();
-			client.close();
-
-			// 交给 jsoup 解析具体内容
-			Document doc = Jsoup.parse(htmlPage);
+			Document doc = JsoupUtil.connect(listPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_EPISODE,
+					ReferrerUtil.YOUKU);
 			Elements liEles = doc.select("#showInfo .baseinfo li");
 
 			// 倒数二个li都是演员/导演信息
@@ -162,16 +110,68 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			video.setPlayCountTotal(playCountTotal);
 
 			// 剧情
-			Elements spanEles = doc.select("#show_info_short span");
-			String storyLine = spanEles.last().text();
+			// NOTE : 有些页面会有2个span元素, 而有些页面没有span元素, 故直接取下面的text内容, 不再区分子元素.
+			Elements spanEles = doc.select("#show_info_short");
+			String storyLine = spanEles.text();
 			storyLine = AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "...");
 			video.setStoryLine(storyLine);
 			videoDao.udpate(video);
 
-			// 注 : 需要点击指定的超链接, 才能出现下面的html代码(使用 HtmlUnit)
+			WebClient client = HtmlUnitUtil.createSimpleWebClient();
+
+			// 设置请求中的内容
+			WebRequest request = new WebRequest(new URL(listPageUrl));
+			request.setAdditionalHeader("Referer", ReferrerUtil.YOUKU);
+			request.setAdditionalHeader("User-Agent", UserAgentUtil.CHROME);
+			//		request.setCharset("UTF-8");
+
+			HtmlPage page = client.getPage(request);
+
+			// 找到"分集剧情"的超链接
+			Iterator<DomElement> iit = page.getElementById("subnav_point").getChildElements().iterator();
+			HtmlAnchor anchor = (HtmlAnchor) iit.next();
+
+			DomElement episodeListUl = getEpisodeListUl(anchor);
+			if (episodeListUl == null) {
+				logger.error(
+						"{}collect episode fail, as retray many times, still can not get episode list UL. please check. video : {}",
+						YOUKU_EPISODE, JacksonUtil.encodeQuietly(video));
+			}
+
+			if (episodeListUl != null) {
+				// 遍历分集li, 点击各范围分集出现的超链接
+				HtmlAnchor ha = null;
+				Iterator<DomElement> liIt = episodeListUl.getChildElements().iterator();
+				while (liIt.hasNext()) {
+					DomElement liItem = liIt.next();
+					// 得到分集的超链接点击位置 (点击后, 会出现范围内的分集列表信息, 如 1-20集)
+					ha = (HtmlAnchor) liItem.getChildElements().iterator().next();
+					// 点击
+					ha.click();
+					// 随机睡眠 50 - 100ms, 等待对方服务器加载完成;
+					long sleepTime = new Random().nextInt(50) + 50;
+					Thread.sleep(sleepTime);
+				}
+
+				Thread.sleep(500); //等待对方服务器加载完成;
+				page = ha.click(); //获取点击完所有分集展示超链接后的页面内容(这里多点击了一次)
+			}
+
+			String htmlPage = page.asXml();
+			client.closeAllWindows();
+
+			// 交给 jsoup 解析具体内容
+			doc = Jsoup.parse(htmlPage);
+
+			// 注 : 需要点击指定的超链接, 才能出现下面的html代码(使用 HtmlUnit). 
+			// 不同视频, div结构稍有不同, 有些是没有分集点击超链接的, 比如"熊出没之夺宝熊兵"
 			Elements episodeAreaDivs = doc.select("#point_area .item");
+			if (episodeAreaDivs == null) {
+				episodeAreaDivs = doc.select("#reload_point .item");
+			}
+
 			if (CollectionUtils.isEmpty(episodeAreaDivs)) {
-				logger.error(YOUKU_EPISODE + "collect episodes fail, as element is null. video = "
+				logger.error(YOUKU_EPISODE + "collect episodes fail, as reload_point item element not found. video = "
 						+ JacksonUtil.encodeQuietly(video));
 				return;
 			}
@@ -200,6 +200,40 @@ public class YoukuEpisodeCollectService extends BaseTask {
 		}
 	}
 
+	private DomElement getEpisodeListUl(HtmlAnchor anchor) {
+		// 最多重试10次
+		for (int i = 0; i < 10; i++) {
+			try {
+				HtmlPage page = anchor.click(); // 点击"分集剧情"
+
+				// 上面点击后, 想要的"zySeriesTab"不一定会出现, 直接运行超链接上的js, 再次触发它出现, 双重保障.
+				ScriptResult jsResult = page.executeJavaScript("y.tab.change(this,'point');");
+				page = (HtmlPage) jsResult.getNewPage();
+
+				List<DomElement> ulList = page.getElementsByIdAndOrName("zySeriesTab"); // 点击"分集剧情"后, 页面中会出现两个id=zySeriesTab的ul
+
+				// 筛选出我们想要的div(因为包含截图信息)
+				for (DomElement episodeListUl : ulList) {
+					Iterator<DomElement> liIt = episodeListUl.getChildElements().iterator();
+					DomElement li = liIt.next();
+					HtmlAnchor ha = (HtmlAnchor) li.getChildElements().iterator().next();
+
+					String onClickJs = ha.getAttribute("onclick");
+					if (onClickJs.contains("point_reload_")) {
+						// 找到了想要的ul元素
+						return episodeListUl;
+					}
+				}
+				// 页面没加载出来时, 睡眠一段时间, 再重试;
+				Thread.sleep(100);
+			} catch (Exception e) {
+				logger.error("{}getEpisodeListUl fail. exception msg : {}, retray again.", YOUKU_EPISODE,
+						e.getMessage());
+			}
+		}
+		return null;
+	}
+
 	private void parseEpisodeAsync(final Video video, final Element episodeDiv, final int totalEpisodeCount,
 			final AtomicInteger episodeCounter, final Object episodeSyncObj) {
 		Runnable episodeTask = new Runnable() {
@@ -221,11 +255,28 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			VideoEpisode episodeFromNet = new VideoEpisode();
 			String playPageUrl = episodeDiv.select(".link a").attr("href");
 			String title = episodeDiv.select(".link a").attr("title");
-			String episodeNo = StringUtil.pickInteger(title);
+
+			// NOTE:有可能出现这样的内容: "第116话 视线360度!白眼的死角", 需要挑出集数.
+			String subTitle = title;
+			if (title.contains(" ")) {
+				subTitle = title.split(" ")[0];
+			} else if (title.contains("话")) {
+				subTitle = title.split("话")[0];
+			} else if (title.contains("集")) {
+				subTitle = title.split("集")[0];
+			} else if (title.contains("讲")) {
+				subTitle = title.split("讲")[0];
+			}
+
+			String episodeNo = StringUtil.pickInteger(subTitle);
 			if (StringUtils.isBlank(episodeNo)) {
-				logger.error("{}parse episode fail. as parse episodeNo is blank. video : {}", YOUKU_EPISODE,
-						JacksonUtil.encodeQuietly(video));
-				return;
+				// 没有集数, 并且没有播放url, 则不处理(有可能是预告信息)
+				if (StringUtils.isBlank(playPageUrl)) {
+					logger.error("{}parse episode fail. as parse episodeNo is blank. video : {}", YOUKU_EPISODE,
+							JacksonUtil.encodeQuietly(video));
+					return;
+				}
+				episodeNo = "1"; // 没有集数, 则默认为1集
 			}
 
 			String snapshotUrl = episodeDiv.select(".thumb img").attr("src");
@@ -270,7 +321,8 @@ public class YoukuEpisodeCollectService extends BaseTask {
 	 * @throws IOException
 	 */
 	private String parseVideoFileUrl(String playPageUrl) throws IOException {
-		Document doc = JsoupUtil.connect(playPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_EPISODE);
+		Document doc = JsoupUtil.connect(playPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_EPISODE,
+				ReferrerUtil.YOUKU);
 		if (doc == null) {
 			return null;
 		}

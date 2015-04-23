@@ -38,9 +38,9 @@ public class YoukuService extends BaseTask {
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();
-	private ExecutorService threadPool = Executors.newFixedThreadPool(processCount + 1);
+	private ExecutorService threadPool = Executors.newFixedThreadPool(1);	// TODO
 
-	private static final String YOUKU_SERVICE = ComConstant.LogPrefix.YOUKU_SERVICE;
+	private static final String YOUKU_JOB = ComConstant.LogPrefix.YOUKU_JOB;
 
 	private static final int QUERY_COUNT_PER_TIME = 500;
 
@@ -68,9 +68,9 @@ public class YoukuService extends BaseTask {
 				collectEpisodeFromListPageAsync(video, videoList.size(), episodeCounter, episodeSyncObj);
 			}
 			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(episodeCounter, videoList.size(), episodeSyncObj, YOUKU_SERVICE, logger);
+			int lastCount = waitingForNotify(episodeCounter, videoList.size(), episodeSyncObj, YOUKU_JOB, logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_SERVICE, lastCount,
+				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_JOB, lastCount,
 						episodeCounter.get() });
 			}
 
@@ -86,7 +86,7 @@ public class YoukuService extends BaseTask {
 					youkuEpisodeCollectService.collectEpisodeFromListPage(video);
 				} finally {
 					String logMsg = logger.isDebugEnabled() ? String.format("%s准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
-							new Object[] { YOUKU_SERVICE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
+							new Object[] { YOUKU_JOB, episodeCounter.get() + 1, totalEpisodeCount }) : null;
 					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
 				}
 			}
@@ -110,7 +110,7 @@ public class YoukuService extends BaseTask {
 			youkuVideoCollectService.collect(source);
 		} catch (Exception e) {
 			logger.error(
-					YOUKU_SERVICE + "collect from video source fail, source = " + JacksonUtil.encodeQuietly(source), e);
+					YOUKU_JOB + "collect from video source fail, source = " + JacksonUtil.encodeQuietly(source), e);
 		}
 	}
 }

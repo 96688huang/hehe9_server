@@ -23,6 +23,7 @@ import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.ScriptResult;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -31,29 +32,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class VideoParser {
 	public static void main(String[] args) throws Exception {
-		parseFileUrl();
-		
-//		String shareUrl = "http://profile.live.com/badge/?url=http%3A%2F%2Fv.youku.com%2Fv_show%2Fid_XODk1NDk4NDky.html&Title=%E7%81%AB%E5%BD%B1%E5%BF%8D%E8%80%85+620&swfurl=http://player.youku.com/player.php/sid/XODk1NDk4NDky/v.swf&screenshot=http://g2.ykimg.com/01270F1F4654E40045E71B0000000066E9B6BD-A90F-2F94-94BF-3DDE065F1A59";
-//		String[] itemArr = shareUrl.replace("&amp;", "").split("&");
-//		for(String item : itemArr){
-//			if(StringUtils.startsWithIgnoreCase(item, "swfurl=")){
-//				String value = item.split("=")[1];
-//				System.out.println(value);
-//				break;
-//			}
-//		}
-		
-//		String shareUrl = "http://tt.mop.com/share/shareV.jsp?title=%BB%F0%D3%B0%C8%CC%D5%DF+620&flashUrl=http://player.youku.com/player.php/sid/XODk1NDk4NDky/v.swf&pageUrl=http%3A%2F%2Fv.youku.com%2Fv_show%2Fid_XODk1NDk4NDky.html";
-//		String[] itemArr = shareUrl.replace("&amp;", "").split("&");
-//		for(String item : itemArr){
-//			if(StringUtils.startsWithIgnoreCase(item, "flashUrl=")){
-//				String value = item.split("=")[1];
-//				System.out.println(value);
-//				break;
-//			}
-//		}
-		
-
+		parseYoukuEpisodeInfos();
 	}
 
 	private static void parseFileUrl() throws IOException {
@@ -102,7 +81,7 @@ public class VideoParser {
 	}
 
 	private static void parseYoukuEpisodeInfos() throws IOException, MalformedURLException, InterruptedException {
-		String listPageUrl = "http://www.youku.com/show_page/id_zcc001f06962411de83b1.html?from=y1.12-100";
+		String listPageUrl = "http://www.youku.com/show_page/id_z0d8abd568d1f11e296da.html";
 		String referer = listPageUrl;
 		WebClient client = new WebClient(BrowserVersion.CHROME);
 		client.getOptions().setCssEnabled(false);
@@ -119,15 +98,25 @@ public class VideoParser {
 		HtmlPage page = client.getPage(request);
 
 		// 找到"分集剧情"的超链接
-		Iterator<DomElement> iit = page.getElementById("subnav_point").getChildElements().iterator();
-		HtmlAnchor anchor = (HtmlAnchor) iit.next();
-		System.out.println(anchor.asXml());
-		page = anchor.click(); // 点击"分集剧情"
-		Thread.sleep(200);
-		page = anchor.click(); //  再次点击"分集剧情", 获取点击后的页面内容
+//		Iterator<DomElement> iit = page.getElementById("subnav_point").getChildElements().iterator();
+//		HtmlAnchor anchor = (HtmlAnchor) iit.next();
+//		System.out.println(anchor.asXml());
+//		page = anchor.click(); // 点击"分集剧情"
+//		Thread.sleep(200);
+//		page = anchor.click(); //  再次点击"分集剧情", 获取点击后的页面内容
+		
+		// 上面点击后, 想要的"zySeriesTab"不一定会出现, 直接运行超链接上的js, 再次触发它出现, 双重保障.
+		ScriptResult jsResult = page.executeJavaScript("y.tab.change(this,'point');");
+		page = (HtmlPage) jsResult.getNewPage();
+		
+		List<DomElement> ulList = page.getElementsByIdAndOrName("zySeriesTab"); // 点击"分集剧情"后, 页面中会出现两个id=zySeriesTab的ul
+		
+		Thread.sleep(500);
+		jsResult = page.executeJavaScript("y.tab.change(this,'point');");
+		page = (HtmlPage) jsResult.getNewPage();
 
 		DomElement episodeListLiEles = null;
-		List<DomElement> ulList = page.getElementsByIdAndOrName("zySeriesTab"); // 点击"分集剧情"后, 页面中会出现两个id=zySeriesTab的ul
+		ulList = page.getElementsByIdAndOrName("zySeriesTab"); // 点击"分集剧情"后, 页面中会出现两个id=zySeriesTab的ul
 
 		// 筛选出我们想要的div(因为包含截图信息)
 		for (DomElement ulItem : ulList) {
@@ -160,7 +149,7 @@ public class VideoParser {
 		page = ha.click(); //获取点击完所有分集展示超链接后的页面内容(这里多点击了一次)
 
 		String htmlPage = page.asXml();
-		client.close();
+		client.closeAllWindows();
 
 		// 交给 jsoup 解析具体内容
 		Document doc = Jsoup.parse(htmlPage);
@@ -188,8 +177,8 @@ public class VideoParser {
 		// 总播放量
 		String playCountTotal = doc.select("#showInfo .basedata .play").text().replace("总播放:", "");
 
-		Elements spanEles = doc.select("#show_info_short span");
-		String storyLine = spanEles.last().text();
+		Elements spanEles = doc.select("#show_info_short");	// 有些页面会有2个span元素, 而有些页面没有span元素, 故直接取下面的text内容, 不再区分子元素.
+		String storyLine = spanEles.text();
 		storyLine = AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "...");
 
 		// 注 : 需要点击指定的超链接, 才能出现下面的html代码(使用 HtmlUnit)

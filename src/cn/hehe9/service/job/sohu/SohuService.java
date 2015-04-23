@@ -40,7 +40,7 @@ public class SohuService extends BaseTask {
 	private int processCount = Runtime.getRuntime().availableProcessors();
 	private ExecutorService threadPool = Executors.newFixedThreadPool(processCount + 1);
 
-	private static final String SOHU_SERVICE = ComConstant.LogPrefix.SOHU_SERVICE;
+	private static final String SOHU_JOB = ComConstant.LogPrefix.SOHU_JOB;
 
 	private static final int QUERY_COUNT_PER_TIME = 500;
 
@@ -68,9 +68,9 @@ public class SohuService extends BaseTask {
 				collectEpisodeFromListPageAsync(video, videoList.size(), episodeCounter, episodeSyncObj);
 			}
 			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(episodeCounter, videoList.size(), episodeSyncObj, SOHU_SERVICE, logger);
+			int lastCount = waitingForNotify(episodeCounter, videoList.size(), episodeSyncObj, SOHU_JOB, logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_SERVICE, lastCount,
+				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_JOB, lastCount,
 						episodeCounter.get() });
 			}
 
@@ -86,7 +86,7 @@ public class SohuService extends BaseTask {
 					sohuEpisodeCollectService.collectEpisodeFromListPage(video);
 				} finally {
 					String logMsg = logger.isDebugEnabled() ? String.format("%s准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
-							new Object[] { SOHU_SERVICE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
+							new Object[] { SOHU_JOB, episodeCounter.get() + 1, totalEpisodeCount }) : null;
 					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
 				}
 			}
@@ -110,7 +110,7 @@ public class SohuService extends BaseTask {
 			sohuVideoCollectService.collect(source);
 		} catch (Exception e) {
 			logger.error(
-					SOHU_SERVICE + "collect from video source fail, source = " + JacksonUtil.encodeQuietly(source), e);
+					SOHU_JOB + "collect from video source fail, source = " + JacksonUtil.encodeQuietly(source), e);
 		}
 	}
 }

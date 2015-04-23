@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import cn.hehe9.common.app.AppConfig;
-import cn.hehe9.common.app.AppHelper;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
 import cn.hehe9.common.utils.ListUtil;
 import cn.hehe9.common.utils.Pinyin4jUtil;
+import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoSource;
@@ -49,12 +49,12 @@ public class YoukuVideoCollectService extends BaseTask {
 	static {
 		// video fields
 		videoCompareFieldNames.add("name");
-		//videoCompareFieldNames.add("author");
-//		videoCompareFieldNames.add("playCountWeekly");
-//		videoCompareFieldNames.add("playCountTotal");
+		//		videoCompareFieldNames.add("author");
+		//		videoCompareFieldNames.add("playCountWeekly");
+		//		videoCompareFieldNames.add("playCountTotal");
 		videoCompareFieldNames.add("posterBigUrl");
-//		videoCompareFieldNames.add("posterMidUrl");
-//		videoCompareFieldNames.add("posterSmallUrl");
+		//		videoCompareFieldNames.add("posterMidUrl");
+		//		videoCompareFieldNames.add("posterSmallUrl");
 		videoCompareFieldNames.add("iconUrl");
 		videoCompareFieldNames.add("listPageUrl");
 		videoCompareFieldNames.add("updateRemark");
@@ -76,7 +76,8 @@ public class YoukuVideoCollectService extends BaseTask {
 			collectPageUrl = collectPageUrl.contains(rootUrl) ? collectPageUrl : (rootUrl + (!collectPageUrl
 					.startsWith("/") ? "/" + collectPageUrl : collectPageUrl));
 
-			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_VIDEO);
+			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_VIDEO,
+					ReferrerUtil.YOUKU);
 			if (doc == null) {
 				logger.error("{}collect videos fail. sourceId = {}, collectPageUrl = {}", new Object[] { YOUKU_VIDEO,
 						sourceId, collectPageUrl });
@@ -102,19 +103,22 @@ public class YoukuVideoCollectService extends BaseTask {
 			}
 
 			// 下一页
-			Elements a = doc.select(".yk-pager .yk-pages .next a");
-			if(a == null){
+			Elements currentPageA = doc.select(".yk-pager .yk-pages .current>span");
+			Elements nextPageA = doc.select(".yk-pager .yk-pages .next a");
+
+			// log
+			String currPageNo = currentPageA != null ? currentPageA.text() : null;
+			String nextPageUrl = nextPageA != null ? nextPageA.attr("href") : null;
+			logger.info("{}currPageNo = {}, nextPageUrl : {}", new Object[] { YOUKU_VIDEO, currPageNo, nextPageUrl });
+
+			if (nextPageA == null) {
 				return;
 			}
-			String nextPage = a.attr("href");
 
 			// 递归解析
-			if (StringUtils.isNotBlank(nextPage)) {
-				if (logger.isDebugEnabled()) {
-					logger.debug("{}nextPage : ", YOUKU_VIDEO, nextPage);
-				}
-				
-				collectVideos(sourceId, nextPage, rootUrl);
+			if (StringUtils.isNotBlank(nextPageUrl)) {
+				Thread.sleep(10);
+				collectVideos(sourceId, nextPageUrl, rootUrl);
 			}
 		} catch (Exception e) {
 			logger.error(YOUKU_VIDEO + "collect videos fail, sourceId = " + sourceId + ", collectPageUrl = "
@@ -144,26 +148,26 @@ public class YoukuVideoCollectService extends BaseTask {
 		try {
 			String iconUrl = item.select(".p .p-thumb img").attr("src");
 			String name = item.select(".p .p-thumb img").attr("alt");
-			if(StringUtils.isBlank(name)){
+			if (StringUtils.isBlank(name)) {
 				name = item.select(".p .p-meta .p-meta-title").text();
 			}
-			
+
 			String updateRemark = item.select(".p .p-thumb .p-thumb-taglb .p-status").text();
-			
+
 			String listPageUrl = item.select(".p .p-link a").attr("href");
-			if(StringUtils.isBlank(listPageUrl)){
+			if (StringUtils.isBlank(listPageUrl)) {
 				listPageUrl = item.select(".p .p-meta .p-meta-title a").attr("href");
 			}
-			
-//			String author = item.select(".p .p-meta .p-meta-entry .p-actor").text();
-//			String playCountTotal = item.select(".p .p-meta .p-meta-entry .p-num").text();
-			
+
+			//			String author = item.select(".p .p-meta .p-meta-entry .p-actor").text();
+			//			String playCountTotal = item.select(".p .p-meta .p-meta-entry .p-num").text();
+
 			videoFromNet.setName(name);
 			videoFromNet.setIconUrl(iconUrl);
 			videoFromNet.setUpdateRemark(updateRemark);
 			videoFromNet.setListPageUrl(listPageUrl);
-//			videoFromNet.setAuthor(author);
-//			videoFromNet.setPlayCountTotal(playCountTotal);
+			//			videoFromNet.setAuthor(author);
+			//			videoFromNet.setPlayCountTotal(playCountTotal);
 
 			// first char
 			String firstChar = Pinyin4jUtil.getFirstChar(videoFromNet.getName()).toUpperCase();

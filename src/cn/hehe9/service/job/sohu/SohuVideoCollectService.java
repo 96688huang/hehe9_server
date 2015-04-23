@@ -18,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.sun.org.apache.xpath.internal.operations.Div;
+
 import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.app.AppHelper;
 import cn.hehe9.common.constants.ComConstant;
@@ -26,6 +28,7 @@ import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
 import cn.hehe9.common.utils.ListUtil;
 import cn.hehe9.common.utils.Pinyin4jUtil;
+import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoSource;
@@ -76,7 +79,8 @@ public class SohuVideoCollectService extends BaseTask {
 			collectPageUrl = collectPageUrl.contains(rootUrl) ? collectPageUrl : (rootUrl + (!collectPageUrl
 					.startsWith("/") ? "/" + collectPageUrl : collectPageUrl));
 
-			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, SOHU_VIDEO);
+			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, SOHU_VIDEO,
+					ReferrerUtil.SOHU);
 			if (doc == null) {
 				logger.error("{}collect videos fail. sourceId = {}, collectPageUrl = {}", new Object[] { SOHU_VIDEO,
 						sourceId, collectPageUrl });
@@ -102,14 +106,18 @@ public class SohuVideoCollectService extends BaseTask {
 			}
 
 			// 下一页
-			String nextPage = doc.select("body div.ssPages>a[title=下一页]").attr("href");
-			if (logger.isDebugEnabled()) {
-				logger.debug("{}nextPage : ", SOHU_VIDEO, nextPage);
-			}
+			Elements currentPageSpan = doc.select("body div.ssPages>span");
+			Elements nextPageA = doc.select("body div.ssPages>a[title=下一页]");
+
+			// log
+			String currPageNo = currentPageSpan != null ? currentPageSpan.text() : null;
+			String nextPageUrl = nextPageA != null ? nextPageA.attr("href") : null;
+			logger.info("{}currPageNo = {}, nextPageUrl : {}", new Object[] { SOHU_VIDEO, currPageNo, nextPageUrl });
 
 			// 递归解析
-			if (StringUtils.isNotBlank(nextPage)) {
-				collectVideos(sourceId, nextPage, rootUrl);
+			if (StringUtils.isNotBlank(nextPageUrl)) {
+				Thread.sleep(10);
+				collectVideos(sourceId, nextPageUrl, rootUrl);
 			}
 		} catch (Exception e) {
 			logger.error(SOHU_VIDEO + "collect videos fail, sourceId = " + sourceId + ", collectPageUrl = "

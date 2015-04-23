@@ -25,6 +25,7 @@ import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
+import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.common.utils.StringUtil;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.dao.VideoEpisodeDao;
@@ -67,7 +68,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 	public void collectEpisodeFromListPage(final Video video) {
 		try {
 			Document doc = JsoupUtil.connect(video.getListPageUrl(), CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL,
-					SOHU_EPISODE);
+					SOHU_EPISODE, ReferrerUtil.SOHU);
 			if (doc == null) {
 				logger.error("{}collect episode from list page fail. video = {}", SOHU_EPISODE,
 						JacksonUtil.encodeQuietly(video));
@@ -105,7 +106,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 			// 动漫名称
 			String name = doc.select("div.right div.blockRA h2 span").text();
 			if (StringUtils.isNotBlank(name) && !video.getName().contains(name)) {
-				logger.warn(
+				logger.error(
 						"{}name from episode(net) is different with video, nameFromEpisoceNet = {}, nameFromVideo={}",
 						new Object[] { SOHU_EPISODE, name, video.getName() });
 			}
@@ -182,14 +183,37 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 			// parse episodeNo
 			String no = StringUtil.pickInteger(episodeNoStr);
-			Integer episodeNo = StringUtils.isBlank(no) ? null : Integer.parseInt(no);
+
+			// NOTE:有可能出现这样的内容: "第116话 视线360度!白眼的死角", 需要挑出集数.
+			String subEpisodeNoStr = episodeNoStr;
+			if (episodeNoStr.contains(" ")) {
+				subEpisodeNoStr = episodeNoStr.split(" ")[0];
+			} else if (episodeNoStr.contains("话")) {
+				subEpisodeNoStr = episodeNoStr.split("话")[0];
+			} else if (episodeNoStr.contains("集")) {
+				subEpisodeNoStr = episodeNoStr.split("集")[0];
+			} else if (episodeNoStr.contains("讲")) {
+				subEpisodeNoStr = episodeNoStr.split("讲")[0];
+			}
+
+			String episodeNo = StringUtil.pickInteger(subEpisodeNoStr);
+			if (StringUtils.isBlank(episodeNo)) {
+				// 没有集数, 并且没有播放url, 则不处理(有可能是预告信息)
+				if (StringUtils.isBlank(playPageUrl)) {
+					logger.error("{}parse episode fail. as parse episodeNo is blank. video : {}", SOHU_EPISODE,
+							JacksonUtil.encodeQuietly(video));
+					return;
+				}
+				episodeNo = "1"; // 没有集数, 则默认为1集
+			}
+
 			String fileUrl = parseVideoFileUrl(playPageUrl);
 
 			VideoEpisode episodeFromNet = new VideoEpisode();
 			episodeFromNet.setVideoId(video.getId());
 			episodeFromNet.setSnapshotUrl(snapshotUrl);
 			episodeFromNet.setPlayPageUrl(playPageUrl);
-			episodeFromNet.setEpisodeNo(episodeNo);
+			episodeFromNet.setEpisodeNo(Integer.parseInt(episodeNo));
 			episodeFromNet.setFileUrl(fileUrl);
 			episodeFromNet.setTitle(titleMap.get(episodeNo));
 
@@ -223,7 +247,8 @@ public class SohuEpisodeCollectService extends BaseTask {
 	 * @throws IOException
 	 */
 	private String parseVideoFileUrl(String playPageUrl) throws IOException {
-		Document doc = JsoupUtil.connect(playPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, SOHU_EPISODE);
+		Document doc = JsoupUtil.connect(playPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, SOHU_EPISODE,
+				ReferrerUtil.SOHU);
 		if (doc == null) {
 			return null;
 		}
