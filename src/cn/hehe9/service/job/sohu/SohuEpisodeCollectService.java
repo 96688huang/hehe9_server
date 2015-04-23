@@ -182,8 +182,6 @@ public class SohuEpisodeCollectService extends BaseTask {
 			String snapshotUrl = ele.select("img").attr("src");
 
 			// parse episodeNo
-			String no = StringUtil.pickInteger(episodeNoStr);
-
 			// NOTE:有可能出现这样的内容: "第116话 视线360度!白眼的死角", 需要挑出集数.
 			String subEpisodeNoStr = episodeNoStr;
 			if (episodeNoStr.contains(" ")) {

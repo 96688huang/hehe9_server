@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
@@ -191,7 +192,7 @@ public class SohuVideoCollectService extends BaseTask {
 			videoFromNet.setPlayCountTotal(playCountTotal);
 
 			List<Video> list = videoDao.searchBriefByName(sourceId, videoFromNet.getName());
-			if (list == null || list.isEmpty()) {
+			if (CollectionUtils.isEmpty(list)) {
 				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
 				videoDao.save(videoFromNet);
 				if (logger.isDebugEnabled()) {
@@ -202,7 +203,15 @@ public class SohuVideoCollectService extends BaseTask {
 
 			boolean isMatcheRecord = false;
 			for (Video videoFromDb : list) {
-				boolean isIconUrlSame = videoFromNet.getIconUrl().trim().equals(videoFromDb.getIconUrl().trim());
+				// 特殊情况, 下面的图片是同一张, 故只比较最后一个"/"后面的内容:
+				// http://r1.ykimg.com/0516000050751ED09792730D39069DFB 与 http://r2.ykimg.com/0516000050751ED09792730D39069DFB
+				String iconUrlNet = StringUtils.trimToEmpty(videoFromNet.getIconUrl());
+				String iconUrlDb = StringUtils.trimToEmpty(videoFromDb.getIconUrl());
+				String subIconUrlNet = iconUrlNet.lastIndexOf("/") != -1 ? iconUrlNet.substring(
+						iconUrlNet.lastIndexOf("/") + 1, iconUrlNet.length()) : iconUrlNet;
+				String subIconUrlDb = iconUrlDb.lastIndexOf("/") != -1 ? iconUrlDb.substring(
+						iconUrlDb.lastIndexOf("/") + 1, iconUrlDb.length()) : iconUrlDb;
+				boolean isIconUrlSame = subIconUrlNet.equals(subIconUrlDb);
 				if (isIconUrlSame) {
 					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同视频的视频)
 					boolean isNameSame = ListUtil.asList(
