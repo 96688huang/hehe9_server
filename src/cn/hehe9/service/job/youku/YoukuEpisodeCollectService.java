@@ -158,7 +158,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			}
 
 			String htmlPage = page.asXml();
-			client.closeAllWindows();
+			client.close();
 
 			// 交给 jsoup 解析具体内容
 			doc = Jsoup.parse(htmlPage);
@@ -227,7 +227,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 				// 页面没加载出来时, 睡眠一段时间, 再重试;
 				Thread.sleep(100);
 			} catch (Exception e) {
-				logger.error("{}getEpisodeListUl fail. exception msg : {}, retray again.", YOUKU_EPISODE,
+				logger.error("{}getEpisodeListUl fail. exception msg : {}, retray again...", YOUKU_EPISODE,
 						e.getMessage());
 			}
 		}
@@ -272,8 +272,8 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			if (StringUtils.isBlank(episodeNo)) {
 				// 没有集数, 并且没有播放url, 则不处理(有可能是预告信息)
 				if (StringUtils.isBlank(playPageUrl)) {
-					logger.error("{}parse episode fail. as parse episodeNo is blank. video : {}", YOUKU_EPISODE,
-							JacksonUtil.encodeQuietly(video));
+					logger.info("{}no episodeNo, no playPageUrl. title = {} video : {}", 
+							new Object[]{YOUKU_EPISODE, title, JacksonUtil.encodeQuietly(video)});
 					return;
 				}
 				episodeNo = "1"; // 没有集数, 则默认为1集

@@ -74,7 +74,7 @@ public class HtmlUnitTest {
 		System.out.println("--------------------------------");
 		System.out.println(episodeDiv21.asXml());
 		
-		client.closeAllWindows();
+		client.close();
 		
 		//		
 		////		Iterable<DomNode> it = page.getElementById("aspectTab").getFirstChild().getFirstChild().getChildNodes();
