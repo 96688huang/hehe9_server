@@ -109,7 +109,7 @@ public class YoukuVideoCollectService extends BaseTask {
 			String nextPage = a.attr("href");
 
 			// 递归解析
-			if (StringUtils.isNotEmpty(nextPage)) {
+			if (StringUtils.isNotBlank(nextPage)) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("{}nextPage : ", YOUKU_VIDEO, nextPage);
 				}

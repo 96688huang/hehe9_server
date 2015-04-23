@@ -41,7 +41,7 @@ public class DateUtil {
      * @return
      */
     public static Date parseSimpleForMinute(String simpleDateStr){
-        if(StringUtils.isEmpty(simpleDateStr))
+        if(StringUtils.isBlank(simpleDateStr))
             return null;
         try {
             DateFormat simpleDateFormatForMinute = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -69,7 +69,7 @@ public class DateUtil {
      */
     public static Date parseSimple(String simpleDateStr){
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        if(StringUtils.isEmpty(simpleDateStr))
+        if(StringUtils.isBlank(simpleDateStr))
             return null;
         try {
             return simpleDateFormat.parse(simpleDateStr);

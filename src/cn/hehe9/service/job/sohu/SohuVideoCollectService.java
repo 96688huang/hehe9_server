@@ -108,7 +108,7 @@ public class SohuVideoCollectService extends BaseTask {
 			}
 
 			// 递归解析
-			if (StringUtils.isNotEmpty(nextPage)) {
+			if (StringUtils.isNotBlank(nextPage)) {
 				collectVideos(sourceId, nextPage, rootUrl);
 			}
 		} catch (Exception e) {

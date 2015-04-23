@@ -21,7 +21,7 @@ public class ListUtil {
 	 * 	由delimeter连接的字符串值
 	 */
 	public static <T> String combineWithDelimeter(List<T> list,String delimeter) {
-		if(StringUtils.isEmpty(delimeter)) {
+		if(StringUtils.isBlank(delimeter)) {
 			delimeter = ",";
 		}
 
@@ -50,7 +50,7 @@ public class ListUtil {
 	 */
 	public static <T> List<T> splitWithDelimeter(String splitStr, String delimiter, T t) {
 		List<T> list = new ArrayList<T>();
-		if (!StringUtils.isEmpty(splitStr)) {
+		if (!StringUtils.isBlank(splitStr)) {
 			for (String str:splitStr.split(delimiter)) {
 				if (t.getClass().isAssignableFrom(Integer.class)) {
 					list.add((T)Integer.valueOf(str));

@@ -97,14 +97,14 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 			// 简介
 			String storyLine = doc.select("#ablum2").select("div.wz").text();
-			if (StringUtils.isEmpty(video.getStoryLine())) {
+			if (StringUtils.isBlank(video.getStoryLine())) {
 				video.setStoryLine(AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "..."));
 			}
 
 			// 作者， 年份， 类型等信息
 			// 动漫名称
 			String name = doc.select("div.right div.blockRA h2 span").text();
-			if (StringUtils.isNotEmpty(name) && !video.getName().contains(name)) {
+			if (StringUtils.isNotBlank(name) && !video.getName().contains(name)) {
 				logger.warn(
 						"{}name from episode(net) is different with video, nameFromEpisoceNet = {}, nameFromVideo={}",
 						new Object[] { SOHU_EPISODE, name, video.getName() });
@@ -182,7 +182,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 			// parse episodeNo
 			String no = StringUtil.pickInteger(episodeNoStr);
-			Integer episodeNo = StringUtils.isEmpty(no) ? null : Integer.parseInt(no);
+			Integer episodeNo = StringUtils.isBlank(no) ? null : Integer.parseInt(no);
 			String fileUrl = parseVideoFileUrl(playPageUrl);
 
 			VideoEpisode episodeFromNet = new VideoEpisode();

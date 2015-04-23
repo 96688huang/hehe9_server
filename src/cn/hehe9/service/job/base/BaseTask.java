@@ -49,7 +49,7 @@ public class BaseTask {
 	 * 初始化
 	 */
 	protected void init(String calcDate) {
-		if (StringUtils.isEmpty(calcDate)) {
+		if (StringUtils.isBlank(calcDate)) {
 			yesterdayEnd = DateUtil.getYesterdayEnd().getTime();
 			today = System.currentTimeMillis();
 		} else {
@@ -95,7 +95,7 @@ public class BaseTask {
 		int executedCount = counter.incrementAndGet();
 		if (executedCount == totalCount) {
 			synchronized (syncObj) { // 计算最后一个对象的线程, 负责唤醒主线程
-				if (StringUtils.isNotEmpty(logMsg)) {
+				if (StringUtils.isNotBlank(logMsg)) {
 					logger.debug(logMsg);
 				}
 				syncObj.notifyAll();
