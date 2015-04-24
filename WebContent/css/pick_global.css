@@ -4,8 +4,6 @@ li{list-style-type:none; }
 .full{position:absolute;left:0px;top:0px;z-index:1;padding:0;margin:0;background-color: #000;}
 #header {height:168px;margin:0 auto;width:900px;background:url('../images/banner.jpg') repeat-x;}
 *{margin:0;padding:0;}
-a:link,a:visited {color:#007498;text-decoration:none;}
-a:link,a:visited {color:#333;text-decoration:none;}
 #regform {border:1px #88D3E3 solid;margin:8px 0 0 0;}
 #nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
 .dmga {float:right; margin:10px;}
@@ -18,7 +16,7 @@ a:link,a:visited {color:#333;text-decoration:none;}
 /*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/
 #navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
 h2,h3,h4,h5,h6,h7{font-weight:normal;}
-#header {height:168px;margin:0 auto;width:980px;background:url('http://www.hehe9.cn/images/banner.jpg') repeat-x;}
+#header {height:168px;margin:0 auto;width:980px;background:url('http://www.dmvcd.com/images/banner.jpg') repeat-x;}
 #recommend_down {float: left;width: 300px;height:370px;clear: left;border: 1px #88D3E3 solid;margin: 5px 0 0 0;}
 @-moz-keyframes pulse{0%{-moz-transform:scale(1)}50%{-moz-transform:scale(1.1)}100%{-moz-transform:scale(1)}}
 @-moz-keyframes swing {20% { -moz-transform: rotate(15deg); }40% { -moz-transform: rotate(-10deg); }60% { -moz-transform: rotate(5deg); }80% { -moz-transform: rotate(-5deg); }100% { -moz-transform: rotate(0deg);}}
@@ -39,12 +37,12 @@ a img {border:0;}
 a.more,#search_result dd i.game_date {color:green;}
 /* a:hover,a:active {color:#003;text-decoration:underline;} */
 /* 阴影效果 a:hover,a:visited:hover{text-shadow:#585858 0px 0px 3px;} */
+a:link,a:visited {color:#007498;text-decoration:none;}
 a:hover,a:active {color:#FF0000;text-decoration:underline;}
 
-a:link,a:visited {color:#007498;text-decoration:none;}
-a{color:202020;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;}
+a{-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;}
 body p,body ul,body dl {text-align:left;}
-body {CURSOR: url('http://www.hehe9.cn/style/narutom.gif');font:12px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman";text-align:center;color:#666;background:#fff;}
+body {CURSOR: url('http://www.dmvcd.com/style/narutom.gif');font:12px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman";text-align:center;color:#666;background:#fff;}
 html{color:#000;font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}
 body{font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体'}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}

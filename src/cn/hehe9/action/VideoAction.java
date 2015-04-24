@@ -37,6 +37,11 @@ import com.opensymphony.xwork2.ActionSupport;
 @Scope("prototype")
 public class VideoAction extends ActionSupport {
 
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 3787420603032130842L;
+
 	private static final Logger logger = LoggerFactory.getLogger(VideoAction.class);
 
 	@Resource
@@ -67,8 +72,8 @@ public class VideoAction extends ActionSupport {
 	/** 分集数量 */
 	private final int MAIN_HOT_VIDEOS_ESPICODE_COUNT = 10;
 
-	/** 动画片大全的视频数量 */
-	private final int MAIN_MENU_VIDEOS_COUNT = 40;
+//	/** 动画片大全的视频数量 */
+//	private final int MAIN_MENU_VIDEOS_COUNT = 40;
 
 	/** 字母菜单每组视频的数量 */
 	private final int COUNT_PER_FIRST_CHAR = 30;

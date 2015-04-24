@@ -46,9 +46,9 @@
 		<div class="wrap clearfix">
 			<%-- <div id="login">
 				<p>
-					<span><a href="http://www.hehe9.cn/lianxu/"
+					<span><a href="http://www.dmvcd.com/lianxu/"
 						target="_blank">火影连续无插曲版</a> &nbsp; <a
-						href="http://www.hehe9.cn/cartoon/narutocn/" target="_blank"><font
+						href="http://www.dmvcd.com/cartoon/narutocn/" target="_blank"><font
 							color="#ff0000">火影忍者国语版</font></a> </span>火影情报：<a href="/news/27198.html"
 						target="_blank">火影623集「决不放弃的强大毅力!」</a>(3月12日晚上放送! ) | 火影忍者漫画已完结
 				</p>
@@ -59,7 +59,7 @@
 					hym.show(1);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
-					src="http://www.hehe9.cn/v2/v/i/1377.html?20150302"></iframe> 
+					src="http://www.dmvcd.com/v2/v/i/1377.html?20150302"></iframe> 
 			</div>
 			--%>
 			<div id="naruto_desk">
@@ -87,7 +87,7 @@
 					hym.show(3);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="90"
-					src="http://www.hehe9.cn/v2/v/i/key.html"></iframe>
+					src="http://www.dmvcd.com/v2/v/i/key.html"></iframe>
 			</div>
 			--%>
 
@@ -219,7 +219,7 @@
 	</script>
 	<div id="BAIDU_DUP_wrapper_1045136_0"></div>
 	<script charset="utf-8"
-		src="http://cb.baidu.com/ecom?di=1045136&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=3&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.hehe9.cn%2F&amp;liu=&amp;ltr=&amp;lcr=&amp;ps=2486x0&amp;psr=1366x768&amp;par=1366x728&amp;pcs=1335x579&amp;pss=1335x2486&amp;pis=-1x-1&amp;cfv=11&amp;ccd=32&amp;chi=1&amp;cja=true&amp;cpl=30&amp;cmi=90&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=3603&amp;tlm=1425683925&amp;tcn=1425717704&amp;tpr=1425717700730&amp;dpt=none&amp;coa=&amp;baidu_id="></script>
+		src="http://cb.baidu.com/ecom?di=1045136&amp;dcb=BAIDU_DUP_define&amp;dtm=BAIDU_DUP2_SETJSONADSLOT&amp;dbv=2&amp;dci=0&amp;dri=0&amp;dis=0&amp;dai=3&amp;dds=&amp;drs=1&amp;dvi=1421289014&amp;ltu=http%3A%2F%2Fwww.dmvcd.com%2F&amp;liu=&amp;ltr=&amp;lcr=&amp;ps=2486x0&amp;psr=1366x768&amp;par=1366x728&amp;pcs=1335x579&amp;pss=1335x2486&amp;pis=-1x-1&amp;cfv=11&amp;ccd=32&amp;chi=1&amp;cja=true&amp;cpl=30&amp;cmi=90&amp;cce=true&amp;col=zh-CN&amp;cec=GBK&amp;cdo=-1&amp;tsr=3603&amp;tlm=1425683925&amp;tcn=1425717704&amp;tpr=1425717700730&amp;dpt=none&amp;coa=&amp;baidu_id="></script>
 	<style>
 .body-bg-left, .body-bg-right {
 	display: block;
