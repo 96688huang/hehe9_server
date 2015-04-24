@@ -61,8 +61,8 @@ public class YoukuVideoCollectService extends BaseTask {
 		videoCompareFieldNames.add("updateRemark");
 	}
 
-	public void collect(VideoSource vs) {
-		collectVideos(vs.getId(), vs.getCollectPageUrl(), vs.getRootUrl());
+	public void collect(VideoSource source) {
+		collectVideos(source.getId(), source.getCollectPageUrl(), source.getRootUrl());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class YoukuVideoCollectService extends BaseTask {
 			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_VIDEO,
 					ReferrerUtil.YOUKU);
 			if (doc == null) {
-				logger.error("{}collect videos fail. sourceId = {}, collectPageUrl = {}", new Object[] { YOUKU_VIDEO,
+				logger.error("{}collectVideos fail. sourceId = {}, collectPageUrl = {}", new Object[] { YOUKU_VIDEO,
 						sourceId, collectPageUrl });
 			}
 
@@ -99,8 +99,8 @@ public class YoukuVideoCollectService extends BaseTask {
 			// 等待被唤醒(被唤醒后, 重置计数器)
 			int lastCount = waitingForNotify(videoCounter, yk_co13_Eles.size(), videoSyncObj, YOUKU_VIDEO, logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}任务线程被唤醒, 本次计算了的视频数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_VIDEO, lastCount,
-						videoCounter.get() });
+				logger.debug("{}collectVideos : 任务线程被唤醒, 本次计算了的视频数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_VIDEO,
+						lastCount, videoCounter.get() });
 			}
 
 			// 下一页
@@ -122,7 +122,7 @@ public class YoukuVideoCollectService extends BaseTask {
 				collectVideos(sourceId, nextPageUrl, rootUrl);
 			}
 		} catch (Exception e) {
-			logger.error(YOUKU_VIDEO + "collect videos fail, sourceId = " + sourceId + ", collectPageUrl = "
+			logger.error(YOUKU_VIDEO + "collectVideos fail, sourceId = " + sourceId + ", collectPageUrl = "
 					+ collectPageUrl + ", rootUrl = " + rootUrl, e);
 		}
 	}
@@ -134,8 +134,9 @@ public class YoukuVideoCollectService extends BaseTask {
 				try {
 					parseVideoInfo(sourceId, liItem);
 				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format("%s准备唤醒任务线程. 本线程已计算了 %s 个视频, 本次计算视频数 = %s",
-							new Object[] { YOUKU_VIDEO, videoCounter.get() + 1, totalVideoCount }) : null;
+					String logMsg = logger.isDebugEnabled() ? String.format(
+							"%s parseVideoInfoAsync : 准备唤醒任务线程. 本线程已计算了 %s 个视频, 本次计算视频数 = %s", new Object[] {
+									YOUKU_VIDEO, videoCounter.get() + 1, totalVideoCount }) : null;
 					notifyMasterThreadIfNeeded(videoCounter, totalVideoCount, videoSyncObj, logMsg, logger);
 				}
 			}
@@ -190,16 +191,13 @@ public class YoukuVideoCollectService extends BaseTask {
 
 			boolean isMatcheRecord = false;
 			for (Video videoFromDb : list) {
-				// 特殊情况, 下面的图片是同一张, 故只比较最后一个"/"后面的内容:
-				// http://r1.ykimg.com/0516000050751ED09792730D39069DFB 与 http://r2.ykimg.com/0516000050751ED09792730D39069DFB
-				String iconUrlNet = StringUtils.trimToEmpty(videoFromNet.getIconUrl());
-				String iconUrlDb = StringUtils.trimToEmpty(videoFromDb.getIconUrl());
-				String subIconUrlNet = iconUrlNet.lastIndexOf("/") != -1 ? iconUrlNet.substring(
-						iconUrlNet.lastIndexOf("/") + 1, iconUrlNet.length()) : iconUrlNet;
-				String subIconUrlDb = iconUrlDb.lastIndexOf("/") != -1 ? iconUrlDb.substring(
-						iconUrlDb.lastIndexOf("/") + 1, iconUrlDb.length()) : iconUrlDb;
-				boolean isIconUrlSame = subIconUrlNet.equals(subIconUrlDb);
-				if (isIconUrlSame) {
+				// NOTE : 同一视频, 可能iconUrl 会不相同.
+				// 比如 youku : http://r1.ykimg.com/0516000050751ED09792730D39069DFB 与 http://r2.ykimg.com/0516000050751ED09792730D39069DFB
+				// 比如 suhu : (纳米神兵) http://photocdn.sohu.com/kis/fengmian/1191/1191688/1191688_ver_big.jpg 与 http://photocdn.sohu.com/kis/fengmian/1199/1199302/1199302_ver_big.jpg
+				// 同一视频, 播放列表url应该是相同的;
+				boolean isListPageUrlSame = StringUtils.trimToEmpty(videoFromNet.getListPageUrl()).equalsIgnoreCase(
+						StringUtils.trimToEmpty(videoFromDb.getIconUrl()));
+				if (isListPageUrlSame) {
 					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同视频的视频)
 					boolean isNameSame = ListUtil.asList(
 							StringUtils.deleteWhitespace(videoFromDb.getName()).split(ComConstant.LEFT_SLASH))
@@ -234,7 +232,7 @@ public class YoukuVideoCollectService extends BaseTask {
 				}
 			}
 		} catch (Exception e) {
-			logger.error(YOUKU_VIDEO + "parse video info fail. video = " + JacksonUtil.encodeQuietly(videoFromNet), e);
+			logger.error(YOUKU_VIDEO + "collectVideos fail. video = " + JacksonUtil.encodeQuietly(videoFromNet), e);
 		}
 	}
 }

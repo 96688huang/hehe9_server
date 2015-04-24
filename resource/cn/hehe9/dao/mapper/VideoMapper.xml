@@ -378,7 +378,7 @@
 			and first_char = #{firstChar,jdbcType=VARCHAR}
 		</if>
 		<if test="name != null and name != ''">
-			and name like CONCAT(#{name,jdbcType=VARCHAR},'%')
+			and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
 		</if>
 	</sql>
 

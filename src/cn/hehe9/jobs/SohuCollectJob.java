@@ -26,7 +26,7 @@ public class SohuCollectJob extends AbstractJob {
 		try {
 			logger.info("{}video job start...", SOHU_JOB);
 
-			sohuService.collectVideos();
+			sohuService.collectVideosFromSource();
 
 			logger.info("{}video job complete. used {} s", SOHU_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {

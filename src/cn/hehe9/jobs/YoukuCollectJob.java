@@ -26,7 +26,7 @@ public class YoukuCollectJob extends AbstractJob {
 		try {
 			logger.info("{}video job start...", YOUKU_JOB);
 
-			youkuService.collectVideos();
+			youkuService.collectVideosFromSource();
 
 			logger.info("{}video job complete. used {} s", YOUKU_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {

@@ -60,34 +60,35 @@ public class SohuService extends BaseTask {
 			}
 
 			// 计数器
-			final AtomicInteger episodeCounter = createCouter();
+			final AtomicInteger videoCounter = createCouter();
 			// 同步锁对象
-			final Object episodeSyncObj = createSyncObject();
+			final Object videoSyncObj = createSyncObject();
 
 			for (Video video : videoList) {
-				collectEpisodeFromListPageAsync(video, videoList.size(), episodeCounter, episodeSyncObj);
+				collectEpisodeFromListPageAsync(video, videoList.size(), videoCounter, videoSyncObj);
 			}
 			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(episodeCounter, videoList.size(), episodeSyncObj, SOHU_JOB, logger);
+			int lastCount = waitingForNotify(videoCounter, videoList.size(), videoSyncObj, SOHU_JOB, logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_JOB, lastCount,
-						episodeCounter.get() });
+				logger.debug("{}collectEpisode : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_JOB,
+						lastCount, videoCounter.get() });
 			}
 
 			page++;
 		}
 	}
 
-	private void collectEpisodeFromListPageAsync(final Video video, final int totalEpisodeCount,
-			final AtomicInteger episodeCounter, final Object episodeSyncObj) {
+	private void collectEpisodeFromListPageAsync(final Video video, final int totalVideoCount,
+			final AtomicInteger videoCounter, final Object videoSyncObj) {
 		Runnable episodeTask = new Runnable() {
 			public void run() {
 				try {
 					sohuEpisodeCollectService.collectEpisodeFromListPage(video);
 				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format("%s准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
-							new Object[] { SOHU_JOB, episodeCounter.get() + 1, totalEpisodeCount }) : null;
-					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
+					String logMsg = logger.isDebugEnabled() ? String.format(
+							"%s collectEpisodeFromListPageAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s", new Object[] {
+									SOHU_JOB, videoCounter.get() + 1, totalVideoCount }) : null;
+					notifyMasterThreadIfNeeded(videoCounter, totalVideoCount, videoSyncObj, logMsg, logger);
 				}
 			}
 		};
@@ -97,7 +98,7 @@ public class SohuService extends BaseTask {
 	/**
 	 * 从第三方平台采集视频
 	 */
-	public void collectVideos() {
+	public void collectVideosFromSource() {
 		VideoSource source = null;
 		try {
 			String sourceName = VideoSourceName.SOHU.getName();
@@ -109,8 +110,7 @@ public class SohuService extends BaseTask {
 
 			sohuVideoCollectService.collect(source);
 		} catch (Exception e) {
-			logger.error(
-					SOHU_JOB + "collect from video source fail, source = " + JacksonUtil.encodeQuietly(source), e);
+			logger.error(SOHU_JOB + "collectVideosFromSource fail, source = " + JacksonUtil.encodeQuietly(source), e);
 		}
 	}
 }

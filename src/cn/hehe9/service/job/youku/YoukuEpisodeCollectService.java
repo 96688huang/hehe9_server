@@ -128,13 +128,24 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			HtmlPage page = client.getPage(request);
 
 			// 找到"分集剧情"的超链接
-			Iterator<DomElement> iit = page.getElementById("subnav_point").getChildElements().iterator();
+			DomElement subnav_point_Li = page.getElementById("subnav_point");
+			if (subnav_point_Li == null) { // 若获取不到该元素, 则重试;
+				for (int i = 0; i < 5; i++) {
+					if (subnav_point_Li != null) {
+						break;
+					}
+					page = client.getPage(request);
+				}
+			}
+
+			Iterable<DomElement> iitChilds = subnav_point_Li.getChildElements();
+			Iterator<DomElement> iit = iitChilds.iterator();
 			HtmlAnchor anchor = (HtmlAnchor) iit.next();
 
 			DomElement episodeListUl = getEpisodeListUl(anchor);
 			if (episodeListUl == null) {
 				logger.error(
-						"{}collect episode fail, as retray many times, still can not get episode list UL. please check. video : {}",
+						"{}collectEpisodeFromListPage fail after retray, episode list UL not found. video : {}",
 						YOUKU_EPISODE, JacksonUtil.encodeQuietly(video));
 			}
 
@@ -190,12 +201,12 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			int lastCount = waitingForNotify(episodeCounter, episodeAreaDivs.size(), episodeSyncObj, YOUKU_EPISODE,
 					logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_EPISODE, lastCount,
+				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_EPISODE, lastCount,
 						episodeCounter.get() });
 			}
 		} catch (Exception e) {
 			logger.error(
-					YOUKU_EPISODE + "collect episodes from list page fail. video : " + JacksonUtil.encodeQuietly(video),
+					YOUKU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
 					e);
 		}
 	}
@@ -241,7 +252,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 				try {
 					parseEpisode(video, episodeDiv, episodeDiv);
 				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format("%s准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
+					String logMsg = logger.isDebugEnabled() ? String.format("%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
 							new Object[] { YOUKU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
 					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
 				}
@@ -272,7 +283,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			if (StringUtils.isBlank(episodeNo)) {
 				// 没有集数, 并且没有播放url, 则不处理(有可能是预告信息)
 				if (StringUtils.isBlank(playPageUrl)) {
-					logger.error("{}parse episode fail. as parse episodeNo is blank. video : {}", YOUKU_EPISODE,
+					logger.error("{}parseEpisode fail. as parse episodeNo is blank. video : {}", YOUKU_EPISODE,
 							JacksonUtil.encodeQuietly(video));
 					return;
 				}
@@ -309,7 +320,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			}
 
 		} catch (Exception e) {
-			logger.error(YOUKU_EPISODE + "parse episode fail. video : " + JacksonUtil.encodeQuietly(video), e);
+			logger.error(YOUKU_EPISODE + "parseEpisode fail. video : " + JacksonUtil.encodeQuietly(video), e);
 		}
 	}
 

@@ -156,7 +156,7 @@
 			and id = #{id,jdbcType=INTEGER}
 		</if>
 		<if test="name != null and name != ''">
-			and name like CONCAT(#{name,jdbcType=VARCHAR},'%')
+			and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
 		</if>
 		order by id
 		limit #{offset}, #{count}

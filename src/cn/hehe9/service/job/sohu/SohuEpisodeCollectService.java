@@ -149,12 +149,12 @@ public class SohuEpisodeCollectService extends BaseTask {
 			// 等待被唤醒(被唤醒后, 重置计数器)
 			int lastCount = waitingForNotify(episodeCounter, liElements.size(), episodeSyncObj, SOHU_EPISODE, logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_EPISODE, lastCount,
+				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_EPISODE, lastCount,
 						episodeCounter.get() });
 			}
 		} catch (Exception e) {
 			logger.error(
-					SOHU_EPISODE + "collect episodes from list page fail. video : " + JacksonUtil.encodeQuietly(video),
+					SOHU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
 					e);
 		}
 	}
@@ -166,7 +166,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 				try {
 					parseEpisode(video, titleMap, ele);
 				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format("%s准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
+					String logMsg = logger.isDebugEnabled() ? String.format("%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
 							new Object[] { SOHU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
 					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
 				}
@@ -198,7 +198,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 			if (StringUtils.isBlank(episodeNo)) {
 				// 没有集数, 并且没有播放url, 则不处理(有可能是预告信息)
 				if (StringUtils.isBlank(playPageUrl)) {
-					logger.error("{}parse episode fail. as parse episodeNo is blank. video : {}", SOHU_EPISODE,
+					logger.error("{}parseEpisode fail. episodeNo is blank. video : {}", SOHU_EPISODE,
 							JacksonUtil.encodeQuietly(video));
 					return;
 				}
@@ -233,7 +233,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 						JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
 			}
 		} catch (Exception e) {
-			logger.error(SOHU_EPISODE + "parse episode fail. video : " + JacksonUtil.encodeQuietly(video), e);
+			logger.error(SOHU_EPISODE + "parseEpisode fail. video : " + JacksonUtil.encodeQuietly(video), e);
 		}
 	}
 
