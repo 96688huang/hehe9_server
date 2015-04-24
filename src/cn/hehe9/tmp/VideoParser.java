@@ -149,7 +149,7 @@ public class VideoParser {
 		page = ha.click(); //获取点击完所有分集展示超链接后的页面内容(这里多点击了一次)
 
 		String htmlPage = page.asXml();
-		client.closeAllWindows();
+		client.close();
 
 		// 交给 jsoup 解析具体内容
 		Document doc = Jsoup.parse(htmlPage);
