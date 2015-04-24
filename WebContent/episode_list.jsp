@@ -49,9 +49,11 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 						src="/style/nav.js"></script></span>
 			</p>
 		</div>
-		<div align="center" style="width: 100%; margin: auto auto 5px auto;">
-			<img alt="${video.name }" src="${video.posterBigUrl }">
-		</div>
+		<c:if test="${video.posterBigUrl != null && video.posterBigUrl != '' }">
+			<div align="center" style="width: 100%; margin: auto auto 5px auto;">
+				<img alt="${video.name }" src="${video.posterBigUrl }">
+			</div>
+		</c:if>
 		<%-- <div class="wrap2 vtg3">
 			<script type="text/javascript">
 				hym.show(1);
@@ -89,16 +91,19 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 					<ul id="narutoList">
 						<s:iterator value="episodeList" var="episode">
 							<li><a href="./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}"
-								title="${video.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null">「${episode.title}」</s:if>"
-								target="_blank"><img
-									alt="${video.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null">「${episode.title}」</s:if>"
-									src="${episode.snapshotUrl}" /></a><a href=""
-								title="${video.name}&nbsp;第${episode.episodeNo}集<s:if
-											test="title != null">「${episode.title}」</s:if>"
-								target="_blank">第${episode.episodeNo}集<s:if
-										test="title != null">「${episode.title}」</s:if></a></li>
+								title="${video.name}&nbsp;第${episode.episodeNo}集 <s:if test="title != null">「${episode.title}」</s:if>"
+								target="_blank">
+									<img alt="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" src="${episode.snapshotUrl}" />
+								</a>
+								<span class="icon_bottom_tips" style="top: 84px;">
+									第${episode.episodeNo}集&nbsp;
+								</span>
+											
+								<a href="" title="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
+								target="_blank">
+									<s:if test="title != null">「${episode.title}」</s:if>
+								</a>
+								</li>
 						</s:iterator>
 					</ul>
 					</form>

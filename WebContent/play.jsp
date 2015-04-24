@@ -133,17 +133,21 @@
 			marginheight="0" vspace="0" hspace="0" allowtransparency="true"
 			scrolling="no"> </iframe>
 	</div> -->
-	<div style="width: 980px; margin: 0 auto; height: 30px;">
+	<div style="width: 980px; margin: 0 auto; height: 30px; overflow: hidden;">
 		<!-- <div class="v-left l15"> -->
 		<div
 			style="display: inline; float: left; text-align: left; margin: auto auto auto 8px;">
 			您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
-				${video.name } </a> &nbsp;&gt;&nbsp; <strong>第${episode.episodeNo }集&nbsp;<s:if
-					test="episode.title != null">「${episode.title}」</s:if>
+				${video.name } </a> &nbsp;&gt;&nbsp; 
+				<strong style="">第${episode.episodeNo }集&nbsp;
+				<s:if test="episode.title != null">「${episode.title}」</s:if>
 			</strong>
 		</div>
 		<!-- <div class="v-right r15"> -->
 		<div style="display: inline;">
+			<span style="color:#FF0000; font-weight:blod; font-size:14px; margin: auto 20px auto auto;">观看不了请
+				<a href="javascript:location.reload();">刷新一下</a>
+			</span>
 			<span id="playPanel"> <a href="javascript:void(0);"
 				onclick="javascript:changePlayPanel(1);" id="witer"> 宽屏 </a>
 			</span>
@@ -157,7 +161,7 @@
 						<div class="pl" id="vleft">
 							<br />
 							<div class="top">
-								<h1>
+								<h1">
 									${video.name }第${episode.episodeNo }集
 									<s:if test="episode.title != null">「${episode.title}」</s:if>
 								</h1>
@@ -176,22 +180,22 @@
 						<div class="pr" id="vright">
 							<ul id="narutoList">
 								<s:iterator value="episodeList" var="episodeItem">
-									<li class="font_12" style="width: 250px; text-align: left;"><a
-										href="./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}"
-										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if
-											test="title != null">「${episodeItem.title}」</s:if>"
-										target="_blank"><img
-											alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if
-											test="title != null">「${episodeItem.title}」</s:if>"
-											src="${episodeItem.snapshotUrl}" /></a> 
-											<!--  --> 
-											<a href=""
-										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>"
-										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if
-											test="title != null">「${episodeItem.title}」</s:if>"
-										target="_blank">第${episodeItem.episodeNo}集 <s:if
-												test="title != null">
-												<br />「${episodeItem.title}」</s:if></a></li>
+									<li class="font_12" style="width: 250px; text-align: left;">
+									<a href="./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}"
+										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
+										target="_blank">
+										<img alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
+											src="${episodeItem.snapshotUrl}" />
+									</a> 
+									<!--  -->
+									<span class="icon_bottom_tips" style="width:132px; top:84px; <s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>">
+										第${episodeItem.episodeNo}集&nbsp;
+									</span>
+									<a href="" style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>"
+										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
+										target="_blank"><s:if test="title != null">「${episodeItem.title}」</s:if>
+									</a>
+									</li>
 								</s:iterator>
 							</ul>
 						</div>

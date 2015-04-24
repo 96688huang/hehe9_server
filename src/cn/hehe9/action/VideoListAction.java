@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
 import cn.hehe9.common.constants.VideoListTitleEnum;
+import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.service.biz.VideoService;
 
@@ -22,6 +23,11 @@ import com.opensymphony.xwork2.ActionSupport;
 @Controller
 @Scope("prototype")
 public class VideoListAction extends ActionSupport {
+
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 5777334391815076701L;
 
 	private static final Logger logger = LoggerFactory.getLogger(VideoListAction.class);
 
@@ -69,6 +75,11 @@ public class VideoListAction extends ActionSupport {
 		videoListHolder = new ArrayList<List<Video>>(VIDEOS_COUNT_PER_LINE);
 		List<Video> videoList = videoService.findBriefByName(firstChar, searchName, pagination.getPage(),
 				pagination.getQueryCount());
+
+		// 赋值视频来源名称
+		ActionHelper.setSourceName(videoList);
+
+		// 排版
 		int count = 0;
 		for (;;) {
 			int preNextCount = count + VIDEOS_COUNT_PER_LINE;

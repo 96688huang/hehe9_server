@@ -34,8 +34,9 @@ public class AppConfig {
 	/** 别名map */
 	public static final Map<String, String> ALIAS_MAP = new HashMap<String, String>();
 	/** 内容最大长度 */
-	public static final int CONTENT_MAX_LENGTH = config.getInt(APP, "content_max_length");
-	public static final int CONTENT_MAX_LENGTH_100 = config.getInt(APP, "content_max_length_100");
+	public static final int STORYLINE_MAX_LENGTH = config.getInt(APP, "storyline_max_length");
+	public static final int AUTHOR_MAX_LENGTH = config.getInt(APP, "author_max_length");
+	public static final int TITLE_MAX_LENGTH = config.getInt(APP, "title_max_length");
 
 	/** 是否启用 memcache */
 	public static final Boolean MEMCACHE_ENABLE = config.getBoolean(MEMCACHE, "memcache_enable", false);

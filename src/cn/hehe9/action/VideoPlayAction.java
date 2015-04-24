@@ -1,5 +1,7 @@
 package cn.hehe9.action;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -27,8 +29,7 @@ public class VideoPlayAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 3207061567116252849L;
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(VideoPlayAction.class);
+	private static final Logger logger = LoggerFactory.getLogger(VideoPlayAction.class);
 
 	@Resource
 	private VideoService videoService;
@@ -68,10 +69,8 @@ public class VideoPlayAction extends ActionSupport {
 	/** 播放页右边的分集列表 */
 	private List<VideoEpisode> episodeList;
 
-	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE
-			.getUrlFlag();
-	private static final String PLAY_PAGE = PageUrlFlagEnum.PLAY_PAGE
-			.getUrlFlag();
+	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
+	private static final String PLAY_PAGE = PageUrlFlagEnum.PLAY_PAGE.getUrlFlag();
 
 	public String play() {
 		if (videoId <= 0 || episodeId <= 0 || episodeNo <= 0) {
@@ -108,31 +107,43 @@ public class VideoPlayAction extends ActionSupport {
 		int minEpisodeNo = episodeNo;
 		if (episodeNo + EPISODE_INTERVAL <= maxEpisodeNo) {
 			maxEpisodeNo = episodeNo + EPISODE_INTERVAL;
-		} else if (episodeNo == maxEpisodeNo) {
-			int tmp = episodeNo - 2 * EPISODE_INTERVAL + 1;
-			minEpisodeNo = tmp > 0 ? tmp : 0;
-		} else {
-			int tmp = maxEpisodeNo - 2 * EPISODE_INTERVAL + 1;
-			minEpisodeNo = tmp > 0 ? tmp : 0;
 		}
-		this.episodeList = videoEpisodeService.listByRange(videoId,
-				minEpisodeNo, maxEpisodeNo);
+		int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
+		minEpisodeNo = tmp > 0 ? tmp : 0;
+
+		//		else if (episodeNo == maxEpisodeNo) {
+		//			int tmp = episodeNo - (2 * EPISODE_INTERVAL) + 1;
+		//			minEpisodeNo = tmp > 0 ? tmp : 0;
+		//		} else {
+		//			int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
+		//			minEpisodeNo = tmp > 0 ? tmp : 0;
+		//		}
+
+		this.episodeList = videoEpisodeService.listByRange(videoId, minEpisodeNo, maxEpisodeNo);
 		if (CollectionUtils.isEmpty(this.episodeList)) {
 			return PLAY_PAGE;
 		}
-		
-		// 上集/下集/当前集
+
+		// 倒序(分集越小, 越排在前面)
+		List<VideoEpisode> tmpList = new ArrayList<VideoEpisode>(this.episodeList.size());
+		for (int i = this.episodeList.size() - 1; i >= 0; i--) {
+			tmpList.add(this.episodeList.get(i));
+		}
+		this.episodeList.clear();
+		this.episodeList = tmpList;
+
+		// 上集/当前集/下集
 		int episodeSize = this.episodeList.size();
 		VideoEpisode firstEpisode = this.episodeList.get(0);
 		VideoEpisode secondEpisode = episodeSize >= 2 ? this.episodeList.get(1) : null;
 		VideoEpisode thirdEpisode = episodeSize >= 3 ? this.episodeList.get(2) : null;
-		if(episodeNo.equals(firstEpisode.getEpisodeNo())){
+		if (episodeNo.equals(firstEpisode.getEpisodeNo())) {
 			episode = firstEpisode;
-			preEpisode = secondEpisode;
-		}else if(episodeNo < firstEpisode.getEpisodeNo()){
-			nextEpisode = firstEpisode;
+			nextEpisode = secondEpisode;
+		} else if (episodeNo > firstEpisode.getEpisodeNo()) {
+			preEpisode = firstEpisode;
 			episode = secondEpisode;
-			preEpisode = thirdEpisode;
+			nextEpisode = thirdEpisode;
 		}
 		return PLAY_PAGE;
 	}

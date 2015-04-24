@@ -69,7 +69,7 @@
 
 #game_name span a , .ltitle span a {float:right;font-size:12px;font-weight:bold;margin-right:5px;display:inline;}
 #indexcartoonList {margin:0 auto;padding:0;}
-#indexcartoonList li {float:left;width:126px;height:188px;text-align:center;margin:5px 5px;padding-left:3px;}
+#indexcartoonList li {float:left;width:126px;height:188px;text-align:center;margin:5px 5px;padding-left:3px;  position:relative;}
 #indexcartoonList li a:hover img{border:1px solid #069;padding:3px;}
 #indexcartoonList li img ,#cartoonList li img A:hover{border:2px solid #D4D4D4;}
 #indexcartoonList li img ,#cartoonList li img a{border:1px solid #d0d0d0;padding:3px;}
@@ -85,10 +85,10 @@
 #login {background:#E8F3F9;border:1px #88D3E3 solid;margin:3px 0 0 0;}
 #login {background:#FFFFEC;border:1px #88D3E3 solid;margin:3px 0 0 0;height:33px;line-height:33px;color:#069}
 #narutoList img:hover,#narutoList a:hover img{-webkit-transform-origin: top center;-moz-transform-origin: topcenter;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name:swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;padding:3px;border:1px solid #069;}
-#narutoList img{-webkit-animation-fill-mode: both;-moz-animation-fill-mode:both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode:both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration:0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration:0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;display:block;margin:5px 0 7px 5px;padding:3px;border:1px solid #d0d0d0;}
+#narutoList img{-webkit-animation-fill-mode: both;-moz-animation-fill-mode:both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode:both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration:0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration:0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;display:block;margin:5px 0 3px 5px;padding:3px;border:1px solid #d0d0d0;}
 #narutoList li a:hover img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
 #narutoList li img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #eee; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
-#narutoList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden;}
+#narutoList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden; position: relative;}
 /* #narutoList li {float:left;width:160px;height:158px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 0 0 17px;overflow:hidden;} */
 #narutoListall {margin:18px 0 0 10px;}
 #naruto_desk,.naruto_desk{width: 980px;border: 1px #88D3E3 solid; float: left;clear: both; margin: 8px auto 8px auto;}
@@ -180,7 +180,7 @@
 .bdshare_b a.shareCount, .bds_tools a.shareCount, .bds_tools_32 a.shareCount,.bds_tools_24 a.shareCount {float: left;background: url(../images/sc.png?cdnversion=20120720) no-repeat!important;margin: 0;padding: 0;text-align: center;padding-left: 5px;color: #454545;font-family: '宋体' !important}
 .bdshare_b a.shareCount, .bds_tools_24 a.shareCount {width: 39px;height: 24px;background-position: 0 0;font-size: 12px;line-height: 24px;margin-left: 3px}
 .bdshare_b a.shareCount:hover, .bds_tools_24 a.shareCount:hover {color: #454545 !important;background-position: -44px 0 !important;opacity: 1 !important;filter: alpha(opacity = 100) !important}
-.blank,.rblank {height:8px;overflow:hidden;background:#fff;width:100%;clear:both;/* border-top:1px #E8CA78 solid; */}
+.blank,.rblank {height:10px;overflow:hidden;background:#fff;width:100%;clear:both;/* border-top:1px #E8CA78 solid; */}
 .clearfix {display:block;}
 .clearfix {display:inline-block;}
 .clearfix:after {content:"动漫在线 - www.hehe9.cn";display:block;height:0;clear:both;visibility:hidden;}
@@ -265,5 +265,6 @@ span.bds_more, .bds_tools a {display: block;font-family: '宋体', Arial;height:
 .r15{margin-right:15px;}
 .mb10{margin-bottom: 10px;}
 
-
 .font_12{ font:13px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman"; }
+
+.icon_bottom_tips{ display: block; width: 100%; overflow: hidden; height: 18px; line-height: 18px; color: #fff; text-align: right; background: #000; filter: alpha(opacity=80); opacity: 0.75; position: absolute; top: 148px;}

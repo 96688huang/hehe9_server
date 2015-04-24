@@ -184,7 +184,7 @@ public class SohuVideoCollectService extends BaseTask {
 
 			// story line brief
 			String storyLine = list_hover_Div.select("p.lh-info").html();
-			videoFromNet.setStoryLine(AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "..."));
+			videoFromNet.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
 
 			// play count total
 			String playCountTotal = list_hover_Div.select("a.acount").first().html();

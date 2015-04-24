@@ -1,5 +1,5 @@
 @CHARSET "UTF-8";
-.menu2_menu_container{margin:0 auto 0 auto;width:100%;height:200px;}
+.menu2_menu_container{margin:0 auto 0 auto;width:100%;height:270px;}
 
 .menu2_nav{position:relative;left:0px;top:0px;width:100%;height:35px; background: url("../img/jian/menubg2.gif") repeat-x; /* background:#E8FAFE; border-top:1px solid #88D3E3; */}
 .menu2_nav .menu2_list{list-style-type:none;margin-left:15px; }

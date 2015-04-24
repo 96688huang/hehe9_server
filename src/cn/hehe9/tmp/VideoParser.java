@@ -179,7 +179,7 @@ public class VideoParser {
 
 		Elements spanEles = doc.select("#show_info_short");	// 有些页面会有2个span元素, 而有些页面没有span元素, 故直接取下面的text内容, 不再区分子元素.
 		String storyLine = spanEles.text();
-		storyLine = AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "...");
+		storyLine = AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "...");
 
 		// 注 : 需要点击指定的超链接, 才能出现下面的html代码(使用 HtmlUnit)
 		Elements episodeAreaDivs = doc.select("#point_area .item");

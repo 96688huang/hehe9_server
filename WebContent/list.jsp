@@ -4,8 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 
@@ -51,37 +50,44 @@
 						target="_blank">火影623集「决不放弃的强大毅力!」</a>(3月12日晚上放送! ) | 火影忍者漫画已完结
 				</p>
 			</div> --%>
-			<div class="ita" id="itaTop">
+			<%-- <div class="ita" id="itaTop">
 				<script type="text/javascript">
 					hym.show(1);
 				</script>
 				<iframe scrolling="no" frameborder="0" width="980" height="141"
 					src="http://www.hehe9.cn/v2/v/i/1377.html?20150302"></iframe>
-			</div>
+			</div> --%>
 			<div id="naruto_desk">
 				<div class="ltitle">${displayTitle}</div>
 				<form id="queryForm" action="./video/videoListAction!list"
 					method="post">
 					<input name="searchName" type="hidden" value="${searchName }" />
 					<s:iterator value="videoListHolder" var="videoList">
-						<div style="display: inline-block; float: left;"> <!-- 强制在一行, 靠左展示 -->
-						<ul id="indexcartoonList">
-							<s:iterator value="videoList" status="videoListStatus">
-								<li><a href="./video/episodeAction!list?videoId=${id }"
-									title="${name} ${updateRemark}" target="_blank"><img
-										alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
-									href="./video/episodeAction!list?videoId=${id }"
-									title="${name} ${updateRemark}" target="_blank"><font
-										color="#FF0000">${name}</font></a></li>
-							</s:iterator>
-						</ul>
+						<div style="display: inline-block; float: left;">
+							<!-- 强制在一行, 靠左展示 -->
+							<ul id="indexcartoonList">
+								<s:iterator value="videoList" status="videoListStatus">
+									<li><a href="./video/episodeAction!list?videoId=${id }"
+										title="${name} ${updateRemark}" target="_blank">
+										<img
+											alt="${name} ${updateRemark}" src="${iconUrl}"></a> 
+										<span
+										class="icon_bottom_tips">&nbsp;<span
+											style="float: left;">&nbsp;${sourceName }</span>&nbsp;
+										<span>${updateRemark}&nbsp;</span></span>
+										<a
+										href="./video/episodeAction!list?videoId=${id }"
+										title="${name} ${updateRemark}" target="_blank"><font
+											color="#FF0000">${name}</font></a></li>
+								</s:iterator>
+							</ul>
 						</div>
 					</s:iterator>
 				</form>
 				<div class="rblank"></div>
 				<jsp:include page="pagination.jsp" />
 			</div>
-		
+
 			<%-- 			<div class="itabg">
 				<script type="text/javascript">
 					hym.show(3);

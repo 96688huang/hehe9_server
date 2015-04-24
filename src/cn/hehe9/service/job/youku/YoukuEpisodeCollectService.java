@@ -113,7 +113,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			// NOTE : 有些页面会有2个span元素, 而有些页面没有span元素, 故直接取下面的text内容, 不再区分子元素.
 			Elements spanEles = doc.select("#show_info_short");
 			String storyLine = spanEles.text();
-			storyLine = AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "...");
+			storyLine = AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "...");
 			video.setStoryLine(storyLine);
 			videoDao.udpate(video);
 
@@ -144,8 +144,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 
 			DomElement episodeListUl = getEpisodeListUl(anchor);
 			if (episodeListUl == null) {
-				logger.error(
-						"{}collectEpisodeFromListPage fail after retray, episode list UL not found. video : {}",
+				logger.error("{}collectEpisodeFromListPage fail after retray, episode list UL not found. video : {}",
 						YOUKU_EPISODE, JacksonUtil.encodeQuietly(video));
 			}
 
@@ -201,13 +200,12 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			int lastCount = waitingForNotify(episodeCounter, episodeAreaDivs.size(), episodeSyncObj, YOUKU_EPISODE,
 					logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_EPISODE, lastCount,
-						episodeCounter.get() });
+				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] {
+						YOUKU_EPISODE, lastCount, episodeCounter.get() });
 			}
 		} catch (Exception e) {
 			logger.error(
-					YOUKU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
-					e);
+					YOUKU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video), e);
 		}
 	}
 
@@ -252,8 +250,9 @@ public class YoukuEpisodeCollectService extends BaseTask {
 				try {
 					parseEpisode(video, episodeDiv, episodeDiv);
 				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format("%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
-							new Object[] { YOUKU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
+					String logMsg = logger.isDebugEnabled() ? String.format(
+							"%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s", new Object[] {
+									YOUKU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
 					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
 				}
 			}
@@ -265,7 +264,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 		try {
 			VideoEpisode episodeFromNet = new VideoEpisode();
 			String playPageUrl = episodeDiv.select(".link a").attr("href");
-			String title = episodeDiv.select(".link a").attr("title");
+			String title = AppHelper.subString(episodeDiv.select(".link a").attr("title"), AppConfig.TITLE_MAX_LENGTH);
 
 			// NOTE:有可能出现这样的内容: "第116话 视线360度!白眼的死角", 需要挑出集数.
 			String subTitle = title;

@@ -87,7 +87,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 					String episodeNo = StringUtil.pickInteger(bitText);
 					if (StringUtils.isNotBlank(episodeNo)) {
 						titleMap.put(Integer.parseInt(episodeNo),
-								AppHelper.subString(wzText, AppConfig.CONTENT_MAX_LENGTH));
+								AppHelper.subString(wzText, AppConfig.TITLE_MAX_LENGTH));
 					}
 				}
 			}
@@ -99,7 +99,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 			// 简介
 			String storyLine = doc.select("#ablum2").select("div.wz").text();
 			if (StringUtils.isBlank(video.getStoryLine())) {
-				video.setStoryLine(AppHelper.subString(storyLine, AppConfig.CONTENT_MAX_LENGTH, "..."));
+				video.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
 			}
 
 			// 作者， 年份， 类型等信息
@@ -114,14 +114,14 @@ public class SohuEpisodeCollectService extends BaseTask {
 			StringBuffer buf = new StringBuffer();
 			Elements holeEles = doc.select("div.right div.blockRA div.cont p");
 			for (Element element : holeEles) {
-				if (buf.length() > AppConfig.CONTENT_MAX_LENGTH_100) {
+				if (buf.length() > AppConfig.TITLE_MAX_LENGTH) {
 					break;
 				}
 				String authorEtc = element.text();
 				buf.append(authorEtc).append("<br/>"); // 加上<br/>, 以便在页面上显示换行效果;
 			}
 
-			video.setAuthor(AppHelper.subString(buf.toString(), AppConfig.CONTENT_MAX_LENGTH_100, "..."));
+			video.setAuthor(AppHelper.subString(buf.toString(), AppConfig.TITLE_MAX_LENGTH, "..."));
 			videoDao.udpate(video);
 
 			// 播放页url， 分集截图，集数等
@@ -149,12 +149,11 @@ public class SohuEpisodeCollectService extends BaseTask {
 			// 等待被唤醒(被唤醒后, 重置计数器)
 			int lastCount = waitingForNotify(episodeCounter, liElements.size(), episodeSyncObj, SOHU_EPISODE, logger);
 			if (logger.isDebugEnabled()) {
-				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_EPISODE, lastCount,
-						episodeCounter.get() });
+				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] {
+						SOHU_EPISODE, lastCount, episodeCounter.get() });
 			}
 		} catch (Exception e) {
-			logger.error(
-					SOHU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
+			logger.error(SOHU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
 					e);
 		}
 	}
@@ -166,8 +165,9 @@ public class SohuEpisodeCollectService extends BaseTask {
 				try {
 					parseEpisode(video, titleMap, ele);
 				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format("%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s",
-							new Object[] { SOHU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
+					String logMsg = logger.isDebugEnabled() ? String.format(
+							"%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s", new Object[] {
+									SOHU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
 					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
 				}
 			}
