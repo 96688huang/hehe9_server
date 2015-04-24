@@ -191,7 +191,9 @@
 									<span class="icon_bottom_tips" style="width:132px; top:84px; <s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>">
 										第${episodeItem.episodeNo}集&nbsp;
 									</span>
-									<a href="" style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>"
+									<a href="./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}"
+										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>" 
+										class="narutoTitle"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 										target="_blank"><s:if test="title != null">「${episodeItem.title}」</s:if>
 									</a>
