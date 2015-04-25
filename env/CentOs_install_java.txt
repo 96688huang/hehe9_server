@@ -19,6 +19,23 @@ wget http://www.webhostingjams.com/mirror/apache/tomcat/tomcat-8/v8.0.21/bin/apa
 
 3. download mysql (安装参考 : http://my.oschina.net/u/912946/blog/157768)
 wget -c http://cdn.mysql.com/archives/mysql-5.6/MySQL-server-5.6.10-1.rhel5.x86_64.rpm
+(最终安装 MY SQL5.6, 参考: http://blog.shiren.info/?p=39)
+启动: service mysqld start
+停止: service mysqld stop
+/var/log/mysqld.log #MySQL日志目录
+/var/lib/mysql #MySQL数据文件目录
+/usr/share/mysql/ #MySQL配置文件目录
+/usr/bin/ #MySQL启动脚本目录
+
+进入mysql:
+cd /usr/bin/
+./mysql -uroot -p
+
+设置开机自启动
+[root@localhost mysql]# cp support-files/mysql.server /etc/init.d/mysql	(若有, 则无需要copy)
+[root@localhost mysql]# chmod +x /etc/init.d/mysql (可能是mysqld)
+[root@localhost mysql]# chkconfig mysql on (可能是mysqld)
+
 
 4. 安装gcc (注意, 安装libevent之前, 需要安装 gcc)
 yum install gcc
@@ -71,3 +88,6 @@ java -version
 
 12. 安装C++编译器
 yum install gcc-c++
+
+///////////////////////////
+M2LqvUwS6z2YTK4Z
