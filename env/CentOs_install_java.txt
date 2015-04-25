@@ -1,0 +1,73 @@
+1. download jdk ( 参考 : http://www.52itstyle.com/thread-2052-1-1.html )
+wget –no-cookie –no-check-certificate –header “Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F” http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.rpm
+或
+wget http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.rpm?AuthParam=1429958565_6439caea73f372b651f3b55f268622d3
+
+①进入编辑profile文件
+#vim /etc/profile  
+②在profile文件最后追加入如下内容：
+    export  java_HOME=/usr/java/jdk1.7.0_25
+    export  CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+    export  PATH=$PATH:$JAVA_HOME/bin
+③保存并退出，执行如下
+#source /etc/profile 
+
+
+2. download tomcat (安装配置参考: http://blog.csdn.net/gaojinshan/article/details/38232225 )
+wget http://www.webhostingjams.com/mirror/apache/tomcat/tomcat-8/v8.0.21/bin/apache-tomcat-8.0.21.tar.gz
+
+
+3. download mysql (安装参考 : http://my.oschina.net/u/912946/blog/157768)
+wget -c http://cdn.mysql.com/archives/mysql-5.6/MySQL-server-5.6.10-1.rhel5.x86_64.rpm
+
+4. 安装gcc (注意, 安装libevent之前, 需要安装 gcc)
+yum install gcc
+
+5. 安装libevent (参考:　http://www.111cn.net/sys/CentOS/58463.htm)
+ wget http://monkey.org/~provos/libevent-1.4.14b-stable.tar.gz
+tar zxvf libevent-1.4.14b-stable.tar.gz
+cd libevent-1.4.14b-stable
+./configure --prefix=/usr/local/libevent/
+make && make install
+ln -s /usr/local/libevent/lib/libevent-1.4.so.2 /lib/libevent-1.4.so.2
+
+6. 安装Memcached (安装memcached之前, 需要安装libevent)　
+wget http://memcached.googlecode.com/files/memcached-1.4.15.tar.gz
+tar zxvf memcached-1.4.15.tar.gz
+cd memcached-1.4.15
+./configure --prefix=/usr/local/memcached/ --with-libevent=/usr/local/libevent/
+make && make install
+
+7. 启动Memcached
+/usr/local/memcached/bin/memcached -d -m 64 -u root -l 127.0.0.100 -p 17001 -c 128 -P /tmp/memcached.pid
+
+8. 添加Memcached开机启动
+cd /etc/rc.d/init.d/
+chmod 777 memcached
+chkconfig --add memcached
+chkconfig --level 235 memcached on
+chkconfig --list | grep memcached
+
+9. Memcached使用
+[root@www.111cn.net] service memcached start
+[root@www.111cn.net] service memcached stop
+[root@www.111cn.net] service memcached restart
+
+10. 安装telnet (测试 memcached, 参考:　http://jingyan.baidu.com/article/3c48dd34709e70e10be35835.html)
+
+11. 修改 linux 中jdk版本
+cd ~
+vi .bashrc
+// 在文件最后加入下面内容 :
+export  JAVA_HOME=/winson/dev/jdk1.8.0_45
+export  CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export  PATH=$JAVA_HOME/bin:$PATH
+
+// source生效
+source .bashrc
+
+// 测试
+java -version
+
+12. 安装C++编译器
+yum install gcc-c++
