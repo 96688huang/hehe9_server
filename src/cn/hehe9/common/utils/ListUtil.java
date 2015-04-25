@@ -19,13 +19,13 @@ public class ListUtil {
 	 * @return
 	 * 	由delimeter连接的字符串值
 	 */
-	public static <T> String combineWithDelimeter(List<T> list,String delimeter) {
-		if(StringUtils.isBlank(delimeter)) {
+	public static <T> String combineWithDelimeter(List<T> list, String delimeter) {
+		if (StringUtils.isBlank(delimeter)) {
 			delimeter = ",";
 		}
 
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i ++) {
+		for (int i = 0; i < list.size(); i++) {
 			T t = list.get(i);
 			if (t != null) {
 				if (i > 0) {
@@ -50,19 +50,19 @@ public class ListUtil {
 	public static <T> List<T> splitWithDelimeter(String splitStr, String delimiter, T t) {
 		List<T> list = new ArrayList<T>();
 		if (!StringUtils.isBlank(splitStr)) {
-			for (String str:splitStr.split(delimiter)) {
+			for (String str : splitStr.split(delimiter)) {
 				if (t.getClass().isAssignableFrom(Integer.class)) {
-					list.add((T)Integer.valueOf(str));
+					list.add((T) Integer.valueOf(str));
 				} else if (t.getClass().isAssignableFrom(Long.class)) {
-					list.add((T)Long.valueOf(str));
+					list.add((T) Long.valueOf(str));
 				} else if (t.getClass().isAssignableFrom(Double.class)) {
-					list.add((T)Double.valueOf(str));
+					list.add((T) Double.valueOf(str));
 				} else if (t.getClass().isAssignableFrom(Float.class)) {
-					list.add((T)Float.valueOf(str));
-				} else if (t.getClass().isAssignableFrom(Boolean.class)){
-					list.add((T)Boolean.valueOf(str));
+					list.add((T) Float.valueOf(str));
+				} else if (t.getClass().isAssignableFrom(Boolean.class)) {
+					list.add((T) Boolean.valueOf(str));
 				} else {
-					list.add((T)str);
+					list.add((T) str);
 				}
 			}
 		}
@@ -78,7 +78,7 @@ public class ListUtil {
 	 */
 	public static <T> List<T> eliminateNullValue(List<T> list) {
 		List<T> resultList = new ArrayList<T>();
-		for (T t:list) {
+		for (T t : list) {
 			if (t != null) {
 				resultList.add(t);
 			}
@@ -94,9 +94,10 @@ public class ListUtil {
 	 * @return
 	 *
 	 */
-	public static <T> List wrapFieldValueList(List<T> list,String fieldName) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static <T> List wrapFieldValueList(List<T> list, String fieldName) {
 		List resultList = new ArrayList();
-		for (T t:list) {
+		for (T t : list) {
 			if (t != null) {
 				resultList.add(ReflectionUtil.getFieldValue(t, fieldName));
 			}
@@ -109,9 +110,10 @@ public class ListUtil {
 	 * @param list	需要去除重复对象的list
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public static <T> List eliminateRepeatedValue(List<T> list) {
 		List<T> resultList = new ArrayList<T>();
-		for (T t:list) {
+		for (T t : list) {
 			if (resultList.contains(t)) {
 				continue;
 			}
@@ -128,14 +130,14 @@ public class ListUtil {
 	 * @author chenxx
 	 */
 	public static <T> List<T> asList(T... t) {
-		if(t == null || t.length == 0){
+		if (t == null || t.length == 0) {
 			return null;
 		}
-		
+
 		List<T> list = new ArrayList<T>();
 		Class<?> clazz = null;
-		for(int i=0; i<t.length; i++) {
-			if(clazz != null && !clazz.equals(t[i].getClass())) {
+		for (int i = 0; i < t.length; i++) {
+			if (clazz != null && !clazz.equals(t[i].getClass())) {
 				throw new RuntimeException("list item class not inconsistent");
 			}
 			clazz = t[i].getClass();
@@ -144,4 +146,3 @@ public class ListUtil {
 		return list;
 	}
 }
-

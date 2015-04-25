@@ -64,8 +64,10 @@
 			--%>
 			<div id="naruto_desk">
 				<div class="ltitle">
-					<a href="./video/videoListAction!listHot" title="热门动画片"
-						target="_blank">热门动画片</a>
+					热门动画片
+					<a href="./video/videoListAction!list">
+						<img class="more" src="./img/jian/more.jpg">
+					</a>
 				</div>
 
 				<s:iterator value="hotVideoListHolder" var="videoList">
@@ -143,10 +145,10 @@
 											<td width="5px">&nbsp;</td>
 											<td>
 												<div class="menu2_nav_li_r">
-													<s:iterator value="#map.value" var="video"
+													<s:iterator value="#map.value" var="videoNameVar"
 														status="videoStatus">
 														<div style="display: inline-block;">
-															<a href="./video/episodeAction!list?videoId=${video.id }">${video.name }</a>&nbsp;┊&nbsp;
+															<a href="./video/videoListAction!list?searchName=${videoNameVar }">${videoNameVar }</a>&nbsp;┊&nbsp;
 														</div>
 													</s:iterator>
 													<div style="display: inline-block;">

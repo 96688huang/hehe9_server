@@ -7,7 +7,11 @@ package cn.hehe9.common.app;
 public enum CacheKeyEnum {
 
 	/** index_page - 首页 */
-	INDEX_PAGE("index_page", "首页");
+	INDEX_PAGE("index_page", "首页"),
+
+	SOURCE_IDS("source_ids", "来源id"),
+
+	SOURCE_VIDEOS("source_videos", "按来源分类的视频列表");
 
 	private String key;
 	private String desc;

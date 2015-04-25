@@ -408,7 +408,7 @@
 		from video
 		where 1=1
 		<include refid="Conditions_Sql" />
-		order by source_id asc, rank asc, id asc
+		order by rank asc, source_id asc, id asc
 		limit #{offset}, #{count}
 	</select>
 
@@ -424,7 +424,7 @@
 		select a.id, a.name, a.first_char from video a 
 		where 
 		#{countPerFirstChar} >= (select count(1) from video b where a.first_char = b.first_char and a.id < b.id)
-		order by a.first_char asc
+		order by a.first_char asc, a.name asc
 		]]>
 	</select>
 </mapper>

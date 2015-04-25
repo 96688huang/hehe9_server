@@ -2,20 +2,23 @@ package cn.hehe9.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
 import cn.hehe9.common.constants.VideoListTitleEnum;
-import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.persistent.entity.Video;
+import cn.hehe9.service.biz.CacheService;
 import cn.hehe9.service.biz.VideoService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -34,6 +37,12 @@ public class VideoListAction extends ActionSupport {
 	@Resource
 	private VideoService videoService;
 
+	@Resource
+	private CacheService cacheService;
+
+	/** 列表页视频的数量 */
+	private final int VIDEOS_COUNT_PER_LINE = 7;
+
 	//--- 请求参数 ----
 	/** 视频名称 */
 	private String searchName;
@@ -45,23 +54,12 @@ public class VideoListAction extends ActionSupport {
 	private String displayTitle;
 
 	/** 视频列表容器 */
-	private List<List<Video>> videoListHolder;
+	private List<List<Video>> videoListHolder = new ArrayList<List<Video>>(VIDEOS_COUNT_PER_LINE);;
 
 	/** 分页参数*/
 	private Pagination pagination = new Pagination();
 
-	/** 列表页视频的数量 */
-	private final int VIDEOS_COUNT_PER_LINE = 7;
-
-	private static final String MAIN_PAGE = PageUrlFlagEnum.MAIN_PAGE.getUrlFlag();
 	private static final String LIST_PAGE = PageUrlFlagEnum.LIST_PAGE.getUrlFlag();
-
-	//	public String listHot() {
-	//		displayTitle = VideoListTitleEnum.VIDEOS_HOT.getTitle();
-	//		List<Video> videoList = videoService.listBrief(pagination.getPage(), pagination.getQueryCount());
-	//		pagination.setTotal(videoService.countBy());
-	//		return LIST_PAGE;
-	//	}
 
 	public String list() {
 		if (StringUtils.isNotBlank(searchName)) {
@@ -72,12 +70,18 @@ public class VideoListAction extends ActionSupport {
 			displayTitle = VideoListTitleEnum.VIDEO_BOOK.getTitle();
 		}
 
-		videoListHolder = new ArrayList<List<Video>>(VIDEOS_COUNT_PER_LINE);
-		List<Video> videoList = videoService.findBriefByName(firstChar, searchName, pagination.getPage(),
-				pagination.getQueryCount());
+		// 先从缓存中取
+		List<Video> videoList = null;
+		AtomicInteger total = new AtomicInteger(0);
+		if (AppConfig.MEMCACHE_ENABLE) {
+			List<Integer> sourceIdList = cacheService.getOrCreateSourceIdsCache();
+			videoList = pickVideosFromCache(total, sourceIdList);
+		}
 
-		// 赋值视频来源名称
-		ActionHelper.setSourceName(videoList);
+		// 如果缓存中没有, 则从DB中取
+		if (CollectionUtils.isEmpty(videoList)) {
+			videoList = pickVideosFromDb(total);
+		}
 
 		// 排版
 		int count = 0;
@@ -91,8 +95,67 @@ public class VideoListAction extends ActionSupport {
 				break;
 			}
 		}
-		pagination.setTotal(videoService.countBy(firstChar, searchName));
+		pagination.setTotal(total.get());
 		return LIST_PAGE;
+	}
+
+	private List<Video> pickVideosFromDb(AtomicInteger total) {
+		List<Video> videoList;
+		videoList = videoService.findBriefByName(firstChar, searchName, pagination.getPage(),
+				pagination.getQueryCount());
+
+		// 赋值视频来源名称
+		ActionHelper.setSourceName(videoList);
+
+		total.set(videoService.countBy(firstChar, searchName));
+		return videoList;
+	}
+
+	private List<Video> pickVideosFromCache(AtomicInteger total, List<Integer> sourceIdList) {
+		if (CollectionUtils.isEmpty(sourceIdList)) {
+			return null;
+		}
+
+		List<Video> queryVideos = new ArrayList<Video>(30);
+		int fromIndex = (pagination.getPage() - 1) * pagination.getQueryCount();
+		int toIndex = fromIndex + pagination.getQueryCount() + 1;
+
+		List<Video> allVideos = cacheService.getOrCreateSourceVideosCache(sourceIdList);
+		for (Video video : allVideos) {
+			if (StringUtils.isNotBlank(searchName) && video.getName().contains(searchName)) {
+				pickVideos(total, queryVideos, toIndex, video);
+			} else if (StringUtils.isNotBlank(firstChar) && video.getFirstChar().equalsIgnoreCase(firstChar)) {
+				pickVideos(total, queryVideos, toIndex, video);
+			} else if (StringUtils.isBlank(searchName) && StringUtils.isBlank(firstChar)) { // 无查询条件, 则查询所有
+				pickVideos(total, queryVideos, toIndex, video);
+			}
+		}
+
+		if (total.get() == 0 || CollectionUtils.isEmpty(queryVideos)) {
+			return null;
+		}
+
+		// sub list by query page and count
+		toIndex = Math.min(total.get(), toIndex); // 可能查询的数量大于总数
+		toIndex = Math.min(toIndex, queryVideos.size()); // 可能元素数量少于查询的数量
+		fromIndex = Math.min(fromIndex, toIndex); // 预防非法篡改分页参数
+		queryVideos = queryVideos.subList(fromIndex, toIndex);
+		return queryVideos;
+	}
+
+	/**
+	 * 根据需求, 挑选视频
+	 *
+	 * @param total			符合条件的视频总数
+	 * @param queryVideos	(查询结果得到的)视频列表
+	 * @param toIndex		要查询到的下标
+	 * @param video			视频信息
+	 */
+	private void pickVideos(AtomicInteger total, List<Video> queryVideos, int toIndex, Video video) {
+		if (total.get() < toIndex) {
+			queryVideos.add(video);
+		}
+		total.incrementAndGet();
 	}
 
 	public String getSearchName() {

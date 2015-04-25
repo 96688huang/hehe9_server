@@ -199,9 +199,7 @@ public class YoukuVideoCollectService extends BaseTask {
 						StringUtils.trimToEmpty(videoFromDb.getIconUrl()));
 				if (isListPageUrlSame) {
 					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同视频的视频)
-					boolean isNameSame = ListUtil.asList(
-							StringUtils.deleteWhitespace(videoFromDb.getName()).split(ComConstant.LEFT_SLASH))
-							.contains(StringUtils.deleteWhitespace(videoFromNet.getName()));
+					boolean isNameSame = videoFromDb.getName().contains(videoFromNet.getName());
 					if (isNameSame) {
 						isMatcheRecord = true;
 						// 比较关键字段是否有更新

@@ -7,6 +7,12 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
+	<servlet>
+		<servlet-name>AppInitServlet</servlet-name>
+		<servlet-class>cn.hehe9.common.app.AppInitServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
 	<!-- 加载spring的配置文件 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

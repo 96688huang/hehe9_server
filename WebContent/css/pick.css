@@ -85,9 +85,9 @@
 #login p{margin:2px;padding-left:20px;height:30px;line-height:30px;}#login p a{color:#039;}
 #login {background:#E8F3F9;border:1px #88D3E3 solid;margin:3px 0 0 0;}
 #login {background:#FFFFEC;border:1px #88D3E3 solid;margin:3px 0 0 0;height:33px;line-height:33px;color:#069}
-#narutoList img,#narutoList img{-webkit-transform-origin: top center;-moz-transform-origin: topcenter;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name:swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;padding:3px;border:1px solid #069;}
+#narutoList img:hover,#narutoList a:hover img{-webkit-transform-origin: top center;-moz-transform-origin: topcenter;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name:swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;padding:3px;border:1px solid #069;}
 #narutoList img{-webkit-animation-fill-mode: both;-moz-animation-fill-mode:both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode:both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration:0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration:0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;display:block;margin:5px 0 3px 5px;padding:3px;border:1px solid #d0d0d0;}
-#narutoList li img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
+#narutoList li a:hover img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
 #narutoList li img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #eee; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
 #narutoList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden; position: relative;}
 /* #narutoList li {float:left;width:160px;height:158px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 0 0 17px;overflow:hidden;} */
@@ -248,7 +248,7 @@ span.bds_more, .bds_tools a {display: block;font-family: '宋体', Arial;height:
 
 #hot_down h2, .index_downrank h2 , #hot_video h2 , .index_downrank .ltitle , #hot_down .ltitle{background: #FEF9EB;color: #8F5400;border-bottom: 1px #F9F0C0 solid;}
 
-.index_downrank .ltitle .more {float: right; margin: 5px;}
+.more {float: right; margin: 5px;}
 .index_downrank .ltitle span ,.index_gamelist .ltitle span{height:18px;font-size:12px;font-weight:normal;padding:0 5px;cursor:pointer;float:right;}
 /* .index_downrank .ltitle span.curPos ,.index_gamelist .ltitle span.curPos {background:#888;border:1px solid #333;font-weight:bold;color:#fff;} */
 .index_downrank ul {margin: 5px 10px;}

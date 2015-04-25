@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class Video extends VideoSource implements Serializable {
 	
-	// -- 与数据库字段无关 start --
+	// -- 与数据库字段无关的字段 start --
 	private String sourceName;
 	//-- end --
 	

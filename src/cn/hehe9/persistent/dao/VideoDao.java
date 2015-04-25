@@ -117,11 +117,13 @@ public class VideoDao {
 		return videoMapper.selectByPrimaryKey(videoId);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public int save(Video video) {
 		video.setCreateTime(new Date());
 		return videoMapper.insertSelective(video);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public int udpate(Video video) {
 		return videoMapper.updateByPrimaryKeySelective(video);
 	}

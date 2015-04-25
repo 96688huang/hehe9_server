@@ -23,6 +23,7 @@ public class VideoEpisodeDao {
 	@Resource
 	private VideoEpisodeMapper videoEpisodeMapper;
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public int save(VideoEpisode ve) {
 		ve.setCreateTime(new Date());
 		return videoEpisodeMapper.insertSelective(ve);
@@ -54,6 +55,7 @@ public class VideoEpisodeDao {
 		return videoEpisodeMapper.findBy(params);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public int udpate(VideoEpisode ve) {
 		return videoEpisodeMapper.updateByPrimaryKeySelective(ve);
 	}

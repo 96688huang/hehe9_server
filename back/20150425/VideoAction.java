@@ -2,8 +2,6 @@ package cn.hehe9.action;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,7 +13,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -27,6 +24,7 @@ import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.utils.JsoupUtil;
+import cn.hehe9.common.utils.ListUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
 import cn.hehe9.service.biz.CacheService;
@@ -57,9 +55,9 @@ public class VideoAction extends ActionSupport {
 
 	private InputStream inputStream;
 
-	private List<List<Video>> hotVideoListHolder;
+	private Set<Set<String>> hotVideoListHolder;
 
-	private List<VideoEpisode> hotEpisodeList;
+	//	private List<VideoEpisode> hotEpisodeList;
 	private List<Map<Video, List<VideoEpisode>>> hotEpisodeListHolder;
 
 	private List<Video> menuVideoList;
@@ -80,7 +78,7 @@ public class VideoAction extends ActionSupport {
 	/** 字母菜单每组视频的数量 */
 	private final int COUNT_PER_FIRST_CHAR = 30;
 
-	/** 字母菜单 */
+	/** 字母菜单, {key : letter, value : VideoNames} */
 	private Map<String, Set<String>> letterMenuVideoMap;
 
 	/** 自动请求首页的标识 */
@@ -98,6 +96,7 @@ public class VideoAction extends ActionSupport {
 		letterMenuVideoMap.put(ComConstant.OTHER_CNS, new LinkedHashSet<String>());
 	}
 
+	@SuppressWarnings("unchecked")
 	public String toMain() throws Exception {
 
 		// check cache
@@ -110,68 +109,24 @@ public class VideoAction extends ActionSupport {
 		}
 
 		// 最热门的视频列表
-		List<Video> hotVideoList = initHotVideos();
+		List<Video> hotVideoList = ActionHelper.getHotVideos(videoService, MAIN_HOT_VIDEOS_COUNT);
+		List<String> hotVideoNameList = ListUtil.wrapFieldValueList(hotVideoList, "name");
+		this.hotVideoListHolder = ActionHelper.initHotVideos(videoService, hotVideoNameList,
+				MAIN_HOT_VIDEOS_COUNT_PER_LINE_);
 
 		// 最热门的视频分集列表
-		initHotEpisodes(hotVideoList);
+		hotEpisodeListHolder = ActionHelper.initHotEpisodes(videoEpisodeService, hotVideoList,
+				MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE, MAIN_HOT_VIDEOS_ESPICODE_COUNT);
 
 		//		// 动画片大全
 		//		menuVideoList = videoService.listBrief(1, MAIN_MENU_VIDEOS_COUNT);
 
 		// 字母菜单视频
-		initLetterVideos();
+		ActionHelper.initLetterVideos(videoService, letterMenuVideoMap, COUNT_PER_FIRST_CHAR);
 
 		// 异步请求首页内容, 并保存到缓存中
 		saveIndexCacheAsyncIfNeeded();
 		return MAIN_PAGE;
-	}
-
-	private void initLetterVideos() {
-		List<Video> letterVideoList = videoService.listBriefGroupByFirstChar(COUNT_PER_FIRST_CHAR);
-		for (;;) {
-			if (CollectionUtils.isEmpty(letterVideoList)) {
-				break;
-			}
-
-			// 归类
-			Video video = letterVideoList.get(0);
-			Set<String> groupVides = letterMenuVideoMap.get(video.getFirstChar().toUpperCase());
-			if (groupVides == null) { // 此处只判断null，不要判断是否empty，因为初始化容器时， 是empty。
-				groupVides = letterMenuVideoMap.get(ComConstant.OTHER_CNS);
-			}
-			groupVides.add(video.getName());
-
-			// 删除该元素
-			letterVideoList.remove(0);
-		}
-	}
-
-	private void initHotEpisodes(List<Video> hotVideoList) {
-		hotVideoList = hotVideoList.subList(0, MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE);
-		hotEpisodeListHolder = new ArrayList<Map<Video, List<VideoEpisode>>>();
-		for (Video video : hotVideoList) {
-			List<VideoEpisode> episodeList = videoEpisodeService.list(video.getId(), 1, MAIN_HOT_VIDEOS_ESPICODE_COUNT);
-			Map<Video, List<VideoEpisode>> map = new HashMap<Video, List<VideoEpisode>>(1);
-			map.put(video, episodeList);
-			hotEpisodeListHolder.add(map);
-		}
-	}
-
-	private List<Video> initHotVideos() {
-		List<Video> hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
-		hotVideoListHolder = new ArrayList<List<Video>>();
-		int count = 0;
-		for (;;) {
-			int preNextCount = count + MAIN_HOT_VIDEOS_COUNT_PER_LINE_;
-			int nextCount = preNextCount > hotVideoList.size() ? hotVideoList.size() : preNextCount;
-			hotVideoListHolder.add(hotVideoList.subList(count, nextCount));
-			count = preNextCount;
-
-			if (nextCount >= hotVideoList.size()) {
-				break;
-			}
-		}
-		return hotVideoList;
 	}
 
 	/**
@@ -197,21 +152,21 @@ public class VideoAction extends ActionSupport {
 		}
 	}
 
-	public List<List<Video>> getHotVideoListHolder() {
+	public Set<Set<String>> getHotVideoListHolder() {
 		return hotVideoListHolder;
 	}
 
-	public void setHotVideoListHolder(List<List<Video>> hotVideoListHolder) {
+	public void setHotVideoListHolder(Set<Set<String>> hotVideoListHolder) {
 		this.hotVideoListHolder = hotVideoListHolder;
 	}
 
-	public List<VideoEpisode> getHotEpisodeList() {
-		return hotEpisodeList;
-	}
-
-	public void setHotEpisodeList(List<VideoEpisode> hotEpisodeList) {
-		this.hotEpisodeList = hotEpisodeList;
-	}
+	//	public List<VideoEpisode> getHotEpisodeList() {
+	//		return hotEpisodeList;
+	//	}
+	//
+	//	public void setHotEpisodeList(List<VideoEpisode> hotEpisodeList) {
+	//		this.hotEpisodeList = hotEpisodeList;
+	//	}
 
 	public List<Map<Video, List<VideoEpisode>>> getHotEpisodeListHolder() {
 		return hotEpisodeListHolder;
