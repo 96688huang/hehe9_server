@@ -1,0 +1,56 @@
+参考 :　http://491569462-qq-com.iteye.com/blog/1948433
+1. 将下面代码复制到 /etc/rc.d/init.d/tomcat (如果文件不存在, 则创建)
+
+#!/bin/bash
+#
+# tomcat startup script for the Tomcat server
+#
+# chkconfig: 345 80 20
+# description: start the tomcat deamon
+#
+# Source function library
+. /etc/rc.d/init.d/functions
+
+prog=tomcat
+JAVA_HOME=/winson/dev/jdk1.8.0_45
+export JAVA_HOME
+CATALANA_HOME=/winson/dev/apache-tomcat-8.0.21
+export CATALINA_HOME
+
+case "$1" in
+start)
+    echo "Starting Tomcat..."
+    $CATALANA_HOME/bin/startup.sh
+    ;;
+
+stop)
+    echo "Stopping Tomcat..."
+    $CATALANA_HOME/bin/shutdown.sh
+    ;;
+
+restart)
+    echo "Stopping Tomcat..."
+    $CATALANA_HOME/bin/shutdown.sh
+    sleep 2
+    echo
+    echo "Starting Tomcat..."
+    $CATALANA_HOME/bin/startup.sh
+    ;;
+
+*)
+    echo "Usage: $prog {start|stop|restart}"
+    ;;
+esac
+exit 0
+
+2. 赋权限
+chmod 777 tomcat
+
+3. 分别执行:
+chkconfig --add tomcat
+chkconfig tomcat on
+
+4. 可用service命令启动或关闭tomcat
+service tomcat start
+service tomcat stop
+service tomcat restart

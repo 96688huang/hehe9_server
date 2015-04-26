@@ -26,7 +26,7 @@ public class AppInitServlet extends HttpServlet {
 		long startTime = System.currentTimeMillis();
 		try {
 			super.init();
-			SpringUtil.init();
+//			SpringUtil.init();	// NOTE:不能初始化 SpringUtil上下文对象, 否则会加载两遍bean, 定时任务会一起运行;
 		} catch (Exception e) {
 			logger.error("init app fail.", e);
 		}

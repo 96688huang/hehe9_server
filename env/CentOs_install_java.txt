@@ -27,15 +27,25 @@ wget -c http://cdn.mysql.com/archives/mysql-5.6/MySQL-server-5.6.10-1.rhel5.x86_
 /usr/share/mysql/ #MySQL配置文件目录
 /usr/bin/ #MySQL启动脚本目录
 
-进入mysql:
-cd /usr/bin/
-./mysql -uroot -p
-
 设置开机自启动
 [root@localhost mysql]# cp support-files/mysql.server /etc/init.d/mysql	(若有, 则无需要copy)
 [root@localhost mysql]# chmod +x /etc/init.d/mysql (可能是mysqld)
 [root@localhost mysql]# chkconfig mysql on (可能是mysqld)
 
+-- 进入mysql:
+cd /usr/bin/
+./mysql -uroot -p
+
+-- centos执行SQL文件: (进入mysql和数据库)
+source /usr/database.sql;
+
+--iamaiceman
+--huangquana@#1437
+
+-- mysql 远程访问参考:http://www.jb51.net/article/42442.htm
+
+-- 还原与备份:
+http://www.centoscn.com/mysql/2014/0821/3526.html
 
 4. 安装gcc (注意, 安装libevent之前, 需要安装 gcc)
 yum install gcc
@@ -89,5 +99,11 @@ java -version
 12. 安装C++编译器
 yum install gcc-c++
 
+13. 安装 filezilla
+--更新一下rpmforge:
+rpm -Uhv http://fedora.mirrors.pair.com/epel/6/i386/epel-release-6-8.noarch.rpm
+-- 安装
+yum install filezilla
+
+
 ///////////////////////////
-M2LqvUwS6z2YTK4Z

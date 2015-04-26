@@ -11,7 +11,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>to main</title>
 <meta http-equiv="refresh" content="0;url=./video/videoAction!toMain">
-<!-- <meta http-equiv="refresh" content="1;url=/hehe9_ssm/video/videoAction!list"> -->
 </head>
 <body>
 <!-- 
