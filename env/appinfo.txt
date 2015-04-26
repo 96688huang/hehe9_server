@@ -1,0 +1,1 @@
+Mysql 配置文件: /etc/my.cnf

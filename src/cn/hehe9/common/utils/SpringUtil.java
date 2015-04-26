@@ -43,7 +43,7 @@ public class SpringUtil implements ApplicationContextAware {
             return;
         }
         logger.info("初始化 spring context");
-        applicationContext = new ClassPathXmlApplicationContext("classpath*:/spring/*.xml");
+        applicationContext = new ClassPathXmlApplicationContext("classpath*:/spring/beans.xml");
     }
 
     /**

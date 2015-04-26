@@ -22,15 +22,15 @@ public class AppInitServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		logger.info("start to init application ...");
-		long startTime = System.currentTimeMillis();
-		try {
-			super.init();
-//			SpringUtil.init();	// NOTE:不能初始化 SpringUtil上下文对象, 否则会加载两遍bean, 定时任务会一起运行;
-		} catch (Exception e) {
-			logger.error("init app fail.", e);
-		}
-		long endTime = System.currentTimeMillis();
-		logger.info("init application complete, used " + ((endTime - startTime) / 1000) + " s");
+//		logger.info("start to init application ...");
+//		long startTime = System.currentTimeMillis();
+//		try {
+//			super.init();
+////			SpringUtil.init();	// NOTE:不能初始化 SpringUtil上下文对象, 否则会加载两遍bean, 定时任务会一起运行;
+//		} catch (Exception e) {
+//			logger.error("init app fail.", e);
+//		}
+//		long endTime = System.currentTimeMillis();
+//		logger.info("init application complete, used " + ((endTime - startTime) / 1000) + " s");
 	}
 }
