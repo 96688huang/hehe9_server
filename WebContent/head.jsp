@@ -13,10 +13,15 @@
 <script type="text/javascript" src="./js/common.js"></script>
 
 <div id="Head" class="Ncontainer">
-	<div
-		style="display: inline-block; background: url('./img/logo_brief.png') no-repeat;">
-		<img id="onepieceGif" style="min-height:45px ;float: right; margin: 15px auto 10px 200px;"
-			alt="www.dmvcd.com" src="" />
+	<div style="display: inline-block;">
+		<a href="./" title="www.dmVCD.com" style="min-height: 60px; float: left; margin-top: 20px;"> 
+		<img alt="www.dmvcd.com"
+			src="./img/logo_brief.png">
+		</a> 
+		<a href="./" title="www.dmVCD.com" style="min-height: 45px; float: right;"> 
+		<img id="onepieceGif" alt="酷不酷？ 帅不帅？"
+			src="./img/gif/as_1.gif" />
+		</a>
 	</div>
 	<div id="searchBar">
 		<form id="searchForm" action="./video/videoListAction!list"
@@ -25,13 +30,31 @@
 			<input id="searchBtn" type="submit" value="搜&nbsp;索">
 		</form>
 	</div>
+	<div id="Dmvcdnav" class="Ncontainer">
+		<ul>
+			<li><a href="./" title="www.dmVCD.com">首 页</a></li>
+		</ul>
+	</div>
+	<div id="Ntop" class="Ncontainer">
+		<div class="Nleft"></div>
+		<div class="listMenu">
+			<span style="color: red; margin-left: 25px; font-weight: bold;">热门搜索：</span>&nbsp;&nbsp;
+			<a href="javascript:onSearch('航海王')" title="海贼王">&nbsp;海贼王&nbsp;</a>&nbsp;
+			<a href="javascript:onSearch('猪猪侠')" title="猪猪侠">&nbsp;猪猪侠&nbsp;</a>&nbsp;<a
+				href="javascript:onSearch('尸兄')" title="尸兄">&nbsp;尸兄&nbsp;</a>&nbsp;
+			<a href="javascript:onSearch('七龙珠')" title="七龙珠">&nbsp;七龙珠&nbsp;</a>&nbsp;
+			<a href="javascript:onSearch('熊出没')" title="熊出末">&nbsp;熊出没&nbsp;</a>&nbsp;
+			<a href="javascript:onSearch('灌篮高手')" title="灌篮高手">&nbsp;灌篮高手&nbsp;</a>&nbsp;
+			<a href="javascript:onSearch('妖精的尾巴')" title="妖精的尾巴">&nbsp;妖精的尾巴&nbsp;</a>
+		</div>
+	</div>
 </div>
-<div id="Dmvcdnav" class="Ncontainer">
+<!-- <div id="Dmvcdnav" class="Ncontainer">
 	<ul>
-		<li><a href="./">首 页</a></li>
+		<li><a href="./" title="www.dmVCD.com">首 页</a></li>
 	</ul>
-</div>
-<div id="Ntop" class="Ncontainer">
+</div> -->
+<%-- <div id="Ntop" class="Ncontainer">
 	<div class="Nleft"></div>
 	<div class="listMenu">
 		<span style="color: red; margin-left: 25px; font-weight: bold;">热门搜索：</span>&nbsp;&nbsp;
@@ -43,7 +66,7 @@
 		<a href="javascript:onSearch('灌篮高手')" title="灌篮高手">&nbsp;灌篮高手&nbsp;</a>&nbsp;
 		<a href="javascript:onSearch('妖精的尾巴')" title="妖精的尾巴">&nbsp;妖精的尾巴&nbsp;</a>
 	</div>
-</div>
+</div> --%>
 
 <!-- jumpForm -->
 <form id="jumpForm" method="post"></form>
