@@ -137,13 +137,21 @@ public class VideoPlayAction extends ActionSupport {
 		VideoEpisode firstEpisode = this.episodeList.get(0);
 		VideoEpisode secondEpisode = episodeSize >= 2 ? this.episodeList.get(1) : null;
 		VideoEpisode thirdEpisode = episodeSize >= 3 ? this.episodeList.get(2) : null;
-		if (episodeNo.equals(firstEpisode.getEpisodeNo())) {
+		VideoEpisode forthEpisode = episodeSize >= 4 ? this.episodeList.get(3) : null;
+		if (episodeNo.equals(firstEpisode == null ? "" : firstEpisode.getEpisodeNo())) {
 			episode = firstEpisode;
 			nextEpisode = secondEpisode;
-		} else if (episodeNo > firstEpisode.getEpisodeNo()) {
+		} else if (episodeNo.equals(secondEpisode == null ? "" : secondEpisode.getEpisodeNo())) {
 			preEpisode = firstEpisode;
 			episode = secondEpisode;
 			nextEpisode = thirdEpisode;
+		} else if (episodeNo.equals(thirdEpisode == null ? "" : thirdEpisode.getEpisodeNo())) {
+			preEpisode = secondEpisode;
+			episode = thirdEpisode;
+			nextEpisode = forthEpisode;
+		} else if (episodeNo.equals(forthEpisode == null ? "" : forthEpisode.getEpisodeNo())) {
+			preEpisode = thirdEpisode;
+			episode = forthEpisode;
 		}
 		return PLAY_PAGE;
 	}

@@ -12,26 +12,8 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>episode list</title>
-<!-- 新 Bootstrap 核心 CSS 文件 -->
 
-<!-- 可选的Bootstrap主题文件（一般不用引入） -->
-<!-- <link rel="stylesheet"
-href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
-
-<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
-
-<!-- <link rel="stylesheet" href="./css/nar/bdsstyle.css"
-	type="text/css">
-<link rel="stylesheet" href="./css/nar/list/index_layout2.css" media="all"
-	type="text/css">
-<link rel="stylesheet" href="./css/nar/i.css"
-	type="text/css">
-<link rel="stylesheet" href="./css/nar/search.css" type="text/css"> -->
-
 <link rel="stylesheet" href="./css/pick.css" type="text/css">
 <link rel="stylesheet" href="./css/pick_global.css" type="text/css">
 
@@ -90,7 +72,7 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 					<input name="videoId" value="${video.id }" type="hidden"/>
 					<ul id="narutoList">
 						<s:iterator value="episodeList" var="episode">
-							<li><a href="./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}"
+							<li><a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');"
 								title="${video.name}&nbsp;第${episode.episodeNo}集 <s:if test="title != null">「${episode.title}」</s:if>"
 								target="_blank">
 									<img alt="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" src="${episode.snapshotUrl}" />
@@ -99,7 +81,8 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 									第${episode.episodeNo}集&nbsp;
 								</span>
 											
-								<a href="" title="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
+								<a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');" 
+								title="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
 								target="_blank">
 									<s:if test="title != null">「${episode.title}」</s:if>
 								</a>
@@ -119,29 +102,5 @@ href="http://cdn.bootcss.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 	</div>
 	<!-- 页脚 -->
 	<jsp:include page="footer.jsp" />
-
-	<div class="wrap2 vtg3">
-		<script type="text/javascript">
-			hym.show(2);
-		</script>
-	</div>
-	<script type='text/javascript' src='http://cbjs.baidu.com/js/m.js'></script>
-	<script type="text/javascript">
-		BAIDU_CLB_fillSlot("600153");
-	</script>
-	<!-- Baidu Button BEGIN -->
-	<script type="text/javascript" id="bdshare_js"
-		data="type=slide&amp;img=5&amp;uid=616638"></script>
-	<script type="text/javascript" id="bdshell_js"></script>
-	<script type="text/javascript">
-		document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion="
-				+ new Date().getHours();
-	</script>
-	<!-- Baidu Button END -->
-	<script type="text/javascript" src="/js/foot.js"></script>
-	<script type="text/javascript">
-		BAIDU_CLB_fillSlot("600142");
-	</script>
-	<script type="text/javascript" src="/tj.js"></script>
 </body>
 </html>

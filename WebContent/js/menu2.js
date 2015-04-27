@@ -30,7 +30,8 @@ var setMainNav = function () {
 				aHoverCont[j].style.display = "none";
 				aHoverCont[j].onmouseover = function () {
 					this.style.display = "block";
-					aGameHover[this.index_j].className += " "+"game_hover_current";
+					// by winson : it is a bug;
+					// aGameHover[this.index_j].className += " "+"game_hover_current";
 				}
 
 				aHoverCont[j].onmouseout = function () {
