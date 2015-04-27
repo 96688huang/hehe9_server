@@ -61,10 +61,6 @@ public class VideoEpisodeAction extends ActionSupport {
 	private static final String EPISODE_LIST_PAGE = PageUrlFlagEnum.EPISODE_LIST_PAGE.getUrlFlag();
 
 	public String list() {
-		
-		String s = null;
-		System.out.println(s.length());
-		
 		if (pagination == null) {
 			pagination = new Pagination();
 		}

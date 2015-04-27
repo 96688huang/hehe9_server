@@ -14,8 +14,8 @@
 <title>episode list</title>
 
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-<link rel="stylesheet" href="./css/pick.css" type="text/css">
-<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd_global.css" type="text/css">
 
 </head>
 <body>
@@ -70,7 +70,7 @@
 					<h1>${video.name}&nbsp;在线观看</h1>
 					<form id="queryForm" action="./video/episodeAction!list?" method = "post">
 					<input name="videoId" value="${video.id }" type="hidden"/>
-					<ul id="narutoList">
+					<ul id="dmvcdList">
 						<s:iterator value="episodeList" var="episode">
 							<li><a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');"
 								title="${video.name}&nbsp;第${episode.episodeNo}集 <s:if test="title != null">「${episode.title}」</s:if>"

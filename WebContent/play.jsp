@@ -16,8 +16,8 @@
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <script type="text/javascript" src="./js/menu2.js"></script>
 
-<link rel="stylesheet" href="./css/pick.css" type="text/css">
-<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd_global.css" type="text/css">
 
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 
@@ -60,8 +60,8 @@
 								</h1>
 							</div>
 							<div class="player" id="player">
-								<embed src="${episode.fileUrl }" id="naruto_v" class="vborder"
-									name="naruto_v" type="application/x-shockwave-flash"
+								<embed src="${episode.fileUrl }" id="dmvcd_v" class="vborder"
+									name="dmvcd_v" type="application/x-shockwave-flash"
 									allowscriptaccess="always"
 									flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;"
 									allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>
@@ -71,7 +71,7 @@
 					<td>&nbsp;</td>
 					<td style="width: 250px; height: 580px; vertical-align: top;">
 						<div class="pr" id="vright">
-							<ul id="narutoList">
+							<ul id="dmvcdList">
 								<s:iterator value="episodeList" var="episodeItem">
 									<li class="font_12" style="width: 250px; text-align: left;">
 									<a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
@@ -86,7 +86,7 @@
 									</span>
 									<a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
 										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>" 
-										class="narutoTitle"
+										class="dmvcdTitle"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 										target="_blank"><s:if test="title != null">「${episodeItem.title}」</s:if>
 									</a>

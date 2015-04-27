@@ -14,9 +14,9 @@
 
 <div id="Head" class="Ncontainer">
 	<div
-		style="display: inline-block; background: url('./img/gif/as_1.gif') no-repeat;">
-		<img style="float: right; margin: 15px auto 10px 200px;" alt=""
-			src="./img/logo_brief.png" />
+		style="display: inline-block; background: url('./img/logo_brief.png') no-repeat;">
+		<img id="onepieceGif" style="min-height:45px ;float: right; margin: 15px auto 10px 200px;"
+			alt="www.dmvcd.com" src="" />
 	</div>
 	<div id="searchBar">
 		<form id="searchForm" action="./video/videoListAction!list"
@@ -26,7 +26,7 @@
 		</form>
 	</div>
 </div>
-<div id="Narutonav" class="Ncontainer">
+<div id="Dmvcdnav" class="Ncontainer">
 	<ul>
 		<li><a href="./">首 页</a></li>
 	</ul>
@@ -49,12 +49,14 @@
 <form id="jumpForm" method="post"></form>
 
 <script type="text/javascript">
-function onSearch(keyword) {
-	if (keyword == null || keyword == '' || keyword == undefined) {
-		return;
+	function onSearch(keyword) {
+		if (keyword == null || keyword == '' || keyword == undefined) {
+			return;
+		}
+
+		$("#searchName").attr("value", keyword);
+		$("#searchForm").submit();
 	}
 
-	$("#searchName").attr("value", keyword);
-	$("#searchForm").submit();
-}
+	
 </script>

@@ -12,8 +12,8 @@
 <base href="<%=basePath%>">
 <title>500 页面无法访问</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="./css/pick.css" type="text/css">
-<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd_global.css" type="text/css">
 
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 

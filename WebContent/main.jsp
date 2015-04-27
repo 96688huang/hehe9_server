@@ -18,8 +18,8 @@
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <script type="text/javascript" src="./js/menu2.js"></script>
 
-<link rel="stylesheet" href="./css/pick.css" type="text/css">
-<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd_global.css" type="text/css">
 
 <link rel="stylesheet" href="./css/common.css" type="text/css">
 <link rel="stylesheet" href="./css/menu2.css" type="text/css">
@@ -33,7 +33,7 @@
 			<div class="ita" id="itaTop">
 			</div>
 			--%>
-			<div id="naruto_desk">
+			<div id="dmvcd_desk">
 				<div class="ltitle">
 					热门动画片
 					<a href="javascript:jumpTo('./video/videoListAction!list');">
@@ -84,7 +84,7 @@
 			</s:iterator>
 
 			<!-- 字母下拉菜单 -->
-			<div id="naruto_desk">
+			<div id="dmvcd_desk">
 				<div class="menu2_menu_container">
 					<div class="menu2_nav" id="letterMainNav">
 						<ul class="menu2_list">

@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+#searchBar {
+	float: right; margin: 40px auto auto auto;
+}
+
+#searchBar #searchName {
+	height: 30px; width: 170px; color: #000;
+}
+
+#searchBar #searchBtn {
+	height: 30px; width: 80px; text-align: center; background: #3385FF; border-bottom: 1px solid #2d78f4; color: #FFF; cursor: pointer;
+}
+
+#searchBar #searchBtn.onfocus{
+	background:#317EF3; border-bottom:1px solid #2868C8; box-shadow: 1px 1px 1px #CCC;
+}

@@ -14,14 +14,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>list</title>
 <script type="text/javascript" src="./js/jquery.min.js"></script>
-<link rel="stylesheet" href="./css/pick.css" type="text/css">
-<link rel="stylesheet" href="./css/pick_global.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd.css" type="text/css">
+<link rel="stylesheet" href="./css/dmvcd_global.css" type="text/css">
 </head>
 <body>
 	<div class="nmain">
 		<jsp:include page="head.jsp" />
 		<div class="wrap clearfix">
-			<div id="naruto_desk">
+			<div id="dmvcd_desk">
 				<div class="ltitle">${displayTitle}</div>
 				<form id="queryForm" action="./video/videoListAction!list"
 					method="post">

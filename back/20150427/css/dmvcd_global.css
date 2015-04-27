@@ -1,0 +1,56 @@
+#kof_desk {	border: 1px #88D3E3 solid;float: left;clear: both;margin-top: 8px;width: 808px; height:168px;}
+.banner {clear: both;width: 810px;float: left;text-align: center;background: #fff;margin: 8px 0 0 0;overflow: hidden;}
+li{list-style-type:none; }
+.full{position:absolute;left:0px;top:0px;z-index:1;padding:0;margin:0;background-color: #000;}
+#header {height:168px;margin:0 auto;width:900px;background:url('../images/banner.jpg') repeat-x;}
+*{margin:0;padding:0;}
+#regform {border:1px #88D3E3 solid;margin:8px 0 0 0;}
+#nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
+.dmga {float:right; margin:10px;}
+.skuaicheForm{display:none;}
+#index_soft,#game_navpage,#index_class {border:1px #88D3E3 solid;margin:5px 0 0 0;}
+#common_tools {border: 1px #88D3E3 solid;float: left;clear: both;margin-top: 8px;width: 808px;}
+.game_img {float:right;width:260px;text-align:left;margin:10px;display:inline;}
+#index_class li {margin: 1px;width: 113px;float: left;text-align: center;display: inline;}
+#search_result label,#search_result a label {color:#f00;font-weight:bold;}
+/*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/
+#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
+h2,h3,h4,h5,h6,h7{font-weight:normal;}
+#header {height:168px;margin:0 auto;width:980px;background:url('http://www.dmvcd.com/images/banner.jpg') repeat-x;}
+#recommend_down {float: left;width: 300px;height:370px;clear: left;border: 1px #88D3E3 solid;margin: 5px 0 0 0;}
+@-moz-keyframes pulse{0%{-moz-transform:scale(1)}50%{-moz-transform:scale(1.1)}100%{-moz-transform:scale(1)}}
+@-moz-keyframes swing {20% { -moz-transform: rotate(15deg); }40% { -moz-transform: rotate(-10deg); }60% { -moz-transform: rotate(5deg); }80% { -moz-transform: rotate(-5deg); }100% { -moz-transform: rotate(0deg);}}
+@-moz-keyframes swing {20% { -moz-transform: rotate(15deg); }40% { -moz-transform: rotate(-10deg); }60% {-moz-transform: rotate(5deg); }80% { -moz-transform: rotate(-5deg); }100% { -moz-transform: rotate(0deg);}}
+@-o-keyframes pulse{0%{-o-transform:scale(1)}50%{-o-transform:scale(1.1)}100%{-o-transform:scale(1)}}
+@-o-keyframes swing {20% { -o-transform: rotate(15deg);}40%{-o-transform: rotate(-10deg);}60%{-o-transform: rotate(5deg);}80%{-o-transform: rotate(-5deg);}100%{-o-transform: rotate(0deg);}}
+@-o-keyframes swing {20% { -o-transform: rotate(15deg);}40%{-o-transform: rotate(-10deg);}60%{-o-transform:rotate(5deg);}80%{-o-transform: rotate(-5deg);}100%{-o-transform: rotate(0deg);}}
+@-webkit-keyframes pulse{0%{-webkit-transform:scale(1)}50%{-webkit-transform:scale(1.1)}100%{-webkit-transform:scale(1)}}
+@-webkit-keyframes swing {20%, 40%, 60%, 80%, 100% { -webkit-transform-origin: top center; }20% { -webkit-transform: rotate(15deg);}40%{-webkit-transform: rotate(-10deg);}60%{-webkit-transform: rotate(5deg);}80%{-webkit-transform: rotate(-5deg);}100%{-webkit-transform: rotate(0deg);}}
+@-webkit-keyframes swing {20%, 40%, 60%, 80%, 100% { -webkit-transform-origin: top center; }20% { -webkit-transform:rotate(15deg);}40%{-webkit-transform: rotate(-10deg);}60%{-webkit-transform: rotate(5deg);}80%{-webkit-transform:rotate(-5deg);}100%{-webkit-transform: rotate(0deg);}}
+
+@CHARSET "UTF-8";
+#bdshare ul, #bdshare_s ul, #bdshare ul li, #bdshare_s ul li,#bdshare_l_c ul li, #bdshare_m_c ul li, #bdshare_pop ul, #bdshare_pop ul li{list-style: none;margin: 0;padding: 0}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+@keyframes swing {20%{ transform: rotate(15deg);}40% { transform: rotate(-10deg);}60%{transform: rotate(5deg);}80%{transform: rotate(-5deg);}100%{transform: rotate(0deg);}}
+@keyframes swing {20%{ transform: rotate(15deg);}40% { transform: rotate(-10deg);}60%{transform:rotate(5deg);}80%{transform: rotate(-5deg);}100%{transform: rotate(0deg);}}
+a img {border:0;}
+a.more,#search_result dd i.game_date {color:green;}
+/* a:hover,a:active {color:#003;text-decoration:underline;} */
+/* 阴影效果 a:hover,a:visited:hover{text-shadow:#585858 0px 0px 3px;} */
+a:link,a:visited {color:#007498;text-decoration:none;}
+a:hover,a:active {color:#FF0000;text-decoration:underline;}
+
+a{-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;}
+body p,body ul,body dl {text-align:left;}
+body {CURSOR: url('http://www.dmvcd.com/style/dmvcdm.gif');font:12px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman";text-align:center;color:#666;background:#fff;}
+html{color:#000;font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体';background-color:#fff;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;_text-overflow:ellipsis}
+body{font-size:12px;font-family:'Microsoft YaHei','微软雅黑',Tahoma,Geneva,'宋体'}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,button,textarea,p,blockquote{margin:0;padding:0}
+fieldset,img{border:0}li{list-style:none}
+p#voice_nav input {float:right;font-size:12px;color:#3E5E8A;border:1px #476C9E solid;height:20px;line-height:20px;vertical-align:middle;background:url(../images/voice_btn.png) repeat-x;position:relative;top:5px;}
+p#voice_nav span {float:left;}
+p#voice_nav {background:#FCFFF6;border:1px #BFDB89 solid;padding:0 5px;margin:5px;height:30px;line-height:30px;text-align:left;}
+span.bds_more {background: url(../images/is.png?cdnversion=20131219) no-repeat 0 5px!important}
+span.bds_more, .bds_tools a {display: block;font-family: '宋体', Arial;height: 16px;float: left;cursor: pointer;padding-top: 6px;padding-bottom: 3px;padding-left: 22px}
+span.bds_nopic, .bds_tools_32 span.bds_nopic, .bds_tools_24 span.bds_nopic{background-image: none !important;padding-left: 3px !important}
+ul,dl {list-style:none;}

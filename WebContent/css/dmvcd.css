@@ -1,12 +1,12 @@
-#Head{ height:78px; text-align:left;width:980px;overfolw:hidden;clear:both;}
+#Head{ margin-top:10px; height:78px; text-align:left;width:980px;overfolw:hidden;clear:both;}
 
-#Narutonav{ height:33px;}
-#Narutonav ul{ height:33px; float:left;}
-#Narutonav li{ width:108px; height:33px; float:left;}
-/* #Narutonav span{ width:102px; line-height:33px; text-align:center; float:left;} */
+#Dmvcdnav{ height:33px;}
+#Dmvcdnav ul{ height:33px; float:left;}
+#Dmvcdnav li{ width:108px; height:33px; float:left;}
+/* #Dmvcdnav span{ width:102px; line-height:33px; text-align:center; float:left;} */
 /** A标签文字垂直居中, 用line-height, 不用padding-top */
-#Narutonav a, #Narutonav a:visited{width:102px; height:33px; line-height:33px; text-align:center;  float:left; font-size:14px;color:#FFF; background: url("../img/jian/menu_bg.jpg") repeat-x;}
-#Narutonav a:hover{ width:102px; height:33px; line-height:33px; text-align:center; float:left; background: url("../img/jian/menu_li_hover.jpg"); text-decoration:none;color:#FFF;}
+#Dmvcdnav a, #Dmvcdnav a:visited{width:102px; height:33px; line-height:33px; text-align:center;  float:left; font-size:14px;color:#FFF; background: url("../img/jian/menu_bg.jpg") repeat-x;}
+#Dmvcdnav a:hover{ width:102px; height:33px; line-height:33px; text-align:center; float:left; background: url("../img/jian/menu_li_hover.jpg"); text-decoration:none;color:#FFF;}
 .Ncontainer{width:980px; margin:0 auto;background:#fff;}
 
 .listMenu { height:32px;line-height:32px;text-align:left;}
@@ -54,12 +54,12 @@
 #bdshare_pop {-webkit-box-shadow: 0 0 7px #aaa;-moz-box-shadow: 0 0 7px #aaa}
 #bdshare_pop {width: 300px;border: 6px solid #8f8f8f;padding: 0;background: #f6f6f6;position: absolute;z-index: 1000000;text-align: left}
 #container2 {background:url(../images/container_bg2.gif) repeat-y;margin:5px 0 5px 0;}
-#content .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #naruto_name , #cartoon_List{border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all;}
+#content .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #dmvcd_name , #cartoon_List{border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all;}
 #content dl,#content2 dl {margin:8px 8px 0 8px;background:#f8f8f8;border:1px #eee solid;}
 #content dl:hover,#content2 dl:hover,#content dl.sfhover {background:#f8f8f8;border:1px #eee solid;margin:8px 8px 0 8px;}
 #content dt a,#content2 dt a {text-decoration:underline;font-size:14px;font-weight:bold;}
 #content dt,#content2 dt {padding-left:25px;background:url(../images/game_name.gif) no-repeat left 2px;height:25px;line-height:25px;overflow:hidden;}
-#content2 .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #naruto_name , #cartoon_List{border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all;}
+#content2 .listitem,#game_name,#game_intro,#game_down,#game_remark,#game_voice,#dm_name , #dm_name2 , #dmvcd_name , #cartoon_List{border:1px #88D3E3 solid;border-bottom:0;word-wrap:break-word;word-break:break-all;}
 #content2 {float:left;width:700px;}
 
 #footer {margin:8px 0 0 0;border-top:3px #FFF3AD solid;background:#272727;color:#fff;}
@@ -78,28 +78,28 @@
 /* #indexcartoonList li img ,#cartoonList li img {border:2px solid #D4D4D4;} */
 #indexcartoonList img,#indexcartoonList:hover{-webkit-animation-fill-mode: both;-moz-animation-fill-mode: both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration: 0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration: 0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;}
 #indexcartoonList img:hover{-webkit-transform-origin: top center;-moz-transform-origin: top center;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name: swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;}
-#kof_desk h2,#naruto_desk h2{padding: 0;text-align: center;}
+#kof_desk h2,#dmvcd_desk h2{padding: 0;text-align: center;}
 #light{background:#000; position:absolute; width:100%; height:100%; z-index:100; top:0; left:0; display:none;}
 #login p span {float:right;margin-right:5px;display:inline;}
 #login p {margin:2px;padding-left:25px;border:1px #D3E9ED solid;/*background:#fff url('../images/login.gif') no-repeat 5px 1px;*/}
 #login p{margin:2px;padding-left:20px;height:30px;line-height:30px;}#login p a{color:#039;}
 #login {background:#E8F3F9;border:1px #88D3E3 solid;margin:3px 0 0 0;}
 #login {background:#FFFFEC;border:1px #88D3E3 solid;margin:3px 0 0 0;height:33px;line-height:33px;color:#069}
-#narutoList img:hover,#narutoList a:hover img{-webkit-transform-origin: top center;-moz-transform-origin: topcenter;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name:swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;padding:3px;border:1px solid #069;}
-#narutoList img{-webkit-animation-fill-mode: both;-moz-animation-fill-mode:both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode:both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration:0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration:0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;display:block;margin:5px 0 3px 5px;padding:3px;border:1px solid #d0d0d0;}
-#narutoList li a:hover img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
-#narutoList li img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #eee; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
-#narutoList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden; position: relative;}
-/* #narutoList li {float:left;width:160px;height:158px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 0 0 17px;overflow:hidden;} */
-#narutoListall {margin:18px 0 0 10px;}
-#naruto_desk,.naruto_desk{width: 980px;border: 1px #88D3E3 solid; float: left;clear: both; margin: 8px auto 8px auto;}
+#dmvcdList img:hover,#dmvcdList a:hover img{-webkit-transform-origin: top center;-moz-transform-origin: topcenter;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name:swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;padding:3px;border:1px solid #069;}
+#dmvcdList img{-webkit-animation-fill-mode: both;-moz-animation-fill-mode:both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode:both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration:0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration:0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;display:block;margin:5px 0 3px 5px;padding:3px;border:1px solid #d0d0d0;}
+#dmvcdList li a:hover img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #069; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
+#dmvcdList li img {display:block;width:128px;height:96px;padding:1px;margin:2px 0 3px 0; *padding:3px; *border:1px solid #eee; -webkit-border-radius:6px;/* Webkit browsers */border-radius:6px;}
+#dmvcdList li {float:left;width:138px;height:140px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 12px;overflow:hidden; position: relative;}
+/* #dmvcdList li {float:left;width:160px;height:158px;line-height:15px;vertical-align:middle;text-align:center;margin:3px 0 0 17px;overflow:hidden;} */
+#dmvcdListall {margin:18px 0 0 10px;}
+#dmvcd_desk,.dmvcd_desk{width: 980px;border: 1px #88D3E3 solid; float: left;clear: both; margin: 8px auto 8px auto;}
 /*
-#narutologo h1{ display:none;}
-#narutologo img{ float:left; margin-left:8px;}
-#narutologo span{ float:left; margin:60px 0 0 60px;}
-#narutologo{ width:206px; height:78px; background:url(/img/logo.gif) no-repeat bottom; float:left}
-#narutologo{ width:206px; height:78px; background:url(http://www.dmvcd.com/img/logo.gif) no-repeat bottom; float:left}
-#narutologo{ width:206px; height:78px; background:url(http://www.dmvcd.com/img/logo.gif) no-repeat bottom;float:left}
+#dmvcdlogo h1{ display:none;}
+#dmvcdlogo img{ float:left; margin-left:8px;}
+#dmvcdlogo span{ float:left; margin:60px 0 0 60px;}
+#dmvcdlogo{ width:206px; height:78px; background:url(/img/logo.gif) no-repeat bottom; float:left}
+#dmvcdlogo{ width:206px; height:78px; background:url(http://www.dmvcd.com/img/logo.gif) no-repeat bottom; float:left}
+#dmvcdlogo{ width:206px; height:78px; background:url(http://www.dmvcd.com/img/logo.gif) no-repeat bottom;float:left}
 */
 
 #nav h1 {margin:0;padding:0;font-size:12px;font-weight:normal;display:compact;}
@@ -226,16 +226,16 @@
 .softblist li span,.softolist li span {float:right;}
 .softblist li,.softolist li {float:left;height:22px;line-height:22px;overflow:hidden;white-space:normal;background:url(img/bg_main.png) no-repeat -365px -58px;padding-left:13px;_display:inline}
 .softblist li,.softolist li, {height:22px;line-height:22px;overflow:hidden;white-space:normal;padding-left:15px;background:url('../images/li_bg3.gif') no-repeat left 7px;}
-.softblist,.softolist , .narutolist2 {list-style:none;line-height:22px;}
-.softolist li a:hover,.softolist li a:active , .narutolist li a:hover, .narutolist li a:active{color:#f00;text-decoration:underline;}
-.softolist li a:link,.softolist li a:visited, .narutolist li a:link, .narutolist li a:visited{color:#8F5400;}
+.softblist,.softolist , .dmvcdlist2 {list-style:none;line-height:22px;}
+.softolist li a:hover,.softolist li a:active , .dmvcdlist li a:hover, .dmvcdlist li a:active{color:#f00;text-decoration:underline;}
+.softolist li a:link,.softolist li a:visited, .dmvcdlist li a:link, .dmvcdlist li a:visited{color:#8F5400;}
 .softolist li {background:url('../images/li_bg4.gif') no-repeat left 7px;padding-left:12px;overflow:hidden;}
 .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
 .wrap {width:980px;margin:0 auto;}
 .wraps{width: 980px;margin: 0 auto;}
 .wrap2 {width:980px;margin:0 auto;z-index:100;}
-.wrap h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px; background: url("../img/jian/menubg2.gif") repeat-x;}
-/* .wrap2 h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #naruto_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap2 .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;} */
+.wrap h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #dmvcd_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px; background: url("../img/jian/menubg2.gif") repeat-x;}
+/* .wrap2 h2 ,#game_name h1 , .listitem h1 , #dm_name h1 , #dmvcd_name h1 ,#cartoon_List h1 ,#dm_name2 h1 , .wrap2 .ltitle{height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;} */
 #nav {background:#E8F3F9;border:1px #88D3E3 solid;margin:2px 0 0 0;color:#007498;}
 #search_result label,#search_result a label {color:#f00;font-weight:bold;}
 /*#dm_name img , #dm_name2 img {border:1px solid #888;padding:2px;display:block;}*/#navpre{width:98%;margin:auto;color:#006600;font-weight:bold;}
@@ -269,5 +269,5 @@ span.bds_more, .bds_tools a {display: block;font-family: '宋体', Arial;height:
 .font_12{ font:13px "微软雅黑","宋体",Verdana,Arial,sans-serif,"Times New Roman"; }
 
 .icon_bottom_tips{ display: block; width: 100%; overflow: hidden; height: 18px; line-height: 18px; color: #FFF; text-align: right; background: #000; filter: alpha(opacity=80); opacity: 0.78; position: absolute; top: 148px;}
-.narutoTitle:link, .narutoTitle:visited {color:#FFF; text-decoration:none;}
-.narutoTitle:hover, .narutoTitle:active {color:#FFD306; text-decoration:underline;}
+.dmvcdTitle:link, .dmvcdTitle:visited {color:#FFF; text-decoration:none;}
+.dmvcdTitle:hover, .dmvcdTitle:active {color:#FFD306; text-decoration:underline;}
