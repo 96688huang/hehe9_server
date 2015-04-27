@@ -11,7 +11,9 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>episode list</title>
+<title>${video.name },${video.name }漫画,${video.name }剧情分析 - 动漫VCD网</title>
+<meta name="keywords" content="${video.name }王,${video.name }漫画,${video.name }-${video.name }专题 - 动漫VCD网">
+<meta name="description" content="${video.name },${video.name }漫画全集连载,${video.name }专题 - 动漫VCD网">
 
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 <link rel="stylesheet" href="./css/dmvcd.css" type="text/css">

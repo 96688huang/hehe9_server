@@ -190,6 +190,7 @@ public class VideoAction extends ActionSupport {
 					}
 					String indexHtml = doc.html();
 					cacheService.saveIndexPageCache(indexHtml);
+					logger.info("save index page to cached complete.");
 					isRequestingIndex.set(false); // 还原请求标识
 				}
 			};

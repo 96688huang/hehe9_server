@@ -11,7 +11,9 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>play</title>
+<title>${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网</title>
+<meta name="keywords" content="${video.name }第${episode.episodeNo }集「${episode.title}」动画片,动漫${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网">
+<meta name="description" content="${video.name }第${episode.episodeNo }集「${episode.title}」在线观看,${video.name }第${episode.episodeNo }集「${episode.title}」 - 动漫VCD网">
 
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <script type="text/javascript" src="./js/menu2.js"></script>

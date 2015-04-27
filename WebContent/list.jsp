@@ -12,7 +12,9 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>list</title>
+<meta name="keywords" content="动漫VCD网-海贼王动漫|海贼王漫画|海贼王在线观看|动漫游戏下载">
+<meta name="description" content="动漫VCD网是国内更新海贼王漫画、海贼王在线观看最快的、收录海贼王资源最全的网站。我们还提供了死神、火影的动漫连载以及动漫资讯和动漫游戏下载等.">
+<title>动漫VCD网-动漫大全|海贼王动漫|海贼王漫画|海贼王在线观看</title>
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <link rel="stylesheet" href="./css/dmvcd.css" type="text/css">
 <link rel="stylesheet" href="./css/dmvcd_global.css" type="text/css">

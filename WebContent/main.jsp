@@ -4,8 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 
@@ -13,7 +12,10 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>main</title>
+<meta name="keywords" content="动漫VCD网-海贼王动漫|海贼王漫画|海贼王在线观看|动漫在线">
+<meta name="description"
+	content="动漫VCD网为广大动漫爱好者提供最新最火热的动漫视频和漫画连载, 包括海贼王, 火影忍者, 死神等热门动漫和漫画, 保证观看速度最快, 画面最清晰.">
+<title>动漫VCD网-海贼王动漫|海贼王漫画|海贼王在线观看</title>
 
 <script type="text/javascript" src="./js/jquery.min.js"></script>
 <script type="text/javascript" src="./js/menu2.js"></script>
@@ -35,8 +37,7 @@
 			--%>
 			<div id="dmvcd_desk">
 				<div class="ltitle">
-					热门动画片
-					<a href="javascript:jumpTo('./video/videoListAction!list');">
+					热门动画片 <a href="javascript:jumpTo('./video/videoListAction!list');">
 						<img class="more" src="./img/jian/more.jpg">
 					</a>
 				</div>
@@ -44,7 +45,8 @@
 				<s:iterator value="hotVideoListHolder" var="videoList">
 					<ul id="indexcartoonList">
 						<s:iterator value="videoList">
-							<li><a href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
+							<li><a
+								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
 								title="${name} ${updateRemark}" target="_blank"><img
 									alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
 								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
@@ -114,7 +116,8 @@
 													<s:iterator value="#map.value" var="videoNameVar"
 														status="videoStatus">
 														<div style="display: inline-block;">
-															<a href="javascript:jumpTo('./video/videoListAction!list?searchName=${videoNameVar }');">${videoNameVar }</a>┊
+															<a
+																href="javascript:jumpTo('./video/videoListAction!list?searchName=${videoNameVar }');">${videoNameVar }</a>┊
 														</div>
 													</s:iterator>
 													<div style="display: inline-block;">
@@ -167,7 +170,8 @@
 		<!-- 友情链接 -->
 		<jsp:include page="friend_link.jsp" />
 	</div>
-	</div> <!-- 注: 因标签判断的缘故, 需要多一个div结束符 -->
+	</div>
+	<!-- 注: 因标签判断的缘故, 需要多一个div结束符 -->
 	<!-- 页脚 -->
 	<jsp:include page="footer.jsp" />
 </body>
