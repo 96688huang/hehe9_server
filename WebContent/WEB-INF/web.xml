@@ -40,7 +40,6 @@
 		</init-param>
 	</filter>
 
-
 	<!-- 配置struts2 -->
 	<filter>
 		<filter-name>struts2</filter-name>
@@ -74,4 +73,14 @@
 	<!--这里配置了一个listener，也可以配置servlet: -->
 	<!-- <servlet> <servlet-name>log4j</servlet-name> <servlet-class> org.springframework.web.util.Log4jConfigServlet 
 		</servlet-class> <load-on-startup>1</load-on-startup> </servlet> -->
+		
+	<!-- 404页面 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/500.jsp</location>
+	</error-page>
 </web-app>

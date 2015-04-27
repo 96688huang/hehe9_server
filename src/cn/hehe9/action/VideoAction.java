@@ -99,7 +99,7 @@ public class VideoAction extends ActionSupport {
 	}
 
 	public String toMain() throws Exception {
-
+		
 		// check cache
 		if (AppConfig.MEMCACHE_ENABLE) {
 			String indexPageContent = cacheService.getIndexPageCache();

@@ -22,6 +22,11 @@ import com.opensymphony.xwork2.ActionSupport;
 @Scope("prototype")
 public class VideoEpisodeAction extends ActionSupport {
 
+	/**
+	 *	serialVersionUID
+	 */
+	private static final long serialVersionUID = 6795352514687692824L;
+
 	private static final Logger logger = LoggerFactory.getLogger(VideoEpisodeAction.class);
 
 	@Resource
@@ -56,6 +61,10 @@ public class VideoEpisodeAction extends ActionSupport {
 	private static final String EPISODE_LIST_PAGE = PageUrlFlagEnum.EPISODE_LIST_PAGE.getUrlFlag();
 
 	public String list() {
+		
+		String s = null;
+		System.out.println(s.length());
+		
 		if (pagination == null) {
 			pagination = new Pagination();
 		}
