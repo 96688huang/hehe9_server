@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
@@ -137,81 +138,73 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 			Elements liElements = div.select("ul>li");
 
-			// 计数器
-			final AtomicInteger episodeCounter = createCouter();
-			// 同步锁对象
-			final Object episodeSyncObj = createSyncObject();
-
+			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(liElements.size());
 			for (final Element ele : liElements) {
-				parseEpisodeAsync(video, titleMap, ele, liElements.size(), episodeCounter, episodeSyncObj);
+				Future<Boolean> future = parseEpisodeAsync(video, titleMap, ele);
+				futureList.add(future);
 			}
 
-			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(episodeCounter, liElements.size(), episodeSyncObj, SOHU_EPISODE, logger);
-			if (logger.isDebugEnabled()) {
-				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] {
-						SOHU_EPISODE, lastCount, episodeCounter.get() });
-			}
+			// 等待检查 future task 是否完成
+			String prefixLog = SOHU_EPISODE + "collectEpisodeFromListPage";
+			String partLog = String.format("videoId = %s, videoName = %s, liElementsSize = %s, futureListSize = %s",
+					video.getId(), video.getName(), liElements.size(), futureList.size());
+			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(SOHU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
 					e);
 		}
 	}
 
-	private void parseEpisodeAsync(final Video video, final Map<Integer, String> titleMap, final Element ele,
-			final int totalEpisodeCount, final AtomicInteger episodeCounter, final Object episodeSyncObj) {
-		Runnable episodeTask = new Runnable() {
-			public void run() {
-				try {
-					parseEpisode(video, titleMap, ele);
-				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format(
-							"%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s", new Object[] {
-									SOHU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
-					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
-				}
+	private Future<Boolean> parseEpisodeAsync(final Video video, final Map<Integer, String> titleMap, final Element ele) {
+		Future<Boolean> future = episodeThreadPool.submit(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				parseEpisode(video, titleMap, ele);
+				return true;
 			}
-		};
-		episodeThreadPool.execute(episodeTask);
+		});
+
+		return future;
 	}
 
 	private void parseEpisode(Video video, Map<Integer, String> titleMap, Element ele) {
 		try {
-			String episodeNoStr = ele.select("a").last().text();
+			String episodeNoStrText = ele.select("a").last().text();
 			String playPageUrl = ele.select("a").last().attr("href");
 			String snapshotUrl = ele.select("img").attr("src");
 
 			// parse episodeNo
 			// NOTE:有可能出现这样的内容: "第116话 视线360度!白眼的死角", 需要挑出集数.
-			String subEpisodeNoStr = episodeNoStr;
-			if (episodeNoStr.contains(" ")) {
-				subEpisodeNoStr = episodeNoStr.split(" ")[0];
-			} else if (episodeNoStr.contains("话")) {
-				subEpisodeNoStr = episodeNoStr.split("话")[0];
-			} else if (episodeNoStr.contains("集")) {
-				subEpisodeNoStr = episodeNoStr.split("集")[0];
-			} else if (episodeNoStr.contains("讲")) {
-				subEpisodeNoStr = episodeNoStr.split("讲")[0];
+			String subEpisodeNoStr = episodeNoStrText;
+			if (episodeNoStrText.contains(" ")) {
+				subEpisodeNoStr = episodeNoStrText.split(" ")[0];
+			} else if (episodeNoStrText.contains("话")) {
+				subEpisodeNoStr = episodeNoStrText.split("话")[0];
+			} else if (episodeNoStrText.contains("集")) {
+				subEpisodeNoStr = episodeNoStrText.split("集")[0];
+			} else if (episodeNoStrText.contains("讲")) {
+				subEpisodeNoStr = episodeNoStrText.split("讲")[0];
 			}
 
-			String episodeNo = StringUtil.pickInteger(subEpisodeNoStr);
-			if (StringUtils.isBlank(episodeNo)) {
+			String episodeNoStr = StringUtil.pickInteger(subEpisodeNoStr);
+			if (StringUtils.isBlank(episodeNoStr)) {
 				// 没有集数, 并且没有播放url, 则不处理(有可能是预告信息)
 				if (StringUtils.isBlank(playPageUrl)) {
 					logger.error("{}parseEpisode fail. episodeNo is blank. video : {}", SOHU_EPISODE,
 							JacksonUtil.encodeQuietly(video));
 					return;
 				}
-				episodeNo = "1"; // 没有集数, 则默认为1集
+				episodeNoStr = "1"; // 没有集数, 则默认为1集
 			}
 
+			Integer episodeNo = Integer.parseInt(episodeNoStr);
 			String fileUrl = parseVideoFileUrl(playPageUrl);
 
 			VideoEpisode episodeFromNet = new VideoEpisode();
 			episodeFromNet.setVideoId(video.getId());
 			episodeFromNet.setSnapshotUrl(snapshotUrl);
 			episodeFromNet.setPlayPageUrl(playPageUrl);
-			episodeFromNet.setEpisodeNo(Integer.parseInt(episodeNo));
+			episodeFromNet.setEpisodeNo(episodeNo);
 			episodeFromNet.setFileUrl(fileUrl);
 			episodeFromNet.setTitle(titleMap.get(episodeNo));
 

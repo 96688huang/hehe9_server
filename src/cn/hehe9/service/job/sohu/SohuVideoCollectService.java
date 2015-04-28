@@ -3,9 +3,10 @@ package cn.hehe9.service.job.sohu;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
@@ -25,7 +26,6 @@ import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
-import cn.hehe9.common.utils.ListUtil;
 import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.VideoDao;
@@ -87,22 +87,18 @@ public class SohuVideoCollectService extends BaseTask {
 
 			Elements liEle = doc.select("ul.st-list>li");
 
-			// 计数器
-			final AtomicInteger videoCounter = createCouter();
-			// 同步锁对象
-			final Object videoSyncObj = createSyncObject();
-
 			// 分别解析每部动漫的信息
+			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(liEle.size());
 			for (final Element liItem : liEle) {
-				parseVideoInfoAsync(sourceId, liItem, liEle.size(), videoCounter, videoSyncObj);
+				Future<Boolean> future = parseVideoInfoAsync(sourceId, liItem);
+				futureList.add(future);
 			}
 
-			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(videoCounter, liEle.size(), videoSyncObj, SOHU_VIDEO, logger);
-			if (logger.isDebugEnabled()) {
-				logger.debug("{}collectVideos : 任务线程被唤醒, 本次计算了的视频数 = {}, 重置计数器 = {}.", new Object[] { SOHU_VIDEO,
-						lastCount, videoCounter.get() });
-			}
+			// 等待检查 future task 是否完成
+			String prefixLog = SOHU_VIDEO + "collectVideos";
+			String partLog = String.format("sourceId = %s, liEleSize = %s, futureListSize = %s", sourceId,
+					liEle.size(), futureList.size());
+			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			// 下一页
 			Elements currentPageSpan = doc.select("body div.ssPages>span");
@@ -124,21 +120,15 @@ public class SohuVideoCollectService extends BaseTask {
 		}
 	}
 
-	private void parseVideoInfoAsync(final int sourceId, final Element liItem, final int totalVideoCount,
-			final AtomicInteger videoCounter, final Object videoSyncObj) {
-		Runnable videoTask = new Runnable() {
-			public void run() {
-				try {
-					parseVideoInfo(sourceId, liItem);
-				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format(
-							"%s parseVideoInfoAsync : 准备唤醒任务线程. 本线程已计算了 %s 个视频, 本次计算视频数 = %s", new Object[] {
-									SOHU_VIDEO, videoCounter.get() + 1, totalVideoCount }) : null;
-					notifyMasterThreadIfNeeded(videoCounter, totalVideoCount, videoSyncObj, logMsg, logger);
-				}
+	private Future<Boolean> parseVideoInfoAsync(final int sourceId, final Element liItem) {
+		Future<Boolean> future = videoThreadPool.submit(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				parseVideoInfo(sourceId, liItem);
+				return true;
 			}
-		};
-		videoThreadPool.execute(videoTask);
+		});
+		return future;
 	}
 
 	private void parseVideoInfo(int sourceId, Element liItem) {

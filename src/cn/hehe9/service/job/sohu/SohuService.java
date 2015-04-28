@@ -1,12 +1,15 @@
 package cn.hehe9.service.job.sohu;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -55,44 +58,35 @@ public class SohuService extends BaseTask {
 
 		while (true) {
 			List<Video> videoList = videoService.listExceptBigData(source.getId(), page, QUERY_COUNT_PER_TIME);
-			if (videoList == null || videoList.isEmpty()) {
+			if (CollectionUtils.isEmpty(videoList)) {
 				return;
 			}
 
-			// 计数器
-			final AtomicInteger videoCounter = createCouter();
-			// 同步锁对象
-			final Object videoSyncObj = createSyncObject();
-
+			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(videoList.size());
 			for (Video video : videoList) {
-				collectEpisodeFromListPageAsync(video, videoList.size(), videoCounter, videoSyncObj);
+				Future<Boolean> future = collectEpisodeFromListPageAsync(video);
+				futureList.add(future);
 			}
-			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(videoCounter, videoList.size(), videoSyncObj, SOHU_JOB, logger);
-			if (logger.isDebugEnabled()) {
-				logger.debug("{}collectEpisode : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] { SOHU_JOB,
-						lastCount, videoCounter.get() });
-			}
+
+			// 等待检查 future task 是否完成
+			String prefixLog = SOHU_JOB + "collectEpisode";
+			String partLog = String.format("sourceId = %s, page = %s, videoListSize = %s, futureListSize = %s",
+					source.getId(), page, videoList.size(), futureList.size());
+			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			page++;
 		}
 	}
 
-	private void collectEpisodeFromListPageAsync(final Video video, final int totalVideoCount,
-			final AtomicInteger videoCounter, final Object videoSyncObj) {
-		Runnable episodeTask = new Runnable() {
-			public void run() {
-				try {
-					sohuEpisodeCollectService.collectEpisodeFromListPage(video);
-				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format(
-							"%s collectEpisodeFromListPageAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s", new Object[] {
-									SOHU_JOB, videoCounter.get() + 1, totalVideoCount }) : null;
-					notifyMasterThreadIfNeeded(videoCounter, totalVideoCount, videoSyncObj, logMsg, logger);
-				}
+	private Future<Boolean> collectEpisodeFromListPageAsync(final Video video) {
+		Future<Boolean> future = threadPool.submit(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				sohuEpisodeCollectService.collectEpisodeFromListPage(video);
+				return true;
 			}
-		};
-		threadPool.execute(episodeTask);
+		});
+		return future;
 	}
 
 	/**

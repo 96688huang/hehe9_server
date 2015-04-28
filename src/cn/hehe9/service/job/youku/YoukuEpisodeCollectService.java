@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
@@ -168,7 +169,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			}
 
 			String htmlPage = page.asXml();
-			client.closeAllWindows();
+			client.close();
 
 			// 交给 jsoup 解析具体内容
 			doc = Jsoup.parse(htmlPage);
@@ -186,23 +187,18 @@ public class YoukuEpisodeCollectService extends BaseTask {
 				return;
 			}
 
-			// 计数器
-			final AtomicInteger episodeCounter = createCouter();
-			// 同步锁对象
-			final Object episodeSyncObj = createSyncObject();
-
+			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(episodeAreaDivs.size());
 			for (Element episodeDiv : episodeAreaDivs) {
-				final int totalEpisodeCount = episodeAreaDivs.size();
-				parseEpisodeAsync(video, episodeDiv, totalEpisodeCount, episodeCounter, episodeSyncObj);
+				Future<Boolean> future = parseEpisodeAsync(video, episodeDiv);
+				futureList.add(future);
 			}
 
-			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(episodeCounter, episodeAreaDivs.size(), episodeSyncObj, YOUKU_EPISODE,
-					logger);
-			if (logger.isDebugEnabled()) {
-				logger.debug("{}collectEpisodeFromListPage : 任务线程被唤醒, 本次计算了的分集数 = {}, 重置计数器 = {}.", new Object[] {
-						YOUKU_EPISODE, lastCount, episodeCounter.get() });
-			}
+			// 等待检查 future task 是否完成
+			String prefixLog = YOUKU_EPISODE + "collectEpisodeFromListPage";
+			String partLog = String.format(
+					"videoId = %s, videoName = %s, episodeAreaDivsSize = %s, futureListSize = %s", video.getId(),
+					video.getName(), episodeAreaDivs.size(), futureList.size());
+			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(
 					YOUKU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video), e);
@@ -243,24 +239,19 @@ public class YoukuEpisodeCollectService extends BaseTask {
 		return null;
 	}
 
-	private void parseEpisodeAsync(final Video video, final Element episodeDiv, final int totalEpisodeCount,
-			final AtomicInteger episodeCounter, final Object episodeSyncObj) {
-		Runnable episodeTask = new Runnable() {
-			public void run() {
-				try {
-					parseEpisode(video, episodeDiv, episodeDiv);
-				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format(
-							"%s parseEpisodeAsync : 准备唤醒任务线程. 本线程已计算了 %s 个分集, 本次计算分集数 = %s", new Object[] {
-									YOUKU_EPISODE, episodeCounter.get() + 1, totalEpisodeCount }) : null;
-					notifyMasterThreadIfNeeded(episodeCounter, totalEpisodeCount, episodeSyncObj, logMsg, logger);
-				}
+	private Future<Boolean> parseEpisodeAsync(final Video video, final Element episodeDiv) {
+		Future<Boolean> future = episodeThreadPool.submit(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				parseEpisode(video, episodeDiv);
+				return true;
 			}
-		};
-		episodeThreadPool.execute(episodeTask);
+		});
+
+		return future;
 	}
 
-	private void parseEpisode(Video video, Element episodeDiv, Element ele) {
+	private void parseEpisode(Video video, Element episodeDiv) {
 		try {
 			VideoEpisode episodeFromNet = new VideoEpisode();
 			String playPageUrl = episodeDiv.select(".link a").attr("href");

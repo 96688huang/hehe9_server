@@ -3,9 +3,10 @@ package cn.hehe9.service.job.youku;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
@@ -24,7 +25,6 @@ import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
-import cn.hehe9.common.utils.ListUtil;
 import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.VideoDao;
@@ -86,22 +86,18 @@ public class YoukuVideoCollectService extends BaseTask {
 
 			Elements yk_co13_Eles = doc.select(".yk-col3");
 
-			// 计数器
-			final AtomicInteger videoCounter = createCouter();
-			// 同步锁对象
-			final Object videoSyncObj = createSyncObject();
-
 			// 分别解析每部动漫的信息
+			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(yk_co13_Eles.size());
 			for (final Element item : yk_co13_Eles) {
-				parseVideoInfoAsync(sourceId, item, yk_co13_Eles.size(), videoCounter, videoSyncObj);
+				Future<Boolean> future = parseVideoInfoAsync(sourceId, item);
+				futureList.add(future);
 			}
 
-			// 等待被唤醒(被唤醒后, 重置计数器)
-			int lastCount = waitingForNotify(videoCounter, yk_co13_Eles.size(), videoSyncObj, YOUKU_VIDEO, logger);
-			if (logger.isDebugEnabled()) {
-				logger.debug("{}collectVideos : 任务线程被唤醒, 本次计算了的视频数 = {}, 重置计数器 = {}.", new Object[] { YOUKU_VIDEO,
-						lastCount, videoCounter.get() });
-			}
+			// 等待检查 future task 是否完成
+			String prefixLog = YOUKU_VIDEO + "collectVideos";
+			String partLog = String.format("sourceId = %s, yk_co13_ElesSize = %s, futureListSize = %s", sourceId,
+					yk_co13_Eles.size(), futureList.size());
+			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			// 下一页
 			Elements currentPageA = doc.select(".yk-pager .yk-pages .current>span");
@@ -127,21 +123,15 @@ public class YoukuVideoCollectService extends BaseTask {
 		}
 	}
 
-	private void parseVideoInfoAsync(final int sourceId, final Element liItem, final int totalVideoCount,
-			final AtomicInteger videoCounter, final Object videoSyncObj) {
-		Runnable videoTask = new Runnable() {
-			public void run() {
-				try {
-					parseVideoInfo(sourceId, liItem);
-				} finally {
-					String logMsg = logger.isDebugEnabled() ? String.format(
-							"%s parseVideoInfoAsync : 准备唤醒任务线程. 本线程已计算了 %s 个视频, 本次计算视频数 = %s", new Object[] {
-									YOUKU_VIDEO, videoCounter.get() + 1, totalVideoCount }) : null;
-					notifyMasterThreadIfNeeded(videoCounter, totalVideoCount, videoSyncObj, logMsg, logger);
-				}
+	private Future<Boolean> parseVideoInfoAsync(final int sourceId, final Element liItem) {
+		Future<Boolean> future = videoThreadPool.submit(new Callable<Boolean>() {
+			@Override
+			public Boolean call() throws Exception {
+				parseVideoInfo(sourceId, liItem);
+				return true;
 			}
-		};
-		videoThreadPool.execute(videoTask);
+		});
+		return future;
 	}
 
 	private void parseVideoInfo(int sourceId, Element item) {

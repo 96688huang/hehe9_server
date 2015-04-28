@@ -1,6 +1,8 @@
 package cn.hehe9.service.job.base;
 
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +30,8 @@ public class BaseTask {
 	protected int CONN_TIME_OUT = 5000;
 	protected int RECONN_COUNT = 3;
 	protected long RECONN_INTERVAL = 2000;
+	protected long FUTURE_TIME_OUT = 10 * 60 * 1000;
+	protected long FUTURE_TASK_CHECK_INTERVAL = 5000;
 
 	/**
 	 * 创建计数器
@@ -68,11 +72,12 @@ public class BaseTask {
 	 * @return 最后计算的个数
 	 */
 	protected int waitingForNotify(AtomicInteger counter, int totalCount, Object syncObj, String logPrefix,
-			Logger logger) {
+			Logger logger, String logMsg) {
 		// 等待被唤醒(被唤醒后, 重置计数器)
 		int currCount = 0;
 		synchronized (syncObj) {
 			try {
+				logger.info(logMsg);
 				syncObj.wait();
 			} catch (InterruptedException e) {
 				logger.error(logPrefix + "线程在等待被唤醒时, 发生异常.", e);
@@ -103,4 +108,68 @@ public class BaseTask {
 		}
 	}
 
+	protected void sleep(long millis, Logger logger) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
+	/**
+	 * 等待future task 完成, 或者超时返回.
+	 *
+	 * @param page
+	 * @param source
+	 * @param videoList
+	 * @param futureList
+	 * @param logger
+	 * @param prefixLog
+	 * @param partLog
+	 */
+	protected void waitForFutureTasksDone(List<Future<Boolean>> futureList, Logger logger, String prefixLog,
+			String partLog) {
+		long startTime = System.currentTimeMillis();
+		while (true) {
+			boolean isAllDone = true;
+			for (Future<Boolean> future : futureList) {
+				if (!future.isDone()) {
+					isAllDone = false;
+					break;
+				}
+			}
+
+			long timeUsed = (System.currentTimeMillis() - startTime) / 1000;
+
+			// 所有任务都已完成
+			if (isAllDone) {
+				logger.info(new StringBuilder(prefixLog).append(", ALL DONE. ").append(partLog).append(", timeUsed = ")
+						.append(timeUsed).append(" s").toString());
+				return;
+			}
+
+			// 任意一个未完成时, 判断是否超过最大等待时间, 若未超过, 则等待, 若超过, 则跳出循环;
+			if (timeUsed >= FUTURE_TIME_OUT) {
+				logger.error(new StringBuilder(prefixLog).append(", TIME OUT. ").append(partLog)
+						.append(", timeUsed = ").append(timeUsed).append(" s").toString());
+
+				// 取消运行未完成的 future task
+				cancelNotDoneFutures(futureList);
+				break;
+			}
+
+			// 睡眠一段时间
+			logger.info(new StringBuilder(prefixLog).append(", not done yet. ").append(partLog).append(", timeUsed = ")
+					.append(timeUsed).append(" s").append(", sleep ...").toString());
+			sleep(FUTURE_TASK_CHECK_INTERVAL, logger);
+		}
+	}
+
+	private void cancelNotDoneFutures(List<Future<Boolean>> futureList) {
+		for (Future<Boolean> future : futureList) {
+			if (!future.isDone()) {
+				future.cancel(true);
+			}
+		}
+	}
 }
