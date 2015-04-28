@@ -31,7 +31,7 @@ public class BaseTask {
 	protected int RECONN_COUNT = 3;
 	protected long RECONN_INTERVAL = 2000;
 	protected long FUTURE_TIME_OUT = 10 * 60 * 1000;
-	protected long FUTURE_TASK_CHECK_INTERVAL = 5000;
+	protected long FUTURE_TASK_CHECK_INTERVAL = 1500;
 
 	/**
 	 * 创建计数器
@@ -129,7 +129,11 @@ public class BaseTask {
 	 */
 	protected void waitForFutureTasksDone(List<Future<Boolean>> futureList, Logger logger, String prefixLog,
 			String partLog) {
+		// 第一次睡眠
+		sleep(FUTURE_TASK_CHECK_INTERVAL, logger);
+
 		long startTime = System.currentTimeMillis();
+		long sleepTime = 1;
 		while (true) {
 			boolean isAllDone = true;
 			for (Future<Boolean> future : futureList) {
@@ -140,6 +144,7 @@ public class BaseTask {
 			}
 
 			long timeUsed = (System.currentTimeMillis() - startTime) / 1000;
+			timeUsed = Math.max(timeUsed - FUTURE_TASK_CHECK_INTERVAL * sleepTime, 0); // 减去之前总的睡眠时间
 
 			// 所有任务都已完成
 			if (isAllDone) {
@@ -159,9 +164,13 @@ public class BaseTask {
 			}
 
 			// 睡眠一段时间
-			logger.info(new StringBuilder(prefixLog).append(", not done yet. ").append(partLog).append(", timeUsed = ")
-					.append(timeUsed).append(" s").append(", sleep ...").toString());
+			if (sleepTime / 10 == 0) { // 每10次(约15秒)输出一条log
+				logger.info(new StringBuilder(prefixLog).append(", not done yet. ").append(partLog)
+						.append(", timeUsed = ").append(timeUsed).append(" s").append(", sleep ")
+						.append(FUTURE_TASK_CHECK_INTERVAL).append(" s ...").toString());
+			}
 			sleep(FUTURE_TASK_CHECK_INTERVAL, logger);
+			sleepTime++;
 		}
 	}
 
