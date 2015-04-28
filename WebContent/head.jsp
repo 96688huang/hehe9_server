@@ -1,17 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
-<base href="<%=basePath%>">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="./css/search.css" type="text/css">
-<script type="text/javascript" src="./js/common.js"></script>
-
 <div id="Head" class="Ncontainer">
 	<div style="display: inline-block;">
 		<a href="./" title="www.dmVCD.com" style="min-height: 60px; float: left; margin-top: 20px;"> 
@@ -32,7 +20,7 @@
 	</div>
 	<div id="Dmvcdnav" class="Ncontainer">
 		<ul>
-			<li><a href="./" title="www.dmVCD.com">首 页</a></li>
+			<li><a href="./" title="www.dmVCD.com" target="_blank">首 页</a></li>
 		</ul>
 	</div>
 	<div id="Ntop" class="Ncontainer">
@@ -69,7 +57,7 @@
 </div> --%>
 
 <!-- jumpForm -->
-<form id="jumpForm" method="post"></form>
+<form id="jumpForm" method="post" target="_blank"></form>
 
 <script type="text/javascript">
 	function onSearch(keyword) {

@@ -1,30 +1,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
 <html>
 <head>
-<base href="<%=basePath%>">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网</title>
 <meta name="keywords" content="${video.name }第${episode.episodeNo }集「${episode.title}」动画片,动漫${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网">
 <meta name="description" content="${video.name }第${episode.episodeNo }集「${episode.title}」在线观看,${video.name }第${episode.episodeNo }集「${episode.title}」 - 动漫VCD网">
-
-<script type="text/javascript" src="./js/jquery.min.js"></script>
-<script type="text/javascript" src="./js/menu2.js"></script>
-
-<link rel="stylesheet" href="./css/dmvcd.css" type="text/css">
-<link rel="stylesheet" href="./css/dmvcd_global.css" type="text/css">
-
-<link rel="stylesheet" href="./css/common.css" type="text/css">
-
-<script src="./js/play.js"></script>
-
+<jsp:include page="common_head.jsp" />
 </head>
 <body>
 	<jsp:include page="head.jsp" />

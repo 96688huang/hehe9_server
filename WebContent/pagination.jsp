@@ -2,13 +2,6 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <div class="pagenav">
 	&nbsp;&nbsp;页码：<b>${pagination.page}/${pagination.pageCount }</b>&nbsp;每页&nbsp;<b>${pagination.queryCount }</b>&nbsp;总数&nbsp;<b>${pagination.total }</b>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="javascript:getListByPage('1');">首页</a>&nbsp;&nbsp;
