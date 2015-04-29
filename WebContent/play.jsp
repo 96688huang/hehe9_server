@@ -3,29 +3,32 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
 <head>
-<title>${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网</title>
-<meta name="keywords" content="${video.name }第${episode.episodeNo }集「${episode.title}」动画片,动漫${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网">
-<meta name="description" content="${video.name }第${episode.episodeNo }集「${episode.title}」在线观看,${video.name }第${episode.episodeNo }集「${episode.title}」 - 动漫VCD网">
+<title>${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看
+	- 动漫VCD网</title>
+<meta name="keywords"
+	content="${video.name }第${episode.episodeNo }集「${episode.title}」动画片,动漫${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网">
+<meta name="description"
+	content="${video.name }第${episode.episodeNo }集「${episode.title}」在线观看,${video.name }第${episode.episodeNo }集「${episode.title}」 - 动漫VCD网">
 <jsp:include page="common_head.jsp" />
 </head>
 <body>
 	<jsp:include page="head.jsp" />
-	<div style="width: 980px; margin: 0 auto; height: 30px; overflow: hidden;">
+	<div
+		style="width: 980px; margin: 0 auto; height: 30px; overflow: hidden;">
 		<!-- <div class="v-left l15"> -->
 		<div
 			style="display: inline; float: left; text-align: left; margin: auto auto auto 8px;">
 			您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
-				${video.name } </a> &nbsp;&gt;&nbsp; 
-				<strong style="">第${episode.episodeNo }集&nbsp;
+				${video.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 			</strong>
 		</div>
 		<!-- <div class="v-right r15"> -->
 		<div style="display: inline;">
-			<span style="color:#FF0000; font-weight:blod; font-size:14px; margin: auto 20px auto auto;">观看不了请
+			<span
+				style="color: #FF0000; font-weight: blod; font-size: 14px; margin: auto 20px auto auto;">观看不了请
 				<a href="javascript:location.reload();">刷新一下</a>
-			</span>
-			<span id="playPanel"> <a href="javascript:void(0);"
+			</span> <span id="playPanel"> <a href="javascript:void(0);"
 				onclick="javascript:changePlayPanel(1);" id="witer"> 宽屏 </a>
 			</span>
 		</div>
@@ -44,11 +47,16 @@
 								</h1>
 							</div>
 							<div class="player" id="player">
-								<embed src="${episode.fileUrl }" id="dmvcd_v" class="vborder"
-									name="dmvcd_v" type="application/x-shockwave-flash"
-									allowscriptaccess="always"
-									flashvars="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;"
-									allowfullscreen="true" wmode="opaque" width="100%" height="480"></embed>
+								<object type="application/x-shockwave-flash"
+									data="${episode.fileUrl }" width="100%" height="480px"
+									is-video-flag="true" >
+									<param name="allowFullScreen" value="true">
+									<param name="allowscriptaccess" value="always">
+									<param name="wMode" value="Opaque">
+									<param name="bgcolor" value="#000000">
+									<param name="flashvars"
+										value="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;">
+								</object>
 							</div>
 						</div>
 					</td>
@@ -58,18 +66,17 @@
 							<ul id="dmvcdList">
 								<s:iterator value="episodeList" var="episodeItem">
 									<li class="font_12" style="width: 250px; text-align: left;">
-									<a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
+										<a
+										href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
-										target="_blank">
-										<img alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
+										target="_blank"> <img
+											alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 											src="${episodeItem.snapshotUrl}" />
-									</a> 
-									<!--  -->
-									<span class="icon_bottom_tips" style="width:132px; top:84px; <s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>">
-										第${episodeItem.episodeNo}集&nbsp;
-									</span>
-									<a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
-										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>" 
+									</a> <!--  --> <span class="icon_bottom_tips"
+										style="width:132px; top:84px; <s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>">
+											第${episodeItem.episodeNo}集&nbsp; </span> <a
+										href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
+										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>"
 										class="dmvcdTitle"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 										target="_blank"><s:if test="title != null">「${episodeItem.title}」</s:if>

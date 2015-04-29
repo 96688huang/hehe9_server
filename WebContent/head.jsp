@@ -6,8 +6,8 @@
 		<img alt="www.dmvcd.com"
 			src="./img/logo_brief.png">
 		</a> 
-		<a href="./" title="www.dmVCD.com" style="min-height: 45px; float: right;"> 
-		<img id="onepieceGif" alt="酷不酷？ 帅不帅？"
+		<a href="./" title="蒙其·d·路飞" style="float: right;"> 
+		<img id="onepieceGif" alt=""
 			src="./img/gif/as_1.gif" />
 		</a>
 	</div>
@@ -37,37 +37,5 @@
 		</div>
 	</div>
 </div>
-<!-- <div id="Dmvcdnav" class="Ncontainer">
-	<ul>
-		<li><a href="./" title="www.dmVCD.com">首 页</a></li>
-	</ul>
-</div> -->
-<%-- <div id="Ntop" class="Ncontainer">
-	<div class="Nleft"></div>
-	<div class="listMenu">
-		<span style="color: red; margin-left: 25px; font-weight: bold;">热门搜索：</span>&nbsp;&nbsp;
-		<a href="javascript:onSearch('航海王')" title="海贼王">&nbsp;海贼王&nbsp;</a>&nbsp;
-		<a href="javascript:onSearch('猪猪侠')" title="猪猪侠">&nbsp;猪猪侠&nbsp;</a>&nbsp;<a
-			href="javascript:onSearch('尸兄')" title="尸兄">&nbsp;尸兄&nbsp;</a>&nbsp;
-		<a href="javascript:onSearch('七龙珠')" title="七龙珠">&nbsp;七龙珠&nbsp;</a>&nbsp;
-		<a href="javascript:onSearch('熊出没')" title="熊出末">&nbsp;熊出没&nbsp;</a>&nbsp;
-		<a href="javascript:onSearch('灌篮高手')" title="灌篮高手">&nbsp;灌篮高手&nbsp;</a>&nbsp;
-		<a href="javascript:onSearch('妖精的尾巴')" title="妖精的尾巴">&nbsp;妖精的尾巴&nbsp;</a>
-	</div>
-</div> --%>
-
 <!-- jumpForm -->
 <form id="jumpForm" method="post" target="_blank"></form>
-
-<script type="text/javascript">
-	function onSearch(keyword) {
-		if (keyword == null || keyword == '' || keyword == undefined) {
-			return;
-		}
-
-		$("#searchName").attr("value", keyword);
-		$("#searchForm").submit();
-	}
-
-	
-</script>

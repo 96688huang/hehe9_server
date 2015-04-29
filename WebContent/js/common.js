@@ -37,6 +37,15 @@ function jumpTo(url) {
 	form.submit();
 }
 
+function onSearch(keyword) {
+	if (keyword == null || keyword == '' || keyword == undefined) {
+		return;
+	}
+
+	$("#searchName").attr("value", keyword);
+	$("#searchForm").submit();
+}
+
 // 头动画
 function showHeadGif() {
 	var gifImgs = [];
@@ -49,4 +58,6 @@ function showHeadGif() {
 	var img = document.getElementById('onepieceGif');
 	img.setAttribute("src", gifImgs[randomBgIndex]);
 }
-window.onload=showHeadGif;
+window.setInterval(function() {
+	showHeadGif()
+}, 10000);
