@@ -18,7 +18,7 @@ public class HtmlUnitUtil {
 	private static final int TIME_OUT = 5000; //ms
 
 	/**
-	 * 创建一个简单的 WebClient 对象, 默认模拟 Chrome浏览器, 不支持css, 支持js, 不抛出异常, 连接超时时间为5s; js执行超时时间为5s<p>
+	 * 创建一个简单的 WebClient 对象, 默认模拟 Chrome浏览器, 不支持css, 支持js, 不抛出异常, 连接超时时间为5s; js执行超时时间为10s<p>
 	 * 类似如下代码:<p>
 	 * <li>
 	 * 	WebClient client = new WebClient(BrowserVersion.CHROME);<li>
@@ -27,7 +27,8 @@ public class HtmlUnitUtil {
 	 * 	client.getOptions().setThrowExceptionOnFailingStatusCode(false);<li>
 	 * 	client.getOptions().setThrowExceptionOnScriptError(false);<li>
 	 * 	client.getOptions().setTimeout(5000);<li>
-	 * client.setJavaScriptTimeout(TIME_OUT);<p>
+	 *  client.setJavaScriptTimeout(5000);<p>
+	 *  client.waitForBackgroundJavaScript(5000);
 	 *
 	 * @return WebClient 对象
 	 */
@@ -38,7 +39,8 @@ public class HtmlUnitUtil {
 		client.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		client.getOptions().setThrowExceptionOnScriptError(false);
 		client.getOptions().setTimeout(TIME_OUT);
-		client.setJavaScriptTimeout(TIME_OUT);
+		client.setJavaScriptTimeout(TIME_OUT * 2);
+		client.waitForBackgroundJavaScript(TIME_OUT * 2);
 		return client;
 	}
 

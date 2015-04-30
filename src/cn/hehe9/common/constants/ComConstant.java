@@ -9,21 +9,20 @@ public class ComConstant {
 	public static final String UNDERSCORE = "_";
 	
 	public static final String LEFT_SLASH = "/";
+	
+	public static final String SEP_STR = "`";
 
 	/** 中文名: 其他 */
 	public static final String OTHER_CNS = "其他";
-	
-//	static{
-//		// 初始化字母列表
-//		for(int i = 0; i < 26; i++){
-//			LETTERS[i] = String.valueOf((char)((char)'A' + i));
-//		}
-//	}
 	
 	/**
 	 * 日志前缀
 	 */
 	public static class LogPrefix {
+		public static final String COMIC_SOHU_JOB = "[ COMIC - SOHU JOB ] ";
+		public static final String COMIC_SOHU_COMIC = "[ COMIC - SOHU COMIC ] ";
+		public static final String COMIC_SOHU_EPISODE = "[ COMIC - SOHU EPISODE ] ";
+		
 		public static final String SOHU_JOB = "[ SOHU JOB ] ";
 		public static final String SOHU_VIDEO = "[ SOHU VIDEO ] ";
 		public static final String SOHU_EPISODE = "[ SOHU EPISODE ] ";

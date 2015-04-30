@@ -2,6 +2,7 @@ package cn.hehe9.service.job.base;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -111,6 +112,15 @@ public class BaseTask {
 	protected void sleep(long millis, Logger logger) {
 		try {
 			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
+	protected void sleepRandom(int minMillis, int maxLillis, Logger logger) {
+		try {
+			long sleepTime = new Random().nextInt(minMillis) + maxLillis;
+			Thread.sleep(sleepTime);
 		} catch (InterruptedException e) {
 			logger.error(e.getMessage());
 		}

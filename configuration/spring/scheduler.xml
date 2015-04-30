@@ -16,12 +16,10 @@
 
 
 	<!-- 定时任务配置 -->
-	<!-- <task:scheduled-tasks>
+	<task:scheduled-tasks>
 		<task:scheduled ref="sohuCollectJob" method="executeJob"
-			cron="0 22 10 * * ?" />
+			cron="0 38 12 * * ?" />
 		<task:scheduled ref="youkuCollectJob" method="executeJob"
-			cron="0 22 11 * * ?" />
+			cron="0 20 13 * * ?" />
 	</task:scheduled-tasks> 
-	-->
-	
 </beans>

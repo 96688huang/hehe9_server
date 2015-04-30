@@ -61,3 +61,10 @@ function showHeadGif() {
 window.setInterval(function() {
 	showHeadGif()
 }, 10000);
+
+// Scroll page to the bottom
+//$(document).ready(function() {
+//	$('html, body').animate({
+//		scrollTop : $(document).height()
+//	}, 'slow');
+//});
