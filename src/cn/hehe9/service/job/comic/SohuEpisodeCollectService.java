@@ -28,10 +28,10 @@ import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.common.utils.StringUtil;
-import cn.hehe9.persistent.dao.VideoDao;
-import cn.hehe9.persistent.dao.VideoEpisodeDao;
-import cn.hehe9.persistent.entity.Video;
-import cn.hehe9.persistent.entity.VideoEpisode;
+import cn.hehe9.persistent.dao.ComicDao;
+import cn.hehe9.persistent.dao.ComicEpisodeDao;
+import cn.hehe9.persistent.entity.Comic;
+import cn.hehe9.persistent.entity.ComicEpisode;
 import cn.hehe9.service.job.base.BaseTask;
 
 @Component
@@ -39,10 +39,10 @@ public class SohuEpisodeCollectService extends BaseTask {
 	private static final Logger logger = LoggerFactory.getLogger(SohuEpisodeCollectService.class);
 
 	@Resource
-	private VideoDao videoDao;
+	private ComicDao comicDao;
 
 	@Resource
-	private VideoEpisodeDao videoEpisodeDao;
+	private ComicEpisodeDao comicEpisodeDao;
 
 	private static final String COMIC_SOHU_EPISODE = ComConstant.LogPrefix.COMIC_SOHU_EPISODE;
 
@@ -53,7 +53,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 	/** 用于比较Episode的属性名称 */
 	private static List<String> episodeCompareFieldNames = new ArrayList<String>();
 	static {
-		// video episode fields
+		// comic episode fields
 		episodeCompareFieldNames.add("title");
 		episodeCompareFieldNames.add("play_page_url");
 		//		episodeCompareFieldNames.add("snapshot_url");
@@ -66,13 +66,13 @@ public class SohuEpisodeCollectService extends BaseTask {
 	 * @param indexUrl
 	 * @throws Exception
 	 */
-	public void collectEpisodeFromListPage(final Video video) {
+	public void collectEpisodeFromListPage(final Comic comic) {
 		try {
-			Document doc = JsoupUtil.connect(video.getListPageUrl(), CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL,
+			Document doc = JsoupUtil.connect(comic.getListPageUrl(), CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL,
 					COMIC_SOHU_EPISODE, ReferrerUtil.SOHU);
 			if (doc == null) {
-				logger.error("{}collect episode from list page fail. video = {}", COMIC_SOHU_EPISODE,
-						JacksonUtil.encodeQuietly(video));
+				logger.error("{}collect episode from list page fail. comic = {}", COMIC_SOHU_EPISODE,
+						JacksonUtil.encodeQuietly(comic));
 			}
 
 			// 分集标题
@@ -95,21 +95,21 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 			// 大图
 			String posterBigUrl = doc.select("#picFocus>a>img").attr("src");
-			video.setPosterBigUrl(posterBigUrl);
+			comic.setPosterBigUrl(posterBigUrl);
 
 			// 简介
 			String storyLine = doc.select("#ablum2").select("div.wz").text();
-			if (StringUtils.isBlank(video.getStoryLine())) {
-				video.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
+			if (StringUtils.isBlank(comic.getStoryLine())) {
+				comic.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
 			}
 
 			// 作者， 年份， 类型等信息
 			// 动漫名称
 			String name = doc.select("div.right div.blockRA h2 span").text();
-			if (StringUtils.isNotBlank(name) && !video.getName().contains(name)) {
+			if (StringUtils.isNotBlank(name) && !comic.getName().contains(name)) {
 				logger.error(
-						"{}name from episode(net) is different with video, nameFromEpisoceNet = {}, nameFromVideo={}",
-						new Object[] { COMIC_SOHU_EPISODE, name, video.getName() });
+						"{}name from episode(net) is different with comic, nameFromEpisoceNet = {}, nameFromComic={}",
+						new Object[] { COMIC_SOHU_EPISODE, name, comic.getName() });
 			}
 
 			StringBuffer buf = new StringBuffer();
@@ -122,8 +122,8 @@ public class SohuEpisodeCollectService extends BaseTask {
 				buf.append(authorEtc).append("<br/>"); // 加上<br/>, 以便在页面上显示换行效果;
 			}
 
-			video.setAuthor(AppHelper.subString(buf.toString(), AppConfig.TITLE_MAX_LENGTH, "..."));
-			videoDao.udpate(video);
+			comic.setAuthor(AppHelper.subString(buf.toString(), AppConfig.TITLE_MAX_LENGTH, "..."));
+			comicDao.udpate(comic);
 
 			// 播放页url， 分集截图，集数等
 			Element div = doc.select("div.similarLists").first();
@@ -131,8 +131,8 @@ public class SohuEpisodeCollectService extends BaseTask {
 				div = doc.select("#similarLists").first();
 			}
 			if (div == null) {
-				logger.error(COMIC_SOHU_EPISODE + "collect episodes fail, as element is null. video = "
-						+ JacksonUtil.encodeQuietly(video));
+				logger.error(COMIC_SOHU_EPISODE + "collect episodes fail, as element is null. comic = "
+						+ JacksonUtil.encodeQuietly(comic));
 				return;
 			}
 
@@ -140,27 +140,27 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(liElements.size());
 			for (final Element ele : liElements) {
-				Future<Boolean> future = parseEpisodeAsync(video, titleMap, ele);
+				Future<Boolean> future = parseEpisodeAsync(comic, titleMap, ele);
 				futureList.add(future);
 			}
 
 			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_SOHU_EPISODE + "collectEpisodeFromListPage";
-			String partLog = String.format("videoId = %s, videoName = %s, liElementsSize = %s, futureListSize = %s",
-					video.getId(), video.getName(), liElements.size(), futureList.size());
+			String partLog = String.format("comicId = %s, comicName = %s, liElementsSize = %s, futureListSize = %s",
+					comic.getId(), comic.getName(), liElements.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(
-					COMIC_SOHU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
+					COMIC_SOHU_EPISODE + "collectEpisodeFromListPage fail. comic : " + JacksonUtil.encodeQuietly(comic),
 					e);
 		}
 	}
 
-	private Future<Boolean> parseEpisodeAsync(final Video video, final Map<Integer, String> titleMap, final Element ele) {
+	private Future<Boolean> parseEpisodeAsync(final Comic comic, final Map<Integer, String> titleMap, final Element ele) {
 		Future<Boolean> future = episodeThreadPool.submit(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				parseEpisode(video, titleMap, ele);
+				parseEpisode(comic, titleMap, ele);
 				return true;
 			}
 		});
@@ -168,7 +168,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 		return future;
 	}
 
-	private void parseEpisode(Video video, Map<Integer, String> titleMap, Element ele) {
+	private void parseEpisode(Comic comic, Map<Integer, String> titleMap, Element ele) {
 		try {
 			String episodeNoStrText = ele.select("a").last().text();
 			String playPageUrl = ele.select("a").last().attr("href");
@@ -191,30 +191,29 @@ public class SohuEpisodeCollectService extends BaseTask {
 			if (StringUtils.isBlank(episodeNoStr)) {
 				// 没有集数, 并且没有播放url, 则不处理(有可能是预告信息)
 				if (StringUtils.isBlank(playPageUrl)) {
-					logger.error("{}parseEpisode fail. episodeNo is blank. video : {}", COMIC_SOHU_EPISODE,
-							JacksonUtil.encodeQuietly(video));
+					logger.error("{}parseEpisode fail. episodeNo is blank. comic : {}", COMIC_SOHU_EPISODE,
+							JacksonUtil.encodeQuietly(comic));
 					return;
 				}
 				episodeNoStr = "1"; // 没有集数, 则默认为1集
 			}
 
 			Integer episodeNo = Integer.parseInt(episodeNoStr);
-			String fileUrl = parseVideoFileUrl(playPageUrl);
+			String fileUrl = parseComicFileUrl(playPageUrl);
 
-			VideoEpisode episodeFromNet = new VideoEpisode();
-			episodeFromNet.setVideoId(video.getId());
-			episodeFromNet.setSnapshotUrl(snapshotUrl);
-			episodeFromNet.setPlayPageUrl(playPageUrl);
+			ComicEpisode episodeFromNet = new ComicEpisode();
+			episodeFromNet.setComicId(comic.getId());
+			episodeFromNet.setReadPageUrl(playPageUrl);
 			episodeFromNet.setEpisodeNo(episodeNo);
-			episodeFromNet.setFileUrl(fileUrl);
+			episodeFromNet.setPicUrls(fileUrl);
 			episodeFromNet.setTitle(titleMap.get(episodeNo));
 
-			VideoEpisode episodeFromDb = videoEpisodeDao.findByVideoIdEpisodeNo(video.getId(),
+			ComicEpisode episodeFromDb = comicEpisodeDao.findByComicIdEpisodeNo(comic.getId(),
 					episodeFromNet.getEpisodeNo());
 			if (episodeFromDb == null) {
-				videoEpisodeDao.save(episodeFromNet);
+				comicEpisodeDao.save(episodeFromNet);
 				if (logger.isDebugEnabled()) {
-					logger.debug("{}add video episode : {}", COMIC_SOHU_EPISODE, JacksonUtil.encode(episodeFromNet));
+					logger.debug("{}add comic episode : {}", COMIC_SOHU_EPISODE, JacksonUtil.encode(episodeFromNet));
 				}
 				return;
 			}
@@ -222,12 +221,12 @@ public class SohuEpisodeCollectService extends BaseTask {
 			boolean isSame = BeanUtil.isFieldsValueSame(episodeFromNet, episodeFromDb, episodeCompareFieldNames, null);
 			if (!isSame) {
 				episodeFromNet.setId(episodeFromDb.getId()); // 主键id
-				videoEpisodeDao.udpate(episodeFromNet); // 不同则更新
-				logger.info("{}update video episode : \r\n OLD : {}\r\n NEW : {}", new Object[] { COMIC_SOHU_EPISODE,
+				comicEpisodeDao.udpate(episodeFromNet); // 不同则更新
+				logger.info("{}update comic episode : \r\n OLD : {}\r\n NEW : {}", new Object[] { COMIC_SOHU_EPISODE,
 						JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
 			}
 		} catch (Exception e) {
-			logger.error(COMIC_SOHU_EPISODE + "parseEpisode fail. video : " + JacksonUtil.encodeQuietly(video), e);
+			logger.error(COMIC_SOHU_EPISODE + "parseEpisode fail. comic : " + JacksonUtil.encodeQuietly(comic), e);
 		}
 	}
 
@@ -238,16 +237,16 @@ public class SohuEpisodeCollectService extends BaseTask {
 	 * @return	视频url
 	 * @throws IOException
 	 */
-	private String parseVideoFileUrl(String playPageUrl) throws IOException {
+	private String parseComicFileUrl(String playPageUrl) throws IOException {
 		Document doc = JsoupUtil.connect(playPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, COMIC_SOHU_EPISODE,
 				ReferrerUtil.SOHU);
 		if (doc == null) {
 			return null;
 		}
 
-		String fileUrl = doc.select("meta[property=og:videosrc]").attr("content");
+		String fileUrl = doc.select("meta[property=og:comicsrc]").attr("content");
 		if (StringUtils.isBlank(fileUrl)) {
-			fileUrl = doc.select("meta[property=og:video]").attr("content");
+			fileUrl = doc.select("meta[property=og:comic]").attr("content");
 		}
 		return fileUrl;
 	}

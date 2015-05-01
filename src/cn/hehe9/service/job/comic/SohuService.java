@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import cn.hehe9.common.constants.ComConstant;
-import cn.hehe9.common.constants.VideoSourceName;
+import cn.hehe9.common.constants.ComicSourceName;
 import cn.hehe9.common.utils.JacksonUtil;
-import cn.hehe9.persistent.entity.Video;
-import cn.hehe9.persistent.entity.VideoSource;
-import cn.hehe9.service.biz.VideoService;
-import cn.hehe9.service.biz.VideoSourceService;
+import cn.hehe9.persistent.entity.Comic;
+import cn.hehe9.persistent.entity.ComicSource;
+import cn.hehe9.service.biz.ComicService;
+import cn.hehe9.service.biz.ComicSourceService;
 import cn.hehe9.service.job.base.BaseTask;
 
 @Component
@@ -28,16 +28,16 @@ public class SohuService extends BaseTask {
 	private static final Logger logger = LoggerFactory.getLogger(SohuComicCollectService.class);
 
 	@Resource
-	private SohuComicCollectService sohuVideoCollectService;
+	private SohuComicCollectService sohuComicCollectService;
 
 	@Resource
 	private SohuEpisodeCollectService sohuEpisodeCollectService;
 
 	@Resource
-	private VideoSourceService videoSourceService;
+	private ComicSourceService comicSourceService;
 
 	@Resource
-	private VideoService videoService;
+	private ComicService comicService;
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();
@@ -49,40 +49,40 @@ public class SohuService extends BaseTask {
 
 	public void collectEpisode() {
 		int page = 1;
-		String sourceName = VideoSourceName.SOHU.getName();
-		VideoSource source = videoSourceService.findByName(sourceName);
+		String sourceName = ComicSourceName.SOHU.getName();
+		ComicSource source = comicSourceService.findByName(sourceName);
 		if (source == null) {
 			logger.error("{}source is null. sourceName = " + sourceName);
 			return;
 		}
 
 		while (true) {
-			List<Video> videoList = videoService.listExceptBigData(source.getId(), page, QUERY_COUNT_PER_TIME);
-			if (CollectionUtils.isEmpty(videoList)) {
+			List<Comic> comicList = comicService.listExceptBigData(source.getId(), page, QUERY_COUNT_PER_TIME);
+			if (CollectionUtils.isEmpty(comicList)) {
 				return;
 			}
 
-			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(videoList.size());
-			for (Video video : videoList) {
-				Future<Boolean> future = collectEpisodeFromListPageAsync(video);
+			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(comicList.size());
+			for (Comic comic : comicList) {
+				Future<Boolean> future = collectEpisodeFromListPageAsync(comic);
 				futureList.add(future);
 			}
 
 			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_SOHU_JOB + "collectEpisode";
-			String partLog = String.format("sourceId = %s, page = %s, videoListSize = %s, futureListSize = %s",
-					source.getId(), page, videoList.size(), futureList.size());
+			String partLog = String.format("sourceId = %s, page = %s, comicListSize = %s, futureListSize = %s",
+					source.getId(), page, comicList.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			page++;
 		}
 	}
 
-	private Future<Boolean> collectEpisodeFromListPageAsync(final Video video) {
+	private Future<Boolean> collectEpisodeFromListPageAsync(final Comic comic) {
 		Future<Boolean> future = threadPool.submit(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				sohuEpisodeCollectService.collectEpisodeFromListPage(video);
+				sohuEpisodeCollectService.collectEpisodeFromListPage(comic);
 				return true;
 			}
 		});
@@ -92,19 +92,19 @@ public class SohuService extends BaseTask {
 	/**
 	 * 从第三方平台采集视频
 	 */
-	public void collectVideosFromSource() {
-		VideoSource source = null;
+	public void collectComicsFromSource() {
+		ComicSource source = null;
 		try {
-			String sourceName = VideoSourceName.SOHU.getName();
-			source = videoSourceService.findByName(sourceName);
+			String sourceName = ComicSourceName.SOHU.getName();
+			source = comicSourceService.findByName(sourceName);
 			if (source == null) {
 				logger.error("{}source is null. sourceName = " + sourceName);
 				return;
 			}
 
-			sohuVideoCollectService.collect(source);
+			sohuComicCollectService.collect(source);
 		} catch (Exception e) {
-			logger.error(COMIC_SOHU_JOB + "collectVideosFromSource fail, source = " + JacksonUtil.encodeQuietly(source), e);
+			logger.error(COMIC_SOHU_JOB + "collectComicsFromSource fail, source = " + JacksonUtil.encodeQuietly(source), e);
 		}
 	}
 }
