@@ -90,6 +90,10 @@ public class TencentComicCollectService extends BaseTask {
 			}
 
 			Elements liEles = doc.select(".ret-search-item");
+			if(CollectionUtils.isEmpty(liEles)){
+				logger.error("{}ret-search-item Li elements not found, return. collectPageUrlAdded = {}", COMIC_TENCENT_COMIC, collectPageUrlAdded);
+				return;
+			}
 
 			// 分别比较每部漫画的信息
 			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(liEles.size());
