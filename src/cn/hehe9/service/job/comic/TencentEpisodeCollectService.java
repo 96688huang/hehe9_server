@@ -139,7 +139,7 @@ public class TencentEpisodeCollectService extends BaseTask {
 			episodeFromNet.setComicId(comic.getId());
 			episodeFromNet.setTitle(title);
 			episodeFromNet.setEpisodeNo(Integer.parseInt(episodeNo));
-			episodeFromNet.setReadPageUrl(readPageUrl);
+			episodeFromNet.setReadPageUrl(AppHelper.addRootUrlIfNeeded(readPageUrl, comic.getRootUrl()));
 			
 			ComicEpisode episodeFromDb = comicEpisodeDao.findByComicIdEpisodeNo(episodeFromNet.getComicId(),
 					episodeFromNet.getEpisodeNo());

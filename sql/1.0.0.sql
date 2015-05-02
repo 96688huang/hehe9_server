@@ -99,7 +99,7 @@ CREATE TABLE `comic_episode` (
   `title` varchar(255) DEFAULT NULL COMMENT '分集标题',
   `episode_no` int(11) NOT NULL DEFAULT '1' COMMENT '第几集',
   `read_page_url` varchar(255) DEFAULT NULL COMMENT '阅读页面url',
-  `pic_urls` varchar(255) NOT NULL COMMENT '图片url,多张时以`号分隔',
+  `pic_urls` varchar(255) DEFAULT NULL COMMENT '图片url,多张时以`号分隔',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',

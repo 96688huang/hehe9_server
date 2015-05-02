@@ -64,6 +64,7 @@ public class TencentService extends BaseTask {
 
 			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(comicList.size());
 			for (Comic comic : comicList) {
+				comic.setRootUrl(source.getRootUrl());
 				Future<Boolean> future = collectEpisodeFromListPageAsync(comic);
 				futureList.add(future);
 			}
