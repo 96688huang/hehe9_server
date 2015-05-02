@@ -43,7 +43,7 @@ public class SohuService extends BaseTask {
 	private int processCount = Runtime.getRuntime().availableProcessors();
 	private ExecutorService threadPool = Executors.newFixedThreadPool(processCount + 1);
 
-	private static final String SOHU_JOB = ComConstant.LogPrefix.SOHU_JOB;
+	private static final String SOHU_JOB = ComConstant.LogPrefix.VIDEO_SOHU_JOB;
 
 	private static final int QUERY_COUNT_PER_TIME = 500;
 

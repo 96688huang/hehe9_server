@@ -43,7 +43,7 @@ public class YoukuService extends BaseTask {
 	private int processCount = Runtime.getRuntime().availableProcessors();
 	private ExecutorService threadPool = Executors.newFixedThreadPool(processCount);
 
-	private static final String YOUKU_JOB = ComConstant.LogPrefix.YOUKU_JOB;
+	private static final String YOUKU_JOB = ComConstant.LogPrefix.VIDEO_YOUKU_JOB;
 
 	private static final int QUERY_COUNT_PER_TIME = 500;
 

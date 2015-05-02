@@ -17,6 +17,8 @@
 
 	<!-- 定时任务配置 -->
 	<task:scheduled-tasks>
+		<task:scheduled ref="tencentComicCollectJob" method="executeJob"
+			cron="0 43 23 * * ?" />
 		<task:scheduled ref="sohuCollectJob" method="executeJob"
 			cron="0 38 12 * * ?" />
 		<task:scheduled ref="youkuCollectJob" method="executeJob"

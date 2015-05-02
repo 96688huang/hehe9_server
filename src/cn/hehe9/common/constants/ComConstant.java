@@ -19,16 +19,16 @@ public class ComConstant {
 	 * 日志前缀
 	 */
 	public static class LogPrefix {
-		public static final String COMIC_SOHU_JOB = "[ COMIC - SOHU JOB ] ";
-		public static final String COMIC_SOHU_COMIC = "[ COMIC - SOHU COMIC ] ";
-		public static final String COMIC_SOHU_EPISODE = "[ COMIC - SOHU EPISODE ] ";
+		public static final String COMIC_TENCENT_JOB = "[ COMIC - TENCENT JOB ] ";
+		public static final String COMIC_TENCENT_COMIC = "[ COMIC - TENCENT COMIC ] ";
+		public static final String COMIC_TENCENT_EPISODE = "[ COMIC - TENCENT EPISODE ] ";
 		
-		public static final String SOHU_JOB = "[ SOHU JOB ] ";
-		public static final String SOHU_VIDEO = "[ SOHU VIDEO ] ";
-		public static final String SOHU_EPISODE = "[ SOHU EPISODE ] ";
+		public static final String VIDEO_SOHU_JOB = "[ VIDEO - SOHU JOB ] ";
+		public static final String VIDEO_SOHU_VIDEO = "[ VIDEO - SOHU VIDEO ] ";
+		public static final String VIDEO_SOHU_EPISODE = "[ VIDEO - SOHU EPISODE ] ";
 		
-		public static final String YOUKU_JOB = "[ YOUKU JOB ] ";
-		public static final String YOUKU_VIDEO = "[ YOUKU VIDEO ] ";
-		public static final String YOUKU_EPISODE = "[ YOUKU EPISODE ] ";
+		public static final String VIDEO_YOUKU_JOB = "[ VIDEO - YOUKU JOB ] ";
+		public static final String VIDEO_YOUKU_VIDEO = "[ VIDEO - YOUKU VIDEO ] ";
+		public static final String VIDEO_YOUKU_EPISODE = "[ VIDEO - YOUKU EPISODE ] ";
 	}
 }

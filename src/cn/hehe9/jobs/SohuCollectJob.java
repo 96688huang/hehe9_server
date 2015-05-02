@@ -14,7 +14,7 @@ public class SohuCollectJob extends AbstractJob {
 
 	private final static Logger logger = LoggerFactory.getLogger(SohuCollectJob.class);
 
-	private final static String SOHU_JOB = ComConstant.LogPrefix.SOHU_JOB;
+	private final static String SOHU_JOB = ComConstant.LogPrefix.VIDEO_SOHU_JOB;
 
 	@Resource
 	private SohuService sohuService;

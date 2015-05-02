@@ -22,4 +22,10 @@ public class AppHelper {
 	public static String subString(String content, int startIndex, int endIndex, String suffix) {
 		return StringUtils.substring(content, startIndex, endIndex) + suffix;
 	}
+
+	public static String addRootUrlIfNeeded(String pageUrl, String rootUrl) {
+		pageUrl = pageUrl.contains(rootUrl) ? pageUrl
+				: (rootUrl + (!pageUrl.startsWith("/") ? "/" + pageUrl : pageUrl));
+		return pageUrl;
+	}
 }

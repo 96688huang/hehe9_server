@@ -14,7 +14,7 @@ public class YoukuCollectJob extends AbstractJob {
 
 	private final static Logger logger = LoggerFactory.getLogger(YoukuCollectJob.class);
 
-	private final static String YOUKU_JOB = ComConstant.LogPrefix.YOUKU_JOB;
+	private final static String YOUKU_JOB = ComConstant.LogPrefix.VIDEO_YOUKU_JOB;
 
 	@Resource
 	private YoukuService youkuService;

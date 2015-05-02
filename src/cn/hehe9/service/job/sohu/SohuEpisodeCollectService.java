@@ -44,7 +44,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 	@Resource
 	private VideoEpisodeDao videoEpisodeDao;
 
-	private static final String SOHU_EPISODE = ComConstant.LogPrefix.SOHU_EPISODE;
+	private static final String SOHU_EPISODE = ComConstant.LogPrefix.VIDEO_SOHU_EPISODE;
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();

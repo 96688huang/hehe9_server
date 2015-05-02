@@ -24,14 +24,14 @@ import cn.hehe9.service.biz.ComicSourceService;
 import cn.hehe9.service.job.base.BaseTask;
 
 @Component
-public class SohuService extends BaseTask {
-	private static final Logger logger = LoggerFactory.getLogger(SohuComicCollectService.class);
+public class TencentService extends BaseTask {
+	private static final Logger logger = LoggerFactory.getLogger(TencentComicCollectService.class);
 
 	@Resource
-	private SohuComicCollectService sohuComicCollectService;
+	private TencentComicCollectService tencentComicCollectService;
 
 	@Resource
-	private SohuEpisodeCollectService sohuEpisodeCollectService;
+	private TencentEpisodeCollectService tencentEpisodeCollectService;
 
 	@Resource
 	private ComicSourceService comicSourceService;
@@ -43,13 +43,13 @@ public class SohuService extends BaseTask {
 	private int processCount = Runtime.getRuntime().availableProcessors();
 	private ExecutorService threadPool = Executors.newFixedThreadPool(processCount + 1);
 
-	private static final String COMIC_SOHU_JOB = ComConstant.LogPrefix.COMIC_SOHU_JOB;
+	private static final String COMIC_TENCENT_JOB = ComConstant.LogPrefix.COMIC_TENCENT_JOB;
 
 	private static final int QUERY_COUNT_PER_TIME = 500;
 
 	public void collectEpisode() {
 		int page = 1;
-		String sourceName = ComicSourceName.SOHU.getName();
+		String sourceName = ComicSourceName.TENCENT.getName();
 		ComicSource source = comicSourceService.findByName(sourceName);
 		if (source == null) {
 			logger.error("{}source is null. sourceName = " + sourceName);
@@ -69,7 +69,7 @@ public class SohuService extends BaseTask {
 			}
 
 			// 等待检查 future task 是否完成
-			String prefixLog = COMIC_SOHU_JOB + "collectEpisode";
+			String prefixLog = COMIC_TENCENT_JOB + "collectEpisode";
 			String partLog = String.format("sourceId = %s, page = %s, comicListSize = %s, futureListSize = %s",
 					source.getId(), page, comicList.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
@@ -82,7 +82,7 @@ public class SohuService extends BaseTask {
 		Future<Boolean> future = threadPool.submit(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				sohuEpisodeCollectService.collectEpisodeFromListPage(comic);
+				tencentEpisodeCollectService.collectEpisodeFromListPage(comic);
 				return true;
 			}
 		});
@@ -95,16 +95,16 @@ public class SohuService extends BaseTask {
 	public void collectComicsFromSource() {
 		ComicSource source = null;
 		try {
-			String sourceName = ComicSourceName.SOHU.getName();
+			String sourceName = ComicSourceName.TENCENT.getName();
 			source = comicSourceService.findByName(sourceName);
 			if (source == null) {
 				logger.error("{}source is null. sourceName = " + sourceName);
 				return;
 			}
 
-			sohuComicCollectService.collect(source);
+			tencentComicCollectService.collect(source);
 		} catch (Exception e) {
-			logger.error(COMIC_SOHU_JOB + "collectComicsFromSource fail, source = " + JacksonUtil.encodeQuietly(source), e);
+			logger.error(COMIC_TENCENT_JOB + "collectComicsFromSource fail, source = " + JacksonUtil.encodeQuietly(source), e);
 		}
 	}
 }

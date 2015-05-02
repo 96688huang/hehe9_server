@@ -40,7 +40,7 @@ public class SohuVideoCollectService extends BaseTask {
 	@Resource
 	private VideoDao videoDao;
 
-	private static final String SOHU_VIDEO = ComConstant.LogPrefix.SOHU_VIDEO;
+	private static final String SOHU_VIDEO = ComConstant.LogPrefix.VIDEO_SOHU_VIDEO;
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();

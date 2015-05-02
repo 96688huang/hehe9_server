@@ -39,7 +39,7 @@ public class YoukuVideoCollectService extends BaseTask {
 	@Resource
 	private VideoDao videoDao;
 
-	private static final String YOUKU_VIDEO = ComConstant.LogPrefix.YOUKU_VIDEO;
+	private static final String YOUKU_VIDEO = ComConstant.LogPrefix.VIDEO_YOUKU_VIDEO;
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();

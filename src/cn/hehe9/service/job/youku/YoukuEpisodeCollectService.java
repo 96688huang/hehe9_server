@@ -56,7 +56,7 @@ public class YoukuEpisodeCollectService extends BaseTask {
 	@Resource
 	private VideoEpisodeDao videoEpisodeDao;
 
-	private static final String YOUKU_EPISODE = ComConstant.LogPrefix.YOUKU_EPISODE;
+	private static final String YOUKU_EPISODE = ComConstant.LogPrefix.VIDEO_YOUKU_EPISODE;
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();

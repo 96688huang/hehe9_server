@@ -81,8 +81,8 @@ public class QqCartoonParser {
 			Element a = spanItem.select("a").first();
 			String title = a.text();
 			String episodeNo = StringUtil.pickInteger(title.split(" ")[0]);
-			String watchUrl = a.attr("href");
-			System.out.println(episodeNo + "  " + title + "  " + watchUrl);
+			String readPageUrl = a.attr("href");
+			System.out.println(episodeNo + "  " + title + "  " + readPageUrl);
 		}
 	}
 	

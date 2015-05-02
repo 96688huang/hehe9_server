@@ -4,7 +4,7 @@ package cn.hehe9.common.constants;
  * 视频来源类型
  */
 public enum ComicSourceName {
-	SOHU(1, "搜狐"), YOUKU(2, "优酷");
+	TENCENT(1, "腾讯");
 
 	private int id;
 	private String name;
