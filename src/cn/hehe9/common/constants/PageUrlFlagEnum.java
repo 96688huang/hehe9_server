@@ -15,7 +15,10 @@ public enum PageUrlFlagEnum {
 	MAIN_PAGE("toMain"),
 
 	/** 视频列表页面 */
-	LIST_PAGE("toList"),
+	VIDEO_LIST_PAGE("toList"),
+	
+	/** 视频列表页面 */
+	COMIC_LIST_PAGE("toComicList"),
 
 	/** 分集列表页面 */
 	EPISODE_LIST_PAGE("toEpisodeList"),

@@ -27,9 +27,11 @@ import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.utils.JsoupUtil;
+import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
 import cn.hehe9.service.biz.CacheService;
+import cn.hehe9.service.biz.ComicService;
 import cn.hehe9.service.biz.VideoEpisodeService;
 import cn.hehe9.service.biz.VideoService;
 
@@ -51,6 +53,9 @@ public class VideoAction extends ActionSupport {
 
 	@Resource
 	private VideoService videoService;
+	
+	@Resource
+	private ComicService comicService;
 
 	@Resource
 	private VideoEpisodeService videoEpisodeService;
@@ -82,6 +87,9 @@ public class VideoAction extends ActionSupport {
 
 	/** 字母菜单 */
 	private Map<String, Set<String>> letterMenuVideoMap;
+	
+	/** 字母漫画菜单 */
+	private Map<String, Set<String>> letterMenuComicMap;
 
 	/** 自动请求首页的标识 */
 	private static final AtomicBoolean isRequestingIndex = new AtomicBoolean(false);
@@ -96,6 +104,13 @@ public class VideoAction extends ActionSupport {
 			letterMenuVideoMap.put(letter, new LinkedHashSet<String>(32));
 		}
 		letterMenuVideoMap.put(ComConstant.OTHER_CNS, new LinkedHashSet<String>());
+		
+		// 初始化菜单漫画容器
+		letterMenuComicMap = new LinkedHashMap<String, Set<String>>(ComConstant.LETTERS.length + 1);
+		for (String letter : ComConstant.LETTERS) {
+			letterMenuComicMap.put(letter, new LinkedHashSet<String>(32));
+		}
+		letterMenuComicMap.put(ComConstant.OTHER_CNS, new LinkedHashSet<String>());
 	}
 
 	public String toMain() throws Exception {
@@ -120,6 +135,9 @@ public class VideoAction extends ActionSupport {
 
 		// 字母菜单视频
 		initLetterVideos();
+		
+		// 字母菜单漫画
+		initLetterComics();
 
 		// 异步请求首页内容, 并保存到缓存中
 		saveIndexCacheAsyncIfNeeded();
@@ -143,6 +161,26 @@ public class VideoAction extends ActionSupport {
 
 			// 删除该元素
 			letterVideoList.remove(0);
+		}
+	}
+	
+	private void initLetterComics() {
+		List<Comic> letterComicList = comicService.listBriefGroupByFirstChar(COUNT_PER_FIRST_CHAR);
+		for (;;) {
+			if (CollectionUtils.isEmpty(letterComicList)) {
+				break;
+			}
+			
+			// 归类
+			Comic comic = letterComicList.get(0);
+			Set<String> groupComics = letterMenuComicMap.get(comic.getFirstChar().toUpperCase());
+			if (groupComics == null) { // 此处只判断null，不要判断是否empty，因为初始化容器时， 是empty。
+				groupComics = letterMenuComicMap.get(ComConstant.OTHER_CNS);
+			}
+			groupComics.add(comic.getName());
+			
+			// 删除该元素
+			letterComicList.remove(0);
 		}
 	}
 
@@ -236,6 +274,14 @@ public class VideoAction extends ActionSupport {
 
 	public void setLetterMenuVideoMap(Map<String, Set<String>> letterMenuVideoMap) {
 		this.letterMenuVideoMap = letterMenuVideoMap;
+	}
+	
+	public Map<String, Set<String>> getLetterMenuComicMap() {
+		return letterMenuComicMap;
+	}
+	
+	public void setLetterMenuComicMap(Map<String, Set<String>> letterMenuComicMap) {
+		this.letterMenuComicMap = letterMenuComicMap;
 	}
 
 	public InputStream getInputStream() {

@@ -10,22 +10,22 @@ package cn.hehe9.common.constants;
  * <br> 创建时间：2015年4月6日 下午2:26:10
  * <br>==========================
  */
-public enum VideoListTitleEnum {
+public enum ComicListTitleEnum {
 	/** 热门动画片 */
-	VIDEOS_HOT("热门动漫片"),
+	VIDEOS_HOT("热门漫画"),
 
 	/** 动画片大全 */
-	VIDEO_BOOK("动漫片大全"),
+	VIDEO_BOOK("漫画大全"),
 	
 	/** 动画片大全 */
-	FIRST_CHAR_VIDEO(" 字母动漫"),
+	FIRST_CHAR_VIDEO(" 字母漫画"),
 
 	/** 搜索结果 */
 	SEARCH_RESULT("搜索结果");
 
 	private String title;
 
-	private VideoListTitleEnum(String title) {
+	private ComicListTitleEnum(String title) {
 		this.title = title;
 	}
 

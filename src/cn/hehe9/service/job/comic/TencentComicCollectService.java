@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,6 +26,7 @@ import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
+import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.ComicDao;
 import cn.hehe9.persistent.entity.Comic;
@@ -159,6 +161,14 @@ public class TencentComicCollectService extends BaseTask {
 			comicFromNet.setTypes(typesBuf.toString());
 			comicFromNet.setStoryLine(storyLine);
 
+			// first char
+			String firstChar = Pinyin4jUtil.getFirstChar(comicFromNet.getName()).toUpperCase();
+			if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
+				comicFromNet.setFirstChar(firstChar);
+			} else {
+				comicFromNet.setFirstChar(ComConstant.OTHER_CNS);
+			}
+			
 			List<Comic> list = comicDao.searchBriefByName(comicFromNet.getSourceId(), comicFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {
 				comicFromNet.setName(AppConfig.getAliasNameIfExist(comicFromNet.getName()));

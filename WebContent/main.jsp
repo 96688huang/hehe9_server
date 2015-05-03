@@ -91,7 +91,7 @@
 									<table style="height: 100%; width: 100%;">
 										<tr>
 											<td width="15px">
-												<div class="menu2_nav_li_l">热门动画</div>
+												<div class="menu2_nav_li_l">热门动漫</div>
 											</td>
 											<td width="5px">&nbsp;</td>
 											<td>
@@ -107,6 +107,34 @@
 														<s:if test="#map.value.size > 0">
 															<a
 																href="javascript:jumpTo('./video/videoListAction!list?firstChar=${map.key }');"><img
+																class="more" src="./img/jian/more.jpg"></a>
+														</s:if>
+														<s:else>
+															<a style="color: gray; font-weight: bold;">无</a>
+														</s:else>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td width="15px">
+												<div class="menu2_nav_li_l">热门漫画</div>
+											</td>
+											<td width="5px">&nbsp;</td>
+											<td>
+												<div class="menu2_nav_li_r">
+													<s:set name="comicList" value="letterMenuComicMap[#map.key ]" />
+													<s:iterator value="comicList" var="comicNameVar"
+														status="videoStatus">
+														<div style="display: inline-block;">
+															<a
+																href="javascript:jumpTo('./video/comicListAction!list?searchName=${comicNameVar }');">${comicNameVar }</a>┊
+														</div>
+													</s:iterator>
+													<div style="display: inline-block;">
+														<s:if test="#comicList.size > 0">
+															<a
+																href="javascript:jumpTo('./video/comicListAction!list?firstChar=${map.key }');"><img
 																class="more" src="./img/jian/more.jpg"></a>
 														</s:if>
 														<s:else>

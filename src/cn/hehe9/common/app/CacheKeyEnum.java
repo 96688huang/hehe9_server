@@ -9,8 +9,12 @@ public enum CacheKeyEnum {
 	/** index_page - 首页 */
 	INDEX_PAGE("index_page", "首页"),
 
-	SOURCE_IDS("source_ids", "来源id"),
+	VIDEO_SOURCE_IDS("video_source_ids", "视频来源id"),
+	
+	COMIC_SOURCE_IDS("comic_source_ids", "漫画来源id"),
 
+	SOURCE_COMICS("source_comics", "按来源分类的漫画列表"),
+	
 	SOURCE_VIDEOS("source_videos", "按来源分类的视频列表");
 
 	private String key;

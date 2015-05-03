@@ -19,6 +19,8 @@ import cn.hehe9.common.cache.CacheEntry;
 import cn.hehe9.common.cache.CacheEntryFactory;
 import cn.hehe9.common.cache.CacheManager;
 import cn.hehe9.common.utils.ListUtil;
+import cn.hehe9.persistent.entity.Comic;
+import cn.hehe9.persistent.entity.ComicSource;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoSource;
 
@@ -35,6 +37,12 @@ public class CacheService {
 
 	@Resource
 	private VideoService videoService;
+
+	@Resource
+	private ComicSourceService comicSourceService;
+	
+	@Resource
+	private ComicService comicService;
 
 	/**
 	 * 保存首页到缓存
@@ -75,7 +83,7 @@ public class CacheService {
 	 *
 	 * @param sourceIdList	来源id列表
 	 */
-	public List<Integer> createSourceIdsCache() {
+	public List<Integer> createVideoSourceIdsCache() {
 		try {
 			List<VideoSource> sourceList = videoSourceService.list();
 			if (CollectionUtils.isEmpty(sourceList)) {
@@ -87,7 +95,7 @@ public class CacheService {
 				return null;
 			}
 
-			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_IDS.getKey());
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.VIDEO_SOURCE_IDS.getKey());
 			entry.setValue(sourceIdList);
 			CacheManager.getInstance().save(entry);
 			return sourceIdList;
@@ -102,9 +110,9 @@ public class CacheService {
 	 *
 	 * @return	来源id列表
 	 */
-	public List<Integer> getSourceIdsCache() {
+	public List<Integer> getVideoSourceIdsCache() {
 		try {
-			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_IDS.getKey());
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.VIDEO_SOURCE_IDS.getKey());
 			return CacheManager.getInstance().get(entry);
 		} catch (Exception e) {
 			logger.error("getSourceIdsCache fail.", e);
@@ -117,11 +125,11 @@ public class CacheService {
 	 *
 	 * @return	来源id列表
 	 */
-	public List<Integer> getOrCreateSourceIdsCache() {
+	public List<Integer> getOrCreateVideoSourceIdsCache() {
 		try {
-			List<Integer> sourceIdList = getSourceIdsCache();
+			List<Integer> sourceIdList = getVideoSourceIdsCache();
 			if (CollectionUtils.isEmpty(sourceIdList)) {
-				sourceIdList = createSourceIdsCache();
+				sourceIdList = createVideoSourceIdsCache();
 			}
 			return sourceIdList;
 		} catch (Exception e) {
@@ -130,6 +138,151 @@ public class CacheService {
 		return null;
 	}
 
+	/**
+	 * 创建来源id到缓存
+	 *
+	 * @param sourceIdList	来源id列表
+	 */
+	public List<Integer> createComicSourceIdsCache() {
+		try {
+			List<ComicSource> sourceList = comicSourceService.list();
+			if (CollectionUtils.isEmpty(sourceList)) {
+				return null;
+			}
+
+			List<Integer> sourceIdList = ListUtil.wrapFieldValueList(sourceList, "id");
+			if (CollectionUtils.isEmpty(sourceIdList)) {
+				return null;
+			}
+
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.VIDEO_SOURCE_IDS.getKey());
+			entry.setValue(sourceIdList);
+			CacheManager.getInstance().save(entry);
+			return sourceIdList;
+		} catch (Exception e) {
+			logger.error("createSourceIdsCache fail.", e);
+		}
+		return null;
+	}
+
+	/**
+	 * 从缓存获取来源id列表
+	 *
+	 * @return	来源id列表
+	 */
+	public List<Integer> getComicSourceIdsCache() {
+		try {
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.VIDEO_SOURCE_IDS.getKey());
+			return CacheManager.getInstance().get(entry);
+		} catch (Exception e) {
+			logger.error("getSourceIdsCache fail.", e);
+		}
+		return null;
+	}
+
+	/**
+	 * 从缓存获取来源id列表, 如果缓存中没有, 则创建并保存到缓存
+	 *
+	 * @return	来源id列表
+	 */
+	public List<Integer> getOrCreateComicSourceIdsCache() {
+		try {
+			List<Integer> sourceIdList = getComicSourceIdsCache();
+			if (CollectionUtils.isEmpty(sourceIdList)) {
+				sourceIdList = createComicSourceIdsCache();
+			}
+			return sourceIdList;
+		} catch (Exception e) {
+			logger.error("getOrCreateSourceIdsCache fail.", e);
+		}
+		return null;
+	}
+
+	/**
+	 * 创建来源视频列表到缓存
+	 *
+	 * @param sourceIdList	来源视频列表
+	 */
+	public List<Comic> createSourceComicsCache(List<Integer> sourceIdList) {
+		try {
+			List<Comic> allComics = comicService.listBrief(1, Short.MAX_VALUE);
+			if (CollectionUtils.isEmpty(allComics)) {
+				return null;
+			}
+
+			// 赋值视频来源名称
+			ActionHelper.setComicSourceName(allComics);
+
+			// {key: sourceId, value: Comic list}
+			Map<Integer, List<Comic>> sourceComicMap = new HashMap<Integer, List<Comic>>(sourceIdList.size());
+			for (Integer sourceId : sourceIdList) {
+				sourceComicMap.put(sourceId, new ArrayList<Comic>(2000));
+			}
+
+			// 按来源分类
+			for (Comic v : allComics) {
+				List<Comic> value = sourceComicMap.get(v.getSourceId());
+				if (value == null) { // 上面已初始化容器, 此处仅判断是否为null
+					logger.error("unexpect error, as comic not match source. comicId = " + v.getId());
+					continue;
+				}
+				value.add(v);
+			}
+
+			// 按来源放入缓存
+			for (Integer sourceId : sourceComicMap.keySet()) {
+				List<Comic> value = sourceComicMap.get(sourceId);
+				CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_VIDEOS.getKey(), sourceId.toString());
+				entry.setValue(value);
+				CacheManager.getInstance().save(entry);
+			}
+			return allComics;
+		} catch (Exception e) {
+			logger.error("createSourceIdsCache fail.", e);
+		}
+		return null;
+	}
+
+	/**
+	 * 从缓存获取来源视频列表
+	 *
+	 * @return	来源视频列表
+	 */
+	public List<Comic> getSourceComicsCache(Integer sourceId) {
+		try {
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_VIDEOS.getKey(), sourceId.toString());
+			return CacheManager.getInstance().get(entry);
+		} catch (Exception e) {
+			logger.error("getSourceComicsCache fail.", e);
+		}
+		return null;
+	}
+
+	/**
+	 * 从缓存获取来源视频列表, 如果缓存中没有, 则创建并保存到缓存
+	 *
+	 * @return	来源视频列表
+	 */
+	public List<Comic> getOrCreateSourceComicsCache(List<Integer> sourceIdList) {
+		try {
+			List<Comic> allComics = new ArrayList<Comic>();
+			for (Integer sourceId : sourceIdList) {
+				List<Comic> sourceComicList = getSourceComicsCache(sourceId);
+				if (CollectionUtils.isNotEmpty(sourceComicList)) {
+					allComics.addAll(sourceComicList);
+				}
+			}
+
+			if (CollectionUtils.isEmpty(allComics)) {
+				allComics = createSourceComicsCache(sourceIdList);
+			}
+			return allComics;
+		} catch (Exception e) {
+			logger.error("getOrCreateSourceIdsCache fail.", e);
+		}
+		return null;
+	}
+	
 	/**
 	 * 创建来源视频列表到缓存
 	 *

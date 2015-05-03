@@ -149,4 +149,8 @@ public class VideoDao {
 		params.put("countPerFirstChar", countPerFirstChar);
 		return videoMapper.listBriefGroupByFirstChar(params);
 	}
+
+	public int deleteById(Integer id) {
+		return videoMapper.deleteByPrimaryKey(id);
+	}
 }

@@ -5,19 +5,9 @@
 	<!-- 指定默认编码集 ，作用于HttpServletRequest的setCharacterEncoding（）和freemarker，vilocity的输出 -->
 	<constant name="struts.configuration.xmlreload" value="true" />
 	<!-- 当struts配置文件修改时是否自动加载 -->
-	<constant name="struts.devMode" value="false" />
+	<constant name="struts.devMode" value="true" />
 	<!-- 开发模式下打印详细的错误信息 -->
 	<constant name="struts.ui.theme" value="xhtml" />
-
-	<package name="user" namespace="/user" extends="struts-default">
-		<action name="user_*" class="userAction" method="{1}">
-			<result name="success" type="redirectAction">user_queryAllUser.action</result>
-			<result name="input">/index.jsp</result>
-			<result name="userList">/userList.jsp</result>
-			<result name="addUser">/userAdd.jsp</result>
-			<result name="updateUser">/userUpdate.jsp</result>
-		</action>
-	</package>
 
 	<package name="video" namespace="/video" extends="struts-default, json-default">
 <!-- 		<global-results>
@@ -33,6 +23,9 @@
 		</action>
 		<action name="videoListAction" class="videoListAction" method="{1}">
 			<result name="toList">/list.jsp</result>
+		</action>
+		<action name="comicListAction" class="comicListAction" method="{1}">
+			<result name="toComicList">/comic_list.jsp</result>
 		</action>
 		<action name="episodeAction" class="videoEpisodeAction"
 			method="{1}">

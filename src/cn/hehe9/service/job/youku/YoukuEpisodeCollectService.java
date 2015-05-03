@@ -201,7 +201,8 @@ public class YoukuEpisodeCollectService extends BaseTask {
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(
-					YOUKU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video), e);
+					YOUKU_EPISODE + "collectEpisodeFromListPage fail. delete video. video : " + JacksonUtil.encodeQuietly(video), e);
+			videoDao.deleteById(video.getId());
 		}
 	}
 

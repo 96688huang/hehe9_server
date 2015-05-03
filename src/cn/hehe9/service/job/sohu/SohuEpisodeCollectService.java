@@ -150,8 +150,9 @@ public class SohuEpisodeCollectService extends BaseTask {
 					video.getId(), video.getName(), liElements.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
-			logger.error(SOHU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
+			logger.error(SOHU_EPISODE + "collectEpisodeFromListPage fail. delete video. video : " + JacksonUtil.encodeQuietly(video),
 					e);
+			videoDao.deleteById(video.getId());
 		}
 	}
 
