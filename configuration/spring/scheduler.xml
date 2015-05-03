@@ -18,10 +18,10 @@
 	<!-- 定时任务配置 -->
 	<task:scheduled-tasks>
 		<task:scheduled ref="tencentComicCollectJob" method="executeJob"
-			cron="0 43 23 * * ?" />
+			cron="0 14 4 * * ?" />
 		<task:scheduled ref="sohuCollectJob" method="executeJob"
-			cron="0 38 12 * * ?" />
+			cron="0 44 4 * * ?" />
 		<task:scheduled ref="youkuCollectJob" method="executeJob"
-			cron="0 20 13 * * ?" />
+			cron="0 30 5 * * ?" />
 	</task:scheduled-tasks> 
 </beans>

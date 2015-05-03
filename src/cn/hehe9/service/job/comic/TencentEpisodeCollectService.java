@@ -71,7 +71,7 @@ public class TencentEpisodeCollectService extends BaseTask {
 				logger.error("{}collect episode from list page fail. comic = {}", COMIC_TENCENT_EPISODE,
 						JacksonUtil.encodeQuietly(comic));
 			}
-			
+
 			Element works_cover_Div = doc.select(".works-cover").first();
 			Element img_a = works_cover_Div.select("a").first();
 			String name = img_a.attr("title");
@@ -82,28 +82,29 @@ public class TencentEpisodeCollectService extends BaseTask {
 			if (StringUtils.isNotBlank(name) && !comic.getName().contains(name)) {
 				logger.error(
 						"{}name from episode(net) is different with comic, nameFromEpisoceNet = {}, nameFromComic={}",
-						new Object[] { COMIC_TENCENT_EPISODE, name,
-								comic.getName() });
+						new Object[] { COMIC_TENCENT_EPISODE, name, comic.getName() });
 			}
-			
-			if(StringUtils.isBlank(comic.getIconUrl())){
+
+			if (StringUtils.isBlank(comic.getIconUrl())) {
 				comic.setIconUrl(iconUrl);
 			}
-			if(StringUtils.isBlank(comic.getStoryLine())){
+			if (StringUtils.isBlank(comic.getStoryLine())) {
 				comic.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
 			}
 			comic.setSerializeStatus(serializeStatus);
 			comicDao.udpate(comic);
-			
+
 			// 分集信息
 			Element chapter_page_all_OL = doc.select("ol").first();
 			Elements works_chapter_item_Spans = chapter_page_all_OL.select(".works-chapter-item");
 			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(works_chapter_item_Spans.size());
+			int episodeNoTmp = 1;
 			for (final Element spanItem : works_chapter_item_Spans) {
-				Future<Boolean> future = parseEpisodeAsync(comic, spanItem);
+				Future<Boolean> future = parseEpisodeAsync(comic, spanItem, episodeNoTmp);
 				futureList.add(future);
+				episodeNoTmp++;
 			}
-
+			
 			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage";
 			String partLog = String.format("comicId = %s, comicName = %s, spanElementsSize = %s, futureListSize = %s",
@@ -111,16 +112,17 @@ public class TencentEpisodeCollectService extends BaseTask {
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(
-					COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail. comic : " + JacksonUtil.encodeQuietly(comic),
-					e);
+					COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail, delete comic. comic : "
+							+ JacksonUtil.encodeQuietly(comic), e);
+			comicDao.deleteBy(comic.getId());
 		}
 	}
 
-	private Future<Boolean> parseEpisodeAsync(final Comic comic, final Element spanItem) {
+	private Future<Boolean> parseEpisodeAsync(final Comic comic, final Element spanItem, final int episodeNoTmp) {
 		Future<Boolean> future = episodeThreadPool.submit(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				parseEpisode(comic, spanItem);
+				parseEpisode(comic, spanItem, episodeNoTmp);
 				return true;
 			}
 		});
@@ -128,19 +130,30 @@ public class TencentEpisodeCollectService extends BaseTask {
 		return future;
 	}
 
-	private void parseEpisode(Comic comic, Element spanItem) {
+	private void parseEpisode(Comic comic, Element spanItem, int episodeNoTmp) {
 		try {
 			ComicEpisode episodeFromNet = new ComicEpisode();
 			Element a = spanItem.select("a").first();
 			String title = a.text();
-			String episodeNo = StringUtil.pickInteger(title.split(" ")[0]);
-			episodeNo = StringUtils.isBlank(episodeNo) ? "1" : episodeNo;
+			Integer episodeNo = 0;
+			String episodeNoStr = StringUtil.pickInteger(title.split(" ")[0]);
+			if (!title.contains(" ") || StringUtils.isBlank(episodeNoStr)) {
+				episodeNo = episodeNoTmp;
+			}
+
+			if (episodeNo == 0) {
+				long tmp = Long.parseLong(episodeNoStr);
+				if (tmp > 10000) { // NOTE: 超过10000， 则用自增分集号
+					episodeNo = episodeNoTmp;
+				}
+			}
+
 			String readPageUrl = a.attr("href");
 			episodeFromNet.setComicId(comic.getId());
 			episodeFromNet.setTitle(title);
-			episodeFromNet.setEpisodeNo(Integer.parseInt(episodeNo));
+			episodeFromNet.setEpisodeNo(episodeNo);
 			episodeFromNet.setReadPageUrl(AppHelper.addRootUrlIfNeeded(readPageUrl, comic.getRootUrl()));
-			
+
 			ComicEpisode episodeFromDb = comicEpisodeDao.findByComicIdEpisodeNo(episodeFromNet.getComicId(),
 					episodeFromNet.getEpisodeNo());
 			if (episodeFromDb == null) {
@@ -155,8 +168,8 @@ public class TencentEpisodeCollectService extends BaseTask {
 			if (!isSame) {
 				episodeFromNet.setId(episodeFromDb.getId()); // 主键id
 				comicEpisodeDao.udpate(episodeFromNet); // 不同则更新
-				logger.info("{}update comic episode : \r\n OLD : {}\r\n NEW : {}", new Object[] { COMIC_TENCENT_EPISODE,
-						JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
+				logger.info("{}update comic episode : \r\n OLD : {}\r\n NEW : {}", new Object[] {
+						COMIC_TENCENT_EPISODE, JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
 			}
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_EPISODE + "parseEpisode fail. comic : " + JacksonUtil.encodeQuietly(comic), e);

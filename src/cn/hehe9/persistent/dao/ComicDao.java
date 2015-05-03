@@ -149,4 +149,12 @@ public class ComicDao {
 		params.put("countPerFirstChar", countPerFirstChar);
 		return comicMapper.listBriefGroupByFirstChar(params);
 	}
+	
+	/**
+	 * 根据ID删除记录
+	 * @param id
+	 */
+	public int deleteBy(Integer id){
+		return comicMapper.deleteByPrimaryKey(id);
+	}
 }
