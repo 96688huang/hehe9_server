@@ -19,7 +19,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class QqCartoonParser {
 	public static void main(String[] args) throws Exception {
-		parseComicEpisodes();
+		parseComic();
 	}
 
 	private static void parseComic() {
@@ -33,7 +33,7 @@ public class QqCartoonParser {
 			Element img_a = liItem.select(".mod-cover-list-thumb").first();
 			String name = img_a.attr("title");
 			String listPageUrl = img_a.attr("href");
-			String iconUrl = img_a.select("img").first().attr("src");
+			String iconUrl = img_a.select("img").first().attr("data-original");
 			String updateRemark = liItem.select(".mod-cover-list-text").first().text();
 			String author = liItem.select(".ret-works-author").first().attr("title");
 			Elements types = liItem.select(".ret-works-tags a");

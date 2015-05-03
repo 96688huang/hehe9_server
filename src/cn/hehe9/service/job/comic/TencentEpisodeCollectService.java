@@ -85,12 +85,10 @@ public class TencentEpisodeCollectService extends BaseTask {
 						new Object[] { COMIC_TENCENT_EPISODE, name, comic.getName() });
 			}
 
-			if (StringUtils.isBlank(comic.getIconUrl())) {
-				comic.setIconUrl(iconUrl);
-			}
 			if (StringUtils.isBlank(comic.getStoryLine())) {
 				comic.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
 			}
+			comic.setIconUrl(iconUrl);
 			comic.setSerializeStatus(serializeStatus);
 			comicDao.udpate(comic);
 

@@ -63,6 +63,8 @@ public class VideoAction extends ActionSupport {
 	private InputStream inputStream;
 
 	private List<List<Video>> hotVideoListHolder;
+	
+	private List<List<Comic>> hotComicListHolder;
 
 	private List<VideoEpisode> hotEpisodeList;
 	private List<Map<Video, List<VideoEpisode>>> hotEpisodeListHolder;
@@ -124,6 +126,9 @@ public class VideoAction extends ActionSupport {
 			}
 		}
 
+		// 最热门的漫画列表
+		initHotComics();
+		
 		// 最热门的视频列表
 		List<Video> hotVideoList = initHotVideos();
 
@@ -195,6 +200,23 @@ public class VideoAction extends ActionSupport {
 		}
 	}
 
+	private List<Comic> initHotComics() {
+		List<Comic> hotComicList = comicService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
+		hotComicListHolder = new ArrayList<List<Comic>>();
+		int count = 0;
+		for (;;) {
+			int preNextCount = count + MAIN_HOT_VIDEOS_COUNT_PER_LINE_;
+			int nextCount = preNextCount > hotComicList.size() ? hotComicList.size() : preNextCount;
+			hotComicListHolder.add(hotComicList.subList(count, nextCount));
+			count = preNextCount;
+			
+			if (nextCount >= hotComicList.size()) {
+				break;
+			}
+		}
+		return hotComicList;
+	}
+	
 	private List<Video> initHotVideos() {
 		List<Video> hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
 		hotVideoListHolder = new ArrayList<List<Video>>();
@@ -242,6 +264,14 @@ public class VideoAction extends ActionSupport {
 
 	public void setHotVideoListHolder(List<List<Video>> hotVideoListHolder) {
 		this.hotVideoListHolder = hotVideoListHolder;
+	}
+	
+	public List<List<Comic>> getHotComicListHolder() {
+		return hotComicListHolder;
+	}
+	
+	public void setHotComicListHolder(List<List<Comic>> hotComicListHolder) {
+		this.hotComicListHolder = hotComicListHolder;
 	}
 
 	public List<VideoEpisode> getHotEpisodeList() {

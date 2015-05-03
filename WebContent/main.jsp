@@ -20,14 +20,14 @@
 			--%>
 			<div id="dmvcd_desk">
 				<div class="ltitle">
-					热门动画片 <a href="javascript:jumpTo('./video/videoListAction!list');">
+					热门动漫 <a href="javascript:jumpTo('./video/videoListAction!list');">
 						<img class="more" src="./img/jian/more.jpg">
 					</a>
 				</div>
 
-				<s:iterator value="hotVideoListHolder" var="videoList">
+				<s:iterator value="hotVideoListHolder" var="videoListVar">
 					<ul id="indexcartoonList">
-						<s:iterator value="videoList">
+						<s:iterator value="videoListVar">
 							<li><a
 								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
 								title="${name} ${updateRemark}" target="_blank"><img
@@ -39,11 +39,7 @@
 					</ul>
 				</s:iterator>
 			</div>
-			<%-- 
-			<div class="itabg">
-			</div>
-			--%>
-
+			
 			<s:iterator value="hotEpisodeListHolder" var="episodeMap">
 				<s:iterator value="episodeMap" id="map">
 					<div class="index_downrank">
@@ -67,6 +63,32 @@
 					</div>
 				</s:iterator>
 			</s:iterator>
+			
+			<div id="dmvcd_desk">
+				<div class="ltitle">
+					热门漫画 <a href="javascript:jumpTo('./video/comicListAction!list');">
+						<img class="more" src="./img/jian/more.jpg">
+					</a>
+				</div>
+
+				<s:iterator value="hotComicListHolder" var="comicListVar">
+					<ul id="indexcartoonList">
+						<s:iterator value="comicListVar">
+							<li><a
+								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
+								title="${name} ${updateRemark}" target="_blank"><img
+									alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
+								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
+								title="${name} ${updateRemark}" target="_blank"><font
+									color="#FF0000">${name}</font></a></li>
+						</s:iterator>
+					</ul>
+				</s:iterator>
+			</div>
+			<%-- 
+			<div class="itabg">
+			</div>
+			--%>
 
 			<!-- 字母下拉菜单 -->
 			<div id="dmvcd_desk">
@@ -90,8 +112,8 @@
 								<div class="menu2_nav_li">
 									<table style="height: 100%; width: 100%;">
 										<tr>
-											<td width="15px">
-												<div class="menu2_nav_li_l">热门动漫</div>
+											<td width="10px">
+												<div class="menu2_nav_li_l">视&nbsp;&nbsp;频</div>
 											</td>
 											<td width="5px">&nbsp;</td>
 											<td>
@@ -117,8 +139,8 @@
 											</td>
 										</tr>
 										<tr>
-											<td width="15px">
-												<div class="menu2_nav_li_l">热门漫画</div>
+											<td width="10px">
+												<div class="menu2_nav_li_l">漫&nbsp;&nbsp;画</div>
 											</td>
 											<td width="5px">&nbsp;</td>
 											<td>

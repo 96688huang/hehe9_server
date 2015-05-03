@@ -139,7 +139,8 @@ public class TencentComicCollectService extends BaseTask {
 			Element img_a = liItem.select(".mod-cover-list-thumb").first();
 			String name = img_a.attr("title");
 			String listPageUrl = img_a.attr("href");
-			String iconUrl = img_a.select("img").first().attr("src");
+			// 该 iconUrl 已做防盗链处理，故不读取。
+//			String iconUrl = img_a.select("img").first().attr("data-original");
 			String updateRemark = liItem.select(".mod-cover-list-text").first().text();
 			String author = liItem.select(".ret-works-author").first().attr("title");
 			Elements types = liItem.select(".ret-works-tags a");
@@ -155,7 +156,7 @@ public class TencentComicCollectService extends BaseTask {
 			comicFromNet.setSourceId(sourceId);
 			comicFromNet.setName(name);
 			comicFromNet.setListPageUrl(AppHelper.addRootUrlIfNeeded(listPageUrl, rootUrl));
-			comicFromNet.setIconUrl(iconUrl);
+//			comicFromNet.setIconUrl(iconUrl);
 			comicFromNet.setAuthor(author);
 			comicFromNet.setUpdateRemark(updateRemark);
 			comicFromNet.setTypes(typesBuf.toString());
