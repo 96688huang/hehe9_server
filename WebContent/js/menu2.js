@@ -24,6 +24,7 @@ var setMainNav = function () {
 	for (var i = 0; i < aGameHover.length; i++) {
 		aGameHover[i].index = i;
 		aGameHover[i].onmouseover = function () {
+			
 			this.className += " "+"game_hover_current";
 			for (var j = 0; j < aHoverCont.length; j++) {
 				aHoverCont[j].index_j = j;

@@ -20,7 +20,8 @@
 			--%>
 			<div id="dmvcd_desk">
 				<div class="ltitle">
-					热门动漫 <a href="javascript:jumpTo('./video/videoListAction!list');">
+					<img alt="" src="./img/mine/movie_icon.png">&nbsp;&nbsp;热门动漫
+					 <a href="javascript:jumpTo('./video/videoListAction!list');">
 						<img class="more" src="./img/jian/more.jpg">
 					</a>
 				</div>
@@ -71,7 +72,8 @@
 			
 			<div id="dmvcd_desk">
 				<div class="ltitle">
-					热门漫画 <a href="javascript:jumpTo('./video/comicListAction!list');">
+					<img alt="" src="./img/mine/book_icon.png">&nbsp;&nbsp;热门漫画
+					<a href="javascript:jumpTo('./video/comicListAction!list');">
 						<img class="more" src="./img/jian/more.jpg">
 					</a>
 				</div>

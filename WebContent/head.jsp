@@ -38,6 +38,5 @@
 	</div>
 </div>
 <!-- jumpForm -->
-<form id="jumpForm" method="post" target="_blank">
-<!-- <input id="resetBtn" type="reset" name="reset" style="display: none;" /> -->
+<form id="jumpForm" name="jumpForm" method="post" target="_blank">
 </form>

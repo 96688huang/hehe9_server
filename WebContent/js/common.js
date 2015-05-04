@@ -6,10 +6,12 @@ function jumpTo(url) {
 	var form = document.getElementById("jumpForm");
 	var urlItem = url.split("?");
 	var params = null;
+	var elementArr = null;
 	if (urlItem.length > 1) {
 		params = urlItem[1];
 		var paramArr = params.split("&");
 		if (paramArr.length > 0) {
+			elementArr = new Array();
 			for (var i = 0; i < paramArr.length; i++) {
 				var keyValue = paramArr[i];
 				var keyValueArr = keyValue.split("=");
@@ -19,17 +21,14 @@ function jumpTo(url) {
 					value = keyValueArr[1];
 				}
 				
-				// 多次点击时， 重用之前的form元素
-				var child = document.getElementById(key);
-				if (child == null || child == undefined) {
-					child = document.createElement("input");
-				}
+				var child = document.createElement("input");
 				child.setAttribute("id", key);
 				child.setAttribute("type", "text");
 				child.setAttribute("name", key);
 				child.setAttribute("value", value);
 				child.setAttribute("hidden", 'true');
-
+				
+				elementArr[i] = child;
 				form.appendChild(child);
 			}
 		}
@@ -37,6 +36,13 @@ function jumpTo(url) {
 
 	form.setAttribute("action", urlItem[0]);
 	form.submit();
+	
+	// form提交后，清空表单元素
+	if(elementArr != null && elementArr.length > 0){
+		for(var i = 0; i < elementArr.length; i++){
+			form.removeChild(elementArr[i]);
+		}
+	}
 }
 
 function onSearch(keyword) {
