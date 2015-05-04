@@ -11,35 +11,36 @@ import org.springframework.stereotype.Controller;
 
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
-import cn.hehe9.persistent.entity.Video;
-import cn.hehe9.persistent.entity.VideoEpisode;
-import cn.hehe9.service.biz.VideoEpisodeService;
-import cn.hehe9.service.biz.VideoService;
+import cn.hehe9.persistent.entity.Comic;
+import cn.hehe9.persistent.entity.ComicEpisode;
+import cn.hehe9.service.biz.ComicEpisodeService;
+import cn.hehe9.service.biz.ComicService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 @Controller
 @Scope("prototype")
-public class VideoEpisodeAction extends ActionSupport {
+public class ComicEpisodeAction extends ActionSupport {
 
 	/**
-	 *	serialVersionUID
+	 * serialVersionUID
+	 *
 	 */
-	private static final long serialVersionUID = 6795352514687692824L;
+	private static final long serialVersionUID = 760585573175136203L;
 
-	private static final Logger logger = LoggerFactory.getLogger(VideoEpisodeAction.class);
-
-	@Resource
-	private VideoService videoService;
+	private static final Logger logger = LoggerFactory.getLogger(ComicEpisodeAction.class);
 
 	@Resource
-	private VideoEpisodeService videoEpisodeService;
+	private ComicService comicService;
 
-	/** 视频id */
-	private Integer videoId;
+	@Resource
+	private ComicEpisodeService comicEpisodeService;
 
-	/** 视频信息 */
-	private Video video;
+	/** 漫画id */
+	private Integer comicId;
+
+	/** 漫画信息 */
+	private Comic comic;
 
 	//	/** 页码 */
 	//	private Integer page = 1;
@@ -56,35 +57,35 @@ public class VideoEpisodeAction extends ActionSupport {
 	private Pagination pagination;
 
 	/** 分集列表 */
-	private List<VideoEpisode> episodeList;
+	private List<ComicEpisode> episodeList;
 
-	private static final String EPISODE_LIST_PAGE = PageUrlFlagEnum.VIDEO_EPISODE_LIST_PAGE.getUrlFlag();
+	private static final String COMIC_EPISODE_LIST_PAGE = PageUrlFlagEnum.COMIC_EPISODE_LIST_PAGE.getUrlFlag();
 
 	public String list() {
 		if (pagination == null) {
 			pagination = new Pagination();
 		}
 
-		video = videoService.findById(videoId);
-		episodeList = videoEpisodeService.list(videoId, pagination.getPage(), pagination.getPageCount());
-		pagination.setTotal(videoEpisodeService.count(videoId));
-		return EPISODE_LIST_PAGE;
+		comic = comicService.findById(comicId);
+		episodeList = comicEpisodeService.list(comicId, pagination.getPage(), pagination.getPageCount());
+		pagination.setTotal(comicEpisodeService.count(comicId));
+		return COMIC_EPISODE_LIST_PAGE;
 	}
 
-	public Integer getVideoId() {
-		return videoId;
+	public Integer getComicId() {
+		return comicId;
 	}
 
-	public void setVideoId(Integer videoId) {
-		this.videoId = videoId;
+	public void setComicId(Integer comicId) {
+		this.comicId = comicId;
 	}
 
-	public Video getVideo() {
-		return video;
+	public Comic getComic() {
+		return comic;
 	}
 
-	public void setVideo(Video video) {
-		this.video = video;
+	public void setComic(Comic comic) {
+		this.comic = comic;
 	}
 
 	//	public Integer getPage() {
@@ -127,11 +128,11 @@ public class VideoEpisodeAction extends ActionSupport {
 		this.pagination = pagination;
 	}
 
-	public List<VideoEpisode> getEpisodeList() {
+	public List<ComicEpisode> getEpisodeList() {
 		return episodeList;
 	}
 
-	public void setEpisodeList(List<VideoEpisode> episodeList) {
+	public void setEpisodeList(List<ComicEpisode> episodeList) {
 		this.episodeList = episodeList;
 	}
 }

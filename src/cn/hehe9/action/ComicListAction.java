@@ -29,8 +29,9 @@ public class ComicListAction extends ActionSupport {
 
 	/**
 	 * serialVersionUID
+	 *
 	 */
-	private static final long serialVersionUID = 5777334391815076701L;
+	private static final long serialVersionUID = -2496736327947639225L;
 
 	private static final Logger logger = LoggerFactory.getLogger(ComicListAction.class);
 
@@ -40,26 +41,26 @@ public class ComicListAction extends ActionSupport {
 	@Resource
 	private CacheService cacheService;
 
-	/** 列表页视频的数量 */
+	/** 列表页漫画的数量 */
 	private final int VIDEOS_COUNT_PER_LINE = 7;
 
 	//--- 请求参数 ----
-	/** 视频名称 */
+	/** 漫画名称 */
 	private String searchName;
-	/** 视频名称首字母 */
+	/** 漫画名称首字母 */
 	private String firstChar;
 
 	//---- 回复参数
 	/** 展示的标题 */
 	private String displayTitle;
 
-	/** 视频列表容器 */
+	/** 漫画列表容器 */
 	private List<List<Comic>> comicListHolder = new ArrayList<List<Comic>>(VIDEOS_COUNT_PER_LINE);;
 
 	/** 分页参数*/
 	private Pagination pagination = new Pagination();
 
-	private static final String LIST_PAGE = PageUrlFlagEnum.VIDEO_LIST_PAGE.getUrlFlag();
+	private static final String COMIC_LIST_PAGE = PageUrlFlagEnum.COMIC_LIST_PAGE.getUrlFlag();
 
 	public String list() {
 		if (StringUtils.isNotBlank(searchName)) {
@@ -96,7 +97,7 @@ public class ComicListAction extends ActionSupport {
 			}
 		}
 		pagination.setTotal(total.get());
-		return LIST_PAGE;
+		return COMIC_LIST_PAGE;
 	}
 
 	private List<Comic> pickComicsFromDb(AtomicInteger total) {
@@ -104,7 +105,7 @@ public class ComicListAction extends ActionSupport {
 		comicList = comicService.findBriefByName(firstChar, searchName, pagination.getPage(),
 				pagination.getQueryCount());
 
-		// 赋值视频来源名称
+		// 赋值漫画来源名称
 		ActionHelper.setComicSourceName(comicList);
 
 		total.set(comicService.countBy(firstChar, searchName));
@@ -144,12 +145,12 @@ public class ComicListAction extends ActionSupport {
 	}
 
 	/**
-	 * 根据需求, 挑选视频
+	 * 根据需求, 挑选漫画
 	 *
-	 * @param total			符合条件的视频总数
-	 * @param queryComics	(查询结果得到的)视频列表
+	 * @param total			符合条件的漫画总数
+	 * @param queryComics	(查询结果得到的)漫画列表
 	 * @param toIndex		要查询到的下标
-	 * @param comic			视频信息
+	 * @param comic			漫画信息
 	 */
 	private void pickComics(AtomicInteger total, List<Comic> queryComics, int toIndex, Comic comic) {
 		if (total.get() < toIndex) {

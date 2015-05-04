@@ -18,17 +18,19 @@ function jumpTo(url) {
 				if (keyValueArr.length > 1) {
 					value = keyValueArr[1];
 				}
-				var new_input = document.createElement("input");
-				new_input.setAttribute("type", "text");
-				new_input.setAttribute("name", key);
-				new_input.setAttribute("value", value);
-				new_input.setAttribute("hidden", 'true');
+				
+				// 多次点击时， 重用之前的form元素
+				var child = document.getElementById(key);
+				if (child == null || child == undefined) {
+					child = document.createElement("input");
+				}
+				child.setAttribute("id", key);
+				child.setAttribute("type", "text");
+				child.setAttribute("name", key);
+				child.setAttribute("value", value);
+				child.setAttribute("hidden", 'true');
 
-				form = document.getElementById("jumpForm");
-				form.appendChild(new_input);
-
-				var br = document.createElement("br");
-				form.appendChild(br);
+				form.appendChild(child);
 			}
 		}
 	}
@@ -63,8 +65,8 @@ window.setInterval(function() {
 }, 10000);
 
 // Scroll page to the bottom
-//$(document).ready(function() {
-//	$('html, body').animate({
-//		scrollTop : $(document).height()
-//	}, 'slow');
-//});
+// $(document).ready(function() {
+// $('html, body').animate({
+// scrollTop : $(document).height()
+// }, 'slow');
+// });

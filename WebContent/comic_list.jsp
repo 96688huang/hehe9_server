@@ -23,7 +23,7 @@
 							<!-- 强制在一行, 靠左展示 -->
 							<ul id="indexcartoonList">
 								<s:iterator value="comicList" status="comicListStatus">
-									<li><a href="javascript:jumpTo('./comic/episodeAction!list?comicId=${id }');"
+									<li><a href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
 										title="${name} ${updateRemark}" target="_blank">
 										<img
 											alt="${name} ${updateRemark}" src="${iconUrl}"></a> 
@@ -32,7 +32,7 @@
 											style="float: left;">&nbsp;${sourceName }</span>&nbsp;
 										<span>${updateRemark}&nbsp;</span></span>
 										<a
-										href="javascript:jumpTo('./comic/episodeAction!list?comicId=${id }');"
+										href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
 										title="${name} ${updateRemark}" target="_blank"><font
 											color="#FF0000">${name}</font></a></li>
 								</s:iterator>

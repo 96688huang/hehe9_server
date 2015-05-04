@@ -31,7 +31,12 @@
 							<li><a
 								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
 								title="${name} ${updateRemark}" target="_blank"><img
-									alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
+									alt="${name} ${updateRemark}" src="${iconUrl}"></a>
+								<span
+								class="icon_bottom_tips">&nbsp;<span
+									style="float: left;">&nbsp;${sourceName }</span>&nbsp;
+								<span>${updateRemark}&nbsp;</span></span>
+								<a
 								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
 								title="${name} ${updateRemark}" target="_blank"><font
 									color="#FF0000">${name}</font></a></li>
@@ -75,10 +80,15 @@
 					<ul id="indexcartoonList">
 						<s:iterator value="comicListVar">
 							<li><a
-								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
+								href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
 								title="${name} ${updateRemark}" target="_blank"><img
-									alt="${name} ${updateRemark}" src="${iconUrl}"></a><a
-								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
+									alt="${name} ${updateRemark}" src="${iconUrl}"></a>
+								<span
+								class="icon_bottom_tips">&nbsp;<span
+									style="float: left;">&nbsp;${sourceName }</span>&nbsp;
+								<span>${updateRemark}&nbsp;</span></span>
+								<a
+								href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
 								title="${name} ${updateRemark}" target="_blank"><font
 									color="#FF0000">${name}</font></a></li>
 						</s:iterator>
@@ -150,13 +160,13 @@
 														status="videoStatus">
 														<div style="display: inline-block;">
 															<a
-																href="javascript:jumpTo('./video/comicListAction!list?searchName=${comicNameVar }');">${comicNameVar }</a>┊
+																href="javascript:jumpTo('./comic/comicListAction!list?searchName=${comicNameVar }');">${comicNameVar }</a>┊
 														</div>
 													</s:iterator>
 													<div style="display: inline-block;">
 														<s:if test="#comicList.size > 0">
 															<a
-																href="javascript:jumpTo('./video/comicListAction!list?firstChar=${map.key }');"><img
+																href="javascript:jumpTo('./comic/comicListAction!list?firstChar=${map.key }');"><img
 																class="more" src="./img/jian/more.jpg"></a>
 														</s:if>
 														<s:else>
@@ -168,20 +178,6 @@
 										</tr>
 									</table>
 								</div>
-								<%-- <div class="menu2_nav_li">
-									<div class="menu2_nav_li_l">高清漫画</div>
-									<div class="menu2_nav_li_r">
-										<s:iterator value="#map.value" var="video"
-											status="videoStatus">
-											<div style="display: inline-block;">
-												<a href="#">${video.name }</a>┊
-											</div>
-										</s:iterator>
-										<div style="display: inline-block;">
-											<a href="#" style="color: red;">更多...</a>
-										</div>
-									</div>
-								</div> --%>
 							</div>
 					</div>
 					</s:iterator>

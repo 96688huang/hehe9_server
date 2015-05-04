@@ -3,12 +3,12 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
 <head>
-<title>${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看
+<title>${comic.name }第${episode.episodeNo }集「${episode.title}」高清在线观看
 	- 动漫VCD网</title>
 <meta name="keywords"
-	content="${video.name }第${episode.episodeNo }集「${episode.title}」动画片,动漫${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网">
+	content="${comic.name }第${episode.episodeNo }集「${episode.title}」动画片,动漫${comic.name }第${episode.episodeNo }集「${episode.title}」高清在线观看 - 动漫VCD网">
 <meta name="description"
-	content="${video.name }第${episode.episodeNo }集「${episode.title}」在线观看,${video.name }第${episode.episodeNo }集「${episode.title}」 - 动漫VCD网">
+	content="${comic.name }第${episode.episodeNo }集「${episode.title}」在线观看,${comic.name }第${episode.episodeNo }集「${episode.title}」 - 动漫VCD网">
 <jsp:include page="common_head.jsp" />
 </head>
 <body>
@@ -19,7 +19,7 @@
 <%-- 		<div
 			style="display: inline; float: left; text-align: left; margin: auto auto auto 8px;">
 			您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
-				${video.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
+				${comic.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 			</strong>
 		</div> --%>
@@ -51,21 +51,21 @@
 							<br />
 							<div class="top">
 								<h1>
-									${video.name }第${episode.episodeNo }集
+									${comic.name }第${episode.episodeNo }集
 									<s:if test="episode.title != null">「${episode.title}」</s:if>
 								</h1>
 							</div>
 							<div class="player" id="player">
-								<object type="application/x-shockwave-flash"
-									data="${episode.fileUrl }" width="100%" height="480px"
-									is-video-flag="true" >
+								<%-- <object type="application/x-shockwave-flash"
+									data="${episode.picUrls }" width="100%" height="480px"
+									is-comic-flag="true" >
 									<param name="allowFullScreen" value="true">
 									<param name="allowscriptaccess" value="always">
 									<param name="wMode" value="Opaque">
 									<param name="bgcolor" value="#000000">
 									<param name="flashvars"
 										value="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;">
-								</object>
+								</object> --%>
 							</div>
 						</div>
 					</td>
@@ -75,19 +75,20 @@
 							<ul id="dmvcdList">
 								<s:iterator value="episodeList" var="episodeItem">
 									<li class="font_12" style="width: 250px; text-align: left;">
-										<a
-										href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
-										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
+										<%-- <a
+										href="javascript:jumpTo('./comic/readAction!read?comicId=${comic.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
+										title="${comic.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 										target="_blank"> <img
-											alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
+											alt="${comic.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 											src="${episodeItem.snapshotUrl}" />
 									</a> <!--  --> <span class="icon_bottom_tips"
 										style="width:132px; top:84px; <s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>">
-											第${episodeItem.episodeNo}集&nbsp; </span> <a
-										href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
+											第${episodeItem.episodeNo}集&nbsp; </span> --%>
+									<a
+										href="javascript:jumpTo('./comic/readAction!read?comicId=${comic.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
 										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>"
 										class="dmvcdTitle"
-										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
+										title="${comic.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 										target="_blank"><s:if test="title != null">「${episodeItem.title}」</s:if>
 									</a>
 									</li>
@@ -105,11 +106,11 @@
 		<div style="margin: 8px; font-size: 14px;">
 			<ul>
 				<li><b>上一集： </b> <s:if test="preEpisode != null">
-						<a href="">${video.name }第${preEpisode.episodeNo }集 <s:if
+						<a href="">${comic.name }第${preEpisode.episodeNo }集 <s:if
 								test="preEpisode.title != null">「${preEpisode.title}」</s:if></a>
 					</s:if> <s:else>无</s:else></li>
 				<li><b>下一集：</b> <s:if test="nextEpisode != null">
-						<a href="">${video.name }第${nextEpisode.episodeNo }集 <s:if
+						<a href="">${comic.name }第${nextEpisode.episodeNo }集 <s:if
 								test="nextEpisode.title != null">「${nextEpisode.title}」</s:if></a>
 					</s:if> <s:else>无</s:else></li>
 			</ul>
@@ -121,7 +122,7 @@
 			</h1>
 			<br />
 			<p style="font-size: 14px;">
-				<s:if test="episode.title == null">${video.name }第${episode.episodeNo }集</s:if>
+				<s:if test="episode.title == null">${comic.name }第${episode.episodeNo }集</s:if>
 				<s:else>
 				「${episode.title}」
 				</s:else>

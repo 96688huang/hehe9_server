@@ -21,8 +21,17 @@ public enum PageUrlFlagEnum {
 	COMIC_LIST_PAGE("toComicList"),
 
 	/** 分集列表页面 */
-	EPISODE_LIST_PAGE("toEpisodeList"),
+	VIDEO_EPISODE_LIST_PAGE("toVideoEpisodeList"),
+	
+	/** 分集列表页面 */
+	COMIC_EPISODE_LIST_PAGE("toComicEpisodeList"),
 
+	/** 阅读页面 */
+	READ_PAGE("toRead"),
+	
+	/** 阅读中转页面 */
+	READ_JUMP_PAGE("toReadJump"),
+	
 	/** 播放页面 */
 	PLAY_PAGE("toPlay");
 
