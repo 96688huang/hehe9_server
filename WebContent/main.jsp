@@ -31,7 +31,7 @@
 						<s:iterator value="videoListVar">
 							<li><a
 								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
-								title="${name} ${updateRemark}" target="_blank"><img
+								title="${name} ${updateRemark}"><img
 									alt="${name} ${updateRemark}" src="${iconUrl}"></a>
 								<span
 								class="icon_bottom_tips">&nbsp;<span
@@ -39,7 +39,7 @@
 								<span>${updateRemark}&nbsp;</span></span>
 								<a
 								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
-								title="${name} ${updateRemark}" target="_blank"><font
+								title="${name} ${updateRemark}"><font
 									color="#FF0000">${name}</font></a></li>
 						</s:iterator>
 					</ul>
@@ -59,8 +59,7 @@
 						<ul class="softolist">
 							<s:iterator value="#map.value" var="episode">
 								<li><a
-									href="javascript:jumpTo('./video/episodeAction!list?videoId=${map.key.id }');"
-									target="_blank"
+									href="javascript:jumpTo('./video/playAction!play?videoId=${map.key.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');"
 									title="${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
 											test="title != null">「${episode.title}」</s:if>">${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
 											test="title != null">「${episode.title}」</s:if></a></li>
@@ -79,19 +78,19 @@
 				</div>
 
 				<s:iterator value="hotComicListHolder" var="comicListVar">
-					<ul id="indexcartoonList">
+					<ul id="indexComicList">
 						<s:iterator value="comicListVar">
 							<li><a
 								href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
-								title="${name} ${updateRemark}" target="_blank"><img
-									alt="${name} ${updateRemark}" src="${iconUrl}"></a>
+								title="${name} ${updateRemark}"><img
+								alt="${name} ${updateRemark}" src="${iconUrl}"></a>
 								<span
 								class="icon_bottom_tips">&nbsp;<span
 									style="float: left;">&nbsp;${sourceName }</span>&nbsp;
 								<span>${updateRemark}&nbsp;</span></span>
 								<a
 								href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
-								title="${name} ${updateRemark}" target="_blank"><font
+								title="${name} ${updateRemark}"><font
 									color="#FF0000">${name}</font></a></li>
 						</s:iterator>
 					</ul>

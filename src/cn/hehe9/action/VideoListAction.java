@@ -63,7 +63,7 @@ public class VideoListAction extends ActionSupport {
 
 	public String list() {
 		if (StringUtils.isNotBlank(searchName)) {
-			displayTitle = VideoListTitleEnum.SEARCH_RESULT.getTitle();
+			displayTitle = searchName + "  " +VideoListTitleEnum.SEARCH_RESULT.getTitle();
 		} else if (StringUtils.isNotBlank(firstChar)) {
 			displayTitle = firstChar.trim() + VideoListTitleEnum.FIRST_CHAR_VIDEO.getTitle();
 		} else {

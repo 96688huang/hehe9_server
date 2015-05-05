@@ -65,7 +65,7 @@
 							<li>
 								<a href="javascript:jumpTo('./comic/readAction!read?comicId=${comic.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');" 
 								title="${comic.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
-								target="_blank">
+								>
 									<s:if test="title != null">「${episode.title}」</s:if>
 								</a>
 							</li>

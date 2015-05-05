@@ -75,7 +75,7 @@ public class ComicReadAction extends ActionSupport {
 	private static final String READ_JUMP_PAGE = PageUrlFlagEnum.READ_JUMP_PAGE.getUrlFlag();
 
 	public String read() {
-		if (comicId <= 0 || episodeId <= 0 || episodeNo <= 0) {
+		if (comicId <= 0 || episodeId <= 0 || episodeNo < 0) {
 			return MAIN_PAGE;
 		}
 

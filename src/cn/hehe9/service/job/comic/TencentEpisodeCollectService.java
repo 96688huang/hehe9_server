@@ -134,7 +134,19 @@ public class TencentEpisodeCollectService extends BaseTask {
 			Element a = spanItem.select("a").first();
 			String title = a.text();
 			Integer episodeNo = 0;
-			String episodeNoStr = StringUtil.pickInteger(title.split(" ")[0]);
+			
+			String subEpisodeNoStr = null;
+			if (title.contains(" ")) {
+				subEpisodeNoStr = title.split(" ")[0];
+			} else if (title.contains("话")) {
+				subEpisodeNoStr = title.split("话")[0];
+			} else if (title.contains("集")) {
+				subEpisodeNoStr = title.split("集")[0];
+			} else if (title.contains("讲")) {
+				subEpisodeNoStr = title.split("讲")[0];
+			}
+			
+			String episodeNoStr = StringUtil.pickInteger(subEpisodeNoStr.split(" ")[0]);
 			if (!title.contains(" ") || StringUtils.isBlank(episodeNoStr)) {
 				episodeNo = episodeNoTmp;
 			}

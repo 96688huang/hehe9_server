@@ -64,7 +64,7 @@
 						<s:iterator value="episodeList" var="episode">
 							<li><a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');"
 								title="${video.name}&nbsp;第${episode.episodeNo}集 <s:if test="title != null">「${episode.title}」</s:if>"
-								target="_blank">
+								>
 									<img alt="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" src="${episode.snapshotUrl}" />
 								</a>
 								<span class="icon_bottom_tips" style="top: 84px;">
@@ -73,7 +73,7 @@
 											
 								<a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');" 
 								title="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
-								target="_blank">
+								>
 									<s:if test="title != null">「${episode.title}」</s:if>
 								</a>
 								</li>

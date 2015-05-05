@@ -139,9 +139,9 @@ public class CacheService {
 	}
 
 	/**
-	 * 创建来源id到缓存
+	 * 创建漫画来源id到缓存
 	 *
-	 * @param sourceIdList	来源id列表
+	 * @param sourceIdList	漫画来源id列表
 	 */
 	public List<Integer> createComicSourceIdsCache() {
 		try {
@@ -155,7 +155,7 @@ public class CacheService {
 				return null;
 			}
 
-			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.VIDEO_SOURCE_IDS.getKey());
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.COMIC_SOURCE_IDS.getKey());
 			entry.setValue(sourceIdList);
 			CacheManager.getInstance().save(entry);
 			return sourceIdList;
@@ -166,13 +166,13 @@ public class CacheService {
 	}
 
 	/**
-	 * 从缓存获取来源id列表
+	 * 从缓存获取漫画来源id列表
 	 *
 	 * @return	来源id列表
 	 */
 	public List<Integer> getComicSourceIdsCache() {
 		try {
-			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.VIDEO_SOURCE_IDS.getKey());
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.COMIC_SOURCE_IDS.getKey());
 			return CacheManager.getInstance().get(entry);
 		} catch (Exception e) {
 			logger.error("getSourceIdsCache fail.", e);
@@ -181,7 +181,7 @@ public class CacheService {
 	}
 
 	/**
-	 * 从缓存获取来源id列表, 如果缓存中没有, 则创建并保存到缓存
+	 * 从缓存获取漫画来源id列表, 如果缓存中没有, 则创建并保存到缓存
 	 *
 	 * @return	来源id列表
 	 */
@@ -199,9 +199,9 @@ public class CacheService {
 	}
 
 	/**
-	 * 创建来源视频列表到缓存
+	 * 创建来源漫画列表到缓存
 	 *
-	 * @param sourceIdList	来源视频列表
+	 * @param sourceIdList	来源漫画列表
 	 */
 	public List<Comic> createSourceComicsCache(List<Integer> sourceIdList) {
 		try {
@@ -210,7 +210,7 @@ public class CacheService {
 				return null;
 			}
 
-			// 赋值视频来源名称
+			// 赋值漫画来源名称
 			ActionHelper.setComicSourceName(allComics);
 
 			// {key: sourceId, value: Comic list}
@@ -232,7 +232,7 @@ public class CacheService {
 			// 按来源放入缓存
 			for (Integer sourceId : sourceComicMap.keySet()) {
 				List<Comic> value = sourceComicMap.get(sourceId);
-				CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_VIDEOS.getKey(), sourceId.toString());
+				CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_COMICS.getKey(), sourceId.toString());
 				entry.setValue(value);
 				CacheManager.getInstance().save(entry);
 			}
@@ -244,13 +244,13 @@ public class CacheService {
 	}
 
 	/**
-	 * 从缓存获取来源视频列表
+	 * 从缓存获取来源漫画列表
 	 *
-	 * @return	来源视频列表
+	 * @return	来源漫画列表
 	 */
 	public List<Comic> getSourceComicsCache(Integer sourceId) {
 		try {
-			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_VIDEOS.getKey(), sourceId.toString());
+			CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_COMICS.getKey(), sourceId.toString());
 			return CacheManager.getInstance().get(entry);
 		} catch (Exception e) {
 			logger.error("getSourceComicsCache fail.", e);
@@ -259,9 +259,9 @@ public class CacheService {
 	}
 
 	/**
-	 * 从缓存获取来源视频列表, 如果缓存中没有, 则创建并保存到缓存
+	 * 从缓存获取来源漫画列表, 如果缓存中没有, 则创建并保存到缓存
 	 *
-	 * @return	来源视频列表
+	 * @return	来源漫画列表
 	 */
 	public List<Comic> getOrCreateSourceComicsCache(List<Integer> sourceIdList) {
 		try {

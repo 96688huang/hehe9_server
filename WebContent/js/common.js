@@ -1,3 +1,4 @@
+// IE 中不支持
 function jumpTo(url) {
 	if (url == null || url == '' || url == undefined) {
 		return;
@@ -45,13 +46,31 @@ function jumpTo(url) {
 	}
 }
 
+function searchVideo(){
+	$("#searchForm").attr("action", './video/videoListAction!list');
+	$("#searchForm").submit();
+	
+	// 清空
+	$("#searchName").attr("value", '');
+	$("#searchForm").attr("action", '');
+}
+
+function searchComic(){
+	$("#searchForm").attr("action", './comic/comicListAction!list');
+	$("#searchForm").submit();
+	
+	// 清空
+	$("#searchName").attr("value", '');
+	$("#searchForm").attr("action", '');
+}
+
 function onSearch(keyword) {
 	if (keyword == null || keyword == '' || keyword == undefined) {
 		return;
 	}
 
 	$("#searchName").attr("value", keyword);
-	$("#searchForm").submit();
+	searchVideo();
 }
 
 // 头动画

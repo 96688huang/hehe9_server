@@ -15,13 +15,14 @@
            http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 
-	<!-- 定时任务配置 -->
+	<!-- 定时任务配置 
 	<task:scheduled-tasks>
 		<task:scheduled ref="tencentComicCollectJob" method="executeJob"
-			cron="0 22 8 * * ?" />
+			cron="0 20 17 * * ?" />
 		<task:scheduled ref="sohuCollectJob" method="executeJob"
-			cron="0 44 4 * * ?" />
+			cron="0 50 17 * * ?" />
 		<task:scheduled ref="youkuCollectJob" method="executeJob"
-			cron="0 30 5 * * ?" />
+			cron="0 10 18 * * ?" />
 	</task:scheduled-tasks> 
+	-->
 </beans>

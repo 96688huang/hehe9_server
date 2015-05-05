@@ -24,7 +24,7 @@
 							<ul id="indexcartoonList">
 								<s:iterator value="videoList" status="videoListStatus">
 									<li><a href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
-										title="${name} ${updateRemark}" target="_blank">
+										title="${name} ${updateRemark}">
 										<img
 											alt="${name} ${updateRemark}" src="${iconUrl}"></a> 
 										<span
@@ -33,7 +33,7 @@
 										<span>${updateRemark}&nbsp;</span></span>
 										<a
 										href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
-										title="${name} ${updateRemark}" target="_blank"><font
+										title="${name} ${updateRemark}"><font
 											color="#FF0000">${name}</font></a></li>
 								</s:iterator>
 							</ul>

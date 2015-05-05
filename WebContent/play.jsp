@@ -78,7 +78,7 @@
 										<a
 										href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
-										target="_blank"> <img
+										> <img
 											alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 											src="${episodeItem.snapshotUrl}" />
 									</a> <!--  --> <span class="icon_bottom_tips"
@@ -88,7 +88,7 @@
 										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>"
 										class="dmvcdTitle"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
-										target="_blank"><s:if test="title != null">「${episodeItem.title}」</s:if>
+										><s:if test="title != null">「${episodeItem.title}」</s:if>
 									</a>
 									</li>
 								</s:iterator>

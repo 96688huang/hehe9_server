@@ -90,6 +90,18 @@
 /* #indexcartoonList li img ,#cartoonList li img {border:2px solid #D4D4D4;} */
 #indexcartoonList img,#indexcartoonList:hover{-webkit-animation-fill-mode: both;-moz-animation-fill-mode: both;-ms-animation-fill-mode: both;-o-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-duration: 0s;-moz-animation-duration: 0s;-ms-animation-duration: 0s;-o-animation-duration: 0s;animation-duration: 0s;-webkit-animation-duration: 0.7s;-moz-animation-duration: 0.7s;-ms-animation-duration: 0.7s;-o-animation-duration: 0.7s;animation-duration: 0.7s;}
 #indexcartoonList img:hover{-webkit-transform-origin: top center;-moz-transform-origin: top center;-o-transform-origin: top center;transform-origin: top center;   -webkit-animation-name: swing;-moz-animation-name: swing;-o-animation-name: swing;animation-name: swing;}
+
+#indexComicList {margin:0 auto;padding:0;}
+#indexComicList li {float:left;width:126px;height:188px;text-align:center;margin:5px 5px;padding-left:3px;  position:relative;}
+#indexComicList li img{border:1px solid #069;padding:3px;}
+#indexComicList li img ,#cartoonList li img {border:2px solid #D4D4D4;}
+#indexComicList li img ,#cartoonList li img {border:1px solid #d0d0d0;padding:3px;}
+#indexComicList li img ,#cartoonList li img {border:1px solid #d0d0d0;padding:3px;width:120px;height:160px;}
+#indexComicList li a:hover, #indexComicList li a:active{color:#F00;}
+/* #indexComicList li img ,#cartoonList li img {border:2px solid #D4D4D4;} */
+#indexComicList img,#indexComicList:hover{-webkit-border-radius: 6px;border-radius: 6px;-webkit-transition: -webkit-transform 2s ease-out;-moz-transition: -moz-transform 2s ease-out;-o-transition: -o-transform 2s ease-out;-ms-transition: -ms-transform 2s ease-out;}
+#indexComicList img:hover{-webkit-transform: rotateZ(360deg);-moz-transform: rotateZ(360deg);-o-transform: rotateZ(360deg);-ms-transform: rotateZ(360deg);transform: rotateZ(360deg);}
+
 #kof_desk h2,#dmvcd_desk h2{padding: 0;text-align: center;}
 #light{background:#000; position:absolute; width:100%; height:100%; z-index:100; top:0; left:0; display:none;}
 #login p span {float:right;margin-right:5px;display:inline;}

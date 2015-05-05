@@ -12,10 +12,10 @@
 		</a>
 	</div>
 	<div id="searchBar">
-		<form id="searchForm" action="./video/videoListAction!list"
-			method="post">
+		<form id="searchForm" action="" method="post" target="_blank">
 			<input id="searchName" type="text" name="searchName">&nbsp;&nbsp;
-			<input id="searchBtn" type="submit" value="搜&nbsp;索">
+			<input class="searchBtn" type="button" onclick="javascript:searchVideo();" value="找动漫">
+			<input class="searchBtn" type="button" onclick="javascript:searchComic();" value="找漫画" style="background-color: #F00;">
 		</form>
 	</div>
 	<div id="Dmvcdnav" class="Ncontainer">

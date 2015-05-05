@@ -17,6 +17,7 @@ import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
 import cn.hehe9.common.constants.ComicListTitleEnum;
+import cn.hehe9.common.constants.VideoListTitleEnum;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.service.biz.CacheService;
 import cn.hehe9.service.biz.ComicService;
@@ -64,7 +65,7 @@ public class ComicListAction extends ActionSupport {
 
 	public String list() {
 		if (StringUtils.isNotBlank(searchName)) {
-			displayTitle = ComicListTitleEnum.SEARCH_RESULT.getTitle();
+			displayTitle = searchName + "  " +ComicListTitleEnum.SEARCH_RESULT.getTitle();
 		} else if (StringUtils.isNotBlank(firstChar)) {
 			displayTitle = firstChar.trim() + ComicListTitleEnum.FIRST_CHAR_VIDEO.getTitle();
 		} else {
