@@ -1,6 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>${video.name }第${episode.episodeNo }集「${episode.title}」高清在线观看
@@ -18,14 +23,14 @@
 		<!-- <div class="v-left l15"> -->
 <%-- 		<div
 			style="display: inline; float: left; text-align: left; margin: auto auto auto 8px;">
-			您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+			您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
 				${video.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 			</strong>
 		</div> --%>
 		<div id="nav">
 			<p>
-				<label>您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+				<label>您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
 				${video.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 				</strong>
@@ -76,7 +81,7 @@
 								<s:iterator value="episodeList" var="episodeItem">
 									<li class="font_12" style="width: 250px; text-align: left;">
 										<a
-										href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
+										href="<%=basePath %>play_video/vid/${video.id }/eid/${episodeItem.id}/eno/${episodeItem.episodeNo}.html"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
 										> <img
 											alt="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
@@ -84,7 +89,7 @@
 									</a> <!--  --> <span class="icon_bottom_tips"
 										style="width:132px; top:84px; <s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>">
 											第${episodeItem.episodeNo}集&nbsp; </span> <a
-										href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
+										href="<%=basePath %>play_video/vid/${video.id }/eid/${episodeItem.id}/eno/${episodeItem.episodeNo}.html"
 										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>"
 										class="dmvcdTitle"
 										title="${video.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
@@ -105,11 +110,11 @@
 		<div style="margin: 8px; font-size: 14px;">
 			<ul>
 				<li><b>上一集： </b> <s:if test="preEpisode != null">
-						<a href="">${video.name }第${preEpisode.episodeNo }集 <s:if
+						<a href="<%=basePath %>play_video/vid/${video.id }/eid/${preEpisode.id}/eno/${preEpisode.episodeNo}.html">${video.name }第${preEpisode.episodeNo }集 <s:if
 								test="preEpisode.title != null">「${preEpisode.title}」</s:if></a>
 					</s:if> <s:else>无</s:else></li>
 				<li><b>下一集：</b> <s:if test="nextEpisode != null">
-						<a href="">${video.name }第${nextEpisode.episodeNo }集 <s:if
+						<a href="<%=basePath %>play_video/vid/${video.id }/eid/${nextEpisode.id}/eno/${nextEpisode.episodeNo}.html">${video.name }第${nextEpisode.episodeNo }集 <s:if
 								test="nextEpisode.title != null">「${nextEpisode.title}」</s:if></a>
 					</s:if> <s:else>无</s:else></li>
 			</ul>

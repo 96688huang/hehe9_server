@@ -1,6 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>${comic.name },${comic.name }漫画,${comic.name }剧情分析 - 动漫VCD网</title>
@@ -15,8 +20,8 @@
 		<div id="nav">
 			<p>
 				<label>您的位置: <a
-					href="./" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
-					href="./comic/comicEpisodeAction!list?comicId=${comic.id }" class="classlinkclass">${comic.name }</a>&nbsp;>&nbsp;
+					href="<%=basePath %>" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
+					href="<%=basePath %>list_comic_episodes/cid/${comic.id }.html" class="classlinkclass">${comic.name }</a>&nbsp;>&nbsp;
 					<a class="classlinkclass">${comic.name }&nbsp;在线阅读</a>&nbsp;><!--empire.url--></label><span><script
 						src="/style/nav.js"></script></span>
 			</p>
@@ -58,12 +63,13 @@
 			<div id="content2" style="position:relative; height: 800px;">
 				<div class="listitem">
 					<h1>${comic.name}&nbsp;&nbsp;<font color="#FF0000">[ ${comic.serializeStatus } ]</font></h1>
-					<form id="queryForm" action="./comic/comicEpisodeAction!list?" method = "post">
+					<form id="queryForm" action="<%=basePath %>list_comic_episodes.html" method = "post">
 					<input name="comicId" value="${comic.id }" type="hidden"/>
 					<ul id="comicEpisodeList">
 						<s:iterator value="episodeList" var="episode">
 							<li>
-								<a href="javascript:jumpTo('./comic/readAction!read?comicId=${comic.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');" 
+								<a href="<%=basePath %>read_comic/cid/${comic.id }/eid/${episode.id}/eno/${episode.episodeNo}.html" 
+								target="_blank"
 								title="${comic.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
 								>
 									<s:if test="title != null">「${episode.title}」</s:if>

@@ -2,6 +2,11 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>动漫VCD网-动漫大全|海贼王动漫|海贼王漫画|海贼王在线观看</title>
@@ -15,7 +20,7 @@
 		<div class="wrap clearfix">
 			<div id="dmvcd_desk">
 				<div class="ltitle">${displayTitle}</div>
-				<form id="queryForm" action="./comic/comicListAction!list"
+				<form id="queryForm" action="<%=basePath %>list_comics.html"
 					method="post">
 					<input name="searchName" type="hidden" value="${searchName }" />
 					<s:iterator value="comicListHolder" var="comicList">
@@ -23,7 +28,8 @@
 							<!-- 强制在一行, 靠左展示 -->
 							<ul id="indexcartoonList">
 								<s:iterator value="comicList" status="comicListStatus">
-									<li><a href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
+									<li><a href="<%=basePath%>list_comic_episodes/cid/${id }.html"
+										target="_blank"
 										title="${name} ${updateRemark}">
 										<img
 											alt="${name} ${updateRemark}" src="${iconUrl}"></a> 
@@ -32,7 +38,8 @@
 											style="float: left;">&nbsp;${sourceName }</span>&nbsp;
 										<span>${updateRemark}&nbsp;</span></span>
 										<a
-										href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
+										href="<%=basePath%>list_comic_episodes/cid/${id }.html"
+										target="_blank"
 										title="${name} ${updateRemark}"><font
 											color="#FF0000">${name}</font></a></li>
 								</s:iterator>

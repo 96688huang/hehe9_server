@@ -14,10 +14,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.hehe9.common.app.AppConfig;
+import cn.hehe9.common.constants.ComicListTitleEnum;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
-import cn.hehe9.common.constants.ComicListTitleEnum;
-import cn.hehe9.common.constants.VideoListTitleEnum;
+import cn.hehe9.common.utils.Base64Util;
+import cn.hehe9.common.utils.UrlEncodeUtil;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.service.biz.CacheService;
 import cn.hehe9.service.biz.ComicService;
@@ -63,42 +64,50 @@ public class ComicListAction extends ActionSupport {
 
 	private static final String COMIC_LIST_PAGE = PageUrlFlagEnum.COMIC_LIST_PAGE.getUrlFlag();
 
-	public String list() {
-		if (StringUtils.isNotBlank(searchName)) {
-			displayTitle = searchName + "  " +ComicListTitleEnum.SEARCH_RESULT.getTitle();
-		} else if (StringUtils.isNotBlank(firstChar)) {
-			displayTitle = firstChar.trim() + ComicListTitleEnum.FIRST_CHAR_VIDEO.getTitle();
-		} else {
-			displayTitle = ComicListTitleEnum.VIDEO_BOOK.getTitle();
-		}
+	public String list() throws Exception {
+		try {
+			searchName = UrlEncodeUtil.base64Decode(searchName);
+			firstChar = UrlEncodeUtil.base64Decode(firstChar);
 
-		// 先从缓存中取
-		List<Comic> comicList = null;
-		AtomicInteger total = new AtomicInteger(0);
-		if (AppConfig.MEMCACHE_ENABLE) {
-			List<Integer> sourceIdList = cacheService.getOrCreateVideoSourceIdsCache();
-			comicList = pickComicsFromCache(total, sourceIdList);
-		}
-
-		// 如果缓存中没有, 则从DB中取
-		if (CollectionUtils.isEmpty(comicList)) {
-			comicList = pickComicsFromDb(total);
-		}
-
-		// 排版
-		int count = 0;
-		for (;;) {
-			int preNextCount = count + VIDEOS_COUNT_PER_LINE;
-			int nextCount = preNextCount > comicList.size() ? comicList.size() : preNextCount;
-			comicListHolder.add(comicList.subList(count, nextCount));
-			count = preNextCount;
-
-			if (nextCount >= comicList.size()) {
-				break;
+			if (StringUtils.isNotBlank(searchName)) {
+				displayTitle = searchName + "  " + ComicListTitleEnum.SEARCH_RESULT.getTitle();
+			} else if (StringUtils.isNotBlank(firstChar)) {
+				displayTitle = firstChar.trim() + ComicListTitleEnum.FIRST_CHAR_VIDEO.getTitle();
+			} else {
+				displayTitle = ComicListTitleEnum.VIDEO_BOOK.getTitle();
 			}
+
+			// 先从缓存中取
+			List<Comic> comicList = null;
+			AtomicInteger total = new AtomicInteger(0);
+			if (AppConfig.MEMCACHE_ENABLE) {
+				List<Integer> sourceIdList = cacheService.getOrCreateVideoSourceIdsCache();
+				comicList = pickComicsFromCache(total, sourceIdList);
+			}
+
+			// 如果缓存中没有, 则从DB中取
+			if (CollectionUtils.isEmpty(comicList)) {
+				comicList = pickComicsFromDb(total);
+			}
+
+			// 排版
+			int count = 0;
+			for (;;) {
+				int preNextCount = count + VIDEOS_COUNT_PER_LINE;
+				int nextCount = preNextCount > comicList.size() ? comicList.size() : preNextCount;
+				comicListHolder.add(comicList.subList(count, nextCount));
+				count = preNextCount;
+
+				if (nextCount >= comicList.size()) {
+					break;
+				}
+			}
+			pagination.setTotal(total.get());
+			return COMIC_LIST_PAGE;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
 		}
-		pagination.setTotal(total.get());
-		return COMIC_LIST_PAGE;
 	}
 
 	private List<Comic> pickComicsFromDb(AtomicInteger total) {

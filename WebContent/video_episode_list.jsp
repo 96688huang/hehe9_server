@@ -1,6 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>${video.name },${video.name }漫画,${video.name }剧情分析 - 动漫VCD网</title>
@@ -15,8 +20,8 @@
 		<div id="nav">
 			<p>
 				<label>您的位置: <a
-					href="./" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
-					href="./video/episodeAction!list?videoId=${video.id }" class="classlinkclass">${video.name }</a>&nbsp;>&nbsp;
+					href="<%=basePath%>" class="classlinkclass">首页</a>&nbsp;>&nbsp;<a
+					href="<%=basePath%>list_video_episodes/vid/${video.id }.html" class="classlinkclass">${video.name }</a>&nbsp;>&nbsp;
 					<a class="classlinkclass">${video.name }&nbsp;在线观看</a>&nbsp;><!--empire.url--></label><span><script
 						src="/style/nav.js"></script></span>
 			</p>
@@ -58,11 +63,12 @@
 			<div id="content2" style="position:relative; height: 800px;">
 				<div class="listitem">
 					<h1>${video.name}&nbsp;在线观看</h1>
-					<form id="queryForm" action="./video/episodeAction!list?" method = "post">
+					<form id="queryForm" action="<%=basePath %>list_video_episodes.html" method = "post">
 					<input name="videoId" value="${video.id }" type="hidden"/>
 					<ul id="dmvcdList">
 						<s:iterator value="episodeList" var="episode">
-							<li><a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');"
+							<li><a href="<%=basePath %>play_video/vid/${video.id }/eid/${episode.id}/eno/${episode.episodeNo}.html"
+								target="_blank"
 								title="${video.name}&nbsp;第${episode.episodeNo}集 <s:if test="title != null">「${episode.title}」</s:if>"
 								>
 									<img alt="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" src="${episode.snapshotUrl}" />
@@ -71,7 +77,8 @@
 									第${episode.episodeNo}集&nbsp;
 								</span>
 											
-								<a href="javascript:jumpTo('./video/playAction!play?videoId=${video.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');" 
+								<a href="<%=basePath %>play_video/vid/${video.id }/eid/${episode.id}/eno/${episode.episodeNo}.html" 
+								target="_blank"
 								title="${video.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
 								>
 									<s:if test="title != null">「${episode.title}」</s:if>

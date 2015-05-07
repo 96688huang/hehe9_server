@@ -1,5 +1,11 @@
+<%@page import="cn.hehe9.common.utils.UrlEncodeUtil"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <div id="Head" class="Ncontainer">
 	<div style="display: inline-block;">
 		<a href="./" title="www.dmVCD.com" style="min-height: 60px; float: left; margin-top: 20px;"> 
@@ -20,20 +26,20 @@
 	</div>
 	<div id="Dmvcdnav" class="Ncontainer">
 		<ul>
-			<li><a href="./" title="www.dmVCD.com" target="_blank">首 页</a></li>
+			<li><a href="<%=basePath%>" title="<%=basePath%>" target="_blank">首 页</a></li>
 		</ul>
 	</div>
 	<div id="Ntop" class="Ncontainer">
 		<div class="Nleft"></div>
 		<div class="listMenu">
 			<span style="color: red; margin-left: 25px; font-weight: bold;">热门搜索：</span>&nbsp;&nbsp;
-			<a href="javascript:onSearch('航海王')" title="海贼王">&nbsp;海贼王&nbsp;</a>&nbsp;
-			<a href="javascript:onSearch('猪猪侠')" title="猪猪侠">&nbsp;猪猪侠&nbsp;</a>&nbsp;<a
-				href="javascript:onSearch('尸兄')" title="尸兄">&nbsp;尸兄&nbsp;</a>&nbsp;
-			<a href="javascript:onSearch('七龙珠')" title="七龙珠">&nbsp;七龙珠&nbsp;</a>&nbsp;
-			<a href="javascript:onSearch('熊出没')" title="熊出末">&nbsp;熊出没&nbsp;</a>&nbsp;
-			<a href="javascript:onSearch('灌篮高手')" title="灌篮高手">&nbsp;灌篮高手&nbsp;</a>&nbsp;
-			<a href="javascript:onSearch('妖精的尾巴')" title="妖精的尾巴">&nbsp;妖精的尾巴&nbsp;</a>
+			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("航海王")%>.html" target="_blank" title="海贼王">&nbsp;海贼王&nbsp;</a>&nbsp;
+			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("猪猪侠")%>.html" target="_blank" title="猪猪侠">&nbsp;猪猪侠&nbsp;</a>&nbsp;
+			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("尸兄")%>.html" target="_blank" title="尸兄">&nbsp;尸兄&nbsp;</a>&nbsp;
+			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("七龙珠")%>.html" target="_blank" title="七龙珠">&nbsp;七龙珠&nbsp;</a>&nbsp;
+			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("熊出没")%>.html" target="_blank" title="熊出末">&nbsp;熊出没&nbsp;</a>&nbsp;
+			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("灌篮高手")%>.html" target="_blank" title="灌篮高手">&nbsp;灌篮高手&nbsp;</a>&nbsp;
+			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("妖精的尾巴")%>.html" target="_blank" title="妖精的尾巴">&nbsp;妖精的尾巴&nbsp;</a>
 		</div>
 	</div>
 </div>

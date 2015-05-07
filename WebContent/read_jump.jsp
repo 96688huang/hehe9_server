@@ -1,6 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>${comic.name }第${episode.episodeNo }讲「${episode.title}」高清在线阅读
@@ -18,14 +23,14 @@
 		<!-- <div class="v-left l15"> -->
 <%-- 		<div
 			style="display: inline; float: left; text-align: left; margin: auto auto auto 8px;">
-			您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+			您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
 				${comic.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }讲&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 			</strong>
 		</div> --%>
 		<div id="nav">
 			<p>
-				<label>您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+				<label>您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
 				${comic.name }&nbsp;&nbsp;<font color="#FF0000">[ ${comic.serializeStatus } ]</font></a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }讲&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 				</strong>

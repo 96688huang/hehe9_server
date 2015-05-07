@@ -1,7 +1,13 @@
+<%@page import="cn.hehe9.common.utils.UrlEncodeUtil"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>动漫VCD网-海贼王动漫|海贼王漫画|海贼王在线观看</title>
@@ -21,7 +27,7 @@
 			<div id="dmvcd_desk">
 				<div class="ltitle">
 					<img alt="" src="./img/mine/movie_icon.png">&nbsp;&nbsp;热门动漫
-					 <a href="javascript:jumpTo('./video/videoListAction!list');">
+					 <a href="<%=basePath%>list_videos.html" target="_blank">
 						<img class="more" src="./img/jian/more.jpg">
 					</a>
 				</div>
@@ -30,7 +36,8 @@
 					<ul id="indexcartoonList">
 						<s:iterator value="videoListVar">
 							<li><a
-								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
+								href="<%=basePath%>list_video_episodes/vid/${id }.html"
+								target="_blank"
 								title="${name} ${updateRemark}"><img
 									alt="${name} ${updateRemark}" src="${iconUrl}"></a>
 								<span
@@ -38,7 +45,8 @@
 									style="float: left;">&nbsp;${sourceName }</span>&nbsp;
 								<span>${updateRemark}&nbsp;</span></span>
 								<a
-								href="javascript:jumpTo('./video/episodeAction!list?videoId=${id }');"
+								href="<%=basePath%>list_video_episodes/vid/${id }.html"
+								target="_blank"
 								title="${name} ${updateRemark}"><font
 									color="#FF0000">${name}</font></a></li>
 						</s:iterator>
@@ -51,7 +59,8 @@
 					<div class="index_downrank">
 						<div class="ltitle">
 							${map.key.name} <a
-								href="javascript:jumpTo('./video/episodeAction!list?videoId=${map.key.id}');"
+								href="<%=basePath%>list_video_episodes/vid/${map.key.id}.html"
+								target="_blank"
 								title="${map.key.name}"><img class="more"
 								src="./img/jian/more.jpg"></a>
 						</div>
@@ -59,7 +68,8 @@
 						<ul class="softolist">
 							<s:iterator value="#map.value" var="episode">
 								<li><a
-									href="javascript:jumpTo('./video/playAction!play?videoId=${map.key.id }&episodeId=${episode.id}&episodeNo=${episode.episodeNo}');"
+									href="<%=basePath%>play_video/vid/${map.key.id }/eid/${episode.id}/eno/${episode.episodeNo}.html"
+									target="_blank"
 									title="${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
 											test="title != null">「${episode.title}」</s:if>">${map.key.name}&nbsp;第${episode.episodeNo}集<s:if
 											test="title != null">「${episode.title}」</s:if></a></li>
@@ -72,7 +82,7 @@
 			<div id="dmvcd_desk">
 				<div class="ltitle">
 					<img alt="" src="./img/mine/book_icon.png">&nbsp;&nbsp;热门漫画
-					<a href="javascript:jumpTo('./video/comicListAction!list');">
+					<a href="<%=basePath%>list_comics.html" target="_blank">
 						<img class="more" src="./img/jian/more.jpg">
 					</a>
 				</div>
@@ -81,7 +91,8 @@
 					<ul id="indexComicList">
 						<s:iterator value="comicListVar">
 							<li><a
-								href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
+								href="<%=basePath%>list_comic_episodes/cid/${id }.html"
+								target="_blank"
 								title="${name} ${updateRemark}"><img
 								alt="${name} ${updateRemark}" src="${iconUrl}"></a>
 								<span
@@ -89,7 +100,8 @@
 									style="float: left;">&nbsp;${sourceName }</span>&nbsp;
 								<span>${updateRemark}&nbsp;</span></span>
 								<a
-								href="javascript:jumpTo('./comic/comicEpisodeAction!list?comicId=${id }');"
+								href="<%=basePath%>list_comic_episodes/cid/${id }.html"
+								target="_blank"
 								title="${name} ${updateRemark}"><font
 									color="#FF0000">${name}</font></a></li>
 						</s:iterator>
@@ -133,14 +145,18 @@
 														status="videoStatus">
 														<div style="display: inline-block;">
 															<a
-																href="javascript:jumpTo('./video/videoListAction!list?searchName=${videoNameVar }');">${videoNameVar }</a>┊
+																href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode((String)request.getAttribute("videoNameVar"))%>.html"
+																target="_blank">${videoNameVar }</a>┊
 														</div>
 													</s:iterator>
 													<div style="display: inline-block;">
 														<s:if test="#map.value.size > 0">
+															<c:set var="firstChar" value="${map.key }" scope="request"/>
 															<a
-																href="javascript:jumpTo('./video/videoListAction!list?firstChar=${map.key }');"><img
-																class="more" src="./img/jian/more.jpg"></a>
+																href="<%=basePath%>search_videos/char/<%=UrlEncodeUtil.base64Encode((String)request.getAttribute("firstChar"))%>.html"
+																target="_blank">
+																<img class="more" src="./img/jian/more.jpg">
+															</a>
 														</s:if>
 														<s:else>
 															<a style="color: gray; font-weight: bold;">无</a>
@@ -161,13 +177,16 @@
 														status="videoStatus">
 														<div style="display: inline-block;">
 															<a
-																href="javascript:jumpTo('./comic/comicListAction!list?searchName=${comicNameVar }');">${comicNameVar }</a>┊
+																href="<%=basePath%>search_comics/name/<%=UrlEncodeUtil.base64Encode((String)request.getAttribute("comicNameVar"))%>.html"
+																target="_blank">${comicNameVar }</a>┊
 														</div>
 													</s:iterator>
 													<div style="display: inline-block;">
 														<s:if test="#comicList.size > 0">
+															<c:set var="firstChar" value="${map.key }" scope="request"/>
 															<a
-																href="javascript:jumpTo('./comic/comicListAction!list?firstChar=${map.key }');"><img
+																href="<%=basePath%>search_comics/char/<%=UrlEncodeUtil.base64Encode((String)request.getAttribute("firstChar"))%>.html"
+																target="_blank"><img
 																class="more" src="./img/jian/more.jpg"></a>
 														</s:if>
 														<s:else>

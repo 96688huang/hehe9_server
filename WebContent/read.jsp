@@ -1,6 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <title>${comic.name }第${episode.episodeNo }集「${episode.title}」高清在线观看
@@ -18,15 +23,15 @@
 		<!-- <div class="v-left l15"> -->
 <%-- 		<div
 			style="display: inline; float: left; text-align: left; margin: auto auto auto 8px;">
-			您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+			您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
 				${comic.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 			</strong>
 		</div> --%>
 		<div id="nav">
 			<p>
-				<label>您的位置： <a href="./"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
-				${video.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
+				<label>您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+				${comic.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 				</strong>
 				</label>
@@ -65,7 +70,8 @@
 									<param name="bgcolor" value="#000000">
 									<param name="flashvars"
 										value="playMovie=true&amp;isAutoPlay=true&amp;auto=1&amp;autoPlay=true&amp;">
-								</object> --%>
+								</object> 
+								--%>
 							</div>
 						</div>
 					</td>
@@ -85,7 +91,7 @@
 										style="width:132px; top:84px; <s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if><s:else>color:#FFF;</s:else>">
 											第${episodeItem.episodeNo}集&nbsp; </span> --%>
 									<a
-										href="javascript:jumpTo('./comic/readAction!read?comicId=${comic.id }&episodeId=${episodeItem.id}&episodeNo=${episodeItem.episodeNo}');"
+										href="<%=basePath %>read_comic/cid/${comic.id }/eid/${episode.id}/eno/${episode.episodeNo}.html"
 										style="<s:if test="episodeNo == episode.episodeNo">color:#FFD306;</s:if>"
 										class="dmvcdTitle"
 										title="${comic.name}&nbsp;第${episodeItem.episodeNo}集<s:if test="title != null">「${episodeItem.title}」</s:if>"
@@ -106,11 +112,11 @@
 		<div style="margin: 8px; font-size: 14px;">
 			<ul>
 				<li><b>上一集： </b> <s:if test="preEpisode != null">
-						<a href="">${comic.name }第${preEpisode.episodeNo }集 <s:if
+						<a href="<%=basePath %>read_comic/vid/${comic.id }/eid/${preEpisode.id}/eno/${preEpisode.episodeNo}.html">${comic.name }第${preEpisode.episodeNo }集 <s:if
 								test="preEpisode.title != null">「${preEpisode.title}」</s:if></a>
 					</s:if> <s:else>无</s:else></li>
 				<li><b>下一集：</b> <s:if test="nextEpisode != null">
-						<a href="">${comic.name }第${nextEpisode.episodeNo }集 <s:if
+						<a href="<%=basePath %>read_comic/vid/${comic.id }/eid/${nextEpisode.id}/eno/${nextEpisode.episodeNo}.html">${comic.name }第${nextEpisode.episodeNo }集 <s:if
 								test="nextEpisode.title != null">「${nextEpisode.title}」</s:if></a>
 					</s:if> <s:else>无</s:else></li>
 			</ul>

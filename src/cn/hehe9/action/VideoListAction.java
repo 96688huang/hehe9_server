@@ -1,11 +1,13 @@
 package cn.hehe9.action;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,6 +19,8 @@ import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
 import cn.hehe9.common.constants.VideoListTitleEnum;
+import cn.hehe9.common.utils.Base64Util;
+import cn.hehe9.common.utils.UrlEncodeUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.service.biz.CacheService;
 import cn.hehe9.service.biz.VideoService;
@@ -61,42 +65,50 @@ public class VideoListAction extends ActionSupport {
 
 	private static final String LIST_PAGE = PageUrlFlagEnum.VIDEO_LIST_PAGE.getUrlFlag();
 
-	public String list() {
-		if (StringUtils.isNotBlank(searchName)) {
-			displayTitle = searchName + "  " +VideoListTitleEnum.SEARCH_RESULT.getTitle();
-		} else if (StringUtils.isNotBlank(firstChar)) {
-			displayTitle = firstChar.trim() + VideoListTitleEnum.FIRST_CHAR_VIDEO.getTitle();
-		} else {
-			displayTitle = VideoListTitleEnum.VIDEO_BOOK.getTitle();
-		}
+	public String list() throws Exception {
+		try {
+			searchName = UrlEncodeUtil.base64Decode(searchName);
+			firstChar = UrlEncodeUtil.base64Decode(firstChar);
 
-		// 先从缓存中取
-		List<Video> videoList = null;
-		AtomicInteger total = new AtomicInteger(0);
-		if (AppConfig.MEMCACHE_ENABLE) {
-			List<Integer> sourceIdList = cacheService.getOrCreateVideoSourceIdsCache();
-			videoList = pickVideosFromCache(total, sourceIdList);
-		}
-
-		// 如果缓存中没有, 则从DB中取
-		if (CollectionUtils.isEmpty(videoList)) {
-			videoList = pickVideosFromDb(total);
-		}
-
-		// 排版
-		int count = 0;
-		for (;;) {
-			int preNextCount = count + VIDEOS_COUNT_PER_LINE;
-			int nextCount = preNextCount > videoList.size() ? videoList.size() : preNextCount;
-			videoListHolder.add(videoList.subList(count, nextCount));
-			count = preNextCount;
-
-			if (nextCount >= videoList.size()) {
-				break;
+			if (StringUtils.isNotBlank(searchName)) {
+				displayTitle = searchName + "  " + VideoListTitleEnum.SEARCH_RESULT.getTitle();
+			} else if (StringUtils.isNotBlank(firstChar)) {
+				displayTitle = firstChar.trim() + VideoListTitleEnum.FIRST_CHAR_VIDEO.getTitle();
+			} else {
+				displayTitle = VideoListTitleEnum.VIDEO_BOOK.getTitle();
 			}
+
+			// 先从缓存中取
+			List<Video> videoList = null;
+			AtomicInteger total = new AtomicInteger(0);
+			if (AppConfig.MEMCACHE_ENABLE) {
+				List<Integer> sourceIdList = cacheService.getOrCreateVideoSourceIdsCache();
+				videoList = pickVideosFromCache(total, sourceIdList);
+			}
+
+			// 如果缓存中没有, 则从DB中取
+			if (CollectionUtils.isEmpty(videoList)) {
+				videoList = pickVideosFromDb(total);
+			}
+
+			// 排版
+			int count = 0;
+			for (;;) {
+				int preNextCount = count + VIDEOS_COUNT_PER_LINE;
+				int nextCount = preNextCount > videoList.size() ? videoList.size() : preNextCount;
+				videoListHolder.add(videoList.subList(count, nextCount));
+				count = preNextCount;
+
+				if (nextCount >= videoList.size()) {
+					break;
+				}
+			}
+			pagination.setTotal(total.get());
+			return LIST_PAGE;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
 		}
-		pagination.setTotal(total.get());
-		return LIST_PAGE;
 	}
 
 	private List<Video> pickVideosFromDb(AtomicInteger total) {

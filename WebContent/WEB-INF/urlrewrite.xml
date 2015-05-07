@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+
+<!--
+    Configuration file for UrlRewriteFilter
+    http://tuckey.org/urlrewrite/
+-->
+
+<urlrewrite>
+
+<!-- video config -->
+	<rule>
+        <note>
+			to index page
+        </note>
+        <from>/$</from>
+        <to>/video/videoAction!toMain</to>
+    </rule>
+    
+	<rule>
+        <note>
+			list videos
+        </note>
+        <from>^/list_videos.html$</from>
+        <to>/video/videoListAction!list</to>
+    </rule>
+	
+    <rule>
+        <note>
+			search videos by name
+        </note>
+        <from>^/search_videos/name/(.*).html$</from>
+        <to>/video/videoListAction!list?searchName=$1</to>
+    </rule>
+    
+    <rule>
+        <note>
+			search videos by char
+        </note>
+        <from>^/search_videos/char/(.*).html$</from>
+        <to>/video/videoListAction!list?firstChar=$1</to>
+    </rule>
+    
+    <rule>
+        <note>
+			list video episodes
+        </note>
+        <from>^/list_video_episodes.html$</from>
+        <to>/video/episodeAction!list</to>
+    </rule>
+    
+    <rule>
+        <note>
+			list video episodes by videoId
+        </note>
+        <from>^/list_video_episodes/vid/([0-9]+).html$</from>
+        <to>/video/episodeAction!list?videoId=$1</to>
+    </rule>
+    
+    <rule>
+        <note>
+			to pay video page
+        </note>
+        <from>^/play_video/vid/([0-9]+)/eid/([0-9]+)/eno/([0-9]+).html$</from>
+        <to>/video/playAction!play?videoId=$1&amp;episodeId=$2&amp;episodeNo=$3</to>
+    </rule>
+
+<!-- comic config -->
+
+	<rule>
+        <note>
+			to index page
+        </note>
+        <from>/$</from>
+        <to>/comic/comicAction!toMain</to>
+    </rule>
+    
+	<rule>
+        <note>
+			list comics
+        </note>
+        <from>^/list_comics.html$</from>
+        <to>/comic/comicListAction!list</to>
+    </rule>
+	
+    <rule>
+        <note>
+			search comics by name
+        </note>
+        <from>^/search_comics/name/(.*).html$</from>
+        <to>/comic/comicListAction!list?searchName=$1</to>
+    </rule>
+    
+    <rule>
+        <note>
+			search comics by char
+        </note>
+        <from>^/search_comics/char/(.*).html$</from>
+        <to>/comic/comicListAction!list?firstChar=$1</to>
+    </rule>
+    
+    <rule>
+        <note>
+			list comic episodes
+        </note>
+        <from>^/list_comic_episodes.html$</from>
+        <to>/comic/comicEpisodeAction!list</to>
+    </rule>
+    
+    <rule>
+        <note>
+			list comic episodes by comicId
+        </note>
+        <from>^/list_comic_episodes/cid/([0-9]+).html$</from>
+        <to>/comic/comicEpisodeAction!list?comicId=$1</to>
+    </rule>
+    
+    <rule>
+        <note>
+			to pay comic page
+        </note>
+        <from>^/read_comic/cid/([0-9]+)/eid/([0-9]+)/eno/([0-9]+).html$</from>
+        <to>/comic/readAction!read?comicId=$1&amp;episodeId=$2&amp;episodeNo=$3</to>
+    </rule>
+
+
+<!--     
+	<rule>
+        <note>
+            The rule means that requests to /test/status/ will be redirected to /rewrite-status
+            the url will be rewritten.
+        </note>
+        <from>/test/status/</from>
+        <to type="redirect">%{context-path}/rewrite-status</to>
+    </rule> 
+-->
+
+
+<!--     
+	<outbound-rule>
+        <note>
+            The outbound-rule specifies that when response.encodeURL is called (if you are using JSTL c:url)
+            the url /rewrite-status will be rewritten to /test/status/.
+
+            The above rule and this outbound-rule means that end users should never see the
+            url /rewrite-status only /test/status/ both in thier location bar and in hyperlinks
+            in your pages.
+        </note>
+        <from>/rewrite-status</from>
+        <to>/test/status/</to>
+    </outbound-rule> -->
+
+
+    <!--
+
+    INSTALLATION
+
+        in your web.xml add...
+
+        <filter>
+            <filter-name>UrlRewriteFilter</filter-name>
+            <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+            <init-param>
+                <param-name>logLevel</param-name>
+                <param-value>WARN</param-value>
+            </init-param>
+        </filter>
+        <filter-mapping>
+            <filter-name>UrlRewriteFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
+
+     EXAMPLES
+
+     Redirect one url
+        <rule>
+            <from>/some/old/page.html</from>
+            <to type="redirect">/very/new/page.html</to>
+        </rule>
+
+    Redirect a directory
+        <rule>
+            <from>/some/olddir/(.*)</from>
+            <to type="redirect">/very/newdir/$1</to>
+        </rule>
+
+    Clean a url
+        <rule>
+            <from>/products/([0-9]+)</from>
+            <to>/products/index.jsp?product_id=$1</to>
+        </rule>
+    eg, /products/1234 will be passed on to /products/index.jsp?product_id=1234 without the user noticing.
+
+    Browser detection
+        <rule>
+            <condition name="user-agent">Mozilla/[1-4]</condition>
+            <from>/some/page.html</from>
+            <to>/some/page-for-old-browsers.html</to>
+        </rule>
+    eg, will pass the request for /some/page.html on to /some/page-for-old-browsers.html only for older
+    browsers whose user agent srtings match Mozilla/1, Mozilla/2, Mozilla/3 or Mozilla/4.
+
+    Centralised browser detection
+        <rule>
+            <condition name="user-agent">Mozilla/[1-4]</condition>
+            <set type="request" name="browser">moz</set>
+        </rule>
+    eg, all requests will be checked against the condition and if matched
+    request.setAttribute("browser", "moz") will be called.
+
+    -->
+
+</urlrewrite>
+
