@@ -56,7 +56,7 @@ body {
 							</strong>
 						</h3></li>
 					<li><h3>
-							<strong><a href="./">&lt;&lt; 返回 首页</a> </strong>
+							<strong><a href="<%=basePath%>">&lt;&lt; 返回 首页</a> </strong>
 						</h3></li>
 				</ul>
 			</div>
