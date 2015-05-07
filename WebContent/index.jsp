@@ -3,7 +3,5 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-%>
-<% //response.sendRedirect("./video/videoAction!toMain");
-response.sendRedirect("./");
+	response.sendRedirect("./");
 %>

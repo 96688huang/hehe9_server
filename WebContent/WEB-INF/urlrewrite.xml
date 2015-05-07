@@ -17,7 +17,7 @@
         <from>/$</from>
         <to>/video/videoAction!toMain</to>
     </rule>
-    
+
 	<rule>
         <note>
 			list videos
@@ -123,6 +123,7 @@
         <from>^/read_comic/cid/([0-9]+)/eid/([0-9]+)/eno/([0-9]+).html$</from>
         <to>/comic/readAction!read?comicId=$1&amp;episodeId=$2&amp;episodeNo=$3</to>
     </rule>
+</urlrewrite>
 
 
 <!--     
@@ -210,6 +211,3 @@
     request.setAttribute("browser", "moz") will be called.
 
     -->
-
-</urlrewrite>
-

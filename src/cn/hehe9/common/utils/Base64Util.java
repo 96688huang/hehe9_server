@@ -7,10 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 
 public class Base64Util {
 	public static String encode(String msg) {
-		if (StringUtils.isBlank(msg)) {
+		try {
+			if (StringUtils.isBlank(msg)) {
+				return null;
+			}
+			return Base64.encodeBase64String(msg.getBytes("UTF-8"));
+		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
-		return Base64.encodeBase64String(msg.getBytes());
 	}
 
 	public static String decode(String base64String) throws UnsupportedEncodingException {

@@ -84,8 +84,8 @@
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-	    <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>      
+        <dispatcher>FORWARD</dispatcher>      
 	</filter-mapping>
 
 	<filter-mapping>
