@@ -19,6 +19,7 @@
 	</div>
 	<div id="searchBar">
 		<form id="searchForm" action="" method="post" target="_blank">
+			<input name="isSearchNameEncode" value="false" type="hidden">
 			<input id="searchName" type="text" name="searchName">&nbsp;&nbsp;
 			<input class="searchBtn" type="button" onclick="javascript:searchVideo();" value="找动漫">
 			<input class="searchBtn" type="button" onclick="javascript:searchComic();" value="找漫画" style="background-color: #F00;">

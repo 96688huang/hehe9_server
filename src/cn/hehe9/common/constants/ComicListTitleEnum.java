@@ -21,7 +21,7 @@ public enum ComicListTitleEnum {
 	FIRST_CHAR_VIDEO(" 字母漫画"),
 
 	/** 搜索结果 */
-	SEARCH_RESULT("搜索结果");
+	SEARCH_RESULT("漫画搜索结果");
 
 	private String title;
 

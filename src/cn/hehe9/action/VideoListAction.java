@@ -1,13 +1,11 @@
 package cn.hehe9.action;
 
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,7 +17,6 @@ import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
 import cn.hehe9.common.constants.VideoListTitleEnum;
-import cn.hehe9.common.utils.Base64Util;
 import cn.hehe9.common.utils.UrlEncodeUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.service.biz.CacheService;
@@ -50,6 +47,8 @@ public class VideoListAction extends ActionSupport {
 	//--- 请求参数 ----
 	/** 视频名称 */
 	private String searchName;
+	// 默认采用base64编码(如果是form表单提交， 则无需要采用base64编码)
+	private Boolean isSearchNameEncode = true;
 	/** 视频名称首字母 */
 	private String firstChar;
 
@@ -67,7 +66,7 @@ public class VideoListAction extends ActionSupport {
 
 	public String list() throws Exception {
 		try {
-			searchName = UrlEncodeUtil.base64Decode(searchName);
+			searchName = isSearchNameEncode ? UrlEncodeUtil.base64Decode(searchName) : searchName;
 			firstChar = UrlEncodeUtil.base64Decode(firstChar);
 
 			if (StringUtils.isNotBlank(searchName)) {
@@ -178,6 +177,14 @@ public class VideoListAction extends ActionSupport {
 		this.searchName = searchName;
 	}
 
+	public Boolean getIsSearchNameEncode() {
+		return isSearchNameEncode;
+	}
+	
+	public void setIsSearchNameEncode(Boolean isSearchNameEncode) {
+		this.isSearchNameEncode = isSearchNameEncode;
+	}
+	
 	public String getFirstChar() {
 		return firstChar;
 	}

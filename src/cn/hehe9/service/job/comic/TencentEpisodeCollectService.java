@@ -102,16 +102,15 @@ public class TencentEpisodeCollectService extends BaseTask {
 				futureList.add(future);
 				episodeNoTmp++;
 			}
-			
+
 			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage";
 			String partLog = String.format("comicId = %s, comicName = %s, spanElementsSize = %s, futureListSize = %s",
 					comic.getId(), comic.getName(), works_chapter_item_Spans.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
-			logger.error(
-					COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail, delete comic. comic : "
-							+ JacksonUtil.encodeQuietly(comic), e);
+			logger.error(COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail, delete comic. comic : "
+					+ JacksonUtil.encodeQuietly(comic), e);
 			comicDao.deleteBy(comic.getId());
 		}
 	}
@@ -134,7 +133,7 @@ public class TencentEpisodeCollectService extends BaseTask {
 			Element a = spanItem.select("a").first();
 			String title = a.text();
 			Integer episodeNo = 0;
-			
+
 			String subEpisodeNoStr = null;
 			if (title.contains(" ")) {
 				subEpisodeNoStr = title.split(" ")[0];
@@ -145,16 +144,20 @@ public class TencentEpisodeCollectService extends BaseTask {
 			} else if (title.contains("讲")) {
 				subEpisodeNoStr = title.split("讲")[0];
 			}
-			
-			String episodeNoStr = StringUtil.pickInteger(subEpisodeNoStr.split(" ")[0]);
-			if (!title.contains(" ") || StringUtils.isBlank(episodeNoStr)) {
-				episodeNo = episodeNoTmp;
-			}
 
-			if (episodeNo == 0) {
-				long tmp = Long.parseLong(episodeNoStr);
-				if (tmp > 10000) { // NOTE: 超过10000， 则用自增分集号
+			if (StringUtils.isBlank(subEpisodeNoStr)) {
+				episodeNo = episodeNoTmp;
+			} else {
+				String episodeNoStr = StringUtil.pickInteger(subEpisodeNoStr.split(" ")[0]);
+				if (!title.contains(" ") || StringUtils.isBlank(episodeNoStr)) {
 					episodeNo = episodeNoTmp;
+				}
+
+				if (episodeNo == 0) {
+					long tmp = Long.parseLong(episodeNoStr);
+					if (tmp > 10000) { // NOTE: 超过10000， 则用自增分集号
+						episodeNo = episodeNoTmp;
+					}
 				}
 			}
 

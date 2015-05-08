@@ -49,6 +49,8 @@ public class ComicListAction extends ActionSupport {
 	//--- 请求参数 ----
 	/** 漫画名称 */
 	private String searchName;
+	// 默认采用base64编码(如果是form表单提交， 则无需要采用base64编码)
+	private Boolean isSearchNameEncode = true;
 	/** 漫画名称首字母 */
 	private String firstChar;
 
@@ -66,7 +68,7 @@ public class ComicListAction extends ActionSupport {
 
 	public String list() throws Exception {
 		try {
-			searchName = UrlEncodeUtil.base64Decode(searchName);
+			searchName = isSearchNameEncode ? UrlEncodeUtil.base64Decode(searchName) : searchName;
 			firstChar = UrlEncodeUtil.base64Decode(firstChar);
 
 			if (StringUtils.isNotBlank(searchName)) {
@@ -177,6 +179,14 @@ public class ComicListAction extends ActionSupport {
 		this.searchName = searchName;
 	}
 
+	public Boolean getIsSearchNameEncode() {
+		return isSearchNameEncode;
+	}
+	
+	public void setIsSearchNameEncode(Boolean isSearchNameEncode) {
+		this.isSearchNameEncode = isSearchNameEncode;
+	}
+	
 	public String getFirstChar() {
 		return firstChar;
 	}
