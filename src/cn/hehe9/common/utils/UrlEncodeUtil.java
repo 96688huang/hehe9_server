@@ -7,23 +7,25 @@ public class UrlEncodeUtil {
 
 	/**
 	 * 先 base64 encode， 再url encode.<p>
-	 * 仅对 加号 作了特殊替换处理：base64encodeStr.replaceAll("\\+", "%2B")
+	 * 仅对 %号 作了特殊替换处理：用"％"代替"%"
 	 * 
 	 */
 	public static String base64Encode(String msg) {
 		try {
-			return URLEncoder.encode(Base64Util.encode(msg).replaceAll("\\+", "%2B"), "UTF-8");
+			return URLEncoder.encode(Base64Util.encode(msg), "UTF-8").replace("%", "％");
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	/**
-	 * 先 base64 decode, 再 url decode
+	 * 先url decode, 再  base64 decode.<p>
+	 * 注: 会先用"％"替换"%",再进行解码操作;
 	 */
 	public static String base64Decode(String base64EncodeStr) {
 		try {
-			return URLDecoder.decode(Base64Util.decode(base64EncodeStr), "UTF-8");
+			base64EncodeStr = base64EncodeStr.replaceAll("％", "%");
+			return Base64Util.decode(URLDecoder.decode(base64EncodeStr, "UTF-8"));
 		} catch (Exception e) {
 			return null;
 		}

@@ -16,15 +16,15 @@
 
 
 	<!-- 定时任务配置 -->
-<!-- 	<task:scheduled-tasks>
+	<!-- <task:scheduled-tasks>
 		<task:scheduled ref="sohuHotVideoCollectJob" method="executeJob"
-			cron="0 08 0 * * ?" />
-	</task:scheduled-tasks> -->
+			cron="0 * */2 * * ?" />
+	</task:scheduled-tasks>
 	
 	<task:scheduled-tasks>
 		<task:scheduled ref="tencentHotComicCollectJob" method="executeJob"
-			cron="0 31 0 * * ?" />
-	</task:scheduled-tasks>
+			cron="0 17 */1 * * ?" />
+	</task:scheduled-tasks> -->
 	
 	<!-- 	
 	<task:scheduled-tasks>

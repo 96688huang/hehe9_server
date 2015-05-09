@@ -169,12 +169,7 @@ public class YoukuVideoCollectService extends BaseTask {
 			//			videoFromNet.setPlayCountTotal(playCountTotal);
 
 			// first char
-			String firstChar = Pinyin4jUtil.getFirstChar(videoFromNet.getName()).toUpperCase();
-			if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
-				videoFromNet.setFirstChar(firstChar);
-			} else {
-				videoFromNet.setFirstChar(ComConstant.OTHER_CNS);
-			}
+			videoFromNet.setFirstChar(AppHelper.convertFirstChar(videoFromNet.getName()));
 
 			List<Video> list = videoDao.listExceptBigData(sourceId, videoFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {

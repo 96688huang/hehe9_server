@@ -176,14 +176,8 @@ public class TencentComicCollectService extends BaseTask {
 			comicFromNet.setUpdateRemark(updateRemark);
 			comicFromNet.setTypes(typesBuf.toString());
 			comicFromNet.setStoryLine(storyLine);
-
 			// first char
-			String firstChar = Pinyin4jUtil.getFirstChar(comicFromNet.getName()).toUpperCase();
-			if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
-				comicFromNet.setFirstChar(firstChar);
-			} else {
-				comicFromNet.setFirstChar(ComConstant.OTHER_CNS);
-			}
+			comicFromNet.setFirstChar(AppHelper.convertFirstChar(comicFromNet.getName()));
 
 			List<Comic> list = comicDao.listExceptBigData(comicFromNet.getSourceId(), comicFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {

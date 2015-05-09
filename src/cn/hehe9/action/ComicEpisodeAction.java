@@ -62,14 +62,19 @@ public class ComicEpisodeAction extends ActionSupport {
 	private static final String COMIC_EPISODE_LIST_PAGE = PageUrlFlagEnum.COMIC_EPISODE_LIST_PAGE.getUrlFlag();
 
 	public String list() {
-		if (pagination == null) {
-			pagination = new Pagination();
-		}
+		try {
+			if (pagination == null) {
+				pagination = new Pagination();
+			}
 
-		comic = comicService.findById(comicId);
-		episodeList = comicEpisodeService.list(comicId, pagination.getPage(), pagination.getPageCount());
-		pagination.setTotal(comicEpisodeService.count(comicId));
-		return COMIC_EPISODE_LIST_PAGE;
+			comic = comicService.findById(comicId);
+			episodeList = comicEpisodeService.list(comicId, pagination.getPage(), pagination.getPageCount());
+			pagination.setTotal(comicEpisodeService.count(comicId));
+			return COMIC_EPISODE_LIST_PAGE;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
 	}
 
 	public Integer getComicId() {

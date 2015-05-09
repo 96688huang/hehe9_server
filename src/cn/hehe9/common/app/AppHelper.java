@@ -1,6 +1,10 @@
 package cn.hehe9.common.app;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import cn.hehe9.common.constants.ComConstant;
+import cn.hehe9.common.utils.Pinyin4jUtil;
 
 /**
  * 助手类
@@ -42,5 +46,14 @@ public class AppHelper {
 	public static String getAliasNameIfExist(String origName) {
 		String alias = AppConfig.ALIAS_MAP.get(origName);
 		return StringUtils.isBlank(alias) ? origName : alias;
+	}
+
+	public static String convertFirstChar(String str) {
+		String firstChar = Pinyin4jUtil.getFirstChar(str).toUpperCase();
+		if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
+			return firstChar;
+		} else {
+			return ComConstant.OTHER_CNS;
+		}
 	}
 }

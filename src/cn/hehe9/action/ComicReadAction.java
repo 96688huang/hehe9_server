@@ -74,65 +74,70 @@ public class ComicReadAction extends ActionSupport {
 	private static final String READ_JUMP_PAGE = PageUrlFlagEnum.READ_JUMP_PAGE.getUrlFlag();
 
 	public String read() {
-		if (comicId <= 0 || episodeId <= 0 || episodeNo < 0) {
-			return MAIN_PAGE;
-		}
+		try {
+			if (comicId <= 0 || episodeId <= 0 || episodeNo < 0) {
+				return MAIN_PAGE;
+			}
 
-		comic = comicService.findById(comicId);
+			comic = comicService.findById(comicId);
 
-		// 播放页右边的分集列表
-		ComicEpisode maxEpisode = comicEpisodeService.getMaxEpisode(comicId);
-		if (maxEpisode == null) {
-			return READ_PAGE;
-		}
+			// 播放页右边的分集列表
+			ComicEpisode maxEpisode = comicEpisodeService.getMaxEpisode(comicId);
+			if (maxEpisode == null) {
+				return READ_PAGE;
+			}
 
-		int maxEpisodeNo = maxEpisode.getEpisodeNo();
-		int minEpisodeNo = episodeNo;
-		if (episodeNo + EPISODE_INTERVAL <= maxEpisodeNo) {
-			maxEpisodeNo = episodeNo + EPISODE_INTERVAL;
-		}
-		int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
-		minEpisodeNo = tmp > 0 ? tmp : 0;
+			int maxEpisodeNo = maxEpisode.getEpisodeNo();
+			int minEpisodeNo = episodeNo;
+			if (episodeNo + EPISODE_INTERVAL <= maxEpisodeNo) {
+				maxEpisodeNo = episodeNo + EPISODE_INTERVAL;
+			}
+			int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
+			minEpisodeNo = tmp > 0 ? tmp : 0;
 
-		this.episodeList = comicEpisodeService.listByRange(comicId, minEpisodeNo, maxEpisodeNo);
-		if (CollectionUtils.isEmpty(this.episodeList)) {
-			return READ_PAGE;
-		}
+			this.episodeList = comicEpisodeService.listByRange(comicId, minEpisodeNo, maxEpisodeNo);
+			if (CollectionUtils.isEmpty(this.episodeList)) {
+				return READ_PAGE;
+			}
 
-		// 倒序(分集越小, 越排在前面)
-		List<ComicEpisode> tmpList = new ArrayList<ComicEpisode>(this.episodeList.size());
-		for (int i = this.episodeList.size() - 1; i >= 0; i--) {
-			tmpList.add(this.episodeList.get(i));
-		}
-		this.episodeList.clear();
-		this.episodeList = tmpList;
+			// 倒序(分集越小, 越排在前面)
+			List<ComicEpisode> tmpList = new ArrayList<ComicEpisode>(this.episodeList.size());
+			for (int i = this.episodeList.size() - 1; i >= 0; i--) {
+				tmpList.add(this.episodeList.get(i));
+			}
+			this.episodeList.clear();
+			this.episodeList = tmpList;
 
-		// 上集/当前集/下集
-		int episodeSize = this.episodeList.size();
-		ComicEpisode firstEpisode = this.episodeList.get(0);
-		ComicEpisode secondEpisode = episodeSize >= 2 ? this.episodeList.get(1) : null;
-		ComicEpisode thirdEpisode = episodeSize >= 3 ? this.episodeList.get(2) : null;
-		ComicEpisode forthEpisode = episodeSize >= 4 ? this.episodeList.get(3) : null;
-		if (episodeNo.equals(firstEpisode == null ? "" : firstEpisode.getEpisodeNo())) {
-			episode = firstEpisode;
-			nextEpisode = secondEpisode;
-		} else if (episodeNo.equals(secondEpisode == null ? "" : secondEpisode.getEpisodeNo())) {
-			preEpisode = firstEpisode;
-			episode = secondEpisode;
-			nextEpisode = thirdEpisode;
-		} else if (episodeNo.equals(thirdEpisode == null ? "" : thirdEpisode.getEpisodeNo())) {
-			preEpisode = secondEpisode;
-			episode = thirdEpisode;
-			nextEpisode = forthEpisode;
-		} else if (episodeNo.equals(forthEpisode == null ? "" : forthEpisode.getEpisodeNo())) {
-			preEpisode = thirdEpisode;
-			episode = forthEpisode;
-		}
-		
-		if(StringUtils.isBlank(episode.getPicUrls())){
-			return READ_JUMP_PAGE;
-		}else{
-			return READ_PAGE;
+			// 上集/当前集/下集
+			int episodeSize = this.episodeList.size();
+			ComicEpisode firstEpisode = this.episodeList.get(0);
+			ComicEpisode secondEpisode = episodeSize >= 2 ? this.episodeList.get(1) : null;
+			ComicEpisode thirdEpisode = episodeSize >= 3 ? this.episodeList.get(2) : null;
+			ComicEpisode forthEpisode = episodeSize >= 4 ? this.episodeList.get(3) : null;
+			if (episodeNo.equals(firstEpisode == null ? "" : firstEpisode.getEpisodeNo())) {
+				episode = firstEpisode;
+				nextEpisode = secondEpisode;
+			} else if (episodeNo.equals(secondEpisode == null ? "" : secondEpisode.getEpisodeNo())) {
+				preEpisode = firstEpisode;
+				episode = secondEpisode;
+				nextEpisode = thirdEpisode;
+			} else if (episodeNo.equals(thirdEpisode == null ? "" : thirdEpisode.getEpisodeNo())) {
+				preEpisode = secondEpisode;
+				episode = thirdEpisode;
+				nextEpisode = forthEpisode;
+			} else if (episodeNo.equals(forthEpisode == null ? "" : forthEpisode.getEpisodeNo())) {
+				preEpisode = thirdEpisode;
+				episode = forthEpisode;
+			}
+
+			if (StringUtils.isBlank(episode.getPicUrls())) {
+				return READ_JUMP_PAGE;
+			} else {
+				return READ_PAGE;
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
 		}
 	}
 

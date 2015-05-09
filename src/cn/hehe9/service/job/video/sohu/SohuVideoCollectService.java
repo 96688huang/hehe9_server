@@ -11,7 +11,6 @@ import java.util.concurrent.Future;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,7 +25,6 @@ import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
-import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.entity.Video;
@@ -171,14 +169,8 @@ public class SohuVideoCollectService extends BaseTask {
 			}
 			// 记得取别名
 			videoFromNet.setName(AppHelper.getAliasNameIfExist(name));
-
 			// first char
-			String firstChar = Pinyin4jUtil.getFirstChar(videoFromNet.getName()).toUpperCase();
-			if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
-				videoFromNet.setFirstChar(firstChar);
-			} else {
-				videoFromNet.setFirstChar(ComConstant.OTHER_CNS);
-			}
+			videoFromNet.setFirstChar(AppHelper.convertFirstChar(videoFromNet.getName()));
 
 			// story line brief
 			String storyLine = list_hover_Div.select("p.lh-info").html();

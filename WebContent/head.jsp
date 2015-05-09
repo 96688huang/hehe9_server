@@ -42,7 +42,7 @@
 			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("灌篮高手")%>.html" target="_blank" title="灌篮高手">&nbsp;灌篮高手&nbsp;</a>&nbsp;
 			<a href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode("妖精的尾巴")%>.html" target="_blank" title="妖精的尾巴">&nbsp;妖精的尾巴&nbsp;</a>
 		</div>
-	</div>
+	</div>％
 </div>
 <!-- jumpForm -->
 <form id="jumpForm" name="jumpForm" method="post" target="_blank">

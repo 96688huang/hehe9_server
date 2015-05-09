@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,6 +22,7 @@ import cn.hehe9.common.constants.ComicSourceName;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
 import cn.hehe9.common.utils.ListUtil;
+import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.persistent.entity.ComicSource;
@@ -73,6 +75,9 @@ public class TencentHotComicService extends BaseTask {
 					comic.setSourceId(source.getId());
 					comic.setName(AppHelper.getAliasNameIfExist(name));
 					comic.setListPageUrl(listPageUrl);
+					// first char
+					comic.setFirstChar(AppHelper.convertFirstChar(comic.getName()));
+
 					comicService.save(comic);
 					hotComics.add(comic);
 					logger.info("{}add new hot comic. sourceId = {}, name = {}, listPageUrl = {}", new Object[] {

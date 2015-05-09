@@ -181,11 +181,11 @@ public class ComicListAction extends ActionSupport {
 	public Boolean getIsSearchNameEncode() {
 		return isSearchNameEncode;
 	}
-	
+
 	public void setIsSearchNameEncode(Boolean isSearchNameEncode) {
 		this.isSearchNameEncode = isSearchNameEncode;
 	}
-	
+
 	public String getFirstChar() {
 		return firstChar;
 	}

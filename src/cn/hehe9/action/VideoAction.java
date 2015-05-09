@@ -53,7 +53,7 @@ public class VideoAction extends ActionSupport {
 
 	@Resource
 	private VideoService videoService;
-	
+
 	@Resource
 	private ComicService comicService;
 
@@ -63,7 +63,7 @@ public class VideoAction extends ActionSupport {
 	private InputStream inputStream;
 
 	private List<List<Video>> hotVideoListHolder;
-	
+
 	private List<List<Comic>> hotComicListHolder;
 
 	private List<VideoEpisode> hotEpisodeList;
@@ -89,7 +89,7 @@ public class VideoAction extends ActionSupport {
 
 	/** 字母菜单 */
 	private Map<String, Set<String>> letterMenuVideoMap;
-	
+
 	/** 字母漫画菜单 */
 	private Map<String, Set<String>> letterMenuComicMap;
 
@@ -106,7 +106,7 @@ public class VideoAction extends ActionSupport {
 			letterMenuVideoMap.put(letter, new LinkedHashSet<String>(32));
 		}
 		letterMenuVideoMap.put(ComConstant.OTHER_CNS, new LinkedHashSet<String>());
-		
+
 		// 初始化菜单漫画容器
 		letterMenuComicMap = new LinkedHashMap<String, Set<String>>(ComConstant.LETTERS.length + 1);
 		for (String letter : ComConstant.LETTERS) {
@@ -116,37 +116,41 @@ public class VideoAction extends ActionSupport {
 	}
 
 	public String toMain() throws Exception {
-		
-		// check cache
-		if (AppConfig.MEMCACHE_ENABLE) {
-			String indexPageContent = cacheService.getIndexPageCache();
-			if (StringUtils.isNotBlank(indexPageContent)) {
-				inputStream = new ByteArrayInputStream(indexPageContent.getBytes("UTF-8"));
-				return SUCCESS;
+		try {
+			// check cache
+			if (AppConfig.MEMCACHE_ENABLE) {
+				String indexPageContent = cacheService.getIndexPageCache();
+				if (StringUtils.isNotBlank(indexPageContent)) {
+					inputStream = new ByteArrayInputStream(indexPageContent.getBytes("UTF-8"));
+					return SUCCESS;
+				}
 			}
+
+			// 最热门的漫画列表
+			initHotComics();
+
+			// 最热门的视频列表
+			List<Video> hotVideoList = initHotVideos();
+
+			// 最热门的视频分集列表
+			initHotEpisodes(hotVideoList);
+
+			//		// 动画片大全
+			//		menuVideoList = videoService.listBrief(1, MAIN_MENU_VIDEOS_COUNT);
+
+			// 字母菜单视频
+			initLetterVideos();
+
+			// 字母菜单漫画
+			initLetterComics();
+
+			// 异步请求首页内容, 并保存到缓存中
+			saveIndexCacheAsyncIfNeeded();
+			return MAIN_PAGE;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
 		}
-
-		// 最热门的漫画列表
-		initHotComics();
-		
-		// 最热门的视频列表
-		List<Video> hotVideoList = initHotVideos();
-
-		// 最热门的视频分集列表
-		initHotEpisodes(hotVideoList);
-
-		//		// 动画片大全
-		//		menuVideoList = videoService.listBrief(1, MAIN_MENU_VIDEOS_COUNT);
-
-		// 字母菜单视频
-		initLetterVideos();
-		
-		// 字母菜单漫画
-		initLetterComics();
-
-		// 异步请求首页内容, 并保存到缓存中
-		saveIndexCacheAsyncIfNeeded();
-		return MAIN_PAGE;
 	}
 
 	private void initLetterVideos() {
@@ -168,14 +172,14 @@ public class VideoAction extends ActionSupport {
 			letterVideoList.remove(0);
 		}
 	}
-	
+
 	private void initLetterComics() {
 		List<Comic> letterComicList = comicService.listBriefGroupByFirstChar(COUNT_PER_FIRST_CHAR);
 		for (;;) {
 			if (CollectionUtils.isEmpty(letterComicList)) {
 				break;
 			}
-			
+
 			// 归类
 			Comic comic = letterComicList.get(0);
 			Set<String> groupComics = letterMenuComicMap.get(comic.getFirstChar().toUpperCase());
@@ -183,7 +187,7 @@ public class VideoAction extends ActionSupport {
 				groupComics = letterMenuComicMap.get(ComConstant.OTHER_CNS);
 			}
 			groupComics.add(comic.getName());
-			
+
 			// 删除该元素
 			letterComicList.remove(0);
 		}
@@ -209,14 +213,14 @@ public class VideoAction extends ActionSupport {
 			int nextCount = preNextCount > hotComicList.size() ? hotComicList.size() : preNextCount;
 			hotComicListHolder.add(hotComicList.subList(count, nextCount));
 			count = preNextCount;
-			
+
 			if (nextCount >= hotComicList.size()) {
 				break;
 			}
 		}
 		return hotComicList;
 	}
-	
+
 	private List<Video> initHotVideos() {
 		List<Video> hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
 		hotVideoListHolder = new ArrayList<List<Video>>();
@@ -265,11 +269,11 @@ public class VideoAction extends ActionSupport {
 	public void setHotVideoListHolder(List<List<Video>> hotVideoListHolder) {
 		this.hotVideoListHolder = hotVideoListHolder;
 	}
-	
+
 	public List<List<Comic>> getHotComicListHolder() {
 		return hotComicListHolder;
 	}
-	
+
 	public void setHotComicListHolder(List<List<Comic>> hotComicListHolder) {
 		this.hotComicListHolder = hotComicListHolder;
 	}
@@ -305,11 +309,11 @@ public class VideoAction extends ActionSupport {
 	public void setLetterMenuVideoMap(Map<String, Set<String>> letterMenuVideoMap) {
 		this.letterMenuVideoMap = letterMenuVideoMap;
 	}
-	
+
 	public Map<String, Set<String>> getLetterMenuComicMap() {
 		return letterMenuComicMap;
 	}
-	
+
 	public void setLetterMenuComicMap(Map<String, Set<String>> letterMenuComicMap) {
 		this.letterMenuComicMap = letterMenuComicMap;
 	}

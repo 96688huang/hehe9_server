@@ -61,14 +61,19 @@ public class VideoEpisodeAction extends ActionSupport {
 	private static final String EPISODE_LIST_PAGE = PageUrlFlagEnum.VIDEO_EPISODE_LIST_PAGE.getUrlFlag();
 
 	public String list() {
-		if (pagination == null) {
-			pagination = new Pagination();
-		}
+		try {
+			if (pagination == null) {
+				pagination = new Pagination();
+			}
 
-		video = videoService.findById(videoId);
-		episodeList = videoEpisodeService.list(videoId, pagination.getPage(), pagination.getPageCount());
-		pagination.setTotal(videoEpisodeService.count(videoId));
-		return EPISODE_LIST_PAGE;
+			video = videoService.findById(videoId);
+			episodeList = videoEpisodeService.list(videoId, pagination.getPage(), pagination.getPageCount());
+			pagination.setTotal(videoEpisodeService.count(videoId));
+			return EPISODE_LIST_PAGE;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
 	}
 
 	public Integer getVideoId() {

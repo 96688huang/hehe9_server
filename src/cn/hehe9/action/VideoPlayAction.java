@@ -72,87 +72,92 @@ public class VideoPlayAction extends ActionSupport {
 	private static final String PLAY_PAGE = PageUrlFlagEnum.PLAY_PAGE.getUrlFlag();
 
 	public String play() {
-		if (videoId <= 0 || episodeId <= 0 || episodeNo <= 0) {
-			return MAIN_PAGE;
-		}
+		try {
+			if (videoId <= 0 || episodeId <= 0 || episodeNo <= 0) {
+				return MAIN_PAGE;
+			}
 
-		video = videoService.findById(videoId);
-		// Integer[] episodeNoArr = new Integer[] { episodeNo - 1, episodeNo,
-		// episodeNo + 1 };
-		// List<VideoEpisode> episodeListTmp = videoEpisodeService.list(videoId,
-		// 1, NEAR_EPISODE_COUNT, episodeNoArr);
-		// if (CollectionUtils.isEmpty(episodeListTmp)) {
-		// return PLAY_PAGE;
-		// }
-		//
-		// if (episodeListTmp.size() == NEAR_EPISODE_COUNT) {
-		// nextEpisode = episodeListTmp.get(0); // 按分集倒序
-		// episode = episodeListTmp.get(1);
-		// preEpisode = episodeListTmp.get(2);
-		// } else if (episodeListTmp.size() == 2) {
-		// episode = episodeListTmp.get(0);
-		// preEpisode = episodeListTmp.get(1);
-		// } else if (episodeListTmp.size() == 1) {
-		// episode = episodeListTmp.get(0);
-		// }
+			video = videoService.findById(videoId);
+			// Integer[] episodeNoArr = new Integer[] { episodeNo - 1, episodeNo,
+			// episodeNo + 1 };
+			// List<VideoEpisode> episodeListTmp = videoEpisodeService.list(videoId,
+			// 1, NEAR_EPISODE_COUNT, episodeNoArr);
+			// if (CollectionUtils.isEmpty(episodeListTmp)) {
+			// return PLAY_PAGE;
+			// }
+			//
+			// if (episodeListTmp.size() == NEAR_EPISODE_COUNT) {
+			// nextEpisode = episodeListTmp.get(0); // 按分集倒序
+			// episode = episodeListTmp.get(1);
+			// preEpisode = episodeListTmp.get(2);
+			// } else if (episodeListTmp.size() == 2) {
+			// episode = episodeListTmp.get(0);
+			// preEpisode = episodeListTmp.get(1);
+			// } else if (episodeListTmp.size() == 1) {
+			// episode = episodeListTmp.get(0);
+			// }
 
-		// 播放页右边的分集列表
-		VideoEpisode maxEpisode = videoEpisodeService.getMaxEpisode(videoId);
-		if (maxEpisode == null) {
+			// 播放页右边的分集列表
+			VideoEpisode maxEpisode = videoEpisodeService.getMaxEpisode(videoId);
+			if (maxEpisode == null) {
+				return PLAY_PAGE;
+			}
+
+			int maxEpisodeNo = maxEpisode.getEpisodeNo();
+			int minEpisodeNo = episodeNo;
+			if (episodeNo + EPISODE_INTERVAL <= maxEpisodeNo) {
+				maxEpisodeNo = episodeNo + EPISODE_INTERVAL;
+			}
+			int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
+			minEpisodeNo = tmp > 0 ? tmp : 0;
+
+			//		else if (episodeNo == maxEpisodeNo) {
+			//			int tmp = episodeNo - (2 * EPISODE_INTERVAL) + 1;
+			//			minEpisodeNo = tmp > 0 ? tmp : 0;
+			//		} else {
+			//			int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
+			//			minEpisodeNo = tmp > 0 ? tmp : 0;
+			//		}
+
+			this.episodeList = videoEpisodeService.listByRange(videoId, minEpisodeNo, maxEpisodeNo);
+			if (CollectionUtils.isEmpty(this.episodeList)) {
+				return PLAY_PAGE;
+			}
+
+			// 倒序(分集越小, 越排在前面)
+			List<VideoEpisode> tmpList = new ArrayList<VideoEpisode>(this.episodeList.size());
+			for (int i = this.episodeList.size() - 1; i >= 0; i--) {
+				tmpList.add(this.episodeList.get(i));
+			}
+			this.episodeList.clear();
+			this.episodeList = tmpList;
+
+			// 上集/当前集/下集
+			int episodeSize = this.episodeList.size();
+			VideoEpisode firstEpisode = this.episodeList.get(0);
+			VideoEpisode secondEpisode = episodeSize >= 2 ? this.episodeList.get(1) : null;
+			VideoEpisode thirdEpisode = episodeSize >= 3 ? this.episodeList.get(2) : null;
+			VideoEpisode forthEpisode = episodeSize >= 4 ? this.episodeList.get(3) : null;
+			if (episodeNo.equals(firstEpisode == null ? "" : firstEpisode.getEpisodeNo())) {
+				episode = firstEpisode;
+				nextEpisode = secondEpisode;
+			} else if (episodeNo.equals(secondEpisode == null ? "" : secondEpisode.getEpisodeNo())) {
+				preEpisode = firstEpisode;
+				episode = secondEpisode;
+				nextEpisode = thirdEpisode;
+			} else if (episodeNo.equals(thirdEpisode == null ? "" : thirdEpisode.getEpisodeNo())) {
+				preEpisode = secondEpisode;
+				episode = thirdEpisode;
+				nextEpisode = forthEpisode;
+			} else if (episodeNo.equals(forthEpisode == null ? "" : forthEpisode.getEpisodeNo())) {
+				preEpisode = thirdEpisode;
+				episode = forthEpisode;
+			}
 			return PLAY_PAGE;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
 		}
-
-		int maxEpisodeNo = maxEpisode.getEpisodeNo();
-		int minEpisodeNo = episodeNo;
-		if (episodeNo + EPISODE_INTERVAL <= maxEpisodeNo) {
-			maxEpisodeNo = episodeNo + EPISODE_INTERVAL;
-		}
-		int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
-		minEpisodeNo = tmp > 0 ? tmp : 0;
-
-		//		else if (episodeNo == maxEpisodeNo) {
-		//			int tmp = episodeNo - (2 * EPISODE_INTERVAL) + 1;
-		//			minEpisodeNo = tmp > 0 ? tmp : 0;
-		//		} else {
-		//			int tmp = maxEpisodeNo - (2 * EPISODE_INTERVAL) + 1;
-		//			minEpisodeNo = tmp > 0 ? tmp : 0;
-		//		}
-
-		this.episodeList = videoEpisodeService.listByRange(videoId, minEpisodeNo, maxEpisodeNo);
-		if (CollectionUtils.isEmpty(this.episodeList)) {
-			return PLAY_PAGE;
-		}
-
-		// 倒序(分集越小, 越排在前面)
-		List<VideoEpisode> tmpList = new ArrayList<VideoEpisode>(this.episodeList.size());
-		for (int i = this.episodeList.size() - 1; i >= 0; i--) {
-			tmpList.add(this.episodeList.get(i));
-		}
-		this.episodeList.clear();
-		this.episodeList = tmpList;
-
-		// 上集/当前集/下集
-		int episodeSize = this.episodeList.size();
-		VideoEpisode firstEpisode = this.episodeList.get(0);
-		VideoEpisode secondEpisode = episodeSize >= 2 ? this.episodeList.get(1) : null;
-		VideoEpisode thirdEpisode = episodeSize >= 3 ? this.episodeList.get(2) : null;
-		VideoEpisode forthEpisode = episodeSize >= 4 ? this.episodeList.get(3) : null;
-		if (episodeNo.equals(firstEpisode == null ? "" : firstEpisode.getEpisodeNo())) {
-			episode = firstEpisode;
-			nextEpisode = secondEpisode;
-		} else if (episodeNo.equals(secondEpisode == null ? "" : secondEpisode.getEpisodeNo())) {
-			preEpisode = firstEpisode;
-			episode = secondEpisode;
-			nextEpisode = thirdEpisode;
-		} else if (episodeNo.equals(thirdEpisode == null ? "" : thirdEpisode.getEpisodeNo())) {
-			preEpisode = secondEpisode;
-			episode = thirdEpisode;
-			nextEpisode = forthEpisode;
-		} else if (episodeNo.equals(forthEpisode == null ? "" : forthEpisode.getEpisodeNo())) {
-			preEpisode = thirdEpisode;
-			episode = forthEpisode;
-		}
-		return PLAY_PAGE;
 	}
 
 	public Integer getVideoId() {
