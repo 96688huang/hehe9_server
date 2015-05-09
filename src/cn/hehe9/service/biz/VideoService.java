@@ -14,6 +14,10 @@ public class VideoService {
 	@Resource
 	private VideoDao videoDao;
 
+	public int save(Video video){
+		return videoDao.save(video);
+	}
+	
 	public List<Video> listBrief(int page, int count) {
 		return videoDao.listBrief(page, count);
 	}
@@ -31,7 +35,7 @@ public class VideoService {
 	}
 
 	public List<Video> findBriefByName(String firstChar, String name, int page, int queryCount) {
-		return videoDao.findBriefBy(null, firstChar, name, page, queryCount);
+		return videoDao.findBriefBy(null, firstChar, name, null, page, queryCount);
 	}
 
 	public Video findById(Integer videoId) {
@@ -44,5 +48,17 @@ public class VideoService {
 
 	public Integer countBy() {
 		return videoDao.countBy(null, null);
+	}
+
+	public List<Video> findBriefByListPageUrl(Integer sourceId, String listPageUrl) {
+		return videoDao.findBriefByListPageUrl(sourceId, listPageUrl);
+	}
+
+	public int updateRank(Integer sourceId, int rank) {
+		return videoDao.updateRank(sourceId, rank);
+	}
+
+	public int update(Video video) {
+		return videoDao.udpate(video);
 	}
 }

@@ -24,7 +24,9 @@ public class ComConstant {
 		public static final String COMIC_TENCENT_EPISODE = "[ COMIC - TENCENT EPISODE ] ";
 		
 		public static final String VIDEO_SOHU_JOB = "[ VIDEO - SOHU JOB ] ";
+		public static final String VIDEO_SOHU_HOT_JOB = "[ VIDEO - SOHU HOT JOB ] ";
 		public static final String VIDEO_SOHU_VIDEO = "[ VIDEO - SOHU VIDEO ] ";
+		public static final String VIDEO_SOHU_HOT_VIDEO = "[ VIDEO - SOHU HOT VIDEO ] ";
 		public static final String VIDEO_SOHU_EPISODE = "[ VIDEO - SOHU EPISODE ] ";
 		
 		public static final String VIDEO_YOUKU_JOB = "[ VIDEO - YOUKU JOB ] ";

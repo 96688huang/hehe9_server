@@ -54,7 +54,7 @@ public class SohuVideoCollectService extends BaseTask {
 		//videoCompareFieldNames.add("author");
 		videoCompareFieldNames.add("playCountWeekly");
 		videoCompareFieldNames.add("playCountTotal");
-		videoCompareFieldNames.add("posterBigUrl");
+		//		videoCompareFieldNames.add("posterBigUrl");
 		//		videoCompareFieldNames.add("posterMidUrl");
 		//		videoCompareFieldNames.add("posterSmallUrl");
 		videoCompareFieldNames.add("iconUrl");
@@ -72,7 +72,7 @@ public class SohuVideoCollectService extends BaseTask {
 	 * @param url
 	 * @throws IOException
 	 */
-	public void collectVideos(final int sourceId, String collectPageUrl, String rootUrl) {
+	public void collectVideos(final int sourceId, String collectPageUrl, final String rootUrl) {
 		try {
 			// 是否已包含根域名
 			collectPageUrl = collectPageUrl.contains(rootUrl) ? collectPageUrl : (rootUrl + (!collectPageUrl
@@ -106,13 +106,20 @@ public class SohuVideoCollectService extends BaseTask {
 
 			// log
 			String currPageNo = currentPageSpan != null ? currentPageSpan.text() : null;
-			String nextPageUrl = nextPageA != null ? nextPageA.attr("href") : null;
+			final String nextPageUrl = nextPageA != null ? nextPageA.attr("href") : null;
 			logger.info("{}currPageNo = {}, nextPageUrl : {}", new Object[] { SOHU_VIDEO, currPageNo, nextPageUrl });
 
 			// 递归解析
 			if (StringUtils.isNotBlank(nextPageUrl)) {
-				Thread.sleep(10);
-				collectVideos(sourceId, nextPageUrl, rootUrl);
+				sleepRandom(10, 10, logger);
+
+				// 启用新线程运行, 防止深度递归造成线程堆栈溢出
+				runWithNewThread(new Runnable() {
+					@Override
+					public void run() {
+						collectVideos(sourceId, nextPageUrl, rootUrl);
+					}
+				});
 			}
 		} catch (Exception e) {
 			logger.error(SOHU_VIDEO + "collectVideos fail, sourceId = " + sourceId + ", collectPageUrl = "
@@ -162,7 +169,8 @@ public class SohuVideoCollectService extends BaseTask {
 			if (StringUtils.isBlank(name)) {
 				name = aEle.text();
 			}
-			videoFromNet.setName(name);
+			// 记得取别名
+			videoFromNet.setName(AppConfig.getAliasNameIfExist(name));
 
 			// first char
 			String firstChar = Pinyin4jUtil.getFirstChar(videoFromNet.getName()).toUpperCase();
@@ -180,7 +188,7 @@ public class SohuVideoCollectService extends BaseTask {
 			String playCountTotal = list_hover_Div.select("a.acount").first().html();
 			videoFromNet.setPlayCountTotal(playCountTotal);
 
-			List<Video> list = videoDao.searchBriefByName(sourceId, videoFromNet.getName());
+			List<Video> list = videoDao.listExceptBigData(sourceId, videoFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {
 				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
 				videoDao.save(videoFromNet);
@@ -197,28 +205,24 @@ public class SohuVideoCollectService extends BaseTask {
 				// 比如 suhu : (纳米神兵) http://photocdn.sohu.com/kis/fengmian/1191/1191688/1191688_ver_big.jpg 与 http://photocdn.sohu.com/kis/fengmian/1199/1199302/1199302_ver_big.jpg
 				// 同一视频, 播放列表url应该是相同的;
 				boolean isListPageUrlSame = StringUtils.trimToEmpty(videoFromNet.getListPageUrl()).equalsIgnoreCase(
-						StringUtils.trimToEmpty(videoFromDb.getIconUrl()));
+						StringUtils.trimToEmpty(videoFromDb.getListPageUrl()));
 				if (isListPageUrlSame) {
-					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同视频的视频)
-					boolean isNameSame = videoFromDb.getName().contains(videoFromNet.getName());
-					if (isNameSame) {
-						isMatcheRecord = true;
-						// 比较关键字段是否有更新
-						boolean isFieldsSame = BeanUtil.isFieldsValueSame(videoFromNet, videoFromDb,
-								videoCompareFieldNames, null);
-						if (!isFieldsSame) {
-							videoFromNet.setId(videoFromDb.getId()); // id
-							videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
-							videoDao.udpate(videoFromNet); // 不同则更新
-
-							// for log
-							videoFromNet.setStoryLine(null);
-							videoFromNet.setStoryLineBrief(null);
-							logger.info("{}update video : \r\n OLD : {}\r\n NEW : {}", new Object[] { SOHU_VIDEO,
-									JacksonUtil.encode(videoFromDb), JacksonUtil.encode(videoFromNet) });
-						}
-						break;
+					//					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同视频的视频)
+					//					boolean isNameSame = videoFromDb.getName().contains(videoFromNet.getName());
+					//					if (isNameSame) {
+					isMatcheRecord = true;
+					// 比较关键字段是否有更新
+					boolean isFieldsSame = BeanUtil.isFieldsValueSame(videoFromNet, videoFromDb,
+							videoCompareFieldNames, null);
+					if (!isFieldsSame) {
+						videoFromNet.setId(videoFromDb.getId()); // id
+						videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
+						videoDao.udpate(videoFromNet); // 不同则更新
+						logger.info("{}update video : \r\n OLD : {}\r\n NEW : {}", new Object[] { SOHU_VIDEO,
+								compareFieldsToString(videoFromDb), compareFieldsToString(videoFromNet) });
 					}
+					break;
+					//					}
 				}
 			}
 
@@ -233,5 +237,17 @@ public class SohuVideoCollectService extends BaseTask {
 		} catch (Exception e) {
 			logger.error(SOHU_VIDEO + "parseVideoInfo fail. video = " + JacksonUtil.encodeQuietly(videoFromNet), e);
 		}
+	}
+
+	private String compareFieldsToString(Video video) {
+		StringBuilder buf = new StringBuilder(300);
+		buf.append("sourceId = ").append(video.getSourceId()).append(", ");
+		buf.append("name = ").append(video.getName()).append(", ");
+		buf.append("updateRemark = ").append(video.getUpdateRemark()).append(", ");
+		buf.append("playCountWeekly = ").append(video.getPlayCountWeekly()).append(", ");
+		buf.append("playCountTotal = ").append(video.getPlayCountTotal()).append(", ");
+		buf.append("iconUrl = ").append(video.getIconUrl()).append(", ");
+		buf.append("listPageUrl = ").append(video.getListPageUrl());
+		return buf.toString();
 	}
 }

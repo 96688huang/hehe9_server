@@ -153,35 +153,39 @@ public class BaseTask {
 				}
 			}
 
-			long timeUsed = (System.currentTimeMillis() - startTime) / 1000;
-			timeUsed = Math.max(timeUsed - FUTURE_TASK_CHECK_INTERVAL * sleepTime, 0); // 减去之前总的睡眠时间
+			long timeUsed = (System.currentTimeMillis() - startTime);
+			//			timeUsed = timeUsed - FUTURE_TASK_CHECK_INTERVAL * sleepTime; // 减去之前总的睡眠时间
 
 			// 所有任务都已完成
 			if (isAllDone) {
 				logger.info(new StringBuilder(prefixLog).append(", ALL DONE. ").append(partLog).append(", timeUsed = ")
-						.append(timeUsed).append(" s").toString());
+						.append(timeUsed / 1000).append(" s").toString());
 				return;
 			}
 
 			// 任意一个未完成时, 判断是否超过最大等待时间, 若未超过, 则等待, 若超过, 则跳出循环;
 			if (timeUsed >= FUTURE_TIME_OUT) {
 				logger.error(new StringBuilder(prefixLog).append(", TIME OUT. ").append(partLog)
-						.append(", timeUsed = ").append(timeUsed).append(" s").toString());
+						.append(", timeUsed = ").append(timeUsed / 1000).append(" s").toString());
 
 				// 取消运行未完成的 future task
 				cancelNotDoneFutures(futureList);
-				break;
+				return;
 			}
 
 			// 睡眠一段时间
-			if (sleepTime / 10 == 0) { // 每10次(约15秒)输出一条log
+			if (sleepTime % 10 == 0) { // 每10次(约15秒)输出一条log
 				logger.info(new StringBuilder(prefixLog).append(", not done yet. ").append(partLog)
-						.append(", timeUsed = ").append(timeUsed).append(" s").append(", sleep ")
-						.append(FUTURE_TASK_CHECK_INTERVAL).append(" s ...").toString());
+						.append(", timeUsed = ").append(timeUsed / 1000).append(" s").append(", sleep ")
+						.append(FUTURE_TASK_CHECK_INTERVAL / 1000.0).append(" s ...").toString());
 			}
 			sleep(FUTURE_TASK_CHECK_INTERVAL, logger);
 			sleepTime++;
 		}
+	}
+
+	protected void runWithNewThread(Runnable runnable) {
+		new Thread(runnable).start();
 	}
 
 	private void cancelNotDoneFutures(List<Future<Boolean>> futureList) {

@@ -51,4 +51,9 @@
 			<result name="toReadJump">/read_jump.jsp</result>
 		</action>
 	</package>
+	
+	<package name="seo" namespace="/seo" extends="struts-default, json-default">
+		<action name="seoAction" class="seoAction" method="{1}">
+		</action>
+	</package>
 </struts>    

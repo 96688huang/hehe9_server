@@ -62,20 +62,23 @@ public class SohuService extends BaseTask {
 				return;
 			}
 
-			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(videoList.size());
-			for (Video video : videoList) {
-				Future<Boolean> future = collectEpisodeFromListPageAsync(video);
-				futureList.add(future);
-			}
-
-			// 等待检查 future task 是否完成
-			String prefixLog = SOHU_JOB + "collectEpisode";
-			String partLog = String.format("sourceId = %s, page = %s, videoListSize = %s, futureListSize = %s",
-					source.getId(), page, videoList.size(), futureList.size());
-			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
-
+			String partLog = String.format("sourceId = %s, page = %s, videoListSize = %s", source.getId(), page,
+					videoList.size());
+			collectEpisoeFromListPageWithFuture(videoList, partLog);
 			page++;
 		}
+	}
+
+	public void collectEpisoeFromListPageWithFuture(List<Video> videoList, String partLog) {
+		List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(videoList.size());
+		for (Video video : videoList) {
+			Future<Boolean> future = collectEpisodeFromListPageAsync(video);
+			futureList.add(future);
+		}
+
+		// 等待检查 future task 是否完成
+		String prefixLog = SOHU_JOB + "collectEpisode";
+		waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 	}
 
 	private Future<Boolean> collectEpisodeFromListPageAsync(final Video video) {

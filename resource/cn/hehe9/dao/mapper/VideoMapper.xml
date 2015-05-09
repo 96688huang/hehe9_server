@@ -361,10 +361,11 @@
 		<result column="update_remark" property="updateRemark"
 			jdbcType="VARCHAR" />
 		<result column="first_char" property="firstChar" jdbcType="VARCHAR" />
+		<result column="list_page_url" property="listPageUrl" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<sql id="Brief_Column_List">
-		id, source_id, name, icon_url, update_remark, first_char
+		id, source_id, name, icon_url, update_remark, first_char, list_page_url
 	</sql>
 
 	<sql id="Conditions_Sql">
@@ -379,6 +380,9 @@
 		</if>
 		<if test="name != null and name != ''">
 			and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="listPageUrl != null and listPageUrl != ''">
+			and list_page_url = #{listPageUrl,jdbcType=VARCHAR}
 		</if>
 	</sql>
 
@@ -427,4 +431,10 @@
 		order by a.first_char asc, a.name asc
 		]]>
 	</select>
+	
+	<update id="updateRank" parameterType="map">
+		update video set rank = #{rank}
+		where source_id = #{sourceId}
+		<include refid="Conditions_Sql" />
+	</update>
 </mapper>

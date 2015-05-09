@@ -46,6 +46,21 @@ public class ComicDao {
 	}
 
 	/**
+	 * 查询视频列表: 排除大数据量的字段
+	 */
+	public List<Comic> listExceptBigData(Integer sourceId, String name) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("sourceId", sourceId);
+		
+		if (StringUtils.isNotBlank(name)) {
+			params.put("name", name);
+		}
+		params.put("offset", 0);
+		params.put("count", Integer.MAX_VALUE);
+		return comicMapper.findExceptBigDataBy(params);
+	}
+	
+	/**
 	 * 查询视频列表: 查询视频的所有的数据
 	 */
 	public List<Comic> list(int page, int count) {

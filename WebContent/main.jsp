@@ -48,7 +48,7 @@
 								href="<%=basePath%>list_video_episodes/vid/${id }.html"
 								target="_blank"
 								title="${name} ${updateRemark}"><font
-									color="#FF0000">${name}</font></a></li>
+									color="#007498">${name}</font></a></li>
 						</s:iterator>
 					</ul>
 				</s:iterator>
@@ -81,7 +81,8 @@
 			
 			<div id="dmvcd_desk">
 				<div class="ltitle">
-					<img alt="" src="./img/mine/book_icon.png">&nbsp;&nbsp;热门漫画
+					<img alt="" src="./img/mine/book_icon.png">&nbsp;&nbsp;
+					<font color="#F00">热门漫画</font>
 					<a href="<%=basePath%>list_comics.html" target="_blank">
 						<img class="more" src="./img/jian/more.jpg">
 					</a>

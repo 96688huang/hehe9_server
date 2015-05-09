@@ -148,14 +148,12 @@ public class TencentEpisodeCollectService extends BaseTask {
 			if (StringUtils.isBlank(subEpisodeNoStr)) {
 				episodeNo = episodeNoTmp;
 			} else {
-				String episodeNoStr = StringUtil.pickInteger(subEpisodeNoStr.split(" ")[0]);
-				if (!title.contains(" ") || StringUtils.isBlank(episodeNoStr)) {
+				String episodeNoStr = StringUtil.pickInteger(subEpisodeNoStr);
+				if (StringUtils.isBlank(episodeNoStr)) {
 					episodeNo = episodeNoTmp;
-				}
-
-				if (episodeNo == 0) {
-					long tmp = Long.parseLong(episodeNoStr);
-					if (tmp > 10000) { // NOTE: 超过10000， 则用自增分集号
+				} else {
+					episodeNo = Integer.parseInt(episodeNoStr);
+					if (episodeNo.intValue() > 10000) { // NOTE: 超过10000， 则用自增分集号
 						episodeNo = episodeNoTmp;
 					}
 				}

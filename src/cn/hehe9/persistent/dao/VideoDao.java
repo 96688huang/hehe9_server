@@ -46,6 +46,21 @@ public class VideoDao {
 	}
 
 	/**
+	 * 查询视频列表: 排除大数据量的字段
+	 */
+	public List<Video> listExceptBigData(Integer sourceId, String name) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("sourceId", sourceId);
+
+		if (StringUtils.isNotBlank(name)) {
+			params.put("name", name);
+		}
+		params.put("offset", 0);
+		params.put("count", Integer.MAX_VALUE);
+		return videoMapper.findExceptBigDataBy(params);
+	}
+
+	/**
 	 * 查询视频列表: 查询视频的所有的数据
 	 */
 	public List<Video> list(int page, int count) {
@@ -62,7 +77,7 @@ public class VideoDao {
 	 * @return
 	 */
 	public List<Video> searchBriefByName(Integer sourceId, String name) {
-		return findBriefBy(sourceId, null, name);
+		return findBriefBy(sourceId, null, name, null);
 	}
 
 	/**
@@ -71,7 +86,7 @@ public class VideoDao {
 	 * @return
 	 */
 	public List<Video> searchBriefByName(String name) {
-		return findBriefBy(null, null, name);
+		return findBriefBy(null, null, name, null);
 	}
 
 	/**
@@ -79,8 +94,17 @@ public class VideoDao {
 	 * @param name
 	 * @return
 	 */
-	public List<Video> findBriefBy(Integer sourceId, String firstChar, String name) {
-		return findBriefBy(sourceId, firstChar, name, 1, Integer.MAX_VALUE);
+	public List<Video> findBriefByListPageUrl(Integer sourceId, String listPageUrl) {
+		return findBriefBy(sourceId, null, null, listPageUrl, 1, Integer.MAX_VALUE);
+	}
+
+	/**
+	 * 根据条件, 查询简要信息
+	 * @param name
+	 * @return
+	 */
+	public List<Video> findBriefBy(Integer sourceId, String firstChar, String name, String listPageUrl) {
+		return findBriefBy(sourceId, firstChar, name, listPageUrl, 1, Integer.MAX_VALUE);
 	}
 
 	/**
@@ -90,15 +114,19 @@ public class VideoDao {
 	 * @param count	查询数量
 	 * @return
 	 */
-	public List<Video> findBriefBy(Integer sourceId, String firstChar, String name, int page, int count) {
+	public List<Video> findBriefBy(Integer sourceId, String firstChar, String name, String listPageUrl, int page,
+			int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("sourceId", sourceId);
-		
+
 		if (StringUtils.isNotBlank(firstChar)) {
 			params.put("firstChar", firstChar);
 		}
 		if (StringUtils.isNotBlank(name)) {
 			params.put("name", name);
+		}
+		if (StringUtils.isNotBlank(listPageUrl)) {
+			params.put("listPageUrl", listPageUrl);
 		}
 
 		int offset = (page - 1) * count;
@@ -152,5 +180,12 @@ public class VideoDao {
 
 	public int deleteById(Integer id) {
 		return videoMapper.deleteByPrimaryKey(id);
+	}
+
+	public int updateRank(Integer sourceId, int rank) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("sourceId", sourceId);
+		params.put("rank", rank);
+		return videoMapper.updateRank(params);
 	}
 }

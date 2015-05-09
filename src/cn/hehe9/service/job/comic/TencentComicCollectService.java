@@ -31,6 +31,7 @@ import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.ComicDao;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.persistent.entity.ComicSource;
+import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.service.job.base.BaseTask;
 
 @Component
@@ -54,10 +55,10 @@ public class TencentComicCollectService extends BaseTask {
 		//		comicCompareFieldNames.add("author");
 		//		comicCompareFieldNames.add("playCountWeekly");
 		//		comicCompareFieldNames.add("playCountTotal");
-		comicCompareFieldNames.add("posterBigUrl");
+		//		comicCompareFieldNames.add("posterBigUrl");
 		//		comicCompareFieldNames.add("posterMidUrl");
 		//		comicCompareFieldNames.add("posterSmallUrl");
-		comicCompareFieldNames.add("iconUrl");
+		//		comicCompareFieldNames.add("iconUrl");
 		comicCompareFieldNames.add("listPageUrl");
 		comicCompareFieldNames.add("updateRemark");
 	}
@@ -73,16 +74,17 @@ public class TencentComicCollectService extends BaseTask {
 	 * @param url
 	 * @throws IOException
 	 */
-	public void collectComics(final int sourceId, String collectPageUrl, String rootUrl, int pageNo) {
+	public void collectComics(final int sourceId, final String collectPageUrl, final String rootUrl, final int pageNo) {
 		try {
 			// 是否已包含根域名
-			collectPageUrl = AppHelper.addRootUrlIfNeeded(collectPageUrl, rootUrl);
+			final String collectPageUrlTmp = AppHelper.addRootUrlIfNeeded(collectPageUrl, rootUrl);
 
 			// 拼装url
-			String collectPageUrlAdded = collectPageUrl + pageNo;
+			String collectPageUrlAdded = collectPageUrlTmp + pageNo;
 
 			Document doc = JsoupUtil.connect(collectPageUrlAdded, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL,
 					COMIC_TENCENT_COMIC, ReferrerUtil.TENCENT);
+
 			if (doc == null) {
 				if (pageNo == 1) { // 第一次就解析不了, 说明有异常
 					logger.error("{}collect comics fail. sourceId = {}, collectPageUrlFmt = {}", new Object[] {
@@ -91,9 +93,16 @@ public class TencentComicCollectService extends BaseTask {
 				return;
 			}
 
+			// 检查该页是否已经没有了漫画内容(正常页面, 是没有该element的 "ret-search-result-fail")
+			Elements noResult = doc.select(".ret-search-result-fail");
+			if (CollectionUtils.isNotEmpty(noResult) || doc.text().contains("未能找到您搜索的作品")) {
+				return;
+			}
+
 			Elements liEles = doc.select(".ret-search-item");
-			if(CollectionUtils.isEmpty(liEles)){
-				logger.error("{}ret-search-item Li elements not found, return. collectPageUrlAdded = {}", COMIC_TENCENT_COMIC, collectPageUrlAdded);
+			if (CollectionUtils.isEmpty(liEles)) {
+				logger.error("{}ret-search-item Li elements not found, return. collectPageUrlAdded = {}",
+						COMIC_TENCENT_COMIC, collectPageUrlAdded);
 				return;
 			}
 
@@ -111,11 +120,18 @@ public class TencentComicCollectService extends BaseTask {
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			// 页码加1
-			pageNo++;
+			final int pageNoTmp = pageNo + 1;
 
 			// 递归解析
 			sleepRandom(10, 10, logger);
-			collectComics(sourceId, collectPageUrl, rootUrl, pageNo);
+
+			// 启用新线程运行, 防止深度递归造成线程堆栈溢出
+			runWithNewThread(new Runnable() {
+				@Override
+				public void run() {
+					collectComics(sourceId, collectPageUrlTmp, rootUrl, pageNoTmp);
+				}
+			});
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_COMIC + "collectComics fail, sourceId = " + sourceId + ", collectPageUrl = "
 					+ collectPageUrl + ", rootUrl = " + rootUrl, e);
@@ -140,7 +156,7 @@ public class TencentComicCollectService extends BaseTask {
 			String name = img_a.attr("title");
 			String listPageUrl = img_a.attr("href");
 			// 该 iconUrl 已做防盗链处理，故不读取。
-//			String iconUrl = img_a.select("img").first().attr("data-original");
+			//			String iconUrl = img_a.select("img").first().attr("data-original");
 			String updateRemark = liItem.select(".mod-cover-list-text").first().text();
 			String author = liItem.select(".ret-works-author").first().attr("title");
 			Elements types = liItem.select(".ret-works-tags a");
@@ -154,9 +170,9 @@ public class TencentComicCollectService extends BaseTask {
 
 			comicFromNet = new Comic();
 			comicFromNet.setSourceId(sourceId);
-			comicFromNet.setName(name);
+			comicFromNet.setName(AppConfig.getAliasNameIfExist(name));
 			comicFromNet.setListPageUrl(AppHelper.addRootUrlIfNeeded(listPageUrl, rootUrl));
-//			comicFromNet.setIconUrl(iconUrl);
+			//			comicFromNet.setIconUrl(iconUrl);
 			comicFromNet.setAuthor(author);
 			comicFromNet.setUpdateRemark(updateRemark);
 			comicFromNet.setTypes(typesBuf.toString());
@@ -169,8 +185,8 @@ public class TencentComicCollectService extends BaseTask {
 			} else {
 				comicFromNet.setFirstChar(ComConstant.OTHER_CNS);
 			}
-			
-			List<Comic> list = comicDao.searchBriefByName(comicFromNet.getSourceId(), comicFromNet.getName());
+
+			List<Comic> list = comicDao.listExceptBigData(comicFromNet.getSourceId(), comicFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {
 				comicFromNet.setName(AppConfig.getAliasNameIfExist(comicFromNet.getName()));
 				comicDao.save(comicFromNet);
@@ -184,29 +200,24 @@ public class TencentComicCollectService extends BaseTask {
 			for (Comic comicFromDb : list) {
 				// NOTE : 同一漫画, 可能iconUrl 会不相同, 故先判断 listPageUrl是否相同
 				boolean isListPageUrlSame = StringUtils.trimToEmpty(comicFromNet.getListPageUrl()).equalsIgnoreCase(
-						StringUtils.trimToEmpty(comicFromDb.getIconUrl()));
+						StringUtils.trimToEmpty(comicFromDb.getListPageUrl()));
 				if (isListPageUrlSame) {
-					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同漫画的漫画)
-					boolean isNameSame = comicFromDb.getName().contains(comicFromNet.getName());
-					if (isNameSame) {
-						isMatcheRecord = true;
-						// 比较关键字段是否有更新
-						boolean isFieldsSame = BeanUtil.isFieldsValueSame(comicFromNet, comicFromDb,
-								comicCompareFieldNames, null);
-						if (!isFieldsSame) {
-							comicFromNet.setId(comicFromDb.getId()); // id
-							comicFromNet.setName(AppConfig.getAliasNameIfExist(comicFromNet.getName()));
-							comicDao.udpate(comicFromNet); // 不同则更新
-
-							// for log
-							comicFromNet.setStoryLine(null);
-							logger.info(
-									"{}update comic : \r\n OLD : {}\r\n NEW : {}",
-									new Object[] { COMIC_TENCENT_COMIC, JacksonUtil.encode(comicFromDb),
-											JacksonUtil.encode(comicFromNet) });
-						}
-						break;
+					//					// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同漫画的漫画)
+					//					boolean isNameSame = comicFromDb.getName().contains(comicFromNet.getName());
+					//					if (isNameSame) {
+					isMatcheRecord = true;
+					// 比较关键字段是否有更新
+					boolean isFieldsSame = BeanUtil.isFieldsValueSame(comicFromNet, comicFromDb,
+							comicCompareFieldNames, null);
+					if (!isFieldsSame) {
+						comicFromNet.setId(comicFromDb.getId()); // id
+						comicFromNet.setName(AppConfig.getAliasNameIfExist(comicFromNet.getName()));
+						comicDao.udpate(comicFromNet); // 不同则更新
+						logger.info("{}update comic : \r\n OLD : {}\r\n NEW : {}", new Object[] { COMIC_TENCENT_COMIC,
+								compareFieldsToString(comicFromDb), compareFieldsToString(comicFromNet) });
 					}
+					break;
+					//					}
 				}
 			}
 
@@ -222,5 +233,14 @@ public class TencentComicCollectService extends BaseTask {
 			logger.error(COMIC_TENCENT_COMIC + "parseComicInfo fail. sourceId = " + sourceId + ", comic = "
 					+ JacksonUtil.encodeQuietly(comicFromNet), e);
 		}
+	}
+
+	private String compareFieldsToString(Comic comic) {
+		StringBuilder buf = new StringBuilder(300);
+		buf.append("sourceId = ").append(comic.getSourceId()).append(", ");
+		buf.append("name = ").append(comic.getName()).append(", ");
+		buf.append("updateRemark = ").append(comic.getUpdateRemark()).append(", ");
+		buf.append("listPageUrl = ").append(comic.getListPageUrl());
+		return buf.toString();
 	}
 }

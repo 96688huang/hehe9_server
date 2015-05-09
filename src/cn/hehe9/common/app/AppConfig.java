@@ -18,13 +18,11 @@ public class AppConfig {
 
 	}
 
-	private static String prefix = SystemUtils.IS_OS_MAC
-			|| SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_LINUX ? "/" : "";
+	private static String prefix = SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_MAC_OSX || SystemUtils.IS_OS_LINUX ? "/"
+			: "";
 	private static String abstractUrl = PathUtils.find("/app.ini");
 	private static IniReader config = new IniReader(
-			StringUtils.isNotBlank(prefix) && !abstractUrl.startsWith("/") ? prefix
-					+ abstractUrl
-					: abstractUrl);
+			StringUtils.isNotBlank(prefix) && !abstractUrl.startsWith("/") ? prefix + abstractUrl : abstractUrl);
 
 	private static String APP = SectionEnum.APP.val();
 	private static String MEMCACHE = SectionEnum.MEMCACHE.val();
@@ -46,9 +44,12 @@ public class AppConfig {
 	public static final Boolean MEMCACHE_USE_CONSISTENT_HASH = config.getBoolean(MEMCACHE,
 			"memcache_use_consistent_hash", false);
 	public static final List<String> MEMCACHE_HOST_LIST = new ArrayList<String>();
-	
-	public static final String INDEX_URL = config.getString(APP, "index_url"); 
-			
+
+	public static final String INDEX_URL = config.getString(APP, "index_url");
+
+	public static final int DEFAULT_RANK = 10000;
+	public static final String SOHU_HOT_VIDEO_COLLECT_PAGE_URL = "http://tv.sohu.com/hotcomic/";
+
 	// init
 	static {
 		// init alias map
