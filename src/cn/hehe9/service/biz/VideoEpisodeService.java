@@ -19,13 +19,13 @@ public class VideoEpisodeService {
 	public List<VideoEpisode> listByRange(Integer videoId, int minEpisodeNo, int maxEpisodeNo) {
 		return videoEpisodeDao.findByRange(videoId, minEpisodeNo, maxEpisodeNo);
 	}
-	
+
 	public List<VideoEpisode> list(Integer videoId, int page, int queryCount) {
 		return videoEpisodeDao.findEpisodesBy(videoId, page, queryCount);
 	}
 
 	public List<VideoEpisode> list(Integer videoId, int page, int queryCount, Integer... episodeNos) {
-		return videoEpisodeDao.findBy(videoId, page, queryCount, episodeNos);
+		return videoEpisodeDao.findBy(videoId, null, page, queryCount, episodeNos);
 	}
 
 	public Integer count(Integer videoId) {

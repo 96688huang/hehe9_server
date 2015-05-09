@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -58,7 +59,7 @@ public class TencentEpisodeCollectService extends BaseTask {
 	}
 
 	/**
-	 * 解析某视频的播放url, 视频url, 第几集等信息
+	 * 解析某漫画的播放url, 漫画url, 第几集等信息
 	 * 
 	 * @param indexUrl
 	 * @throws Exception
@@ -165,8 +166,17 @@ public class TencentEpisodeCollectService extends BaseTask {
 			episodeFromNet.setEpisodeNo(episodeNo);
 			episodeFromNet.setReadPageUrl(AppHelper.addRootUrlIfNeeded(readPageUrl, comic.getRootUrl()));
 
-			ComicEpisode episodeFromDb = comicEpisodeDao.findByComicIdEpisodeNo(episodeFromNet.getComicId(),
-					episodeFromNet.getEpisodeNo());
+			// 因为会出现同一集漫画, 再分上下集的情况, 在查询时, 以episodeNo不够准确, 故采用 readPageUrl作为查询条件.
+			List<ComicEpisode> episodeFromDbList = comicEpisodeDao.findByReadPageUrl(episodeFromNet.getComicId(),
+					episodeFromNet.getReadPageUrl());
+
+			// 检查是否存在相同readPageUrl的情况
+			if (CollectionUtils.isNotEmpty(episodeFromDbList) && episodeFromDbList.size() > 1) {
+				logger.error("{}more than one comics has same readPageUrl. please check. episodeFromNet : {}",
+						COMIC_TENCENT_EPISODE, JacksonUtil.encodeQuietly(episodeFromNet));
+			}
+
+			ComicEpisode episodeFromDb = CollectionUtils.isEmpty(episodeFromDbList) ? null : episodeFromDbList.get(0);
 			if (episodeFromDb == null) {
 				comicEpisodeDao.save(episodeFromNet);
 				if (logger.isDebugEnabled()) {
@@ -180,10 +190,20 @@ public class TencentEpisodeCollectService extends BaseTask {
 				episodeFromNet.setId(episodeFromDb.getId()); // 主键id
 				comicEpisodeDao.udpate(episodeFromNet); // 不同则更新
 				logger.info("{}update comic episode : \r\n OLD : {}\r\n NEW : {}", new Object[] {
-						COMIC_TENCENT_EPISODE, JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
+						COMIC_TENCENT_EPISODE, compareFieldsToString(episodeFromDb),
+						compareFieldsToString(episodeFromNet) });
 			}
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_EPISODE + "parseEpisode fail. comic : " + JacksonUtil.encodeQuietly(comic), e);
 		}
+	}
+
+	private String compareFieldsToString(ComicEpisode episode) {
+		StringBuilder buf = new StringBuilder(300);
+		buf.append("id = ").append(episode.getId()).append(", ");
+		buf.append("comicId = ").append(episode.getComicId()).append(", ");
+		buf.append("title = ").append(episode.getTitle()).append(", ");
+		buf.append("readPageUrl = ").append(episode.getReadPageUrl());
+		return buf.toString();
 	}
 }

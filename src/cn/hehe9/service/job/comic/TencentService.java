@@ -62,21 +62,26 @@ public class TencentService extends BaseTask {
 				return;
 			}
 
-			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(comicList.size());
-			for (Comic comic : comicList) {
-				comic.setRootUrl(source.getRootUrl());
-				Future<Boolean> future = collectEpisodeFromListPageAsync(comic);
-				futureList.add(future);
-			}
-
-			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_TENCENT_JOB + "collectEpisode";
-			String partLog = String.format("sourceId = %s, page = %s, comicListSize = %s, futureListSize = %s",
-					source.getId(), page, comicList.size(), futureList.size());
-			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
+			String partLog = String.format("sourceId = %s, page = %s, comicListSize = %s", source.getId(), page,
+					comicList.size());
+			collectEpisoeFromListPageWithFuture(source, comicList, prefixLog, partLog);
 
 			page++;
 		}
+	}
+
+	public void collectEpisoeFromListPageWithFuture(ComicSource source, List<Comic> comicList, String prefixLog,
+			String partLog) {
+		List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(comicList.size());
+		for (Comic comic : comicList) {
+			comic.setRootUrl(source.getRootUrl());
+			Future<Boolean> future = collectEpisodeFromListPageAsync(comic);
+			futureList.add(future);
+		}
+
+		// 等待检查 future task 是否完成
+		waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 	}
 
 	private Future<Boolean> collectEpisodeFromListPageAsync(final Comic comic) {
@@ -91,7 +96,7 @@ public class TencentService extends BaseTask {
 	}
 
 	/**
-	 * 从第三方平台采集视频
+	 * 从第三方平台采集漫画
 	 */
 	public void collectComicsFromSource() {
 		ComicSource source = null;
@@ -105,7 +110,9 @@ public class TencentService extends BaseTask {
 
 			tencentComicCollectService.collect(source);
 		} catch (Exception e) {
-			logger.error(COMIC_TENCENT_JOB + "collectComicsFromSource fail, source = " + JacksonUtil.encodeQuietly(source), e);
+			logger.error(
+					COMIC_TENCENT_JOB + "collectComicsFromSource fail, source = " + JacksonUtil.encodeQuietly(source),
+					e);
 		}
 	}
 }

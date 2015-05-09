@@ -415,6 +415,13 @@
 		order by rank asc, source_id asc, id asc
 		limit #{offset}, #{count}
 	</select>
+	
+	<select id="listNoEpisodeVideos" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Brief_Column_List" />
+		from video
+		where id not in (select video_id from video_episode)
+	</select>
 
 	<select id="countBy" parameterType="map" resultType="INTEGER">
 		select count(1) from video
@@ -435,6 +442,20 @@
 	<update id="updateRank" parameterType="map">
 		update video set rank = #{rank}
 		where source_id = #{sourceId}
-		<include refid="Conditions_Sql" />
 	</update>
+	
+	<delete id="delete" parameterType="list">
+		<choose>
+			<when test="videoIds != null and videoIds.size() &gt; 0">
+				delete from video where id in 
+		   		<foreach item="item" index="index" collection="videoIds" open="("
+				separator="," close=")">
+				#{item}
+				</foreach>
+			</when>
+			<otherwise>
+				select 0
+			</otherwise>
+		</choose>
+	</delete>
 </mapper>

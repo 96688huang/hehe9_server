@@ -180,6 +180,9 @@
 		<if test="comicId != null">
 			and comic_id = #{comicId,jdbcType=INTEGER}
 		</if>
+		<if test="readPageUrl != null and readPageUrl != ''">
+			and read_page_url = #{readPageUrl,jdbcType=VARCHAR}
+		</if>
 		<if test="episodeNos != null and episodeNos.size() &gt; 0">
     	and episode_no in 
 	   		<foreach item="item" index="index" collection="episodeNos" open="("

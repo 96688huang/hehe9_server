@@ -24,8 +24,23 @@ public class AppHelper {
 	}
 
 	public static String addRootUrlIfNeeded(String pageUrl, String rootUrl) {
+		if (rootUrl.endsWith("/")) {
+			rootUrl = rootUrl.substring(0, rootUrl.length() - 1);
+		}
+
 		pageUrl = pageUrl.contains(rootUrl) ? pageUrl
 				: (rootUrl + (!pageUrl.startsWith("/") ? "/" + pageUrl : pageUrl));
 		return pageUrl;
+	}
+
+	/**
+	 * 如果别名存在, 则获取;
+	 *
+	 * @param origName	原始名称
+	 * @return	如果别名存在, 则返回别名; 否则, 返回视频名称;
+	 */
+	public static String getAliasNameIfExist(String origName) {
+		String alias = AppConfig.ALIAS_MAP.get(origName);
+		return StringUtils.isBlank(alias) ? origName : alias;
 	}
 }

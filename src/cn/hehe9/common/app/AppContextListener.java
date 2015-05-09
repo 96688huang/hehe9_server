@@ -6,10 +6,6 @@ import javax.servlet.ServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.druid.pool.DruidDataSource;
-
-import cn.hehe9.common.utils.SpringUtil;
-
 public class AppContextListener implements ServletContextListener {
 
 	private static final Logger logger = LoggerFactory.getLogger(AppContextListener.class);

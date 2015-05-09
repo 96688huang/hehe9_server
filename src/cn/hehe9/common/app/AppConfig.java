@@ -49,6 +49,8 @@ public class AppConfig {
 
 	public static final int DEFAULT_RANK = 10000;
 	public static final String SOHU_HOT_VIDEO_COLLECT_PAGE_URL = "http://tv.sohu.com/hotcomic/";
+	public static final String TENCENT_HOT_COMIC_COLLECT_PAGE_URL = "http://ac.qq.com/Rank/comicRank/type/pgv";
+//	public static final String TENCENT_HOT_COMIC_ROOT_URL = "http://ac.qq.com/Rank/";
 
 	// init
 	static {
@@ -69,16 +71,5 @@ public class AppConfig {
 				}
 			}
 		}
-	}
-
-	/**
-	 * 如果别名存在, 则获取;
-	 *
-	 * @param origName	原始名称
-	 * @return	如果别名存在, 则返回别名; 否则, 返回视频名称;
-	 */
-	public static String getAliasNameIfExist(String origName) {
-		String alias = ALIAS_MAP.get(origName);
-		return StringUtils.isBlank(alias) ? origName : alias;
 	}
 }

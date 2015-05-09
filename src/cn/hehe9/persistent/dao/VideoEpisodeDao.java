@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,12 +31,16 @@ public class VideoEpisodeDao {
 	}
 
 	public VideoEpisode findByVideoIdEpisodeNo(Integer videoId, Integer episodeNo) {
-		List<VideoEpisode> episodes = findBy(videoId, 1, 1, episodeNo);
+		List<VideoEpisode> episodes = findBy(videoId, null, 1, 1, episodeNo);
 		return CollectionUtils.isEmpty(episodes) ? null : episodes.get(0);
 	}
 
+	public List<VideoEpisode> findByPlayPageUrl(Integer videoId, String playPageUrl) {
+		return findBy(videoId, playPageUrl, 1, Integer.MAX_VALUE);
+	}
+
 	public List<VideoEpisode> findEpisodesBy(Integer videoId, int page, int queryCount) {
-		return findBy(videoId, page, queryCount);
+		return findBy(videoId, null, page, queryCount);
 	}
 
 	/**
@@ -46,10 +51,16 @@ public class VideoEpisodeDao {
 	 * @param episodeNos	集数(可多个)
 	 * @return	视频列表
 	 */
-	public List<VideoEpisode> findBy(Integer videoId, int page, int queryCount, Integer... episodeNos) {
+	public List<VideoEpisode> findBy(Integer videoId, String playPageUrl, int page, int queryCount,
+			Integer... episodeNos) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("videoId", videoId);
-		params.put("episodeNos", ListUtil.asList(episodeNos));
+		if (StringUtils.isNotBlank(playPageUrl)) {
+			params.put("playPageUrl", playPageUrl);
+		}
+		if (episodeNos != null && episodeNos.length > 0) {
+			params.put("episodeNos", ListUtil.asList(episodeNos));
+		}
 		params.put("offset", (page - 1) * queryCount);
 		params.put("count", queryCount);
 		return videoEpisodeMapper.findBy(params);

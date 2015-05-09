@@ -1,4 +1,4 @@
-package cn.hehe9.jobs;
+package cn.hehe9.jobs.video;
 
 import javax.annotation.Resource;
 
@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import cn.hehe9.common.constants.ComConstant;
-import cn.hehe9.service.job.youku.YoukuService;
+import cn.hehe9.jobs.base.AbstractJob;
+import cn.hehe9.service.job.video.youku.YoukuService;
 
 @Component
 public class YoukuCollectJob extends AbstractJob {

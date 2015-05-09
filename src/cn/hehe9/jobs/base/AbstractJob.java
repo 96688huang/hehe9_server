@@ -1,4 +1,4 @@
-package cn.hehe9.jobs;
+package cn.hehe9.jobs.base;
 
 import cn.hehe9.common.utils.DateUtil;
 

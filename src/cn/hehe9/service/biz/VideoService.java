@@ -14,10 +14,10 @@ public class VideoService {
 	@Resource
 	private VideoDao videoDao;
 
-	public int save(Video video){
+	public int save(Video video) {
 		return videoDao.save(video);
 	}
-	
+
 	public List<Video> listBrief(int page, int count) {
 		return videoDao.listBrief(page, count);
 	}
@@ -60,5 +60,13 @@ public class VideoService {
 
 	public int update(Video video) {
 		return videoDao.udpate(video);
+	}
+
+	public List<Video> listNoEpisodeVideos() {
+		return videoDao.listNoEpisodeVideos();
+	}
+
+	public int delete(List<Integer> videoIds) {
+		return videoDao.delete(videoIds);
 	}
 }

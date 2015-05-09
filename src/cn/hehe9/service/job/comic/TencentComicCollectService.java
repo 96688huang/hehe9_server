@@ -31,7 +31,6 @@ import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.ComicDao;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.persistent.entity.ComicSource;
-import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.service.job.base.BaseTask;
 
 @Component
@@ -170,7 +169,7 @@ public class TencentComicCollectService extends BaseTask {
 
 			comicFromNet = new Comic();
 			comicFromNet.setSourceId(sourceId);
-			comicFromNet.setName(AppConfig.getAliasNameIfExist(name));
+			comicFromNet.setName(AppHelper.getAliasNameIfExist(name));
 			comicFromNet.setListPageUrl(AppHelper.addRootUrlIfNeeded(listPageUrl, rootUrl));
 			//			comicFromNet.setIconUrl(iconUrl);
 			comicFromNet.setAuthor(author);
@@ -188,7 +187,7 @@ public class TencentComicCollectService extends BaseTask {
 
 			List<Comic> list = comicDao.listExceptBigData(comicFromNet.getSourceId(), comicFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {
-				comicFromNet.setName(AppConfig.getAliasNameIfExist(comicFromNet.getName()));
+				comicFromNet.setName(AppHelper.getAliasNameIfExist(comicFromNet.getName()));
 				comicDao.save(comicFromNet);
 				if (logger.isDebugEnabled()) {
 					logger.debug("{}add new comic : {}", COMIC_TENCENT_COMIC, JacksonUtil.encode(comicFromNet));
@@ -211,7 +210,7 @@ public class TencentComicCollectService extends BaseTask {
 							comicCompareFieldNames, null);
 					if (!isFieldsSame) {
 						comicFromNet.setId(comicFromDb.getId()); // id
-						comicFromNet.setName(AppConfig.getAliasNameIfExist(comicFromNet.getName()));
+						comicFromNet.setName(AppHelper.getAliasNameIfExist(comicFromNet.getName()));
 						comicDao.udpate(comicFromNet); // 不同则更新
 						logger.info("{}update comic : \r\n OLD : {}\r\n NEW : {}", new Object[] { COMIC_TENCENT_COMIC,
 								compareFieldsToString(comicFromDb), compareFieldsToString(comicFromNet) });
@@ -223,7 +222,7 @@ public class TencentComicCollectService extends BaseTask {
 
 			// 如果找不到要更新的记录, 则新增
 			if (!isMatcheRecord) {
-				comicFromNet.setName(AppConfig.getAliasNameIfExist(comicFromNet.getName()));
+				comicFromNet.setName(AppHelper.getAliasNameIfExist(comicFromNet.getName()));
 				comicDao.save(comicFromNet);
 				if (logger.isDebugEnabled()) {
 					logger.debug("{}add new comic : {}", COMIC_TENCENT_COMIC, JacksonUtil.encode(comicFromNet));
@@ -237,6 +236,7 @@ public class TencentComicCollectService extends BaseTask {
 
 	private String compareFieldsToString(Comic comic) {
 		StringBuilder buf = new StringBuilder(300);
+		buf.append("id = ").append(comic.getId()).append(", ");
 		buf.append("sourceId = ").append(comic.getSourceId()).append(", ");
 		buf.append("name = ").append(comic.getName()).append(", ");
 		buf.append("updateRemark = ").append(comic.getUpdateRemark()).append(", ");

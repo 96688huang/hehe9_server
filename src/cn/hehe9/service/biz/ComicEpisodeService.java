@@ -25,7 +25,7 @@ public class ComicEpisodeService {
 	}
 
 	public List<ComicEpisode> list(Integer comicId, int page, int queryCount, Integer... episodeNos) {
-		return comicEpisodeDao.findBy(comicId, page, queryCount, episodeNos);
+		return comicEpisodeDao.findBy(comicId, null, page, queryCount, episodeNos);
 	}
 
 	public Integer count(Integer comicId) {

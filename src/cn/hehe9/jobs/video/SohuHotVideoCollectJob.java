@@ -7,14 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import cn.hehe9.common.constants.ComConstant;
-import cn.hehe9.jobs.AbstractJob;
-import cn.hehe9.jobs.SohuCollectJob;
-import cn.hehe9.service.job.video.SohuHotVideoService;
+import cn.hehe9.jobs.base.AbstractJob;
+import cn.hehe9.service.job.video.sohu.SohuHotVideoService;
 
 @Component
 public class SohuHotVideoCollectJob extends AbstractJob {
 
-	private final static Logger logger = LoggerFactory.getLogger(SohuCollectJob.class);
+	private final static Logger logger = LoggerFactory.getLogger(SohuHotVideoCollectJob.class);
 
 	private final static String VIDEO_SOHU_HOT_JOB = ComConstant.LogPrefix.VIDEO_SOHU_HOT_JOB;
 

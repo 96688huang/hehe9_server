@@ -188,4 +188,14 @@ public class VideoDao {
 		params.put("rank", rank);
 		return videoMapper.updateRank(params);
 	}
+
+	public List<Video> listNoEpisodeVideos() {
+		return videoMapper.listNoEpisodeVideos();
+	}
+
+	public int delete(List<Integer> videoIds) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("videoIds", videoIds);
+		return videoMapper.delete(params);
+	}
 }

@@ -31,7 +31,7 @@ public class ComicService {
 	}
 
 	public List<Comic> findBriefByName(String firstChar, String name, int page, int queryCount) {
-		return comicDao.findBriefBy(null, firstChar, name, page, queryCount);
+		return comicDao.findBriefBy(null, firstChar, name, null, page, queryCount);
 	}
 
 	public Comic findById(Integer comicId) {
@@ -44,5 +44,29 @@ public class ComicService {
 
 	public Integer countBy() {
 		return comicDao.countBy(null, null);
+	}
+
+	public List<Comic> findBriefByListPageUrl(Integer sourceId, String listPageUrl) {
+		return comicDao.findBriefByListPageUrl(sourceId, listPageUrl);
+	}
+
+	public int save(Comic comic) {
+		return comicDao.save(comic);
+	}
+
+	public int updateRank(Integer sourceId, int rank) {
+		return comicDao.updateRank(sourceId, rank);
+	}
+
+	public int update(Comic comic) {
+		return comicDao.udpate(comic);
+	}
+
+	public List<Comic> listNoEpisodeComics() {
+		return comicDao.listNoEpisodeComics();
+	}
+
+	public int delete(List<Integer> comicIds) {
+		return comicDao.delete(comicIds);
 	}
 }

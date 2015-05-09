@@ -1,7 +1,6 @@
 package cn.hehe9.action;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;

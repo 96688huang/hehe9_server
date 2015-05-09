@@ -33,9 +33,9 @@ CREATE TABLE `video` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  KEY `idx_name` (`name`),
-  KEY `idx_first_char` (`first_char`),
-  KEY `idx_source_id_list_page_url` (`source_id`,`list_page_url`)
+  INDEX `idx_name` (`name`),
+  INDEX `idx_first_char` (`first_char`),
+  INDEX `idx_source_id_list_page_url` (`source_id`,`list_page_url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='视频信息';
 
 CREATE TABLE `video_episode` (
@@ -50,7 +50,8 @@ CREATE TABLE `video_episode` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  INDEX video_id_episode_no(`video_id`, `episode_no`)
+  INDEX `video_id_episode_no`(`video_id`, `episode_no`),
+  INDEX `comic_id_play_page_url` (`comic_id`,`read_page_url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='视频分集信息';
 
 CREATE TABLE `comic_source` (
@@ -89,10 +90,10 @@ CREATE TABLE `comic` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  KEY `idx_name` (`name`),
-  KEY `idx_first_char` (`first_char`),
-  KEY `idx_types` (`types`),
-  KEY `idx_source_id_list_page_url` (`source_id`,`list_page_url`)
+  INDEX `idx_name` (`name`),
+  INDEX `idx_first_char` (`first_char`),
+  INDEX `idx_types` (`types`),
+  INDEX `idx_source_id_list_page_url` (`source_id`,`list_page_url`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16369 DEFAULT CHARSET=utf8 COMMENT='漫画信息';
 
 CREATE TABLE `comic_episode` (
@@ -106,6 +107,7 @@ CREATE TABLE `comic_episode` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  INDEX comic_id_episode_no(`comic_id`, `episode_no`)
+  INDEX `comic_id_episode_no`(`comic_id`, `episode_no`),
+  INDEX `video_id_play_page_url` (`video_id`,`play_page_url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='漫画分集信息';
 

@@ -94,5 +94,22 @@ public interface VideoMapper {
 	/**
 	 * 更新rank字段
 	 */
-	int updateRank(Map<String, Object> params);
+	public int updateRank(Map<String, Object> params);
+
+	/**
+	 * 查询没有分集的视频记录
+	 * Comment here.
+	 *
+	 * @return
+	 */
+	public List<Video> listNoEpisodeVideos();
+
+	/**
+	 * 根据条件, 删除记录
+	 * Comment here.
+	 *
+	 * @param params
+	 * @return
+	 */
+	public int delete(Map<String, Object> params);
 }

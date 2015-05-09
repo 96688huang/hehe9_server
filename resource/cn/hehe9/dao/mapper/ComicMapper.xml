@@ -379,7 +379,7 @@
 	<select id="findBy" parameterType="map" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from video
+		from comic
 		where 1=1
 		<include refid="Conditions_Sql" />
 		order by rank asc, id asc
@@ -421,4 +421,31 @@
 		order by a.first_char asc, a.name asc
 		]]>
 	</select>
+	
+	<select id="listNoEpisodeComics" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Brief_Column_List" />
+		from comic
+		where id not in (select comic_id from comic_episode)
+	</select>
+	
+	<update id="updateRank" parameterType="map">
+		update comic set rank = #{rank}
+		where source_id = #{sourceId}
+	</update>
+	
+	<delete id="delete" parameterType="list">
+		<choose>
+			<when test="comicIds != null and comicIds.size() &gt; 0">
+				delete from comic where id in 
+		   		<foreach item="item" index="index" collection="comicIds" open="("
+				separator="," close=")">
+				#{item}
+				</foreach>
+			</when>
+			<otherwise>
+				select 0
+			</otherwise>
+		</choose>
+	</delete>
 </mapper>

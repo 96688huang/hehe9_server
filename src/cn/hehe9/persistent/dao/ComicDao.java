@@ -51,7 +51,7 @@ public class ComicDao {
 	public List<Comic> listExceptBigData(Integer sourceId, String name) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("sourceId", sourceId);
-		
+
 		if (StringUtils.isNotBlank(name)) {
 			params.put("name", name);
 		}
@@ -59,7 +59,7 @@ public class ComicDao {
 		params.put("count", Integer.MAX_VALUE);
 		return comicMapper.findExceptBigDataBy(params);
 	}
-	
+
 	/**
 	 * 查询视频列表: 查询视频的所有的数据
 	 */
@@ -77,7 +77,7 @@ public class ComicDao {
 	 * @return
 	 */
 	public List<Comic> searchBriefByName(Integer sourceId, String name) {
-		return findBriefBy(sourceId, null, name);
+		return findBriefBy(sourceId, null, name, null);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class ComicDao {
 	 * @return
 	 */
 	public List<Comic> searchBriefByName(String name) {
-		return findBriefBy(null, null, name);
+		return findBriefBy(null, null, name, null);
 	}
 
 	/**
@@ -94,8 +94,17 @@ public class ComicDao {
 	 * @param name
 	 * @return
 	 */
-	public List<Comic> findBriefBy(Integer sourceId, String firstChar, String name) {
-		return findBriefBy(sourceId, firstChar, name, 1, Integer.MAX_VALUE);
+	public List<Comic> findBriefByListPageUrl(Integer sourceId, String listPageUrl) {
+		return findBriefBy(sourceId, null, null, listPageUrl, 1, Integer.MAX_VALUE);
+	}
+
+	/**
+	 * 根据条件, 查询简要信息
+	 * @param name
+	 * @return
+	 */
+	public List<Comic> findBriefBy(Integer sourceId, String firstChar, String name, String listPageUrl) {
+		return findBriefBy(sourceId, firstChar, name, listPageUrl, 1, Integer.MAX_VALUE);
 	}
 
 	/**
@@ -105,15 +114,19 @@ public class ComicDao {
 	 * @param count	查询数量
 	 * @return
 	 */
-	public List<Comic> findBriefBy(Integer sourceId, String firstChar, String name, int page, int count) {
+	public List<Comic> findBriefBy(Integer sourceId, String firstChar, String name, String listPageUrl, int page,
+			int count) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("sourceId", sourceId);
-		
+
 		if (StringUtils.isNotBlank(firstChar)) {
 			params.put("firstChar", firstChar);
 		}
 		if (StringUtils.isNotBlank(name)) {
 			params.put("name", name);
+		}
+		if (StringUtils.isNotBlank(listPageUrl)) {
+			params.put("listPageUrl", listPageUrl);
 		}
 
 		int offset = (page - 1) * count;
@@ -164,12 +177,29 @@ public class ComicDao {
 		params.put("countPerFirstChar", countPerFirstChar);
 		return comicMapper.listBriefGroupByFirstChar(params);
 	}
-	
+
 	/**
 	 * 根据ID删除记录
 	 * @param id
 	 */
-	public int deleteBy(Integer id){
+	public int deleteBy(Integer id) {
 		return comicMapper.deleteByPrimaryKey(id);
+	}
+
+	public int updateRank(Integer sourceId, int rank) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("sourceId", sourceId);
+		params.put("rank", rank);
+		return comicMapper.updateRank(params);
+	}
+
+	public List<Comic> listNoEpisodeComics() {
+		return comicMapper.listNoEpisodeComics();
+	}
+
+	public int delete(List<Integer> comicIds) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("comicIds", comicIds);
+		return comicMapper.delete(params);
 	}
 }

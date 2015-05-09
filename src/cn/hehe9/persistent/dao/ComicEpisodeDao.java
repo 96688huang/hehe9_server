@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,12 +31,16 @@ public class ComicEpisodeDao {
 	}
 
 	public ComicEpisode findByComicIdEpisodeNo(Integer comicId, Integer episodeNo) {
-		List<ComicEpisode> episodes = findBy(comicId, 1, 1, episodeNo);
+		List<ComicEpisode> episodes = findBy(comicId, null, 1, 1, episodeNo);
 		return CollectionUtils.isEmpty(episodes) ? null : episodes.get(0);
 	}
 
+	public List<ComicEpisode> findByReadPageUrl(Integer comicId, String readPageUrl) {
+		return findBy(comicId, readPageUrl, 1, Integer.MAX_VALUE);
+	}
+
 	public List<ComicEpisode> findEpisodesBy(Integer comicId, int page, int queryCount) {
-		return findBy(comicId, page, queryCount);
+		return findBy(comicId, null, page, queryCount);
 	}
 
 	/**
@@ -46,10 +51,17 @@ public class ComicEpisodeDao {
 	 * @param episodeNos	集数(可多个)
 	 * @return	视频列表
 	 */
-	public List<ComicEpisode> findBy(Integer comicId, int page, int queryCount, Integer... episodeNos) {
+	public List<ComicEpisode> findBy(Integer comicId, String readPageUrl, int page, int queryCount,
+			Integer... episodeNos) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("comicId", comicId);
-		params.put("episodeNos", ListUtil.asList(episodeNos));
+
+		if (StringUtils.isNotBlank(readPageUrl)) {
+			params.put("readPageUrl", readPageUrl);
+		}
+		if (episodeNos != null && episodeNos.length > 0) {
+			params.put("episodeNos", ListUtil.asList(episodeNos));
+		}
 		params.put("offset", (page - 1) * queryCount);
 		params.put("count", queryCount);
 		return comicEpisodeMapper.findBy(params);

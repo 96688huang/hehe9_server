@@ -17,7 +17,6 @@ import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.ComicListTitleEnum;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
-import cn.hehe9.common.utils.Base64Util;
 import cn.hehe9.common.utils.UrlEncodeUtil;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.service.biz.CacheService;

@@ -1,7 +1,5 @@
 package cn.hehe9.tmp;
 
-import java.net.URLEncoder;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

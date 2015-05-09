@@ -191,6 +191,9 @@
 		<if test="videoId != null">
 			and video_id = #{videoId,jdbcType=INTEGER}
 		</if>
+		<if test="playPageUrl != null and playPageUrl != ''">
+			and play_page_url = #{playPageUrl,jdbcType=VARCHAR}
+		</if>
 		<if test="episodeNos != null and episodeNos.size() &gt; 0">
     	and episode_no in 
 	   		<foreach item="item" index="index" collection="episodeNos" open="("

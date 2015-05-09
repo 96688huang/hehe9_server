@@ -1,4 +1,4 @@
-package cn.hehe9.service.job.youku;
+package cn.hehe9.service.job.video.youku;
 
 import java.util.ArrayList;
 import java.util.List;

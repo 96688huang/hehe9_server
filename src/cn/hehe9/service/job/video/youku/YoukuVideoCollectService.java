@@ -1,4 +1,4 @@
-package cn.hehe9.service.job.sohu;
+package cn.hehe9.service.job.video.youku;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.app.AppHelper;
 import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
@@ -34,13 +33,13 @@ import cn.hehe9.persistent.entity.VideoSource;
 import cn.hehe9.service.job.base.BaseTask;
 
 @Component
-public class SohuVideoCollectService extends BaseTask {
-	private static final Logger logger = LoggerFactory.getLogger(SohuVideoCollectService.class);
+public class YoukuVideoCollectService extends BaseTask {
+	private static final Logger logger = LoggerFactory.getLogger(YoukuVideoCollectService.class);
 
 	@Resource
 	private VideoDao videoDao;
 
-	private static final String SOHU_VIDEO = ComConstant.LogPrefix.VIDEO_SOHU_VIDEO;
+	private static final String YOUKU_VIDEO = ComConstant.LogPrefix.VIDEO_YOUKU_VIDEO;
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();
@@ -51,9 +50,9 @@ public class SohuVideoCollectService extends BaseTask {
 	static {
 		// video fields
 		videoCompareFieldNames.add("name");
-		//videoCompareFieldNames.add("author");
-		videoCompareFieldNames.add("playCountWeekly");
-		videoCompareFieldNames.add("playCountTotal");
+		//		videoCompareFieldNames.add("author");
+		//		videoCompareFieldNames.add("playCountWeekly");
+		//		videoCompareFieldNames.add("playCountTotal");
 		//		videoCompareFieldNames.add("posterBigUrl");
 		//		videoCompareFieldNames.add("posterMidUrl");
 		//		videoCompareFieldNames.add("posterSmallUrl");
@@ -78,36 +77,40 @@ public class SohuVideoCollectService extends BaseTask {
 			collectPageUrl = collectPageUrl.contains(rootUrl) ? collectPageUrl : (rootUrl + (!collectPageUrl
 					.startsWith("/") ? "/" + collectPageUrl : collectPageUrl));
 
-			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, SOHU_VIDEO,
-					ReferrerUtil.SOHU);
+			Document doc = JsoupUtil.connect(collectPageUrl, CONN_TIME_OUT, RECONN_COUNT, RECONN_INTERVAL, YOUKU_VIDEO,
+					ReferrerUtil.YOUKU);
 			if (doc == null) {
-				logger.error("{}collect videos fail. sourceId = {}, collectPageUrl = {}", new Object[] { SOHU_VIDEO,
+				logger.error("{}collectVideos fail. sourceId = {}, collectPageUrl = {}", new Object[] { YOUKU_VIDEO,
 						sourceId, collectPageUrl });
 			}
 
-			Elements liEle = doc.select("ul.st-list>li");
+			Elements yk_co13_Eles = doc.select(".yk-col3");
 
 			// 分别解析每部动漫的信息
-			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(liEle.size());
-			for (final Element liItem : liEle) {
-				Future<Boolean> future = parseVideoInfoAsync(sourceId, liItem);
+			List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(yk_co13_Eles.size());
+			for (final Element item : yk_co13_Eles) {
+				Future<Boolean> future = parseVideoInfoAsync(sourceId, item);
 				futureList.add(future);
 			}
 
 			// 等待检查 future task 是否完成
-			String prefixLog = SOHU_VIDEO + "collectVideos";
-			String partLog = String.format("sourceId = %s, liEleSize = %s, futureListSize = %s", sourceId,
-					liEle.size(), futureList.size());
+			String prefixLog = YOUKU_VIDEO + "collectVideos";
+			String partLog = String.format("sourceId = %s, yk_co13_ElesSize = %s, futureListSize = %s", sourceId,
+					yk_co13_Eles.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			// 下一页
-			Elements currentPageSpan = doc.select("body div.ssPages>span");
-			Elements nextPageA = doc.select("body div.ssPages>a[title=下一页]");
+			Elements currentPageA = doc.select(".yk-pager .yk-pages .current>span");
+			Elements nextPageA = doc.select(".yk-pager .yk-pages .next a");
 
 			// log
-			String currPageNo = currentPageSpan != null ? currentPageSpan.text() : null;
+			String currPageNo = currentPageA != null ? currentPageA.text() : null;
 			final String nextPageUrl = nextPageA != null ? nextPageA.attr("href") : null;
-			logger.info("{}currPageNo = {}, nextPageUrl : {}", new Object[] { SOHU_VIDEO, currPageNo, nextPageUrl });
+			logger.info("{}currPageNo = {}, nextPageUrl : {}", new Object[] { YOUKU_VIDEO, currPageNo, nextPageUrl });
+
+			if (nextPageA == null) {
+				return;
+			}
 
 			// 递归解析
 			if (StringUtils.isNotBlank(nextPageUrl)) {
@@ -122,7 +125,7 @@ public class SohuVideoCollectService extends BaseTask {
 				});
 			}
 		} catch (Exception e) {
-			logger.error(SOHU_VIDEO + "collectVideos fail, sourceId = " + sourceId + ", collectPageUrl = "
+			logger.error(YOUKU_VIDEO + "collectVideos fail, sourceId = " + sourceId + ", collectPageUrl = "
 					+ collectPageUrl + ", rootUrl = " + rootUrl, e);
 		}
 	}
@@ -138,39 +141,32 @@ public class SohuVideoCollectService extends BaseTask {
 		return future;
 	}
 
-	private void parseVideoInfo(int sourceId, Element liItem) {
+	private void parseVideoInfo(int sourceId, Element item) {
 		Video videoFromNet = new Video();
 		videoFromNet.setSourceId(sourceId);
 		try {
-			Elements st_picDiv = liItem.select("div.st-pic");
-
-			// 分集列表页url, sk码, icon
-			Elements items = st_picDiv.select("a[href]");
-			String listPageUrl = items.attr("href");
-			String sk = items.attr("_s_k");
-			String iconUrl = items.select("img").attr("src");
-
-			videoFromNet.setListPageUrl(listPageUrl);
-			videoFromNet.setIconUrl(iconUrl);
-
-			// update remark
-			String updateRemark = st_picDiv.select("span.maskTx").html();
-			videoFromNet.setUpdateRemark(updateRemark);
-
-			// play count per week
-			String playCountWeekly = liItem.select("p.num-bf").html();
-			videoFromNet.setPlayCountWeekly(playCountWeekly);
-
-			Elements list_hover_Div = liItem.select("div.list-hover");
-
-			// name
-			Element aEle = list_hover_Div.select("a[_s_k=" + sk + "]").first();
-			String name = aEle.attr("title");
+			String iconUrl = item.select(".p .p-thumb img").attr("src");
+			String name = item.select(".p .p-thumb img").attr("alt");
 			if (StringUtils.isBlank(name)) {
-				name = aEle.text();
+				name = item.select(".p .p-meta .p-meta-title").text();
 			}
-			// 记得取别名
-			videoFromNet.setName(AppConfig.getAliasNameIfExist(name));
+
+			String updateRemark = item.select(".p .p-thumb .p-thumb-taglb .p-status").text();
+
+			String listPageUrl = item.select(".p .p-link a").attr("href");
+			if (StringUtils.isBlank(listPageUrl)) {
+				listPageUrl = item.select(".p .p-meta .p-meta-title a").attr("href");
+			}
+
+			//			String author = item.select(".p .p-meta .p-meta-entry .p-actor").text();
+			//			String playCountTotal = item.select(".p .p-meta .p-meta-entry .p-num").text();
+
+			videoFromNet.setName(AppHelper.getAliasNameIfExist(name));
+			videoFromNet.setIconUrl(iconUrl);
+			videoFromNet.setUpdateRemark(updateRemark);
+			videoFromNet.setListPageUrl(listPageUrl);
+			//			videoFromNet.setAuthor(author);
+			//			videoFromNet.setPlayCountTotal(playCountTotal);
 
 			// first char
 			String firstChar = Pinyin4jUtil.getFirstChar(videoFromNet.getName()).toUpperCase();
@@ -180,20 +176,12 @@ public class SohuVideoCollectService extends BaseTask {
 				videoFromNet.setFirstChar(ComConstant.OTHER_CNS);
 			}
 
-			// story line brief
-			String storyLine = list_hover_Div.select("p.lh-info").html();
-			videoFromNet.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
-
-			// play count total
-			String playCountTotal = list_hover_Div.select("a.acount").first().html();
-			videoFromNet.setPlayCountTotal(playCountTotal);
-
 			List<Video> list = videoDao.listExceptBigData(sourceId, videoFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {
-				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
+				videoFromNet.setName(AppHelper.getAliasNameIfExist(videoFromNet.getName()));
 				videoDao.save(videoFromNet);
 				if (logger.isDebugEnabled()) {
-					logger.debug("{}add new video : {}", SOHU_VIDEO, JacksonUtil.encode(videoFromNet));
+					logger.debug("{}add new video : {}", YOUKU_VIDEO, JacksonUtil.encode(videoFromNet));
 				}
 				return;
 			}
@@ -216,9 +204,9 @@ public class SohuVideoCollectService extends BaseTask {
 							videoCompareFieldNames, null);
 					if (!isFieldsSame) {
 						videoFromNet.setId(videoFromDb.getId()); // id
-						videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
+						videoFromNet.setName(AppHelper.getAliasNameIfExist(videoFromNet.getName()));
 						videoDao.udpate(videoFromNet); // 不同则更新
-						logger.info("{}update video : \r\n OLD : {}\r\n NEW : {}", new Object[] { SOHU_VIDEO,
+						logger.info("{}update video : \r\n OLD : {}\r\n NEW : {}", new Object[] { YOUKU_VIDEO,
 								compareFieldsToString(videoFromDb), compareFieldsToString(videoFromNet) });
 					}
 					break;
@@ -228,24 +216,23 @@ public class SohuVideoCollectService extends BaseTask {
 
 			// 如果找不到要更新的记录, 则新增
 			if (!isMatcheRecord) {
-				videoFromNet.setName(AppConfig.getAliasNameIfExist(videoFromNet.getName()));
+				videoFromNet.setName(AppHelper.getAliasNameIfExist(videoFromNet.getName()));
 				videoDao.save(videoFromNet);
 				if (logger.isDebugEnabled()) {
-					logger.debug("{}add new video : {}", SOHU_VIDEO, JacksonUtil.encode(videoFromNet));
+					logger.debug("{}add new video : {}", YOUKU_VIDEO, JacksonUtil.encode(videoFromNet));
 				}
 			}
 		} catch (Exception e) {
-			logger.error(SOHU_VIDEO + "parseVideoInfo fail. video = " + JacksonUtil.encodeQuietly(videoFromNet), e);
+			logger.error(YOUKU_VIDEO + "collectVideos fail. video = " + JacksonUtil.encodeQuietly(videoFromNet), e);
 		}
 	}
 
 	private String compareFieldsToString(Video video) {
 		StringBuilder buf = new StringBuilder(300);
+		buf.append("id = ").append(video.getId()).append(", ");
 		buf.append("sourceId = ").append(video.getSourceId()).append(", ");
 		buf.append("name = ").append(video.getName()).append(", ");
 		buf.append("updateRemark = ").append(video.getUpdateRemark()).append(", ");
-		buf.append("playCountWeekly = ").append(video.getPlayCountWeekly()).append(", ");
-		buf.append("playCountTotal = ").append(video.getPlayCountTotal()).append(", ");
 		buf.append("iconUrl = ").append(video.getIconUrl()).append(", ");
 		buf.append("listPageUrl = ").append(video.getListPageUrl());
 		return buf.toString();

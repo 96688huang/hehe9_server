@@ -1,4 +1,4 @@
-package cn.hehe9.service.job.sohu;
+package cn.hehe9.service.job.video.sohu;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -150,8 +151,9 @@ public class SohuEpisodeCollectService extends BaseTask {
 					video.getId(), video.getName(), liElements.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
-			logger.error(SOHU_EPISODE + "collectEpisodeFromListPage fail. delete video. video : " + JacksonUtil.encodeQuietly(video),
-					e);
+			logger.error(
+					SOHU_EPISODE + "collectEpisodeFromListPage fail. delete video. video : "
+							+ JacksonUtil.encodeQuietly(video), e);
 			videoDao.deleteById(video.getId());
 		}
 	}
@@ -209,8 +211,16 @@ public class SohuEpisodeCollectService extends BaseTask {
 			episodeFromNet.setFileUrl(fileUrl);
 			episodeFromNet.setTitle(titleMap.get(episodeNo));
 
-			VideoEpisode episodeFromDb = videoEpisodeDao.findByVideoIdEpisodeNo(video.getId(),
-					episodeFromNet.getEpisodeNo());
+			// 因为(可能)会出现同一集视频, 再分上下集的情况, 在查询时, 以episodeNo不够准确, 故采用 readPageUrl作为查询条件.
+			List<VideoEpisode> episodeFromDbList = videoEpisodeDao.findByPlayPageUrl(video.getId(),
+					episodeFromNet.getPlayPageUrl());
+			VideoEpisode episodeFromDb = CollectionUtils.isEmpty(episodeFromDbList) ? null : episodeFromDbList.get(0);
+			// 检查是否存在相同readPageUrl的情况
+			if (CollectionUtils.isNotEmpty(episodeFromDbList) && episodeFromDbList.size() > 1) {
+				logger.error("{}more than one videos has same playPageUrl. please check. episodeFromNet : {}",
+						SOHU_EPISODE, JacksonUtil.encodeQuietly(episodeFromNet));
+			}
+
 			if (episodeFromDb == null) {
 				videoEpisodeDao.save(episodeFromNet);
 				if (logger.isDebugEnabled()) {
@@ -224,7 +234,7 @@ public class SohuEpisodeCollectService extends BaseTask {
 				episodeFromNet.setId(episodeFromDb.getId()); // 主键id
 				videoEpisodeDao.udpate(episodeFromNet); // 不同则更新
 				logger.info("{}update video episode : \r\n OLD : {}\r\n NEW : {}", new Object[] { SOHU_EPISODE,
-						JacksonUtil.encode(episodeFromDb), JacksonUtil.encode(episodeFromNet) });
+						compareFieldsToString(episodeFromDb), compareFieldsToString(episodeFromNet) });
 			}
 		} catch (Exception e) {
 			logger.error(SOHU_EPISODE + "parseEpisode fail. video : " + JacksonUtil.encodeQuietly(video), e);
@@ -250,5 +260,16 @@ public class SohuEpisodeCollectService extends BaseTask {
 			fileUrl = doc.select("meta[property=og:video]").attr("content");
 		}
 		return fileUrl;
+	}
+
+	private String compareFieldsToString(VideoEpisode episode) {
+		StringBuilder buf = new StringBuilder(300);
+		buf.append("id = ").append(episode.getId()).append(", ");
+		buf.append("videoId = ").append(episode.getVideoId()).append(", ");
+		buf.append("title = ").append(episode.getTitle()).append(", ");
+		buf.append("playPageUrl").append(episode.getPlayPageUrl()).append(", ");
+		buf.append("snapshotUrl").append(episode.getSnapshotUrl()).append(", ");
+		buf.append("fileUrl").append(episode.getFileUrl());
+		return buf.toString();
 	}
 }

@@ -1,4 +1,4 @@
-package cn.hehe9.service.job.sohu;
+package cn.hehe9.service.job.video.sohu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,14 +62,15 @@ public class SohuService extends BaseTask {
 				return;
 			}
 
+			String prefixLog = SOHU_JOB + "collectEpisode";
 			String partLog = String.format("sourceId = %s, page = %s, videoListSize = %s", source.getId(), page,
 					videoList.size());
-			collectEpisoeFromListPageWithFuture(videoList, partLog);
+			collectEpisoeFromListPageWithFuture(videoList, prefixLog, partLog);
 			page++;
 		}
 	}
 
-	public void collectEpisoeFromListPageWithFuture(List<Video> videoList, String partLog) {
+	public void collectEpisoeFromListPageWithFuture(List<Video> videoList, String prefixLog, String partLog) {
 		List<Future<Boolean>> futureList = new ArrayList<Future<Boolean>>(videoList.size());
 		for (Video video : videoList) {
 			Future<Boolean> future = collectEpisodeFromListPageAsync(video);
@@ -77,7 +78,6 @@ public class SohuService extends BaseTask {
 		}
 
 		// 等待检查 future task 是否完成
-		String prefixLog = SOHU_JOB + "collectEpisode";
 		waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 	}
 
