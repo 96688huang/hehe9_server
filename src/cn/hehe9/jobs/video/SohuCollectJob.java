@@ -1,5 +1,7 @@
 package cn.hehe9.jobs.video;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;

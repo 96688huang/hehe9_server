@@ -32,7 +32,7 @@ public class BaseTask {
 	protected int RECONN_COUNT = 3;
 	protected long RECONN_INTERVAL = 2000;
 	protected long FUTURE_TIME_OUT = 15 * 60 * 1000;
-	protected long FUTURE_TASK_CHECK_INTERVAL = 5000;
+	protected long FUTURE_TASK_CHECK_INTERVAL = 2000;
 
 	/**
 	 * 创建计数器
@@ -128,21 +128,13 @@ public class BaseTask {
 
 	/**
 	 * 等待future task 完成, 或者超时返回.
-	 *
-	 * @param page
-	 * @param source
-	 * @param videoList
-	 * @param futureList
-	 * @param logger
-	 * @param prefixLog
-	 * @param partLog
 	 */
 	protected void waitForFutureTasksDone(List<Future<Boolean>> futureList, Logger logger, String prefixLog,
 			String partLog) {
-		
+
 		// log中增加线程id
-		prefixLog += (" [Thread " + Thread.currentThread().getId() +" ]");
-		
+		prefixLog += (" [Thread " + Thread.currentThread().getId() + " ]");
+
 		// 第一次睡眠
 		sleep(FUTURE_TASK_CHECK_INTERVAL, logger);
 
@@ -158,7 +150,6 @@ public class BaseTask {
 			}
 
 			long timeUsed = (System.currentTimeMillis() - startTime);
-			//			timeUsed = timeUsed - FUTURE_TASK_CHECK_INTERVAL * sleepTime; // 减去之前总的睡眠时间
 
 			// 所有任务都已完成
 			if (isAllDone) {
@@ -167,15 +158,16 @@ public class BaseTask {
 				return;
 			}
 
-			// 任意一个未完成时, 判断是否超过最大等待时间, 若未超过, 则等待, 若超过, 则跳出循环;
-			if (timeUsed >= FUTURE_TIME_OUT) {
-				logger.error(new StringBuilder(prefixLog).append(", TIME OUT. ").append(partLog)
-						.append(", timeUsed = ").append(timeUsed / 1000).append(" s").toString());
-
-				// 取消运行未完成的 future task
-				cancelNotDoneFutures(futureList);
-				return;
-			}
+			// NOTE: 不判断超时(某些任务很耗时, 某些很快, 所以不能一刀切)
+			//			// 任意一个未完成时, 判断是否超过最大等待时间, 若未超过, 则等待, 若超过, 则跳出循环;
+			//			if (timeUsed >= FUTURE_TIME_OUT) {
+			//				logger.error(new StringBuilder(prefixLog).append(", TIME OUT. ").append(partLog)
+			//						.append(", timeUsed = ").append(timeUsed / 1000).append(" s").toString());
+			//
+			//				// 取消运行未完成的 future task 
+			//				cancelNotDoneFutures(futureList);
+			//				return;
+			//			}
 
 			// 睡眠一段时间
 			if (sleepTime % 10 == 0) { // 每10次(约15秒)输出一条log

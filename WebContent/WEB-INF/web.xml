@@ -30,6 +30,12 @@
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 
+	<!-- 配置spring配置文件加载的位置 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/spring/*.xml</param-value>
+	</context-param>
+
 	<!-- 加载spring的配置文件 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -38,26 +44,20 @@
 		<listener-class>cn.hehe9.common.app.AppContextListener</listener-class>
 	</listener>
 
-	<!-- 配置spring配置文件加载的位置 -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:/spring/*.xml</param-value>
-	</context-param>
-
 	<!-- url rewrite 必须配置在 strtus2 过滤器的前面 -->
 	<filter>
-   		<filter-name>UrlRewriteFilter</filter-name>
-    	<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-    	<init-param>  
-            <param-name>logLevel</param-name>  
-            <param-value>WARN</param-value>  
-        </init-param>  
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>WARN</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
-	    <filter-name>UrlRewriteFilter</filter-name>
-	    <url-pattern>/*</url-pattern><!-- 拦截所有URL -->
-	   	<dispatcher>REQUEST</dispatcher>
-	    <dispatcher>FORWARD</dispatcher>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern><!-- 拦截所有URL -->
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 
 	<!-- 编码配置 -->
@@ -78,14 +78,15 @@
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>
-			org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+			org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+		</filter-class>
 	</filter>
 
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>      
-        <dispatcher>FORWARD</dispatcher>      
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 
 	<filter-mapping>
