@@ -27,7 +27,7 @@ public class TencentComicCollectJob extends AbstractJob {
 		try {
 			logger.info("{}video job start...", COMIC_TENCENT_JOB);
 
-//			tencentService.collectComicsFromSource();
+			tencentService.collectComicsFromSource();
 
 			logger.info("{}video job complete. used {} s", COMIC_TENCENT_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {

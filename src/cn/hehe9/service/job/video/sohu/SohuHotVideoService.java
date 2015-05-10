@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,10 +21,10 @@ import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
 import cn.hehe9.common.utils.ListUtil;
-import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoSource;
+import cn.hehe9.service.biz.CacheService;
 import cn.hehe9.service.biz.VideoService;
 import cn.hehe9.service.biz.VideoSourceService;
 import cn.hehe9.service.job.base.BaseTask;
@@ -35,6 +34,9 @@ public class SohuHotVideoService extends BaseTask {
 	private static final Logger logger = LoggerFactory.getLogger(SohuHotVideoService.class);
 
 	private static final String VIDEO_SOHU_HOT_VIDEO = ComConstant.LogPrefix.VIDEO_SOHU_HOT_VIDEO;
+
+	@Resource
+	private CacheService cacheService;
 
 	@Resource
 	private VideoSourceService videoSourceService;
@@ -111,6 +113,8 @@ public class SohuHotVideoService extends BaseTask {
 			// 更新分集信息
 			String prefixLog = VIDEO_SOHU_HOT_VIDEO + "collectHotVideos";
 			String partLog = String.format("sourceId = %s, hotVideoListSize = %s", source.getId(), hotVideos.size());
+			logger.info("{}start to collectEpisoeFromListPageWithFuture. hot videos count = {}", VIDEO_SOHU_HOT_VIDEO,
+					hotVideos.size());
 			sohuService.collectEpisoeFromListPageWithFuture(hotVideos, prefixLog, partLog);
 			logger.info(
 					"{}finish to update hot videos, need to update {}, total update {}, video names : {}",
@@ -122,6 +126,7 @@ public class SohuHotVideoService extends BaseTask {
 			// 删除没有分集的视频记录
 			List<Video> videoList = videoService.listNoEpisodeVideos();
 			if (CollectionUtils.isEmpty(videoList)) {
+				logger.info("{}no need to delete non-episode videos.", VIDEO_SOHU_HOT_VIDEO);
 				return;
 			}
 			List<Integer> videoIds = ListUtil.wrapFieldValueList(videoList, "id");
@@ -131,8 +136,17 @@ public class SohuHotVideoService extends BaseTask {
 			for (Video v : videoList) {
 				buf.append(JacksonUtil.encodeQuietly(v)).append("\r\n");
 			}
-			logger.info("{}delete no episode videos record, need to delete {}, total delete {}, as below:\r\n{}",
+			logger.info("{}delete non-episode videos record, need to delete {}, total delete {}, as below:\r\n{}",
 					new Object[] { VIDEO_SOHU_HOT_VIDEO, videoList.size(), rows, buf.toString() });
+
+			if (!AppConfig.MEMCACHE_ENABLE) {
+				logger.info("{}no need to clear caches as MC is disabled.", VIDEO_SOHU_HOT_VIDEO);
+				return;
+			}
+			logger.info("{}start to clear caches...", VIDEO_SOHU_HOT_VIDEO);
+			cacheService.clearSourceVideosCache();
+			cacheService.clearIndexPageCache();
+			logger.info("{}clear caches done.", VIDEO_SOHU_HOT_VIDEO);
 		}
 	}
 }

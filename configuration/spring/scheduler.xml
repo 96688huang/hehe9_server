@@ -16,30 +16,25 @@
 
 
 	<!-- 定时任务配置 -->
-	<!-- <task:scheduled-tasks>
-		<task:scheduled ref="sohuHotVideoCollectJob" method="executeJob"
-			cron="0 * */2 * * ?" />
-	</task:scheduled-tasks>
-	
-	<task:scheduled-tasks>
+<!-- 	<task:scheduled-tasks>
 		<task:scheduled ref="tencentHotComicCollectJob" method="executeJob"
-			cron="0 17 */1 * * ?" />
+			cron="0 * */2 * * ?" />
+		<task:scheduled ref="sohuHotVideoCollectJob" method="executeJob"
+			cron="0 10 */2 * * ?" />
 	</task:scheduled-tasks> -->
 	
-	<!-- 	
 	<task:scheduled-tasks>
 		<task:scheduled ref="sohuCollectJob" method="executeJob"
-			cron="0 17 11 * * ?" />
+			cron="0 37 13 * * ?" />
 	</task:scheduled-tasks>
 	
 	<task:scheduled-tasks>
 		<task:scheduled ref="youkuCollectJob" method="executeJob"
-			cron="0 23 16 * * ?" />
+			cron="0 20 14 * * ?" />
 	</task:scheduled-tasks> 
 	
 	<task:scheduled-tasks>
 		<task:scheduled ref="tencentComicCollectJob" method="executeJob"
-			cron="0 0 1 * * ?" />
+			cron="0 0 14 * * ?" />
 	</task:scheduled-tasks>
-	-->
 </beans>

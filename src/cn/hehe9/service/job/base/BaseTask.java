@@ -17,7 +17,7 @@ public class BaseTask {
 	/** 换行符 */
 	protected String LINE_SEP = SystemUtils.LINE_SEPARATOR;
 
-	/** 每次查询出公会列表的数量 */
+	/** 每次查询出记录的数量 */
 	protected final int QUERY_GUILD_COUNT_PER_TIME = 500;
 
 	/** 昨天结束时间 */
@@ -31,8 +31,8 @@ public class BaseTask {
 	protected int CONN_TIME_OUT = 5000;
 	protected int RECONN_COUNT = 3;
 	protected long RECONN_INTERVAL = 2000;
-	protected long FUTURE_TIME_OUT = 10 * 60 * 1000;
-	protected long FUTURE_TASK_CHECK_INTERVAL = 1500;
+	protected long FUTURE_TIME_OUT = 15 * 60 * 1000;
+	protected long FUTURE_TASK_CHECK_INTERVAL = 5000;
 
 	/**
 	 * 创建计数器
@@ -139,6 +139,10 @@ public class BaseTask {
 	 */
 	protected void waitForFutureTasksDone(List<Future<Boolean>> futureList, Logger logger, String prefixLog,
 			String partLog) {
+		
+		// log中增加线程id
+		prefixLog += (" [Thread " + Thread.currentThread().getId() +" ]");
+		
 		// 第一次睡眠
 		sleep(FUTURE_TASK_CHECK_INTERVAL, logger);
 
@@ -177,7 +181,7 @@ public class BaseTask {
 			if (sleepTime % 10 == 0) { // 每10次(约15秒)输出一条log
 				logger.info(new StringBuilder(prefixLog).append(", not done yet. ").append(partLog)
 						.append(", timeUsed = ").append(timeUsed / 1000).append(" s").append(", sleep ")
-						.append(FUTURE_TASK_CHECK_INTERVAL / 1000.0).append(" s ...").toString());
+						.append(FUTURE_TASK_CHECK_INTERVAL / 1000).append(" s ...").toString());
 			}
 			sleep(FUTURE_TASK_CHECK_INTERVAL, logger);
 			sleepTime++;
@@ -193,6 +197,22 @@ public class BaseTask {
 			if (!future.isDone()) {
 				future.cancel(true);
 			}
+		}
+	}
+
+	protected void waitingForNotify(Object syncObj, String logFlag, Logger logger) {
+		synchronized (syncObj) {
+			try {
+				syncObj.wait();
+			} catch (InterruptedException e) {
+				logger.error(logFlag + "interrupted when collect videos.", e);
+			}
+		}
+	}
+
+	protected void notifyThread(Object syncObj) {
+		synchronized (syncObj) {
+			syncObj.notifyAll();
 		}
 	}
 }

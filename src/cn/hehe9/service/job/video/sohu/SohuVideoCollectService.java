@@ -40,6 +40,8 @@ public class SohuVideoCollectService extends BaseTask {
 
 	private static final String SOHU_VIDEO = ComConstant.LogPrefix.VIDEO_SOHU_VIDEO;
 
+	private byte[] collectVideosSyncObj = new byte[0];
+
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();
 	private ExecutorService videoThreadPool = Executors.newFixedThreadPool(processCount + 1);
@@ -62,6 +64,9 @@ public class SohuVideoCollectService extends BaseTask {
 
 	public void collect(VideoSource source) {
 		collectVideos(source.getId(), source.getCollectPageUrl(), source.getRootUrl());
+
+		// 由递归到最后的线程唤醒
+		waitingForNotify(collectVideosSyncObj, SOHU_VIDEO, logger);
 	}
 
 	/**
@@ -94,8 +99,8 @@ public class SohuVideoCollectService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = SOHU_VIDEO + "collectVideos";
-			String partLog = String.format("sourceId = %s, liEleSize = %s, futureListSize = %s", sourceId,
-					liEle.size(), futureList.size());
+			String partLog = String.format("sourceId = %s, liEleSize = %s, videosCount = %s", sourceId,
+					liEle.size(), liEle.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			// 下一页
@@ -109,15 +114,17 @@ public class SohuVideoCollectService extends BaseTask {
 
 			// 递归解析
 			if (StringUtils.isNotBlank(nextPageUrl)) {
-				sleepRandom(10, 10, logger);
-
 				// 启用新线程运行, 防止深度递归造成线程堆栈溢出
 				runWithNewThread(new Runnable() {
 					@Override
 					public void run() {
+						sleepRandom(10, 10, logger);
 						collectVideos(sourceId, nextPageUrl, rootUrl);
 					}
 				});
+			} else {
+				// 递归到最后, 唤醒主线程
+				notifyThread(collectVideosSyncObj);
 			}
 		} catch (Exception e) {
 			logger.error(SOHU_VIDEO + "collectVideos fail, sourceId = " + sourceId + ", collectPageUrl = "

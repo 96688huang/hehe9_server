@@ -70,8 +70,8 @@ public class YoukuService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = YOUKU_JOB + "collectEpisode";
-			String partLog = String.format("sourceId = %s, page = %s, videoListSize = %s, futureListSize = %s",
-					source.getId(), page, videoList.size(), futureList.size());
+			String partLog = String.format("sourceId = %s, page = %s, videosCount = %s",
+					source.getId(), page, videoList.size(), videoList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			page++;

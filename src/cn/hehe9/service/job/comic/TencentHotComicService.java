@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,10 +21,10 @@ import cn.hehe9.common.constants.ComicSourceName;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
 import cn.hehe9.common.utils.ListUtil;
-import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.persistent.entity.ComicSource;
+import cn.hehe9.service.biz.CacheService;
 import cn.hehe9.service.biz.ComicService;
 import cn.hehe9.service.biz.ComicSourceService;
 import cn.hehe9.service.job.base.BaseTask;
@@ -35,6 +34,9 @@ public class TencentHotComicService extends BaseTask {
 	private static final Logger logger = LoggerFactory.getLogger(TencentHotComicService.class);
 
 	private static final String COMIC_TENCENT_HOT_COMIC = ComConstant.LogPrefix.COMIC_TENCENT_HOT_COMIC;
+
+	@Resource
+	private CacheService cacheService;
 
 	@Resource
 	private ComicSourceService comicSourceService;
@@ -109,6 +111,8 @@ public class TencentHotComicService extends BaseTask {
 			// 更新分集信息
 			String prefixLog = COMIC_TENCENT_HOT_COMIC + "collectHotComics";
 			String partLog = String.format("sourceId = %s, hotComicListSize = %s", source.getId(), hotComics.size());
+			logger.info("{}start to collectEpisoeFromListPageWithFuture. hot comics count = {}",
+					COMIC_TENCENT_HOT_COMIC, hotComics.size());
 			tencentService.collectEpisoeFromListPageWithFuture(source, hotComics, prefixLog, partLog);
 			logger.info(
 					"{}finish to update hot comics, need to update {}, total update {}, comic names : {}",
@@ -120,6 +124,7 @@ public class TencentHotComicService extends BaseTask {
 			// 删除没有分集的视频记录
 			List<Comic> comicList = comicService.listNoEpisodeComics();
 			if (CollectionUtils.isEmpty(comicList)) {
+				logger.info("{}no need to delete non-episode comics.", COMIC_TENCENT_HOT_COMIC);
 				return;
 			}
 			List<Integer> comicIds = ListUtil.wrapFieldValueList(comicList, "id");
@@ -129,8 +134,17 @@ public class TencentHotComicService extends BaseTask {
 			for (Comic v : comicList) {
 				buf.append(JacksonUtil.encodeQuietly(v)).append("\r\n");
 			}
-			logger.info("{}delete no episode comics record, need to delete {}, total delete {}, as below:\r\n{}",
+			logger.info("{}delete non-episode comics record, need to delete {}, total delete {}, as below:\r\n{}",
 					new Object[] { COMIC_TENCENT_HOT_COMIC, comicList.size(), rows, buf.toString() });
+
+			if (!AppConfig.MEMCACHE_ENABLE) {
+				logger.info("{}no need to clear caches as MC is disabled.", COMIC_TENCENT_HOT_COMIC);
+				return;
+			}
+			logger.info("{}start to clear caches...", COMIC_TENCENT_HOT_COMIC);
+			cacheService.clearSourceComicsCache();
+			cacheService.clearIndexPageCache();
+			logger.info("{}clear caches done.", COMIC_TENCENT_HOT_COMIC);
 		}
 	}
 }

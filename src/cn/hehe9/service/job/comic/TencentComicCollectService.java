@@ -11,7 +11,6 @@ import java.util.concurrent.Future;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -26,7 +25,6 @@ import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
-import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.ComicDao;
 import cn.hehe9.persistent.entity.Comic;
@@ -41,6 +39,8 @@ public class TencentComicCollectService extends BaseTask {
 	private ComicDao comicDao;
 
 	private static final String COMIC_TENCENT_COMIC = ComConstant.LogPrefix.COMIC_TENCENT_COMIC;
+
+	private byte[] collectVideosSyncObj = new byte[0];
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();
@@ -65,6 +65,9 @@ public class TencentComicCollectService extends BaseTask {
 	public void collect(ComicSource source) {
 		// 页码默认为1
 		collectComics(source.getId(), source.getCollectPageUrl(), source.getRootUrl(), 1);
+
+		// 由递归到最后的线程唤醒
+		waitingForNotify(collectVideosSyncObj, COMIC_TENCENT_COMIC, logger);
 	}
 
 	/**
@@ -89,12 +92,16 @@ public class TencentComicCollectService extends BaseTask {
 					logger.error("{}collect comics fail. sourceId = {}, collectPageUrlFmt = {}", new Object[] {
 							COMIC_TENCENT_COMIC, sourceId, collectPageUrlAdded });
 				}
+				// 唤醒主线程
+				notifyThread(collectVideosSyncObj);
 				return;
 			}
 
 			// 检查该页是否已经没有了漫画内容(正常页面, 是没有该element的 "ret-search-result-fail")
 			Elements noResult = doc.select(".ret-search-result-fail");
 			if (CollectionUtils.isNotEmpty(noResult) || doc.text().contains("未能找到您搜索的作品")) {
+				// 唤醒主线程
+				notifyThread(collectVideosSyncObj);
 				return;
 			}
 
@@ -102,6 +109,8 @@ public class TencentComicCollectService extends BaseTask {
 			if (CollectionUtils.isEmpty(liEles)) {
 				logger.error("{}ret-search-item Li elements not found, return. collectPageUrlAdded = {}",
 						COMIC_TENCENT_COMIC, collectPageUrlAdded);
+				// 唤醒主线程
+				notifyThread(collectVideosSyncObj);
 				return;
 			}
 
@@ -114,20 +123,18 @@ public class TencentComicCollectService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_TENCENT_COMIC + "collectComics";
-			String partLog = String.format("sourceId = %s, comicCount = %s, futureListSize = %s", sourceId,
-					liEles.size(), futureList.size());
+			String partLog = String.format("sourceId = %s, comicCount = %s", sourceId, liEles.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
 			// 页码加1
 			final int pageNoTmp = pageNo + 1;
 
 			// 递归解析
-			sleepRandom(10, 10, logger);
-
 			// 启用新线程运行, 防止深度递归造成线程堆栈溢出
 			runWithNewThread(new Runnable() {
 				@Override
 				public void run() {
+					sleepRandom(10, 10, logger);
 					collectComics(sourceId, collectPageUrlTmp, rootUrl, pageNoTmp);
 				}
 			});

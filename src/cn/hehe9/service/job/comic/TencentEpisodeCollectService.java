@@ -106,7 +106,7 @@ public class TencentEpisodeCollectService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage";
-			String partLog = String.format("comicId = %s, comicName = %s, spanElementsSize = %s, futureListSize = %s",
+			String partLog = String.format("comicId = %s, comicName = %s, comicEpisodesCount = %s",
 					comic.getId(), comic.getName(), works_chapter_item_Spans.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {

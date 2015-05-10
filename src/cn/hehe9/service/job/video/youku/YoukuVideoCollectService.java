@@ -11,7 +11,6 @@ import java.util.concurrent.Future;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,7 +24,6 @@ import cn.hehe9.common.constants.ComConstant;
 import cn.hehe9.common.utils.BeanUtil;
 import cn.hehe9.common.utils.JacksonUtil;
 import cn.hehe9.common.utils.JsoupUtil;
-import cn.hehe9.common.utils.Pinyin4jUtil;
 import cn.hehe9.common.utils.ReferrerUtil;
 import cn.hehe9.persistent.dao.VideoDao;
 import cn.hehe9.persistent.entity.Video;
@@ -40,6 +38,8 @@ public class YoukuVideoCollectService extends BaseTask {
 	private VideoDao videoDao;
 
 	private static final String YOUKU_VIDEO = ComConstant.LogPrefix.VIDEO_YOUKU_VIDEO;
+
+	private byte[] collectVideosSyncObj = new byte[0];
 
 	// 线程池
 	private int processCount = Runtime.getRuntime().availableProcessors();
@@ -63,6 +63,9 @@ public class YoukuVideoCollectService extends BaseTask {
 
 	public void collect(VideoSource source) {
 		collectVideos(source.getId(), source.getCollectPageUrl(), source.getRootUrl());
+
+		// 由递归到最后的线程唤醒
+		waitingForNotify(collectVideosSyncObj, YOUKU_VIDEO, logger);
 	}
 
 	/**
@@ -95,7 +98,7 @@ public class YoukuVideoCollectService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = YOUKU_VIDEO + "collectVideos";
-			String partLog = String.format("sourceId = %s, yk_co13_ElesSize = %s, futureListSize = %s", sourceId,
+			String partLog = String.format("sourceId = %s, videosCount = %s", sourceId,
 					yk_co13_Eles.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 
@@ -123,6 +126,9 @@ public class YoukuVideoCollectService extends BaseTask {
 						collectVideos(sourceId, nextPageUrl, rootUrl);
 					}
 				});
+			} else {
+				// 递归到最后, 唤醒主线程
+				notifyThread(collectVideosSyncObj);
 			}
 		} catch (Exception e) {
 			logger.error(YOUKU_VIDEO + "collectVideos fail, sourceId = " + sourceId + ", collectPageUrl = "

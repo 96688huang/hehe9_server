@@ -147,8 +147,8 @@ public class SohuEpisodeCollectService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = SOHU_EPISODE + "collectEpisodeFromListPage";
-			String partLog = String.format("videoId = %s, videoName = %s, liElementsSize = %s, futureListSize = %s",
-					video.getId(), video.getName(), liElements.size(), futureList.size());
+			String partLog = String.format("videoId = %s, videoName = %s, videoEpisodesCount = %s", video.getId(),
+					video.getName(), liElements.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(
