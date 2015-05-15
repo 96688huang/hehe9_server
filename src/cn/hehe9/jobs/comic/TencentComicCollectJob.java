@@ -33,7 +33,8 @@ public class TencentComicCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_JOB + "video job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
-
+		System.gc(); //release
+		
 		startTime = System.currentTimeMillis();
 		try {
 			logger.info("{}episode job start...", COMIC_TENCENT_JOB);
@@ -44,5 +45,6 @@ public class TencentComicCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_JOB + "episode job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
+		System.gc(); //release
 	}
 }

@@ -89,6 +89,17 @@ public class TencentEpisodeCollectService extends BaseTask {
 			if (StringUtils.isBlank(comic.getStoryLine())) {
 				comic.setStoryLine(AppHelper.subString(storyLine, AppConfig.STORYLINE_MAX_LENGTH, "..."));
 			}
+
+			Element works_ft_new_A = doc.select(".works-ft-new").first();
+			String updateRemarkText = works_ft_new_A.text().split(" ")[0].replace("[", "").replace("]", "");
+
+			String episodeNoFromListPage = StringUtil.pickInteger(updateRemarkText);
+			String episodeNoFromDb = StringUtil.pickInteger(comic.getUpdateRemark());
+			if (!episodeNoFromListPage.equals(episodeNoFromDb)) {
+				String updateRemark = "更新至" + updateRemarkText + "话";
+				comic.setRemark(updateRemark);
+			}
+
 			comic.setIconUrl(iconUrl);
 			comic.setSerializeStatus(serializeStatus);
 			comicDao.udpate(comic);
@@ -106,8 +117,8 @@ public class TencentEpisodeCollectService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage";
-			String partLog = String.format("comicId = %s, comicName = %s, comicEpisodesCount = %s",
-					comic.getId(), comic.getName(), works_chapter_item_Spans.size(), futureList.size());
+			String partLog = String.format("comicId = %s, comicName = %s, comicEpisodesCount = %s", comic.getId(),
+					comic.getName(), works_chapter_item_Spans.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail, delete comic. comic : "

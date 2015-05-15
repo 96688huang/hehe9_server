@@ -47,6 +47,7 @@ public class TencentHotComicService extends BaseTask {
 	@Resource
 	private TencentService tencentService;
 
+	@SuppressWarnings("unchecked")
 	public void collectHotComics() {
 		try {
 			String hotComicCollectPageUrl = AppConfig.TENCENT_HOT_COMIC_COLLECT_PAGE_URL;

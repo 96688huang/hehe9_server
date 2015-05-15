@@ -33,5 +33,6 @@ public class TencentHotComicCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_HOT_JOB + "comic job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
+		System.gc(); //release
 	}
 }

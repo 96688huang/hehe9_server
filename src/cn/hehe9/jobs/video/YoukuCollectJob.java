@@ -33,6 +33,7 @@ public class YoukuCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(YOUKU_JOB + "video job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
+		System.gc(); //release
 
 		startTime = System.currentTimeMillis();
 		try {
@@ -44,5 +45,6 @@ public class YoukuCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(YOUKU_JOB + "episode job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
+		System.gc(); //release
 	}
 }

@@ -1,7 +1,5 @@
 package cn.hehe9.jobs.video;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -35,7 +33,8 @@ public class SohuCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(SOHU_JOB + "video job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
-
+		System.gc(); //release
+		
 		startTime = System.currentTimeMillis();
 		try {
 			logger.info("{}episode job start...", SOHU_JOB);
@@ -46,5 +45,6 @@ public class SohuCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(SOHU_JOB + "episode job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
+		System.gc(); //release
 	}
 }

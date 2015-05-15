@@ -1,7 +1,5 @@
 package cn.hehe9.jobs.video;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -35,5 +33,6 @@ public class SohuHotVideoCollectJob extends AbstractJob {
 		} catch (Exception e) {
 			logger.error(VIDEO_SOHU_HOT_JOB + "video job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}
+		System.gc(); //release
 	}
 }

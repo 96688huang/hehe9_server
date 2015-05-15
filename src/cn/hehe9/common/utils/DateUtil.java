@@ -18,26 +18,6 @@ import cn.hehe9.common.constants.ComConstant;
  */
 public class DateUtil {
 
-	public static void main(String[] args) {
-		String iconUrlNet = StringUtils
-				.trimToEmpty("http://photocdn.sohu.com/kis/fengmian/982/982758/982758_ver_big.jpg");
-		String iconUrlDb = StringUtils
-				.trimToEmpty("http://photocdn.sohu.com/kis/fengmian/982/982758/982758_ver_big.jpg");
-		String subIconUrlNet = iconUrlNet.lastIndexOf("/") != -1 ? iconUrlNet.substring(
-				iconUrlNet.lastIndexOf("/") + 1, iconUrlNet.length()) : iconUrlNet;
-		String subIconUrlDb = iconUrlDb.lastIndexOf("/") != -1 ? iconUrlDb.substring(iconUrlDb.lastIndexOf("/") + 1,
-				iconUrlDb.length()) : iconUrlDb;
-		boolean isIconUrlSame = subIconUrlNet.equals(subIconUrlDb);
-		if (isIconUrlSame) {
-			// 名字和icon相同, 则更新 (因为存在名字相同, 但属于不同视频的视频)
-			boolean isNameSame = ListUtil.asList(StringUtils.deleteWhitespace("海贼王/航海王").split(ComConstant.LEFT_SLASH))
-					.contains(StringUtils.deleteWhitespace("航海王"));
-			if (isNameSame) {
-				System.out.println("yes");
-			}
-		}
-	}
-
 	/** 常规日期格式，24小时制格式  **/
 	public static final String NORMAL_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
