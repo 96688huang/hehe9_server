@@ -26,12 +26,21 @@ start)
 stop)
     echo "Stopping Tomcat..."
     $CATALANA_HOME/bin/shutdown.sh
-    ;;
+        
+    sleep 2
 
+    ps -ef | grep 'tomcat' | grep -v grep| awk '{print $2}' | xargs kill -9 
+    sleep 2
+	;;
+	
 restart)
     echo "Stopping Tomcat..."
     $CATALANA_HOME/bin/shutdown.sh
     sleep 2
+    
+    ps -ef | grep 'tomcat' | grep -v grep| awk '{print $2}' | xargs kill -9 
+    sleep 2
+
     echo
     echo "Starting Tomcat..."
     $CATALANA_HOME/bin/startup.sh

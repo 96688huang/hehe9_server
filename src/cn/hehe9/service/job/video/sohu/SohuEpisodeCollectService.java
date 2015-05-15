@@ -94,6 +94,19 @@ public class SohuEpisodeCollectService extends BaseTask {
 				}
 			}
 
+			// update remark
+			String updateRemark = null;
+			Elements hisPlayEles = doc.select("#hisPlay");
+			if (hisPlayEles != null && hisPlayEles.first() != null) {
+				Element hisPlay = hisPlayEles.first();
+				String updateText = hisPlay.text();
+				String[] updateArr = updateText.split(",");
+				updateRemark = updateArr[updateArr.length - 1];
+				if (!StringUtils.equals(updateRemark, video.getUpdateRemark())) {
+					video.setUpdateRemark(updateRemark);
+				}
+			}
+
 			// 大图
 			String posterBigUrl = doc.select("#picFocus>a>img").attr("src");
 			video.setPosterBigUrl(posterBigUrl);

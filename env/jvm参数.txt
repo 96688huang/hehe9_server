@@ -1,0 +1,5 @@
+# 线上 tomcat JVM参数如下:
+JAVA_OPTS='-server -Xmx1200m -Xms1200m -XX:MaxNewSize=600m -XX:NewRatio=2 -XX:PermSize=64m -Xss256k -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/winson/tmp/dump/heapDump.hprof -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -XX:ErrorFile=/winson/tmp/hs_err/hs_err.log -Xloggc:/winson/tmp/gc/gc.log'
+
+# Wifi项目 JVM参数如下:
+jws start -Dprecompiled=true -server -Xmx3g -Xms3g -XX:NewRatio=2 -XX:PermSize=168m -Xss256k -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError -Dsun.net.inetaddr.ttl=5 -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -XX:HeapDumpPath=/tmp/heapDump.hprof -XX:+PrintClassHistogram -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -XX:ErrorFile=/tmp/hs_err.log

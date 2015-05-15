@@ -38,7 +38,7 @@
 			</p>
 		</div>
 	</div>
-	<div style="width: 980px; margin: 0 auto; height: 800px;">
+	<div style="width: 980px; margin: 0 auto; height: 3000px;">
 		<iframe src="${episode.readPageUrl }" width="100%" height="100%"
 		frameborder="0" scrolling="yes"></iframe>
 	</div>
