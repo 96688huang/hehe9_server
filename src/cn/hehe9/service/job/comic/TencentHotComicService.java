@@ -126,26 +126,27 @@ public class TencentHotComicService extends BaseTask {
 			List<Comic> comicList = comicService.listNoEpisodeComics();
 			if (CollectionUtils.isEmpty(comicList)) {
 				logger.info("{}no need to delete non-episode comics.", COMIC_TENCENT_HOT_COMIC);
-				return;
-			}
-			List<Integer> comicIds = ListUtil.wrapFieldValueList(comicList, "id");
-			int rows = comicService.delete(comicIds);
+			} else {
+				List<Integer> comicIds = ListUtil.wrapFieldValueList(comicList, "id");
+				int rows = comicService.delete(comicIds);
 
-			StringBuilder buf = new StringBuilder(1000);
-			for (Comic v : comicList) {
-				buf.append(JacksonUtil.encodeQuietly(v)).append("\r\n");
+				StringBuilder buf = new StringBuilder(1000);
+				for (Comic v : comicList) {
+					buf.append(JacksonUtil.encodeQuietly(v)).append("\r\n");
+				}
+				logger.info("{}delete non-episode comics record, need to delete {}, total delete {}, as below:\r\n{}",
+						new Object[] { COMIC_TENCENT_HOT_COMIC, comicList.size(), rows, buf.toString() });
 			}
-			logger.info("{}delete non-episode comics record, need to delete {}, total delete {}, as below:\r\n{}",
-					new Object[] { COMIC_TENCENT_HOT_COMIC, comicList.size(), rows, buf.toString() });
 
+			// clear cache
 			if (!AppConfig.MEMCACHE_ENABLE) {
 				logger.info("{}no need to clear caches as MC is disabled.", COMIC_TENCENT_HOT_COMIC);
-				return;
+			} else {
+				logger.info("{}start to clear caches...", COMIC_TENCENT_HOT_COMIC);
+				cacheService.clearSourceComicsCache();
+				cacheService.clearIndexPageCache();
+				logger.info("{}clear caches done.", COMIC_TENCENT_HOT_COMIC);
 			}
-			logger.info("{}start to clear caches...", COMIC_TENCENT_HOT_COMIC);
-			cacheService.clearSourceComicsCache();
-			cacheService.clearIndexPageCache();
-			logger.info("{}clear caches done.", COMIC_TENCENT_HOT_COMIC);
 		}
 	}
 }

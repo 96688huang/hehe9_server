@@ -127,26 +127,27 @@ public class SohuHotVideoService extends BaseTask {
 			List<Video> videoList = videoService.listNoEpisodeVideos();
 			if (CollectionUtils.isEmpty(videoList)) {
 				logger.info("{}no need to delete non-episode videos.", VIDEO_SOHU_HOT_VIDEO);
-				return;
-			}
-			List<Integer> videoIds = ListUtil.wrapFieldValueList(videoList, "id");
-			int rows = videoService.delete(videoIds);
+			} else {
+				List<Integer> videoIds = ListUtil.wrapFieldValueList(videoList, "id");
+				int rows = videoService.delete(videoIds);
 
-			StringBuilder buf = new StringBuilder(1000);
-			for (Video v : videoList) {
-				buf.append(JacksonUtil.encodeQuietly(v)).append("\r\n");
+				StringBuilder buf = new StringBuilder(1000);
+				for (Video v : videoList) {
+					buf.append(JacksonUtil.encodeQuietly(v)).append("\r\n");
+				}
+				logger.info("{}delete non-episode videos record, need to delete {}, total delete {}, as below:\r\n{}",
+						new Object[] { VIDEO_SOHU_HOT_VIDEO, videoList.size(), rows, buf.toString() });
 			}
-			logger.info("{}delete non-episode videos record, need to delete {}, total delete {}, as below:\r\n{}",
-					new Object[] { VIDEO_SOHU_HOT_VIDEO, videoList.size(), rows, buf.toString() });
 
+			// clear cache
 			if (!AppConfig.MEMCACHE_ENABLE) {
 				logger.info("{}no need to clear caches as MC is disabled.", VIDEO_SOHU_HOT_VIDEO);
-				return;
+			} else {
+				logger.info("{}start to clear caches...", VIDEO_SOHU_HOT_VIDEO);
+				cacheService.clearSourceVideosCache();
+				cacheService.clearIndexPageCache();
+				logger.info("{}clear caches done.", VIDEO_SOHU_HOT_VIDEO);
 			}
-			logger.info("{}start to clear caches...", VIDEO_SOHU_HOT_VIDEO);
-			cacheService.clearSourceVideosCache();
-			cacheService.clearIndexPageCache();
-			logger.info("{}clear caches done.", VIDEO_SOHU_HOT_VIDEO);
 		}
 	}
 }
