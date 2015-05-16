@@ -9,7 +9,7 @@
 <html>
 <head>
 <title>${video.name },${video.name }漫画,${video.name }剧情分析 - 动漫VCD网</title>
-<meta name="keywords" content="${video.name }王,${video.name }漫画,${video.name }-${video.name }专题 - 动漫VCD网">
+<meta name="keywords" content="${video.name },${video.name }漫画,${video.name }-${video.name }专题 - 动漫VCD网">
 <meta name="description" content="${video.name },${video.name }漫画全集连载,${video.name }专题 - 动漫VCD网">
 <jsp:include page="common_head.jsp" />
 </head>

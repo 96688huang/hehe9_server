@@ -9,7 +9,7 @@
 <html>
 <head>
 <title>${comic.name },${comic.name }漫画,${comic.name }剧情分析 - 动漫VCD网</title>
-<meta name="keywords" content="${comic.name }王,${comic.name }漫画,${comic.name }-${comic.name }专题 - 动漫VCD网">
+<meta name="keywords" content="${comic.name },${comic.name }漫画,${comic.name }-${comic.name }专题 - 动漫VCD网">
 <meta name="description" content="${comic.name },${comic.name }漫画全集连载,${comic.name }专题 - 动漫VCD网">
 <jsp:include page="common_head.jsp" />
 </head>
