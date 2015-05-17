@@ -25,11 +25,11 @@ public class TencentComicCollectJob extends AbstractJob {
 	public void executeJob() {
 		long startTime = System.currentTimeMillis();
 		try {
-			logger.info("{}video job start...", COMIC_TENCENT_JOB);
+			logger.info("{}comic job start...", COMIC_TENCENT_JOB);
 
 			tencentService.collectComicsFromSource();
 
-			logger.info("{}video job complete. used {} s", COMIC_TENCENT_JOB, getUsedTimeAsSecond(startTime));
+			logger.info("{}comic job complete. used {} s", COMIC_TENCENT_JOB, getUsedTimeAsSecond(startTime));
 		} catch (Exception e) {
 			logger.error(COMIC_TENCENT_JOB + "video job fail! used " + getUsedTimeAsSecond(startTime) + " s", e);
 		}

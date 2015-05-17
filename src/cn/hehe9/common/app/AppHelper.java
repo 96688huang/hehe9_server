@@ -49,7 +49,16 @@ public class AppHelper {
 	}
 
 	public static String convertFirstChar(String str) {
-		String firstChar = Pinyin4jUtil.getFirstChar(str).toUpperCase();
+		if (StringUtils.isBlank(str)) {
+			return str;
+		}
+
+		String firstChar = String.valueOf(str.charAt(0)).toUpperCase();
+		if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
+			return firstChar;
+		}
+
+		firstChar = Pinyin4jUtil.getFirstChar(str).toUpperCase();
 		if (ArrayUtils.contains(ComConstant.LETTERS, firstChar)) {
 			return firstChar;
 		} else {

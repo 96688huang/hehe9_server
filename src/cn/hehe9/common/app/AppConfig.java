@@ -50,7 +50,9 @@ public class AppConfig {
 	public static final int DEFAULT_RANK = 10000;
 	public static final String SOHU_HOT_VIDEO_COLLECT_PAGE_URL = "http://tv.sohu.com/hotcomic/";
 	public static final String TENCENT_HOT_COMIC_COLLECT_PAGE_URL = "http://ac.qq.com/Rank/comicRank/type/pgv";
-//	public static final String TENCENT_HOT_COMIC_ROOT_URL = "http://ac.qq.com/Rank/";
+	//	public static final String TENCENT_HOT_COMIC_ROOT_URL = "http://ac.qq.com/Rank/";
+
+	public static final boolean RUN_HOT_JOBS_SINCE_START = config.getBoolean(APP, "run_hot_jobs_since_start");
 
 	// init
 	static {

@@ -50,6 +50,7 @@ public class YoukuVideoCollectService extends BaseTask {
 	static {
 		// video fields
 		videoCompareFieldNames.add("name");
+		videoCompareFieldNames.add("firstChar");
 		//		videoCompareFieldNames.add("author");
 		//		videoCompareFieldNames.add("playCountWeekly");
 		//		videoCompareFieldNames.add("playCountTotal");
@@ -179,7 +180,7 @@ public class YoukuVideoCollectService extends BaseTask {
 
 			List<Video> list = videoDao.listExceptBigData(sourceId, videoFromNet.getName());
 			if (CollectionUtils.isEmpty(list)) {
-				videoFromNet.setName(AppHelper.getAliasNameIfExist(videoFromNet.getName()));
+				videoFromNet.setName(AppHelper.getAliasNameIfExist(name));
 				videoDao.save(videoFromNet);
 				if (logger.isDebugEnabled()) {
 					logger.debug("{}add new video : {}", YOUKU_VIDEO, JacksonUtil.encode(videoFromNet));
@@ -233,6 +234,7 @@ public class YoukuVideoCollectService extends BaseTask {
 		buf.append("id = ").append(video.getId()).append(", ");
 		buf.append("sourceId = ").append(video.getSourceId()).append(", ");
 		buf.append("name = ").append(video.getName()).append(", ");
+		buf.append("firstChar = ").append(video.getFirstChar()).append(", ");
 		buf.append("updateRemark = ").append(video.getUpdateRemark()).append(", ");
 		buf.append("iconUrl = ").append(video.getIconUrl()).append(", ");
 		buf.append("listPageUrl = ").append(video.getListPageUrl());

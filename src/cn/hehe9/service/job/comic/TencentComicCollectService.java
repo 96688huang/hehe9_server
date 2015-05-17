@@ -51,6 +51,7 @@ public class TencentComicCollectService extends BaseTask {
 	static {
 		// comic fields
 		comicCompareFieldNames.add("name");
+		comicCompareFieldNames.add("firstChar");
 		//		comicCompareFieldNames.add("author");
 		//		comicCompareFieldNames.add("playCountWeekly");
 		//		comicCompareFieldNames.add("playCountTotal");
@@ -240,6 +241,7 @@ public class TencentComicCollectService extends BaseTask {
 		buf.append("id = ").append(comic.getId()).append(", ");
 		buf.append("sourceId = ").append(comic.getSourceId()).append(", ");
 		buf.append("name = ").append(comic.getName()).append(", ");
+		buf.append("firstChar = ").append(comic.getFirstChar()).append(", ");
 		buf.append("updateRemark = ").append(comic.getUpdateRemark()).append(", ");
 		buf.append("listPageUrl = ").append(comic.getListPageUrl());
 		return buf.toString();

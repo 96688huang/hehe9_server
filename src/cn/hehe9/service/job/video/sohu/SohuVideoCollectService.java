@@ -51,6 +51,7 @@ public class SohuVideoCollectService extends BaseTask {
 	static {
 		// video fields
 		videoCompareFieldNames.add("name");
+		videoCompareFieldNames.add("firstChar");
 		//videoCompareFieldNames.add("author");
 		videoCompareFieldNames.add("playCountWeekly");
 		videoCompareFieldNames.add("playCountTotal");
@@ -243,6 +244,7 @@ public class SohuVideoCollectService extends BaseTask {
 		buf.append("id = ").append(video.getId()).append(", ");
 		buf.append("sourceId = ").append(video.getSourceId()).append(", ");
 		buf.append("name = ").append(video.getName()).append(", ");
+		buf.append("firstChar = ").append(video.getFirstChar()).append(", ");
 		buf.append("updateRemark = ").append(video.getUpdateRemark()).append(", ");
 		buf.append("playCountWeekly = ").append(video.getPlayCountWeekly()).append(", ");
 		buf.append("playCountTotal = ").append(video.getPlayCountTotal()).append(", ");
