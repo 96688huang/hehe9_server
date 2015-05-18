@@ -1,0 +1,10 @@
+增加 compression, compressionMinSize, noCompressionUserAgents, compressableMimeType 属性配置即可, 如下:
+
+<Connector port="80" protocol="HTTP/1.1" 
+               connectionTimeout="20000" 
+               redirectPort="8443"
+               compression="on" 
+               compressionMinSize="2048"  
+               noCompressionUserAgents="gozilla, traviata"  
+               compressableMimeType="text/html,text/xml,text/javascript,text/css,text/plain"
+ />
