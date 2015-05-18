@@ -123,6 +123,15 @@
         <from>^/read_comic/cid/([0-9]+)/eid/([0-9]+)/eno/([0-9]+).html$</from>
         <to>/comic/readAction!read?comicId=$1&amp;episodeId=$2&amp;episodeNo=$3</to>
     </rule>
+    
+    <rule>
+        <note>
+			to site map page
+        </note>
+        <from>^/sitemap.html$</from>
+        <to>/seo/seoAction!makeSiteMap</to>
+    </rule>
+    
 </urlrewrite>
 
 

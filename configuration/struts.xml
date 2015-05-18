@@ -54,6 +54,7 @@
 	
 	<package name="seo" namespace="/seo" extends="struts-default, json-default">
 		<action name="seoAction" class="seoAction" method="{1}">
+			<result name="toSitemap">/sitemap.jsp</result>
 		</action>
 	</package>
 </struts>    

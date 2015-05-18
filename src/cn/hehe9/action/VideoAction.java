@@ -72,7 +72,7 @@ public class VideoAction extends ActionSupport {
 	private List<Video> menuVideoList;
 
 	/** 首页热门视频数量 */
-	private final int MAIN_HOT_VIDEOS_COUNT = 21;
+	int MAIN_HOT_VIDEOS_COUNT = 21;
 	/** 首页每行热门视频的数量 */
 	private final int MAIN_HOT_VIDEOS_COUNT_PER_LINE_ = 7;
 	/** 首页热门视频数量(用于展示分集) */
@@ -85,7 +85,7 @@ public class VideoAction extends ActionSupport {
 	//	private final int MAIN_MENU_VIDEOS_COUNT = 40;
 
 	/** 字母菜单每组视频的数量 */
-	private final int COUNT_PER_FIRST_CHAR = 30;
+	int COUNT_PER_FIRST_CHAR = 30;
 
 	/** 字母菜单 */
 	private Map<String, Set<String>> letterMenuVideoMap;
@@ -153,7 +153,7 @@ public class VideoAction extends ActionSupport {
 		}
 	}
 
-	private void initLetterVideos() {
+	void initLetterVideos() {
 		List<Video> letterVideoList = videoService.listBriefGroupByFirstChar(COUNT_PER_FIRST_CHAR);
 		for (;;) {
 			if (CollectionUtils.isEmpty(letterVideoList)) {
@@ -173,7 +173,7 @@ public class VideoAction extends ActionSupport {
 		}
 	}
 
-	private void initLetterComics() {
+	void initLetterComics() {
 		List<Comic> letterComicList = comicService.listBriefGroupByFirstChar(COUNT_PER_FIRST_CHAR);
 		for (;;) {
 			if (CollectionUtils.isEmpty(letterComicList)) {
@@ -204,7 +204,7 @@ public class VideoAction extends ActionSupport {
 		}
 	}
 
-	private List<Comic> initHotComics() {
+	List<Comic> initHotComics() {
 		List<Comic> hotComicList = comicService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
 		hotComicListHolder = new ArrayList<List<Comic>>();
 		int count = 0;
@@ -221,7 +221,7 @@ public class VideoAction extends ActionSupport {
 		return hotComicList;
 	}
 
-	private List<Video> initHotVideos() {
+	List<Video> initHotVideos() {
 		List<Video> hotVideoList = videoService.listBrief(1, MAIN_HOT_VIDEOS_COUNT);
 		hotVideoListHolder = new ArrayList<List<Video>>();
 		int count = 0;
@@ -324,6 +324,22 @@ public class VideoAction extends ActionSupport {
 
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
+	}
+
+	public VideoService getVideoService() {
+		return videoService;
+	}
+
+	public void setVideoService(VideoService videoService) {
+		this.videoService = videoService;
+	}
+
+	public ComicService getComicService() {
+		return comicService;
+	}
+
+	public void setComicService(ComicService comicService) {
+		this.comicService = comicService;
 	}
 
 	// List<List<Map<String,Object>>> jsonList = new

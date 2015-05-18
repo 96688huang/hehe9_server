@@ -450,6 +450,10 @@ public class StringUtil {
 	}
 
 	public static String pick(String string, String regex) {
+		if(StringUtils.isBlank(string)){
+			return "";
+		}
+		
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(string);
 		StringBuilder no = new StringBuilder();

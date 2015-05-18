@@ -33,7 +33,10 @@ public enum PageUrlFlagEnum {
 	READ_JUMP_PAGE("toReadJump"),
 	
 	/** 播放页面 */
-	PLAY_PAGE("toPlay");
+	PLAY_PAGE("toPlay"),
+	
+	/** site map */
+	SITEMAP_PAGE("toSitemap");
 
 	private String urlFlag;
 

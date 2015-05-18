@@ -1,7 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+	<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<base href="<%=basePath%>">
 <div id="footer">
-	<p style="font-weight: bold; color: #428bca;">免责声明 - 链接合作 - 联系我们</p>
+	<p style="font-weight: bold; color: #428bca;">免责声明 - 链接合作 - 联系我们 - <a href="<%=basePath%>sitemap.html" target="_blank">网站地图</a></p>
 	<p>
 		本站所有资源来源于互联网网友交流,只供网络测试和动漫制作,
 		构思学习,交流所用、所有视频版权归原权利人，如有关视频侵犯了您的权益，请联系告之，我们将于第一时间删除！<br />我们强烈建议所有动漫爱好者购买正版音像制品。
