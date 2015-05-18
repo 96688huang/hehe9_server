@@ -75,7 +75,7 @@ public class JsoupUtil {
 					return doc;
 				}
 			} catch (Exception e) {
-				logger.warn("{}connect faile, reconnect after {} seconds, url = {}", new Object[] { logPrefix,
+				logger.warn("{}connect fail, reconnect after {} seconds, url = {}", new Object[] { logPrefix,
 						reconnectInterval / 1000, connectUrl });
 				try {
 					Thread.sleep(reconnectInterval);

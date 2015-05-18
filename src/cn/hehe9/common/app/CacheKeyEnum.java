@@ -8,6 +8,10 @@ public enum CacheKeyEnum {
 
 	/** index_page - 首页 */
 	INDEX_PAGE("index_page", "首页"),
+	
+	SITEMAP_VIDEOS("sitemap_videos", "网站地图-视频部分"),
+	
+	SITEMAP_COMICS("sitemap_comics", "网站地图-漫画部分"),
 
 	VIDEO_SOURCE_IDS("video_source_ids", "视频来源id"),
 	

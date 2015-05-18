@@ -1,35 +1,48 @@
 package cn.hehe9.action;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.hehe9.common.app.AppConfig;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.utils.DateUtil;
+import cn.hehe9.common.utils.JsoupUtil;
 import cn.hehe9.common.utils.UrlEncodeUtil;
 import cn.hehe9.model.SitemapItem;
 import cn.hehe9.persistent.entity.Comic;
 import cn.hehe9.persistent.entity.ComicEpisode;
 import cn.hehe9.persistent.entity.Video;
 import cn.hehe9.persistent.entity.VideoEpisode;
+import cn.hehe9.service.biz.CacheService;
 import cn.hehe9.service.biz.ComicEpisodeService;
 import cn.hehe9.service.biz.ComicService;
 import cn.hehe9.service.biz.VideoEpisodeService;
@@ -60,11 +73,16 @@ public class SeoAction extends ActionSupport {
 	@Resource
 	private ComicEpisodeService comicEpisodeService;
 
+	@Resource
+	private CacheService cacheService;
+
 	private List<SitemapItem> siteMapVideoList;
 
 	private List<SitemapItem> siteMapComicList;
 
-	private String dateTime;
+	private static String dateTime;
+
+	private InputStream inputStream;
 
 	private static String[] prefixWordArr;
 
@@ -73,6 +91,84 @@ public class SeoAction extends ActionSupport {
 	static {
 		String prefixWordStr = "很久以前,Long time ago,相传,传闻,多年前,传说中";
 		prefixWordArr = prefixWordStr.split(",");
+	}
+
+	public String makeSiteMap() throws Exception {
+		try {
+			dateTime = dateTime == null ? DateUtil.formatDateNormal(new Date()) : dateTime;
+
+			// check cache
+			if (AppConfig.MEMCACHE_ENABLE) {
+				siteMapVideoList = cacheService.getSitemapVideoCache();
+				siteMapComicList = cacheService.getSitemapComicCache();
+				if (!CollectionUtils.isEmpty(siteMapVideoList) && !CollectionUtils.isEmpty(siteMapComicList)) {
+					logger.info("sitemap items found in cache. siteMapVideoList(size)={}, siteMapComicList(size)={}",
+							siteMapVideoList.size(), siteMapComicList.size());
+					return SITEMAP_PAGE;
+				}
+			}
+
+			String basePath = "http://www.dmvcd.com/";
+			VideoAction videoAction = new VideoAction();
+			videoAction.setVideoService(videoService);
+			videoAction.setComicService(comicService);
+			videoAction.MAIN_HOT_VIDEOS_COUNT = 100;
+			videoAction.initHotVideos();
+			videoAction.initHotComics();
+
+			siteMapVideoList = new ArrayList<SitemapItem>(videoAction.MAIN_HOT_VIDEOS_COUNT);
+			siteMapComicList = new ArrayList<SitemapItem>(videoAction.MAIN_HOT_VIDEOS_COUNT);
+
+			// 最新热门url
+			for (List<Video> videoList : videoAction.getHotVideoListHolder()) {
+				for (Video video : videoList) {
+					List<VideoEpisode> videoEpisodeList = videoEpisodeService.list(video.getId(), 1, 3);
+					if (CollectionUtils.isEmpty(videoEpisodeList)) {
+						continue;
+					}
+
+					String name = video.getName();
+					for (VideoEpisode ve : videoEpisodeList) {
+						String url = basePath + "play_video/vid/" + video.getId() + "/eid/" + ve.getId() + "/eno/"
+								+ ve.getEpisodeNo() + ".html";
+
+						String title = "动漫VCD网-" + name + " 第" + ve.getEpisodeNo() + "集 "
+								+ (StringUtils.isBlank(ve.getTitle()) ? "" : "「" + ve.getTitle() + "」");
+						siteMapVideoList.add(new SitemapItem(url, title));
+					}
+				}
+			}
+
+			for (List<Comic> comicList : videoAction.getHotComicListHolder()) {
+				for (Comic comic : comicList) {
+					List<ComicEpisode> comicEpisodeList = comicEpisodeService.list(comic.getId(), 1, 3);
+					if (CollectionUtils.isEmpty(comicEpisodeList)) {
+						continue;
+					}
+
+					String name = comic.getName();
+					for (ComicEpisode ce : comicEpisodeList) {
+						String url = basePath + "read_comic/cid/" + comic.getId() + "/eid/" + ce.getId() + "/eno/"
+								+ ce.getEpisodeNo() + ".html";
+
+						String title = "动漫VCD网-" + name + " 第" + ce.getEpisodeNo() + "篇 "
+								+ (StringUtils.isBlank(ce.getTitle()) ? "" : "「" + ce.getTitle() + "」");
+						siteMapComicList.add(new SitemapItem(url, title));
+					}
+				}
+			}
+
+			// add to cache
+			dateTime = DateUtil.formatDateNormal(new Date());
+			cacheService.createSitemapVideoCache(siteMapVideoList);
+			cacheService.createSitemapComicCache(siteMapComicList);
+			logger.info("sitemap items save to cache. siteMapVideoList(size)={}, siteMapComicList(size)={}",
+					siteMapVideoList.size(), siteMapComicList.size());
+			return SITEMAP_PAGE;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw e;
+		}
 	}
 
 	private static String getRandomPrefixWord() {
@@ -137,69 +233,41 @@ public class SeoAction extends ActionSupport {
 	}
 
 	public static void main(String[] args) throws Exception {
-		//		Document doc = JsoupUtil.connect("http://ac.qq.com/Comic/all/search/time/page/1", 2000, 2, 2000, "");
-		//		Elements noResult = doc.select(".ret-search-result-fail");
-		//		System.out.println(CollectionUtils.isEmpty(noResult));
+		//		Document doc = JsoupUtil.connect("http://www.dmvcd.com", 5000, 3, 3000, "");
+		//		System.out.println(doc == null ? "null" : doc.toString());
 
+		convertSitemapTxtToXml();
 	}
 
-	public String makeSiteMap() {
-		try {
-			dateTime = DateUtil.formatCurrentTime("yyyy-MM-dd");
-			String basePath = "http://www.dmvcd.com/";
-			VideoAction videoAction = new VideoAction();
-			videoAction.setVideoService(videoService);
-			videoAction.setComicService(comicService);
-			videoAction.MAIN_HOT_VIDEOS_COUNT = 100;
-			videoAction.initHotVideos();
-			videoAction.initHotComics();
-
-			siteMapVideoList = new ArrayList<SitemapItem>(videoAction.MAIN_HOT_VIDEOS_COUNT);
-			siteMapComicList = new ArrayList<SitemapItem>(videoAction.MAIN_HOT_VIDEOS_COUNT);
-
-			// 最新热门url
-			for (List<Video> videoList : videoAction.getHotVideoListHolder()) {
-				for (Video video : videoList) {
-					List<VideoEpisode> videoEpisodeList = videoEpisodeService.list(video.getId(), 1, 3);
-					if (CollectionUtils.isEmpty(videoEpisodeList)) {
-						continue;
-					}
-
-					String name = video.getName();
-					for (VideoEpisode ve : videoEpisodeList) {
-						String url = basePath + "play_video/vid/" + video.getId() + "/eid/" + ve.getId() + "/eno/"
-								+ ve.getEpisodeNo() + ".html";
-
-						String title = "动漫VCD网-" + name + " 第" + ve.getEpisodeNo() + "集 "
-								+ (StringUtils.isBlank(ve.getTitle()) ? "" : "「" + ve.getTitle() + "」");
-						siteMapVideoList.add(new SitemapItem(url, title));
-					}
-				}
-			}
-
-			for (List<Comic> comicList : videoAction.getHotComicListHolder()) {
-				for (Comic comic : comicList) {
-					List<ComicEpisode> comicEpisodeList = comicEpisodeService.list(comic.getId(), 1, 3);
-					if (CollectionUtils.isEmpty(comicEpisodeList)) {
-						continue;
-					}
-
-					String name = comic.getName();
-					for (ComicEpisode ce : comicEpisodeList) {
-						String url = basePath + "read_comic/cid/" + comic.getId() + "/eid/" + ce.getId() + "/eno/"
-								+ ce.getEpisodeNo() + ".html";
-
-						String title = "动漫VCD网-" + name + " 第" + ce.getEpisodeNo() + "篇 "
-								+ (StringUtils.isBlank(ce.getTitle()) ? "" : "「" + ce.getTitle() + "」");
-						siteMapComicList.add(new SitemapItem(url, title));
-					}
-				}
-			}
-			return SITEMAP_PAGE;
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
+	private static void convertSitemapTxtToXml() throws FileNotFoundException, IOException {
+		String sitemapTxtPath = "E:/Winson/My_projects/Git/hehe9_server/sitemap/sitemap.txt";
+		String sitemapXmlPath = "E:/Winson/My_projects/Git/hehe9_server/sitemap/sitemap.xml";
+		BufferedReader reader = new BufferedReader(new FileReader(new File(sitemapTxtPath)));
+		String line = null;
+		List<String> urlList = new ArrayList<String>();
+		while ((line = reader.readLine()) != null) {
+			urlList.add(line);
 		}
+		reader.close();
+
+		PrintWriter writer = new PrintWriter(new FileWriter(new File(sitemapXmlPath)));
+		writer.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+		writer.println("<urlset>");
+		for (int i= 0; i < urlList.size(); i++) {
+			String url = urlList.get(i);
+			StringBuilder buf = new StringBuilder(500);
+			buf.append("<url>");
+			buf.append("<loc>").append(url).append("</loc>");
+			buf.append("<lastmod>").append(DateUtil.formatCurrentTime("yyyy-MM-dd")).append("</lastmod>");
+			buf.append("<changefreq>daily</changefreq>");
+			buf.append("<priority>0.5</priority>");
+			buf.append("</url>");
+			writer.println(buf.toString());
+		}
+		writer.println("</urlset>");
+		writer.flush();
+		writer.close();
+		System.out.println("done");
 	}
 
 	public void makeSiteMapUrls() {
@@ -332,5 +400,13 @@ public class SeoAction extends ActionSupport {
 
 	public void setSiteMapComicList(List<SitemapItem> siteMapComicList) {
 		this.siteMapComicList = siteMapComicList;
+	}
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
 	}
 }

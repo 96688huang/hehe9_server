@@ -73,11 +73,13 @@ public class VideoAction extends ActionSupport {
 
 	/** 首页热门视频数量 */
 	int MAIN_HOT_VIDEOS_COUNT = 21;
+
 	/** 首页每行热门视频的数量 */
 	private final int MAIN_HOT_VIDEOS_COUNT_PER_LINE_ = 7;
-	/** 首页热门视频数量(用于展示分集) */
 
+	/** 首页热门视频数量(用于展示分集) */
 	private final int MAIN_HOT_VIDEOS_COUNT_FOR_EPISODE = 4;
+
 	/** 分集数量 */
 	private final int MAIN_HOT_VIDEOS_ESPICODE_COUNT = 10;
 
@@ -85,7 +87,7 @@ public class VideoAction extends ActionSupport {
 	//	private final int MAIN_MENU_VIDEOS_COUNT = 40;
 
 	/** 字母菜单每组视频的数量 */
-	int COUNT_PER_FIRST_CHAR = 30;
+	int COUNT_PER_FIRST_CHAR = 10; // 由30变为10, 提高首页展示的速度;
 
 	/** 字母菜单 */
 	private Map<String, Set<String>> letterMenuVideoMap;
@@ -247,15 +249,19 @@ public class VideoAction extends ActionSupport {
 			Runnable requestTask = new Runnable() {
 				@Override
 				public void run() {
-					Document doc = JsoupUtil.connect(AppConfig.INDEX_URL, 10000, 3, 1000, "Request Index");
-					if (doc == null) {
-						logger.error("save index data to cache fail, as request index fail. indexUrl = "
-								+ AppConfig.INDEX_URL);
+					try {
+						Document doc = JsoupUtil.connect(AppConfig.INDEX_URL, 60000, 3, 2000, "Request Index");
+						if (doc == null) {
+							logger.error("save index data to cache fail, as request index fail. indexUrl = "
+									+ AppConfig.INDEX_URL);
+							return;
+						}
+						String indexHtml = doc.html();
+						cacheService.createIndexPageCache(indexHtml);
+						logger.info("save index page to cached complete.");
+					} finally {
+						isRequestingIndex.set(false); // 还原请求标识
 					}
-					String indexHtml = doc.html();
-					cacheService.saveIndexPageCache(indexHtml);
-					logger.info("save index page to cached complete.");
-					isRequestingIndex.set(false); // 还原请求标识
 				}
 			};
 			thread.execute(requestTask);

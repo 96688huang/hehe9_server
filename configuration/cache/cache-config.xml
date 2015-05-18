@@ -15,6 +15,8 @@
   <cache-entry key="guild_social_topic_comment" node="mc" expiration="60m" reload-at="30m" comment="公会话题评论"/> -->
   
   <cache-entry key="index_page" node="mc" expiration="60m" reload-at="30m" comment="首页" version="v1"/>
+  <cache-entry key="sitemap_videos" node="mc" expiration="60m" reload-at="30m" comment="网站地图-视频部分" version="v1"/>
+  <cache-entry key="sitemap_comics" node="mc" expiration="60m" reload-at="30m" comment="网站地图-漫画部分" version="v1"/>
   <cache-entry key="video_source_ids" node="mc" expiration="60m" reload-at="30m" comment="视频来源id" version="v1"/>
   <cache-entry key="comic_source_ids" node="mc" expiration="60m" reload-at="30m" comment="漫画来源id" version="v1"/>
   <cache-entry key="source_videos" node="mc" expiration="60m" reload-at="30m" comment="按来源分类的视频列表" version="v1"/>

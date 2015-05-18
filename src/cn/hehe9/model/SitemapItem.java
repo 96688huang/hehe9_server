@@ -1,6 +1,14 @@
 package cn.hehe9.model;
 
-public class SitemapItem {
+import java.io.Serializable;
+
+public class SitemapItem implements Serializable{
+	/**
+	 * serialVersionUID
+	 *
+	 */
+	private static final long serialVersionUID = -3447796865204351344L;
+	
 	private String url;
 	private String title;
 

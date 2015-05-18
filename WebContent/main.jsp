@@ -147,7 +147,7 @@
 														<div style="display: inline-block;">
 															<a
 																href="<%=basePath%>search_videos/name/<%=UrlEncodeUtil.base64Encode((String)request.getAttribute("videoNameVar"))%>.html"
-																target="_blank">${videoNameVar }</a>┊
+																target="_blank">${videoNameVar }</a> ┊
 														</div>
 													</s:iterator>
 													<div style="display: inline-block;">
@@ -179,7 +179,7 @@
 														<div style="display: inline-block;">
 															<a
 																href="<%=basePath%>search_comics/name/<%=UrlEncodeUtil.base64Encode((String)request.getAttribute("comicNameVar"))%>.html"
-																target="_blank">${comicNameVar }</a>┊
+																target="_blank">${comicNameVar }</a> ┊
 														</div>
 													</s:iterator>
 													<div style="display: inline-block;">

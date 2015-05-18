@@ -1,0 +1,28 @@
+CentOS修改系统时间
+
+--操作：
+date –s '1987-05-02 10:10:10'
+clock –w //将日期写入CMOS
+
+--补充：
+修改Linux时间一般涉及到3个命令：
+
+   date：修改系统当前的时间
+  clock：修改CMOS时间（查看CMOS时间：clock -r）
+hwclock：修改系统硬件时间
+
+-- hwclock 用法：
+hwclock --show //查看硬件时钟
+hwclock --set --date="5/18/15 15:29:59" //设置硬件时钟, 格式: month/day/year HH:mm:ss
+
+硬件时间从根本上讲是CMOS时钟；而系统时间是由内核维护的，它是从1969年末（即传说中的标志Unix时代开端的那个拂晓）开始算起的累积秒数。
+
+在DOS或Mac系统中，起作用的是硬件时钟。遗憾的是，你可能已经发现了，绝大多数电脑时钟都是很不准确的。它们从根本上讲是由小型电池供电的警报器时钟，这种锂电池一般可持续供电三年左右，那时候你系统各大块差不多都已经过时了。而在Linux系统中，起作用的是系统时钟。在启动时，它靠读取硬件时钟获得计时起点，而不是靠记忆计时。
+
+你可以通过BIOS修改系统硬件时钟，或者如果你不想重起机器，那就用hwclock命令。
+
+硬件时钟通常被设置成全球标准时间（UTC），而将时区信息保存在/usr/share/lib/timezone （或者在某些系统中可能是/usr/local/timezone）目录下某个适当的文件中，然后用一个符号链接文件/etc/localtime指向它。CentOS下的操作：
+
+ln -sf /usr/share/zoneinfo/Asia/Chongqing /etc/localtime // 修正时区
+date –s '2011-11-23 22:34:10' // 设置时间
+clock –w // 将时间写入CMOS
