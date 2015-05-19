@@ -91,14 +91,19 @@ public class TencentEpisodeCollectService extends BaseTask {
 			}
 
 			Element works_ft_new_A = doc.select(".works-ft-new").first();
-			String updateRemarkText = works_ft_new_A.text().split(" ")[0].replace("[", "").replace("]", "");
-
-			String episodeNoFromListPage = StringUtil.pickInteger(updateRemarkText);
-			String episodeNoFromDb = StringUtil.pickInteger(comic.getUpdateRemark());
-			if (!episodeNoFromListPage.equals(episodeNoFromDb)) {
-				String updateRemark = "更新至" + updateRemarkText + "话";
-				comic.setRemark(updateRemark);
+			String updateRemarkText = works_ft_new_A == null ? null : works_ft_new_A.text();
+			if (StringUtils.isNotBlank(updateRemarkText)) {
+				comic.setUpdateRemark(updateRemarkText.replace("[", "").replace("]", ""));
 			}
+			
+			// NOTE: 下面代码是取分集数, 再组装成 updateRemark
+			//			String updateRemarkText = works_ft_new_A.text().split(" ")[0].replace("[", "").replace("]", "");
+			//			String episodeNoFromListPage = StringUtil.pickInteger(updateRemarkText);
+			//			String episodeNoFromDb = StringUtil.pickInteger(comic.getUpdateRemark());
+			//			if (!episodeNoFromListPage.equals(episodeNoFromDb)) {
+			//				String updateRemark = "更新至" + updateRemarkText + "话";
+			//				comic.setRemark(updateRemark);
+			//			}
 
 			comic.setIconUrl(iconUrl);
 			comic.setSerializeStatus(serializeStatus);

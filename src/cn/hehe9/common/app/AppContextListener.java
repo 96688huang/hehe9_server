@@ -44,6 +44,9 @@ public class AppContextListener implements ServletContextListener {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
+					// 一分钟后执行定时任务
+					sleepQuiret(60 * 1000);
+
 					TencentHotComicCollectJob hotComic = springContext.getBean("tencentHotComicCollectJob",
 							TencentHotComicCollectJob.class);
 					SohuHotVideoCollectJob hotVideo = springContext.getBean("sohuHotVideoCollectJob",
@@ -66,4 +69,11 @@ public class AppContextListener implements ServletContextListener {
 		//		logger.info("init application complete, used " + ((endTime - startTime) / 1000) + " s");
 	}
 
+	private void sleepQuiret(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (Exception e) {
+			// do nothing
+		}
+	}
 }

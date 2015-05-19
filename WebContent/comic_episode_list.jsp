@@ -70,7 +70,7 @@
 							<li>
 								<a href="<%=basePath %>read_comic/cid/${comic.id }/eid/${episode.id}/eno/${episode.episodeNo}.html" 
 								target="_blank"
-								title="${comic.name}&nbsp;第${episode.episodeNo}集<s:if test="title != null">「${episode.title}」</s:if>" 
+								title="${comic.name}&nbsp;第${episode.episodeNo}篇<s:if test="title != null">「${episode.title}」</s:if>" 
 								>
 									<s:if test="title != null">「${episode.title}」</s:if>
 								</a>
