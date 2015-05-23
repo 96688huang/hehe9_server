@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.hehe9.common.app.AppConfig;
+import cn.hehe9.common.app.AppHelper;
 import cn.hehe9.common.constants.PageUrlFlagEnum;
 import cn.hehe9.common.constants.Pagination;
 import cn.hehe9.common.constants.VideoListTitleEnum;
@@ -68,6 +69,10 @@ public class VideoListAction extends ActionSupport {
 		try {
 			searchName = isSearchNameEncode ? UrlEncodeUtil.base64Decode(searchName) : searchName;
 			firstChar = UrlEncodeUtil.base64Decode(firstChar);
+			
+			// 预防搜索内容过长, 以及预防 XSS 攻击
+			searchName = ActionHelper.cleanText(searchName);
+			firstChar = ActionHelper.cleanText(firstChar);
 
 			if (StringUtils.isNotBlank(searchName)) {
 				displayTitle = searchName + "  " + VideoListTitleEnum.SEARCH_RESULT.getTitle();
@@ -180,11 +185,11 @@ public class VideoListAction extends ActionSupport {
 	public Boolean getIsSearchNameEncode() {
 		return isSearchNameEncode;
 	}
-	
+
 	public void setIsSearchNameEncode(Boolean isSearchNameEncode) {
 		this.isSearchNameEncode = isSearchNameEncode;
 	}
-	
+
 	public String getFirstChar() {
 		return firstChar;
 	}

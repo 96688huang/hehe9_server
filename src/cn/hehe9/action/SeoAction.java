@@ -159,11 +159,13 @@ public class SeoAction extends ActionSupport {
 			}
 
 			// add to cache
-			dateTime = DateUtil.formatDateNormal(new Date());
-			cacheService.createSitemapVideoCache(siteMapVideoList);
-			cacheService.createSitemapComicCache(siteMapComicList);
-			logger.info("sitemap items save to cache. siteMapVideoList(size)={}, siteMapComicList(size)={}",
-					siteMapVideoList.size(), siteMapComicList.size());
+			if (AppConfig.MEMCACHE_ENABLE) {
+				dateTime = DateUtil.formatDateNormal(new Date());
+				cacheService.createSitemapVideoCache(siteMapVideoList);
+				cacheService.createSitemapComicCache(siteMapComicList);
+				logger.info("sitemap items save to cache. siteMapVideoList(size)={}, siteMapComicList(size)={}",
+						siteMapVideoList.size(), siteMapComicList.size());
+			}
 			return SITEMAP_PAGE;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -253,7 +255,7 @@ public class SeoAction extends ActionSupport {
 		PrintWriter writer = new PrintWriter(new FileWriter(new File(sitemapXmlPath)));
 		writer.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 		writer.println("<urlset>");
-		for (int i= 0; i < urlList.size(); i++) {
+		for (int i = 0; i < urlList.size(); i++) {
 			String url = urlList.get(i);
 			StringBuilder buf = new StringBuilder(500);
 			buf.append("<url>");

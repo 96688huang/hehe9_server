@@ -2,6 +2,8 @@ package cn.hehe9.action;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import cn.hehe9.common.constants.ComicSourceName;
 import cn.hehe9.common.constants.VideoSourceName;
 import cn.hehe9.persistent.entity.Comic;
@@ -32,7 +34,7 @@ public class ActionHelper {
 			comic.setSourceName(ComicSourceName.COCO.getName());
 		}
 	}
-	
+
 	/**
 	 * 设置来源名称
 	 */
@@ -41,7 +43,7 @@ public class ActionHelper {
 			setSourceName(video);
 		}
 	}
-	
+
 	/**
 	 * 设置来源名称
 	 */
@@ -52,5 +54,20 @@ public class ActionHelper {
 		} else if (sourceId == VideoSourceName.YOUKU.getId()) {
 			video.setSourceName(VideoSourceName.YOUKU.getName());
 		}
+	}
+
+	public static String cleanText(String text) {
+		if (StringUtils.isNotBlank(text)) {
+			text = text.replace("%", "");
+			text = text.replace("<", "");
+			text = text.replace(">", "");
+			text = text.replace("&", "");
+			int length = text.length();
+			if (length > 20) {
+				length = 20;
+			}
+			text = text.substring(0, length);
+		}
+		return text;
 	}
 }

@@ -223,8 +223,8 @@
 .itabg{width:980px;height:90px;border:1px solid #d0d0d0;clear: both;display:inline;overflow:hidden;}
 .ita{width:900px;text-align:left;margin-top:10px;margin-bottom:5px;}
 .ita{width:900px;text-align:left;margin-top:5px;margin-bottom:1px;}
-.line {height:1px;overflow:hidden;background:url('../images/container_border.gif')}
-.line2 {height:1px;overflow:hidden;background:url('../images/container_border2.gif')}
+.line {height:1px;overflow:hidden;}
+.line2 {height:1px;overflow:hidden;}
 .lines {margin:auto;width:980px;height:1px;margin-top:1px;border-bottom:1px solid dotted;clear: both;}
 
 .listitemall h1 {	height: 25px;line-height: 25px;font-size: 14px;padding-left: 8px;font-weight:bold;background: #E8FAFE;color: #007498;text-align: left;margin: 1px;border-bottom: 1px #D3E9ED solid;}
@@ -254,7 +254,7 @@
 .softblist,.softolist , .dmvcdlist2 {list-style:none;line-height:22px;}
 .softolist li a:hover,.softolist li a:active , .dmvcdlist li a:hover, .dmvcdlist li a:active{color:#f00;text-decoration:underline;}
 .softolist li a:link,.softolist li a:visited, .dmvcdlist li a:link, .dmvcdlist li a:visited{color:#8F5400;}
-.softolist li {background:url('../images/li_bg4.gif') no-repeat left 7px;padding-left:12px;overflow:hidden;}
+/* .softolist li {background:url('../images/li_bg4.gif') no-repeat left 7px;padding-left:12px;overflow:hidden;} */
 .softolist li {width:175px;height:22px;line-height:22px;overflow:hidden;}
 .wrap {width:980px;margin:0 auto;}
 .wraps{width: 980px;margin: 0 auto;}

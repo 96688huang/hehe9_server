@@ -46,7 +46,29 @@ function jumpTo(url) {
 	}
 }
 
+function cleanText(text){
+	if(text != undefined && text != null && text != ''){
+		text = text.replace('%', '');
+		text = text.replace('<', '');
+		text = text.replace('>', '');
+		text = text.replace('&', '');
+		var length = text.length;
+		if(length > 20){
+			length = 20;
+		}
+		text = text.substring(0, length);
+		return text;
+	}
+	return null;
+}
+
 function searchVideo(){
+	var searchName = $("#searchName").val();
+	var searchNameFmt = cleanText(searchName);
+	if(searchNameFmt != null){
+		$("#searchName").val(searchNameFmt);
+	}
+	
 	$("#searchForm").attr("action", './list_videos.html');
 	$("#searchForm").submit();
 	
@@ -56,6 +78,12 @@ function searchVideo(){
 }
 
 function searchComic(){
+	var searchName = $("#searchName").val();
+	var searchNameFmt = cleanText(searchName);
+	if(searchNameFmt != null){
+		$("#searchName").val(searchNameFmt);
+	}
+	
 	$("#searchForm").attr("action", './list_comics.html');
 	$("#searchForm").submit();
 	

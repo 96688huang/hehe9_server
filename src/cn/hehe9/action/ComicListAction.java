@@ -70,6 +70,10 @@ public class ComicListAction extends ActionSupport {
 			searchName = isSearchNameEncode ? UrlEncodeUtil.base64Decode(searchName) : searchName;
 			firstChar = UrlEncodeUtil.base64Decode(firstChar);
 
+			// 预防搜索内容过长, 以及预防 XSS 攻击
+			searchName = ActionHelper.cleanText(searchName);
+			firstChar = ActionHelper.cleanText(firstChar);
+			
 			if (StringUtils.isNotBlank(searchName)) {
 				displayTitle = searchName + "  " + ComicListTitleEnum.SEARCH_RESULT.getTitle();
 			} else if (StringUtils.isNotBlank(firstChar)) {

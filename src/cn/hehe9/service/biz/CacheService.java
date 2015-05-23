@@ -170,7 +170,7 @@ public class CacheService {
 	 */
 	public List<Comic> createSourceComicsCache(List<Integer> sourceIdList) {
 		try {
-			List<Comic> allComics = comicService.listBrief(1, Short.MAX_VALUE);
+			List<Comic> allComics = comicService.listBrief(1, Integer.MAX_VALUE);
 			if (CollectionUtils.isEmpty(allComics)) {
 				return null;
 			}
@@ -209,6 +209,58 @@ public class CacheService {
 		return null;
 	}
 
+//	/**
+//	 * 创建来源视频列表到缓存
+//	 *
+//	 * @param sourceIdList	来源视频列表
+//	 */
+//	public List<Video> createSourceVideosCache(List<Integer> sourceIdList) {
+//		try {
+//			List<Video> allVideos = videoService.listBrief(1, Integer.MAX_VALUE);
+//			if (CollectionUtils.isEmpty(allVideos)) {
+//				return null;
+//			}
+//
+//			// 赋值视频来源名称
+//			ActionHelper.setSourceName(allVideos);
+//
+//			// {key: sourceId, value: Video list}
+//			Map<Integer, Subscription<String, Video>> sourceVideoMap = new HashMap<Integer, Subscription<String, Video>>(
+//					sourceIdList.size());
+//			for (Integer sourceId : sourceIdList) {
+//				sourceVideoMap.put(sourceId, new Subscription<String, Video>());
+//			}
+//
+//			// 按来源分类
+//			for (Video v : allVideos) {
+//				Subscription<String, Video> firstCharVideoMap = sourceVideoMap.get(v.getSourceId());
+//				if (firstCharVideoMap == null) { // 上面已初始化容器, 此处仅判断是否为null
+//					logger.error("unexpect error, as video not match source. videoId = " + v.getId());
+//					continue;
+//				}
+//				firstCharVideoMap.subscribe(v.getFirstChar(), v);
+//			}
+//
+//			// 按来源放入缓存
+//			clearSourceVideosCache(); // 先清除原来的缓存
+//			for (Integer sourceId : sourceVideoMap.keySet()) {
+//				Subscription<String, Video> firstCharVideoMap = sourceVideoMap.get(sourceId);
+//				for (String firstChar : firstCharVideoMap.keys()) {
+//					// 按分母分成多组, 分别保存到缓存中;
+//					String simpler = sourceId.toString() + "_" + firstChar;
+//					Set<Video> videoSet = firstCharVideoMap.get(firstChar);
+//					CacheEntry entry = CacheEntryFactory.create(CacheKeyEnum.SOURCE_VIDEOS.getKey(), simpler);
+//					entry.setValue(videoSet);
+//					CacheManager.getInstance().save(entry);
+//				}
+//			}
+//			return allVideos;
+//		} catch (Exception e) {
+//			logger.error("createSourceIdsCache fail.", e);
+//		}
+//		return null;
+//	}
+	
 	/**
 	 * 创建来源视频列表到缓存
 	 *
@@ -216,7 +268,7 @@ public class CacheService {
 	 */
 	public List<Video> createSourceVideosCache(List<Integer> sourceIdList) {
 		try {
-			List<Video> allVideos = videoService.listBrief(1, Short.MAX_VALUE);
+			List<Video> allVideos = videoService.listBrief(1, Integer.MAX_VALUE);
 			if (CollectionUtils.isEmpty(allVideos)) {
 				return null;
 			}
