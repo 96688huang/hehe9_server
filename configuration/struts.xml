@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<!-- 指定默认编码集 ，作用于HttpServletRequest的setCharacterEncoding（）和freemarker，vilocity的输出 -->
@@ -9,51 +9,51 @@
 	<!-- 开发模式下打印详细的错误信息 -->
 	<constant name="struts.ui.theme" value="xhtml" />
 
+	<!-- strtus 2.3.15 版本后, 默认关闭DMI动态调用action 方法, 故此处要开启. 另外, 推荐使用通配符的方式而不是 
+		action!methodName 的方式调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+
 	<package name="video" namespace="/video" extends="struts-default, json-default">
 		<global-results>
 			<result name="toMain">/main.jsp</result>
 		</global-results>
-		<action name="videoAction" class="videoAction" method="{1}" >
+		<action name="videoAction" class="videoAction">
 			<result type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
 			</result>
 		</action>
-		<action name="videoListAction" class="videoListAction" method="{1}">
+		<action name="videoListAction" class="videoListAction">
 			<result name="toList">/list.jsp</result>
 		</action>
-		<action name="episodeAction" class="videoEpisodeAction"
-			method="{1}">
+		<action name="episodeAction" class="videoEpisodeAction">
 			<result name="toVideoEpisodeList">/video_episode_list.jsp</result>
 		</action>
-		<action name="playAction" class="videoPlayAction"
-			method="{1}">
+		<action name="playAction" class="videoPlayAction">
 			<result name="toPlay">/play.jsp</result>
 		</action>
 		<!-- <action name="videoAction" class="videoAction" method="toMain"> <result 
 			name="toMain">/main.jsp</result> </action> -->
 	</package>
-	
+
 	<package name="comic" namespace="/comic" extends="struts-default, json-default">
 		<global-results>
 			<result name="toMain">/main.jsp</result>
 		</global-results>
-		<action name="comicListAction" class="comicListAction" method="{1}">
+		<action name="comicListAction" class="comicListAction">
 			<result name="toComicList">/comic_list.jsp</result>
 		</action>
-		<action name="comicEpisodeAction" class="comicEpisodeAction"
-			method="{1}">
+		<action name="comicEpisodeAction" class="comicEpisodeAction">
 			<result name="toComicEpisodeList">/comic_episode_list.jsp</result>
 		</action>
-		<action name="readAction" class="comicReadAction"
-			method="{1}">
+		<action name="readAction" class="comicReadAction">
 			<result name="toRead">/read.jsp</result>
 			<result name="toReadJump">/read_jump.jsp</result>
 		</action>
 	</package>
-	
+
 	<package name="seo" namespace="/seo" extends="struts-default, json-default">
-		<action name="seoAction" class="seoAction" method="{1}">
+		<action name="seoAction" class="seoAction">
 			<result name="toSitemap">/sitemap.jsp</result>
 		</action>
 	</package>
