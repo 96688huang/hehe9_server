@@ -126,9 +126,13 @@ public class TencentEpisodeCollectService extends BaseTask {
 					comic.getName(), works_chapter_item_Spans.size(), futureList.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
-			logger.error(COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail, delete comic. comic : "
+			logger.error(COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail. comic : "
 					+ JacksonUtil.encodeQuietly(comic), e);
-			comicDao.deleteBy(comic.getId());
+			
+// NOTE: 手工删除, 以免把已采集大部分分集信息的漫画删掉.
+//			logger.error(COMIC_TENCENT_EPISODE + "collectEpisodeFromListPage fail, delete comic. comic : "
+//					+ JacksonUtil.encodeQuietly(comic), e);
+//			comicDao.deleteBy(comic.getId());
 		}
 	}
 

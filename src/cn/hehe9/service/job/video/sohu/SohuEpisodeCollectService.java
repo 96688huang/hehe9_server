@@ -164,10 +164,10 @@ public class SohuEpisodeCollectService extends BaseTask {
 					video.getName(), liElements.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
-			logger.error(
-					SOHU_EPISODE + "collectEpisodeFromListPage fail. delete video. video : "
-							+ JacksonUtil.encodeQuietly(video), e);
-			videoDao.deleteById(video.getId());
+			logger.error(SOHU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video),
+					e);
+			// NOTE: 手工删除, 以免把已采集大部分分集信息的动漫删掉.
+			//			videoDao.deleteById(video.getId());
 		}
 	}
 

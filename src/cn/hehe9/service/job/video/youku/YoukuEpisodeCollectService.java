@@ -195,15 +195,14 @@ public class YoukuEpisodeCollectService extends BaseTask {
 
 			// 等待检查 future task 是否完成
 			String prefixLog = YOUKU_EPISODE + "collectEpisodeFromListPage";
-			String partLog = String.format(
-					"videoId = %s, videoName = %s, videoEpisodesCount = %s", video.getId(),
+			String partLog = String.format("videoId = %s, videoName = %s, videoEpisodesCount = %s", video.getId(),
 					video.getName(), episodeAreaDivs.size());
 			waitForFutureTasksDone(futureList, logger, prefixLog, partLog);
 		} catch (Exception e) {
 			logger.error(
-					YOUKU_EPISODE + "collectEpisodeFromListPage fail. delete video. video : "
-							+ JacksonUtil.encodeQuietly(video), e);
-			videoDao.deleteById(video.getId());
+					YOUKU_EPISODE + "collectEpisodeFromListPage fail. video : " + JacksonUtil.encodeQuietly(video), e);
+			//			NOTE: 手工删除, 以免把已采集大部分分集信息的动漫删掉.
+			//			videoDao.deleteById(video.getId());
 		}
 	}
 

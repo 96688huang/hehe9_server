@@ -6,7 +6,7 @@
 	&nbsp;&nbsp;页码：<b>${pagination.page}/${pagination.pageCount }</b>&nbsp;每页&nbsp;<b>${pagination.queryCount }</b>&nbsp;总数&nbsp;<b>${pagination.total }</b>&nbsp;&nbsp;&nbsp;&nbsp;
 	<a href="javascript:getListByPage('1');">首页</a>&nbsp;&nbsp;
 	
-	<c:if test="${pagination.page - 1} > 0">
+	<c:if test="${pagination.page > 1 }">
 		<a href="javascript:getListByPage('${pagination.page - 1}')">上一页</a>&nbsp;&nbsp;
 	</c:if>
 	<a href="javascript:getListByPage('${pagination.page + 1}')">下一页</a>&nbsp;&nbsp;<a

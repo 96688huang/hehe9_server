@@ -30,7 +30,7 @@
 		</div> --%>
 		<div id="nav">
 			<p>
-				<label>您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+				<label>您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="<%=basePath %>list_comic_episodes/cid/${comic.id }.html" target="_blank">
 				${comic.name }&nbsp;&nbsp;<font color="#FF0000">[ ${comic.serializeStatus } ]</font></a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }讲&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 				</strong>
@@ -38,7 +38,7 @@
 			</p>
 		</div>
 	</div>
-	<div style="width: 980px; margin: 0 auto; height: 3000px;">
+	<div style="width: 980px; margin: 0 auto; height: 1400px;">
 		<iframe src="${episode.readPageUrl }" width="100%" height="100%"
 		frameborder="0" scrolling="yes"></iframe>
 	</div>

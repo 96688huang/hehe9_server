@@ -30,7 +30,7 @@
 		</div> --%>
 		<div id="nav">
 			<p>
-				<label>您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="">
+				<label>您的位置： <a href="<%=basePath%>"> 首页 </a> &nbsp;&gt;&nbsp; <a href="<%=basePath %>list_comic_episodes/cid/${comic.id }.html" target="_blank">
 				${comic.name } </a> &nbsp;&gt;&nbsp; <strong style="">第${episode.episodeNo }集&nbsp;
 				<s:if test="episode.title != null">「${episode.title}」</s:if>
 				</strong>
